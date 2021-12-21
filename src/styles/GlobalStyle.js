@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
 
 body {
   /* font-family: ; */
-  background-color: gray;
+  background-color: grey;
   color: #111;
   font-size: 15px;
   font-weight: 400;
@@ -38,6 +38,10 @@ button {
 
 a {
   cursor: pointer;
+}
+
+li {
+  list-style: none;
 }
 
 `
