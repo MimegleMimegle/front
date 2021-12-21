@@ -3,7 +3,7 @@ import axios from 'axios'
 /* Axios 인스턴스 생성 */
 
 const instance = axios.create({
-  baseURL: 'http://example.com',
+  baseURL: 'http://52.78.155.185',
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-type': 'application/json; charset=UTF-8',
