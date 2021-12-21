@@ -1,11 +1,11 @@
 import React from 'react'
 import './MobileFrame.css'
 
-const MobileFrame = () => {
+const MobileFrame = (props) => {
   return (
     <>
       <div className="WebFullFrame">
-        <div className="MobileFullFrame"></div>
+        <div className="MobileFullFrame" />
       </div>
     </>
   )

@@ -14,7 +14,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <ConnectedRouter history={history}>
-          <Route path="/" exact component={MobileFrame} />
+          <Route path="/" exact component={Main} />
           <Route path="/join" exact component={Join} />
           <Route path="/login" exact component={Login} />
           <Route path="/mypage/:nickname" exact component={Mypage} />
