@@ -1,11 +1,18 @@
 import React from 'react'
 import './MobileFrame.css'
 
-const MobileFrame = () => {
+import Header from './Header'
+import Footer from './Footer'
+
+const MobileFrame = ({ children }) => {
   return (
     <>
       <div className="WebFullFrame">
-        <div className="MobileFullFrame"></div>
+        <div className="MobileFullFrame">
+          <Header />
+          {children}
+          <Footer />
+        </div>
       </div>
     </>
   )
