@@ -26,15 +26,15 @@ const Footer = (props) => {
 }
 
 const NavFooter = styled.nav`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 360px;
+  width: 100%;
   height: 72px;
   background-color: #d1d1d1;
   padding: 12px 0 10px;
-  z-index: 1;
+  z-index: 1000;
 
   .nav-list {
     height: 100%;
