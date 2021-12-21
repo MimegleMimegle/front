@@ -7,30 +7,28 @@ const Header = () => {
   const [show, setShow] = React.useState(false)
   return (
     <>
-      <div></div>
-      <div>
-        <NavHeader>
-          <ul className="nav-list">
-            <h2>Logo</h2>
-            <li className="nav-item">
-              <GiHamburgerMenu />
-            </li>
-          </ul>
-        </NavHeader>
-      </div>
+      <NavHeader>
+        <ul className="nav-list">
+          <h2>Logo</h2>
+          <li className="nav-item">
+            <GiHamburgerMenu />
+          </li>
+        </ul>
+      </NavHeader>
     </>
   )
 }
 
 const NavHeader = styled.nav`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 360px;
+  width: 100%;
   height: 50px;
   background-color: #d1d1d1;
   padding: 10px 0 12px;
+  z-index: 1000;
 
   .nav-list {
     height: 100%;
