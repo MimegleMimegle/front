@@ -1,10 +1,14 @@
 import React from 'react'
 
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+
 const Main = (props) => {
   return (
     <>
       <div>
-        <h1>메인!</h1>
+        <Header />
+        <Footer />
       </div>
     </>
   )
