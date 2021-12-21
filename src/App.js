@@ -6,13 +6,14 @@ import { ThemeProvider } from 'styled-components'
 import GlobalStyle from './styles/GlobalStyle'
 import theme from './styles/theme'
 import { Main, NotFound, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, DictEdit, DictList, DictWrite } from './pages'
+import MobileFrame from './components/MobileFrame'
 
 function App() {
   return (
     <>
-      <ConnectedRouter history={history}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <ConnectedRouter history={history}>
           <Route path="/" exact component={Main} />
           <Route path="/join" exact component={Join} />
           <Route path="/login" exact component={Login} />
@@ -27,8 +28,8 @@ function App() {
           <Route path="/dict/write" exact component={DictWrite} />
           <Route path="/dict/edit/:wordId" exact component={DictEdit} />
           {/* <Route path="" exact component={NotFound} /> */}
-        </ThemeProvider>
-      </ConnectedRouter>
+        </ConnectedRouter>
+      </ThemeProvider>
     </>
   )
 }
