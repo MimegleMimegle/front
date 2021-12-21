@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components'
 import GlobalStyle from './styles/GlobalStyle'
 import theme from './styles/theme'
 import { Main, NotFound, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, DictEdit, DictList, DictWrite } from './pages'
+import MobileFrame from './components/MobileFrame'
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <ConnectedRouter history={history}>
-          <Route path="/" exact component={Main} />
+          <Route path="/" exact component={MobileFrame} />
           <Route path="/join" exact component={Join} />
           <Route path="/login" exact component={Login} />
           <Route path="/mypage/:nickname" exact component={Mypage} />
