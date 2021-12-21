@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   post: Post,
   quiz: Quiz,
   user: User,
-  dicr: Dict,
+  dict: Dict,
   main: Main,
   router: connectRouter(history),
 })

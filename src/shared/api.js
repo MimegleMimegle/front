@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 /* Axios 인스턴스 생성 */
-
 const instance = axios.create({
   baseURL: 'http://52.78.155.185',
   headers: {
@@ -12,7 +11,6 @@ const instance = axios.create({
 })
 
 /* Interceptor를 통한 Header 설정 */
-
 instance.interceptors.request.use((config) => {
   const accessToken = document.cookie.split('=')[1]
   config.headers.common['authorization'] = `${accessToken}`
@@ -20,11 +18,10 @@ instance.interceptors.request.use((config) => {
 })
 
 /* export api */
-
 export const userApi = {
-  login: () => instance.get('/api/user'),
+  login: (username, password) => instance.get('/api/user', { username: username, password: password }),
   socialLogin: () => instance.get('/api/user/kakao/callback'),
-  join: () => instance.post('/api/user'),
+  join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
   userInfo: () => instance.get(`/api/userInfo`), // api 명세서 url userId 확인, 토큰으로 확인하는지?
   myPage: () => instance.get(`/api/mypage`), // api 명세서 url userId 확인, 토큰으로 확인하는지?
 }
