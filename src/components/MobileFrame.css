@@ -1,0 +1,29 @@
+.WebFullFrame {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 55%;
+  right: 0;
+  max-width: 400px;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  /* 레이아웃 작업 후 삭제 */
+  border: 5px solid red;
+}
+
+.MobileFullFrame {
+  position: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  top: 0;
+  bottom: 0;
+  left: 950px;
+  right: 0;
+  max-width: 375px;
+  height: 640px;
+  /* 레이아웃 작업 후 삭제 */
+  border: 5px solid rgb(146, 170, 240);
+  margin: 270px 10px 300px 10px;
+}
