@@ -10,9 +10,9 @@ import { Main, NotFound, Quiz, QuizResult, Join, Login, Mypage, PostDetail, Post
 function App() {
   return (
     <>
-      <ConnectedRouter history={history}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <ConnectedRouter history={history}>
           <Route path="/" exact component={Main} />
           <Route path="/join" exact component={Join} />
           <Route path="/login" exact component={Login} />
@@ -27,8 +27,8 @@ function App() {
           <Route path="/dict/write" exact component={DictWrite} />
           <Route path="/dict/edit/:wordId" exact component={DictEdit} />
           {/* <Route path="" exact component={NotFound} /> */}
-        </ThemeProvider>
-      </ConnectedRouter>
+        </ConnectedRouter>
+      </ThemeProvider>
     </>
   )
 }
