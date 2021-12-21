@@ -7,10 +7,11 @@
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  left: 600px;
+  left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+  margin: 10px 0 0 0;
 }
 
 .LoginText {
@@ -25,6 +26,7 @@
   width: 300px;
   height: 40px;
   margin: 10px;
+  padding-left: 20px;
 }
 
 .PwdInputBox {
@@ -33,6 +35,17 @@
   width: 300px;
   height: 40px;
   margin: 10px;
+  padding-left: 20px;
+}
+
+.LoginButton {
+  margin: 10px;
+}
+
+.JoinNewUser {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 10px 0 0 0;
 }
 
 .FindUserPwd {
@@ -45,40 +58,51 @@
   display: flex;
   flex-basis: 100%;
   align-items: center;
-  color: rgb(255, 255, 255);
+  color: rgba(0, 0, 0, 0.35);
   font-size: 12px;
-  margin: 8px 0px;
+  margin: 0px 0px;
 }
 
 .SocialLoginHR::before,
 .SocialLoginHR::after {
   content: '';
   flex-grow: 1;
-  background: rgb(255, 255, 255);
-  height: 1px;
-  font-size: 0px;
-  line-height: 0px;
+  background: rgba(0, 0, 0, 0.35);
+  height: 3px;
+  font-size: 5px;
+  line-height: 5px;
   margin: 0px 16px;
 }
 
+.SocialLoginBtns {
+  display: flex;
+  margin: 50px 0px 50px 0px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .KakaoLoginBtn {
-  width: 30px;
-  background-color: rgb(255, 255, 109);
+  width: 50px;
+  background-color: #fee500;
+
+  border-radius: 5px;
 }
 .KakaoLoginBtn:hover {
   cursor: pointer;
 }
 
 .GoogleLoginBtn {
-  width: 30px;
+  width: 50px;
 }
 .GoogleLoginBtn:hover {
   cursor: pointer;
 }
 
 .NaverLoginBtn {
-  width: 30px;
+  width: 50px;
   background-color: rgb(0, 255, 0);
+  border-radius: 5px;
 }
 .NaverLoginBtn:hover {
   cursor: pointer;
