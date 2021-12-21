@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
 
 body {
   /* font-family: ; */
+  background-color: gray;
   color: #111;
   font-size: 15px;
   font-weight: 400;
