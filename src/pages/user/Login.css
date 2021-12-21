@@ -80,3 +80,6 @@
   width: 30px;
   background-color: rgb(0, 255, 0);
 }
+.NaverLoginBtn:hover {
+  cursor: pointer;
+}
