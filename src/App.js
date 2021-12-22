@@ -18,7 +18,7 @@ function App() {
             <Route path="/" exact component={Main} />
             <Route path="/join" exact component={Join} />
             <Route path="/login" exact component={Login} />
-            <Route path="/mypage/:nickname" exact component={Mypage} />
+            <Route path="/mypage" exact component={Mypage} />
             <Route path="/quiz" exact component={Quiz} />
             <Route path="/quiz/result" exact component={QuizResult} />
             <Route path="/post" exact component={PostList} />

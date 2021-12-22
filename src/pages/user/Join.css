@@ -1,15 +1,32 @@
-.JoinInputContainer {
-  width: auto;
-  margin: 10px 10px 10px 10px;
+.JoinPageLayout {
+  display: block;
+  border: 3px solid green;
+  width: 100%;
+  max-width: 400px;
+  height: 485px;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0 0 0 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.JoinPageLayout::-webkit-scrollbar {
+  display: none;
 }
 
 .JoinText {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px;
 }
 
 .JoinInputTag {
@@ -21,11 +38,24 @@
 }
 
 .JoinInputBox {
-  display: flex;
-  flex-direction: column;
-  max-width: 300px;
+  border: 0.5px solid black;
+  border-radius: 30px;
+  width: 300px;
+  height: 40px;
+  margin: 10px;
+  padding-left: 20px;
 }
 
 .JoinButton {
-  margin: 50px;
+  margin: 35px 0 10px 0;
+  border: 1px solid rgb(252, 145, 133);
+  border-radius: 5px;
+  background-color: rgb(252, 145, 133);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+}
+.JoinButton:hover {
+  cursor: pointer;
 }
