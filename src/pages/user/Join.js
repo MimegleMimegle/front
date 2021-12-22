@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import './Join.css'
 import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
 
@@ -8,8 +9,8 @@ const Join = () => {
   const dispatch = useDispatch()
 
   //이름, 이메일, 비밀번호, 비밀번호 확인
-  const [username, setUserName] = React.useState('')
-  const [nickname, setNickName] = React.useState('')
+  const [username, setUsername] = React.useState('')
+  const [nickname, setNickname] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [passwordCheck, setPasswordCheck] = React.useState('')
 
@@ -27,22 +28,22 @@ const Join = () => {
 
   // 이메일
   const onChangeUsername = (e) => {
-    // const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
     const usernameCurrent = e.target.value
-    setUserName(usernameCurrent)
+    setUsername(usernameCurrent)
 
-    // if (!emailRegex.test(usernameCurrent)) {
-    //   setUsernameMessage('이메일 형식을 확인해주세요.')
-    //   setIsUsername(false)
-    // } else {
-    //   setUsernameMessage('올바른 이메일 형식입니다')
-    //   setIsUsername(true)
-    // }
+    if (!emailRegex.test(usernameCurrent)) {
+      setUsernameMessage('이메일 형식을 확인해주세요.')
+      setIsUsername(false)
+    } else {
+      setUsernameMessage('올바른 이메일 형식입니다')
+      setIsUsername(true)
+    }
   }
 
   // 이름
   const onChangeNickname = (e) => {
-    setNickName(e.target.value)
+    setNickname(e.target.value)
     if (e.target.value.length < 2 || e.target.value.length > 11) {
       setNicknameMessage('2글자 이상 11글자 미만으로 입력해주세요.')
       setIsNickname(false)
@@ -86,51 +87,61 @@ const Join = () => {
       window.alert('모두 입력해주세요!')
       return
     }
+
+    // let userFormData = new FormData()
+
+    // const data = {
+    //   username: username,
+    //   nickname: nickname,
+    //   password: password,
+    //   passwordCheck: passwordCheck,
+    // }
+
+    // userFormData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }))
+
     dispatch(userActions.joinDB(username, nickname, password, passwordCheck))
   }
 
   return (
     <>
-      <div className="JoinInputContainer">
+      <div className="JoinPageLayout">
         <text className="JoinText">회원가입</text>
-        <form>
-          <div className="JoinInputSection">
-            <div className="JoinInputTag">
-              <input className="JoinInputBox" placeholder="아이디" type="text" value={username} onChange={onChangeUsername} />
-              {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
-            </div>
-            <div className="JoinInputTag">
-              <input className="JoinInputBox" maxLength="10" placeholder="닉네임" text="이름" type="text" value={nickname} onChange={onChangeNickname} />
-              {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>}
-            </div>
-            <div className="JoinInputTag">
-              <input
-                className="JoinInputBox"
-                type="password"
-                placeholder="비밀번호"
-                onChange={onChangePassword}
-                passwordText="비밀번호 (숫자+영문자+특수문자 조합으로 8자리 이상)"
-                title="비밀번호"
-                value={password}
-              />
-              {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
-            </div>
-            <div className="JoinInputTag">
-              <input className="JoinInputBox" type="password" placeholder="비밀번호 확인" onChange={onChangePasswordCheck} passwordText=" " title="비밀번호 확인" value={passwordCheck} />
-              {setPasswordCheck.length > 0 && <Span className={`message ${isPasswordCheck ? 'success' : 'error'}`}>{passwordCheckMessage}</Span>}
-            </div>
-            <button className="JoinButton" type="submit" disabled={!(isNickname && isUsername && isPassword && isPasswordCheck)} onClick={join}>
-              회원가입하기
-            </button>
-          </div>
-        </form>
+        {/* <form> */}
+        <div className="JoinInputTag">
+          <input className="JoinInputBox" placeholder="아이디" type="text" value={username} onChange={onChangeUsername} />
+          {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
+        </div>
+        <div className="JoinInputTag">
+          <input className="JoinInputBox" maxLength="10" placeholder="닉네임" text="이름" type="text" value={nickname} onChange={onChangeNickname} />
+          {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>}
+        </div>
+        <div className="JoinInputTag">
+          <input
+            className="JoinInputBox"
+            type="password"
+            placeholder="비밀번호"
+            onChange={onChangePassword}
+            passwordText="비밀번호 (숫자+영문자+특수문자 조합으로 8자리 이상)"
+            title="비밀번호"
+            value={password}
+          />
+          {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
+        </div>
+        <div className="JoinInputTag">
+          <input className="JoinInputBox" type="password" placeholder="비밀번호 확인" onChange={onChangePasswordCheck} passwordText=" " title="비밀번호 확인" value={passwordCheck} />
+          {setPasswordCheck.length > 0 && <Span className={`message ${isPasswordCheck ? 'success' : 'error'}`}>{passwordCheckMessage}</Span>}
+        </div>
+        <button className="JoinButton" type="submit" disabled={!(isNickname && isUsername && isPassword && isPasswordCheck)} onClick={join}>
+          회원가입하기
+        </button>
+        {/* </form> */}
       </div>
     </>
   )
 }
 
 const Span = styled.span`
-  font-size: 13px;
+  font-size: 12px;
   color: #ffa07a;
 `
 export default Join

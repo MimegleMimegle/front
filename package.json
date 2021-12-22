@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -10,6 +11,7 @@
     "connected-react-router": "6.9.1",
     "history": "4.10.1",
     "immer": "^9.0.7",
+    "material-design-icons": "^3.0.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -24,6 +26,7 @@
     "redux-thunk": "^2.4.1",
     "remixicon": "^2.5.0",
     "styled-components": "^5.3.3",
+    "swiper": "6.8.4",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
