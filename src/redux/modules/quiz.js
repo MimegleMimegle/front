@@ -1,21 +1,57 @@
-// import { createAction, handleActions } from 'redux-actions'
-// import { produce } from 'immer'
-// import { quizApi } from '../../shared/api'
+import { createAction, handleActions } from 'redux-actions'
+import { produce } from 'immer'
+import { quizApi } from '../../shared/api'
 
-// /* action type */
+/* action type */
+const GET_QUIZ_LIST = 'GET_QUIZ_LIST'
+const ADD_ANSWER = 'ADD_ANSWER'
 
-// /* action creator */
+/* action creator */
+const getQuizList = createAction(GET_QUIZ_LIST, (quiz_list) => ({ quiz_list }))
+const addAnswer = createAction(ADD_ANSWER, (user_answer) => ({ user_answer }))
 
-// /* initial state */
+/* initial state */
+const initialState = {
+  quiz_list: null,
+  user_answer_list: [],
+}
 
-// /* middleware */
+/* middleware */
+const getQuizListDB = () => {
+  return async function (dispatch, getState, { history }) {
+    await quizApi
+      .getQuizList()
+      .then((res) => {
+        dispatch(getQuizList(res.data))
+      })
+      .catch((err) => {
+        console.log('퀴즈 데이터를 불러오는 데 문제가 발생했습니다.', err.response)
+      })
+  }
+}
 
 // /* reducer */
 
-// export default handleActions({})
+export default handleActions(
+  {
+    [GET_QUIZ_LIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.quiz_list = action.payload.quiz_list
+      }),
+    [ADD_ANSWER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user_answer_list.push(action.payload.user_answer)
+      }),
+  },
+  initialState
+)
 
 // /* export */
 
-// const actionCreators = {}
+const actionCreators = {
+  getQuizList,
+  getQuizListDB,
+  addAnswer,
+}
 
-// export { actionCreators }
+export { actionCreators }
