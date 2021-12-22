@@ -1,0 +1,31 @@
+.JoinInputContainer {
+  width: auto;
+  margin: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.JoinText {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.JoinInputTag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 300px;
+}
+
+.JoinInputBox {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.JoinButton {
+  margin: 50px;
+}

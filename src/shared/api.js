@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 /* Axios 인스턴스 생성 */
-
 const instance = axios.create({
   baseURL: 'http://52.78.155.185',
   headers: {
@@ -12,7 +11,6 @@ const instance = axios.create({
 })
 
 /* Interceptor를 통한 Header 설정 */
-
 instance.interceptors.request.use((config) => {
   const accessToken = document.cookie.split('=')[1]
   config.headers.common['authorization'] = `${accessToken}`
@@ -20,13 +18,16 @@ instance.interceptors.request.use((config) => {
 })
 
 /* export api */
-
 export const userApi = {
-  login: () => instance.get('/api/user'),
+  login: (username, password) => instance.get('/api/user', { username: username, password: password }),
   socialLogin: () => instance.get('/api/user/kakao/callback'),
-  join: () => instance.post('/api/user'),
-  userInfo: () => instance.get(`/api/userInfo`), // api 명세서 url userId 확인, 토큰으로 확인하는지?
-  myPage: () => instance.get(`/api/mypage`), // api 명세서 url userId 확인, 토큰으로 확인하는지?
+  join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
+  userInfo: () => instance.get(`/api/userInfo`),
+  myPage: () => instance.get(`/api/mypage`),
+
+  /* 추가 */
+  checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
+  checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
 }
 
 export const boardApi = {
@@ -40,16 +41,26 @@ export const boardApi = {
 export const dictApi = {
   getDicts: () => instance.get('/api/dict'),
   writeDict: () => instance.post('/api/dict'),
-  editDict: () => instance.put(`/api/dict`), // api 명세서 url dictId 확인
+  editDict: () => instance.put(`/api/dict`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
+  /* 추가 */
+  liked: (dictId) => instance.get(`/api/dict/${dictId}/like`),
 }
 
 export const quizApi = {
-  // quiz api 명세서 없음 -> 확인 필요
+  /* 추가 */
+  getQuizList: () => instance.get('/api/quiz?count=10'),
 }
 
 export const mainApi = {
   mainPage: () => instance.get('/api/main'),
+}
+
+/* 추가 */
+export const commentApi = {
+  writeComment: (postId) => instance.post(`/api/board/${postId}/comment`),
+  editComment: (commentId) => instance.put(`/api/board/${commentId}`),
+  deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
 }
