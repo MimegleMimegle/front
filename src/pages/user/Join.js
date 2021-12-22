@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import './Join.css'
+import '../../styles/css/Join.css'
 import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
 
@@ -26,14 +26,14 @@ const Join = () => {
   const [isPassword, setIsPassword] = useState('false')
   const [isPasswordCheck, setIsPasswordCheck] = useState('false')
 
-  // 이메일
+  // 유저네임 유효성 검사
   const onChangeUsername = (e) => {
     const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
     const usernameCurrent = e.target.value
     setUsername(usernameCurrent)
 
     if (!emailRegex.test(usernameCurrent)) {
-      setUsernameMessage('이메일 형식을 확인해주세요.')
+      setUsernameMessage('이메일 형식을 확인해주세요')
       setIsUsername(false)
     } else {
       setUsernameMessage('올바른 이메일 형식입니다')
@@ -41,11 +41,11 @@ const Join = () => {
     }
   }
 
-  // 이름
+  // 닉네임 유효성 검사
   const onChangeNickname = (e) => {
     setNickname(e.target.value)
     if (e.target.value.length < 2 || e.target.value.length > 11) {
-      setNicknameMessage('2글자 이상 11글자 미만으로 입력해주세요.')
+      setNicknameMessage('2글자 이상 11글자 미만으로 입력해주세요')
       setIsNickname(false)
     } else {
       setNicknameMessage('올바른 이름 형식입니다')
@@ -53,14 +53,14 @@ const Join = () => {
     }
   }
 
-  // 비밀번호
+  // 비밀번호 유효성 검사
   const onChangePassword = (e) => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
     const passwordCurrent = e.target.value
     setPassword(passwordCurrent)
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요.')
+      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요')
       setIsPassword(false)
     } else {
       setPasswordMessage('안전한 비밀번호입니다')
@@ -68,7 +68,7 @@ const Join = () => {
     }
   }
 
-  // 비밀번호 확인
+  // 비밀번호 확인 유효성 검사
   const onChangePasswordCheck = (e) => {
     const PasswordCheckCurrent = e.target.value
     setPasswordCheck(PasswordCheckCurrent)
@@ -77,7 +77,7 @@ const Join = () => {
       setPasswordCheckMessage('비밀번호가 일치합니다')
       setIsPasswordCheck(true)
     } else {
-      setPasswordCheckMessage('비밀번호가 일치하지 않습니다.')
+      setPasswordCheckMessage('비밀번호가 일치하지 않습니다')
       setIsPasswordCheck(false)
     }
   }
@@ -87,18 +87,6 @@ const Join = () => {
       window.alert('모두 입력해주세요!')
       return
     }
-
-    // let userFormData = new FormData()
-
-    // const data = {
-    //   username: username,
-    //   nickname: nickname,
-    //   password: password,
-    //   passwordCheck: passwordCheck,
-    // }
-
-    // userFormData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }))
-
     dispatch(userActions.joinDB(username, nickname, password, passwordCheck))
   }
 
@@ -106,7 +94,6 @@ const Join = () => {
     <>
       <div className="JoinPageLayout">
         <text className="JoinText">회원가입</text>
-        {/* <form> */}
         <div className="JoinInputTag">
           <input className="JoinInputBox" placeholder="아이디" type="text" value={username} onChange={onChangeUsername} />
           {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
@@ -134,7 +121,6 @@ const Join = () => {
         <button className="JoinButton" type="submit" disabled={!(isNickname && isUsername && isPassword && isPasswordCheck)} onClick={join}>
           회원가입하기
         </button>
-        {/* </form> */}
       </div>
     </>
   )

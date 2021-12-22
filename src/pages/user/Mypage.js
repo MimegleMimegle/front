@@ -1,5 +1,5 @@
 import React from 'react'
-import './Mypage.css'
+import '../../styles/css/Mypage.css'
 import { MdFace } from 'react-icons/md'
 
 const Mypage = (props) => {
@@ -8,7 +8,7 @@ const Mypage = (props) => {
       <div className="MypageLayout">
         <div className="UserProfileBox">
           <div className="UserProfileTag">
-            <MdFace className="UserProfileImage" fontSize="50"></MdFace>
+            <MdFace className="UserProfileImage" fontSize="50" />
             <text className="UserProfileName">Username</text>
           </div>
           <div className="UserActivityInfo">
