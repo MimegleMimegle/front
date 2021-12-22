@@ -19,7 +19,8 @@ const PostEdit = (props) => {
           <textarea className="writedesc"/>
         </PWBody>
         <PWFooter>
-        <button className="postbtn">작성하기</button>
+        <button className="postbtn">수정하기</button>
+        <button className="postbtn">뒤로가기</button>
         </PWFooter>
       </Container>
     </>
@@ -63,9 +64,10 @@ const PWFooter = styled.div`
   justify-content: center;
   .postbtn{
       width: 100px;
-      pading: 20px;
+      pading: 2px;
       border: 1px solid lightgray;
       border-radius: 10px;
+      margin: 0px 5px;
     }
 `;
 
