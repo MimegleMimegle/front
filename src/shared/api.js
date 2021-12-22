@@ -19,7 +19,7 @@ instance.interceptors.request.use((config) => {
 
 /* export api */
 export const userApi = {
-  login: (username, password) => instance.get('/api/user', { username: username, password: password }),
+  login: (username, password) => instance.post('/api/user', { username: username, password: password }),
   socialLogin: () => instance.get('/api/user/kakao/callback'),
   join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
   userInfo: () => instance.get(`/api/userInfo`),
