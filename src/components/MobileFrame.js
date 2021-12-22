@@ -1,5 +1,5 @@
 import React from 'react'
-import './MobileFrame.css'
+import '../styles/css/MobileFrame.css'
 
 import Header from './Header'
 import Footer from './Footer'

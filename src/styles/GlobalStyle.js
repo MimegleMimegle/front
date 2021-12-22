@@ -15,7 +15,7 @@ body {
   line-height: 1.6;
 }
 
-p, h2, h4 {
+p, h1, h2, h3, h4 {
 	margin: 0;
 }
 
