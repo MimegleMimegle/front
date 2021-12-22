@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import './Join.css'
+import '../../styles/css/Join.css'
 import { useDispatch } from 'react-redux'
 import { actionCreators as userActions } from '../../redux/modules/user'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import './Mypage.css'
+import '../../styles/css/Mypage.css'
 import { MdFace } from 'react-icons/md'
 
 const Mypage = (props) => {

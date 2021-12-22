@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import './KakaoLoginBtn.css'
+import '../styles/css/KakaoLoginBtn.css'
 import KaKaoLogin from 'react-kakao-login'
 
 const buttonBlock = {
