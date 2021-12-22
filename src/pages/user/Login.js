@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import history from '../../redux/ConfigureStore'
-import './Login.css'
+import '../../styles/css/Login.css'
 import styled from 'styled-components'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import KaKaoLogin from 'react-kakao-login'
@@ -67,7 +67,7 @@ const Login = () => {
         <button
           className="LoginButton"
           type="submit"
-          // disabled={!(isUsername && isPassword)}
+          disabled={!(isUsername && isPassword)}
           onClick={login}
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
