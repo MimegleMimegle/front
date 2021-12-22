@@ -24,10 +24,12 @@ const joinDB = (username, nickname, password, passwordCheck) => {
     userApi
       .join(username, nickname, password, passwordCheck)
       .then((res) => {
+
         history.push('/login')
         window.alert('회원가입을 축하드립니다! 로그인 후 이용하실 수 있어요')
       })
       .catch((err) => {
+
         window.alert('이미 등록된 사용자 입니다! 아이디 또는 닉네임을 변경해주세요')
       })
   }

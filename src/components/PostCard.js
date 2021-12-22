@@ -25,10 +25,10 @@ const PostBody = styled.div`
     
   width: 100%;
   height:auto;
-  padding: 10px;
+  padding: 8px;
   display: flex;
   justify-content: space-between;
-  
+  cursor: pointer;
   background-color:red;
   
 
