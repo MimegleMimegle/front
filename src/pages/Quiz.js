@@ -102,3 +102,21 @@ const StyleSwiper = styled(Swiper)`
 `
 
 export default Quiz
+
+const quiz_list = [
+  {
+    question: '700은 무슨 뜻일까요?',
+    solution: '',
+    choice: ['귀여워', '', '', ''],
+  },
+  {
+    question: '',
+    solution: '',
+    choice: ['', '', '', ''],
+  },
+  {
+    question: '',
+    solution: '',
+    choice: ['', '', '', ''],
+  },
+]
