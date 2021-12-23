@@ -17,7 +17,7 @@ const addPost = createAction(ADD_POST,(post)=>({post}));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
 // /* initial state */
-const initialstate = {
+const initialState = {
     list: [],
     is_laoding: false,
 
@@ -39,7 +39,7 @@ const initialPost = {
 // /* reducer */
 
 export default handleActions(
-    {
+  {
        [SET_POST]: (state, action) =>
        produce(state, (draft) => {
          draft.list = action.payload.post_list
@@ -54,7 +54,9 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_laoding = action.payload.is_loading
       }),
-    })
+  },
+  initialState
+)
 
 // /* export */
 
