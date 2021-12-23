@@ -5,8 +5,12 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
+import useScript from '../util/useScript'
+import { KakaoShareButton } from '../shared/kakaoShare'
 
 const QuizResult = (props) => {
+  useScript('https://developers.kakao.com/sdk/js/kakao.js')
+  console.log(window.Kakao)
   const dispatch = useDispatch()
 
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
@@ -66,7 +70,7 @@ const QuizResult = (props) => {
           <div style={{ width: '80%', padding: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div>공유하기</div>
             <div style={{ width: '100%', padding: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <button className="share-btn">카카오톡</button>
+              <KakaoShareButton />
               <button className="share-btn">페이스북</button>
               <button className="share-btn">트위터</button>
               <CopyToClipboard onCopy={onCopy} text={quizUrl}>
