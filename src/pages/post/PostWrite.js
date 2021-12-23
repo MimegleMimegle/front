@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CgEnter } from 'react-icons/cg';
 import styled from 'styled-components'
-
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import { actionCreators as postActions } from '../../redux/modules/post';
 const PostWrite = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const[ contents, setContents] = useState("");
+
+  const changeContents = (e) => {
+    setContents(e.target.value);
+  }
+
+  const addPost = () => {
+    dispatch(postActions.addPostDB(contents));
+  }
+  console.log(addPost);
+
   return (
     <>
       <Container>
@@ -17,10 +32,10 @@ const PostWrite = (props) => {
           <button className="plustfuction">sns공유</button>
           <button className="plustfuction">스티커</button>
 
-          <textarea className="writedesc"/>
+          <textarea onChange={changeContents} className="writedesc"/>
         </PWBody>
         <PWFooter>
-        <button className="postbtn">작성하기</button>
+        <button className="postbtn" onClick={addPost}>작성하기</button>
         </PWFooter>
       </Container>
     </>
