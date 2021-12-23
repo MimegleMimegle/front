@@ -36,7 +36,13 @@ export const boardApi = {
   writePost: () => instance.post('/api/board'),
   editPost: (postId) => instance.put(`/api/board/${postId}`),
   deletePost: (postId) => instance.delete(`/api/board/${postId}`),
+
+  // 추가
+  likePost: (postId) => instance.post(`/api/board/${postId}/like`),
+  getSubject: ()=> instance.get('/api/board/subject'),
 }
+
+
 
 export const dictApi = {
   getDicts: () => instance.get('/api/dict'),
