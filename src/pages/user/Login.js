@@ -9,7 +9,7 @@ import kakaotalk from '../../styles/image/kakaotalk.svg'
 import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
 
-const Login = () => {
+const Login = (props) => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -89,7 +89,10 @@ const Login = () => {
         <text className="FindUserPwd">비밀번호를 잊어버리셨나요?</text>
         <div className="SocialLoginHR">SNS 계정으로 로그인하기</div>
         <div className="SocialLoginBtns">
-          <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
+          <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=17fb08cb376f564b3375667a799fda1f&redirect_uri=http://localhost:3000/oauth">
+            <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
+          </a>
+
           <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
           <img className="NaverLoginBtn" size="5" src={naver}></img>
         </div>
