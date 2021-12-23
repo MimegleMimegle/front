@@ -1,4 +1,5 @@
 import React from 'react'
+import kakaoLogo from '../styles/image/kakao-logo.png'
 
 const KakaoShareButton = () => {
   React.useEffect(() => {
@@ -51,7 +52,11 @@ const KakaoShareButton = () => {
     }
   }
 
-  return <button id="kakao-link-btn">카카오톡</button>
+  return (
+    <button id="kakao-link-btn" style={{ padding: '0 0 6px' }}>
+      <img src={kakaoLogo} style={{ width: '40px', height: '40px', borderRadius: '20px' }} />
+    </button>
+  )
 }
 
 export { KakaoShareButton }
