@@ -4,8 +4,12 @@ import styled from 'styled-components'
 
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
+import useScript from '../util/useScript'
+import { KakaoShareButton } from '../shared/kakaoShare'
 
 const QuizResult = (props) => {
+  useScript('https://developers.kakao.com/sdk/js/kakao.js')
+  console.log(window.Kakao)
   const dispatch = useDispatch()
 
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
@@ -48,6 +52,7 @@ const QuizResult = (props) => {
           </div>
           <div style={{ width: '80%', height: '1px', backgroundColor: '#333' }}></div>
           <div style={{ padding: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <KakaoShareButton />
             <div>공유하기</div>
             <div>sns</div>
             <div>link</div>

@@ -11,11 +11,11 @@ const KakaoShareButton = () => {
 
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-        kakao.init(process.env.REACT_APP_KAKAO_API_KEY)
+        kakao.init('65a77a52d880b0b38abb30f7b4816e82')
       }
 
-      kakao.Link.createKakaoButton({
-        container: '.kakao-share-btn',
+      kakao.Link.createDefaultButton({
+        container: '#kakao-link-btn',
         objectType: 'feed',
         content: {
           title: '신조어 퀴즈',
@@ -27,9 +27,8 @@ const KakaoShareButton = () => {
           },
         },
         social: {
-          likeCount: 0,
-          commentCount: 0,
-          shareCount: 0,
+          likeCount: 77,
+          commentCount: 55,
         },
         buttons: [
           {
@@ -51,7 +50,7 @@ const KakaoShareButton = () => {
     }
   }
 
-  return <button className="kakao-share-button">카카오톡</button>
+  return <button id="kakao-link-btn">카카오톡</button>
 }
 
 export { KakaoShareButton }
