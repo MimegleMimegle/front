@@ -67,7 +67,7 @@ const Login = () => {
         <button
           className="LoginButton"
           type="submit"
-          // disabled={!(isUsername && isPassword)}
+          disabled={!(isUsername && isPassword)}
           onClick={login}
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
