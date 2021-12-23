@@ -8,13 +8,14 @@ const GlobalStyle = createGlobalStyle`
 
 body {
   /* font-family: ; */
+  background-color: grey;
   color: #111;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.6;
 }
 
-p, h2, h4 {
+p, h1, h2, h3, h4 {
 	margin: 0;
 }
 
@@ -37,6 +38,10 @@ button {
 
 a {
   cursor: pointer;
+}
+
+li {
+  list-style: none;
 }
 
 `
