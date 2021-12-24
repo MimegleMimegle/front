@@ -2,7 +2,10 @@ import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 import { setCookie, deleteCookie } from '../../shared/cookie'
 import { applyMiddleware } from 'redux'
+import axios from 'axios'
 import { userApi } from '../../shared/api'
+
+const { Kakao } = window
 
 const LOG_OUT = 'LOG_OUT'
 const GET_USER = 'GET_USER'
@@ -19,17 +22,31 @@ const initialState = {
 }
 
 //middleware
+const KakaoLogin = (KakaoCode) => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: 'get',
+      url: 'http://52.78.155.185/callback/kakao?code=' + `${KakaoCode}`,
+    })
+      .then((res) => {
+        localStorage.setItem('token', res.data)
+        console.log(res)
+        history.replace('/')
+        window.location.reload()
+      })
+      .catch((err) => console.log(err))
+  }
+}
+
 const joinDB = (username, nickname, password, passwordCheck) => {
   return function (dispatch, getState, { history }) {
     userApi
       .join(username, nickname, password, passwordCheck)
       .then((res) => {
-
         history.push('/login')
         window.alert('회원가입을 축하드립니다! 로그인 후 이용하실 수 있어요')
       })
       .catch((err) => {
-
         window.alert('이미 등록된 사용자 입니다! 아이디 또는 닉네임을 변경해주세요')
       })
   }
@@ -105,6 +122,7 @@ const actionCreators = {
   logInDB,
   logOutDB,
   loginCheckDB,
+  KakaoLogin,
 }
 
 export { actionCreators }

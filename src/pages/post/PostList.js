@@ -19,8 +19,9 @@ const PostList = (props) => {
         <button>즐겨찾기</button>
         <button>전체공지</button>
       </PostHeader>
-      
+      <div style={{height:"100px"}}>
       <PostlistSlider/>
+      </div>
       <PostCard  />
       <Link to="/post/write">
       <IconBorder><MdPostAdd size="30px"/></IconBorder>

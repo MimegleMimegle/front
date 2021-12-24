@@ -39,9 +39,9 @@ export const boardApi = {
 }
 
 export const dictApi = {
-  getDicts: () => instance.get('/api/dict'),
+  getDicts: () => instance.get('/api/dict?page=0&size=10'),
   writeDict: () => instance.post('/api/dict'),
-  editDict: () => instance.put(`/api/dict`),
+  editDict: (dickId) => instance.put(`/api/dict/${dickId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
@@ -60,7 +60,9 @@ export const mainApi = {
 
 /* 추가 */
 export const commentApi = {
-  writeComment: (postId) => instance.post(`/api/board/${postId}/comment`),
+  getComments: (postId) => instance.get(`/api/board/${postId}/comment?page=0&size=10`),
+  /* writeComment -> addComment 로 수정 */
+  addComment: (postId) => instance.post(`/api/board/${postId}/comment`),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
 }
