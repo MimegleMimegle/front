@@ -33,10 +33,16 @@ export const userApi = {
 export const boardApi = {
   getPosts: () => instance.get('/api/board'),
   getOnePost: (postId) => instance.get(`/api/board/${postId}`),
-  writePost: () => instance.post('/api/board'),
-  editPost: (postId) => instance.put(`/api/board/${postId}`),
+  writePost: (title,content,subject,category) => instance.post('/api/board',{title:title, content:content, subject:subject, category:category}),
+  editPost: (postId,title,content,subject) => instance.put(`/api/board/${postId}`,{title:title, content:content, subject:subject,}),
   deletePost: (postId) => instance.delete(`/api/board/${postId}`),
+
+  // 추가
+  likePost: (postId) => instance.post(`/api/board/${postId}/like`),
+  getSubject: ()=> instance.get('/api/board/subject'),
 }
+
+
 
 export const dictApi = {
   getDicts: () => instance.get('/api/dict?page=0&size=10'),

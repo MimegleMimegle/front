@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory, useParams, } from 'react-router'
-import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import PostlistSlider from '../../components/PostlistSlide';
 import PostCard from '../../components/PostCard'
 import { MdPostAdd } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
 const PostList = (props) => {
+  const is_login = useSelector((state)=> state.user.is_login)
 
+  const history = useHistory();
+  
   return (
     <>
     <PostHeader>
@@ -23,9 +26,7 @@ const PostList = (props) => {
       <PostlistSlider/>
       </div>
       <PostCard  />
-      <Link to="/post/write">
-      <IconBorder><MdPostAdd size="30px"/></IconBorder>
-      </Link>
+      <IconBorder onClick={()=> {history.push("/post/write");}}><MdPostAdd size="30px"/></IconBorder>
     </>
   )
 }
