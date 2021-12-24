@@ -82,7 +82,7 @@ const QuizResult = (props) => {
               <LineShareButton url={currentUrl}>
                 <LineIcon size={40} round={true} />
               </LineShareButton>
-              <CopyToClipboard onCopy={onCopy} text={quizUrl}>
+              <CopyToClipboard onCopy={onCopy} text={currentUrl}>
                 <button className="share-btn">URL</button>
               </CopyToClipboard>
               {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
