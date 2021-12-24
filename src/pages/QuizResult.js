@@ -9,6 +9,9 @@ import useScript from '../util/useScript'
 import { KakaoShareButton } from '../shared/kakaoShare'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
 
+import { history } from '../redux/ConfigureStore'
+import { actionCreators as quizActions } from '../redux/modules/quiz'
+
 const QuizResult = (props) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
   console.log(window.Kakao)
