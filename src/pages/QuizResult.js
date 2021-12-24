@@ -6,6 +6,9 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
 
+import { history } from '../redux/ConfigureStore'
+import { actionCreators as quizActions } from '../redux/modules/quiz'
+
 const QuizResult = (props) => {
   const dispatch = useDispatch()
 
