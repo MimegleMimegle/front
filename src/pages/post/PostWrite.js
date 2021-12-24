@@ -52,45 +52,43 @@ const PostWrite = (props) => {
 
 const Container = styled.div`
   margin: 10px 20px;
-  
-`;
+`
 
 const PWHeader = styled.div`
-  display: flex:
+  display: flex;
 
-  .writectgr{
+  .writectgr {
     width: 100px;
   }
-  .writetitle{
+  .writetitle {
     border: 1px solid lightgray;
     border-radius: 10px;
     width: 200px;
-  
   }
-`;
+`
 
 const PWBody = styled.div`
-margin: 10px 0px;
-.plustfuction{
-  margin: 0px 15px 10px 15px;
-}
-.writedesc{
-  width: 300px;
-  height: 350px;
-  border: 1px solid lightgray;
-  border-radius: 10px;
-}
-`;
+  margin: 10px 0px;
+  .plustfuction {
+    margin: 0px 15px 10px 15px;
+  }
+  .writedesc {
+    width: 300px;
+    height: 350px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+  }
+`
 
 const PWFooter = styled.div`
   display: flex;
   justify-content: center;
-  .postbtn{
-      width: 100px;
-      pading: 20px;
-      border: 1px solid lightgray;
-      border-radius: 10px;
-    }
-`;
+  .postbtn {
+    width: 100px;
+    pading: 20px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+  }
+`
 
 export default PostWrite
