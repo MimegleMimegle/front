@@ -5,11 +5,16 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
+import useScript from '../util/useScript'
+import { KakaoShareButton } from '../shared/kakaoShare'
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
 
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
 
 const QuizResult = (props) => {
+  useScript('https://developers.kakao.com/sdk/js/kakao.js')
+  console.log(window.Kakao)
   const dispatch = useDispatch()
 
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
@@ -18,6 +23,7 @@ const QuizResult = (props) => {
   const [copied, setCopied] = React.useState(false)
 
   const quizUrl = 'http://localhost:3000/quiz'
+  const currentUrl = window.location.href
 
   const closeCopied = () => {
     setTimeout(() => {
@@ -69,10 +75,17 @@ const QuizResult = (props) => {
           <div style={{ width: '80%', padding: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div>공유하기</div>
             <div style={{ width: '100%', padding: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <button className="share-btn">카카오톡</button>
-              <button className="share-btn">페이스북</button>
-              <button className="share-btn">트위터</button>
-              <CopyToClipboard onCopy={onCopy} text={quizUrl}>
+              <FacebookShareButton url={currentUrl}>
+                <FacebookIcon size={40} round={true} />
+              </FacebookShareButton>
+              <TwitterShareButton url={currentUrl}>
+                <TwitterIcon size={40} round={true} />
+              </TwitterShareButton>
+              <KakaoShareButton />
+              <LineShareButton url={currentUrl}>
+                <LineIcon size={40} round={true} />
+              </LineShareButton>
+              <CopyToClipboard onCopy={onCopy} text={currentUrl}>
                 <button className="share-btn">URL</button>
               </CopyToClipboard>
               {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
@@ -104,11 +117,15 @@ const Wrapper = styled.div`
   }
 
   .share-btn {
-    border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    width: 55px;
-    height: 55px;
+    border: 1px solid rgb(115, 98, 255);
+    border-radius: 20px;
+    background-color: rgb(115, 98, 255);
+    width: 40px;
+    height: 40px;
+    color: #fff;
     font-size: 11px;
+    font-weight: 700;
+    margin: 0 0 6px;
   }
 
   .link-copied {
