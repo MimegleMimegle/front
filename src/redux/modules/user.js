@@ -1,21 +1,128 @@
-// import { createAction, handleActions } from 'redux-actions'
-// import { produce } from 'immer'
-// import { userApi } from '../../shared/api'
+import { createAction, handleActions } from 'redux-actions'
+import { produce } from 'immer'
+import { setCookie, deleteCookie } from '../../shared/cookie'
+import { applyMiddleware } from 'redux'
+import axios from 'axios'
+import { userApi } from '../../shared/api'
 
-// /* action type */
+const { Kakao } = window
 
-// /* action creator */
+const LOG_OUT = 'LOG_OUT'
+const GET_USER = 'GET_USER'
+const SET_USER = 'SET_USER'
 
-// /* initial state */
+// const logIn = createAction(LOG_IN, (user) => ({ user }))
+const logOut = createAction(LOG_OUT, (user) => ({ user }))
+const getUser = createAction(GET_USER, (user) => ({ user }))
+const setUser = createAction(SET_USER, (user) => ({ user }))
 
-// /* middleware */
+const initialState = {
+  user: null,
+  is_login: false,
+}
 
-// /* reducer */
+//middleware
+const KakaoLogin = (KakaoCode) => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: 'get',
+      url: 'http://52.78.155.185/callback/kakao?code=' + `${KakaoCode}`,
+    })
+      .then((res) => {
+        localStorage.setItem('token', res.data)
+        console.log(res)
+        history.replace('/')
+        window.location.reload()
+      })
+      .catch((err) => console.log(err))
+  }
+}
 
-// export default handleActions({})
+const joinDB = (username, nickname, password, passwordCheck) => {
+  return function (dispatch, getState, { history }) {
+    userApi
+      .join(username, nickname, password, passwordCheck)
+      .then((res) => {
+        history.push('/login')
+        window.alert('회원가입을 축하드립니다! 로그인 후 이용하실 수 있어요')
+      })
+      .catch((err) => {
+        window.alert('이미 등록된 사용자 입니다! 아이디 또는 닉네임을 변경해주세요')
+      })
+  }
+}
 
-// /* export */
+const logInDB = (username, password) => {
+  return function (dispatch, getState, { history }) {
+    userApi
+      .login(username, password)
+      .then((res) => {
+        setCookie('token', res.data.token, 3)
+        localStorage.setItem('username', res.username)
+        localStorage.setItem('nickname', res.nickname)
+        dispatch(setUser({ username: res.username, nickname: res.nickname }))
+        history.replace('/')
+      })
+      .catch((err) => {
+        window.alert('잘못된 아이디나 비밀번호 입니다. 다시 확인해주세요!')
+      })
+  }
+}
 
-// const actionCreators = {}
+const logOutDB = () => {
+  return function (dispatch, getState, { history }) {
+    deleteCookie('token')
+    localStorage.removeItem('username')
+    localStorage.removeItem('nickname')
+    dispatch(logOut())
 
-// export { actionCreators }
+    history.replace('/')
+  }
+}
+
+const loginCheckDB = () => {
+  return function (dispatch, getState, { history }) {
+    const username = localStorage.getItem('username')
+    const tokenCheck = document.cookie
+    if (tokenCheck) {
+      dispatch(setUser({ userId: username }))
+    } else {
+      dispatch(logOut())
+    }
+  }
+}
+
+//reducer
+export default handleActions(
+  {
+    [SET_USER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user = action.payload.user
+        draft.is_login = true
+      }),
+    [LOG_OUT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user = null
+        draft.is_login = false
+      }),
+    [GET_USER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user = action.payload.user
+        draft.is_login = true
+      }),
+  },
+  initialState
+)
+
+const actionCreators = {
+  setUser,
+  logOut,
+  getUser,
+  joinDB,
+  logInDB,
+  logOutDB,
+  loginCheckDB,
+  KakaoLogin,
+}
+
+export { actionCreators }
