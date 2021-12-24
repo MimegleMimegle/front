@@ -28,42 +28,44 @@ const Join = () => {
 
   // 유저네임 유효성 검사
   const onChangeUsername = (e) => {
-    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+    const emailRegex = /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/
     const usernameCurrent = e.target.value
     setUsername(usernameCurrent)
 
     if (!emailRegex.test(usernameCurrent)) {
-      setUsernameMessage('이메일 형식을 확인해주세요')
+      setUsernameMessage('영문자 + 숫자 조합으로 3자리 이상 16자리 이하인지 확인해주세요')
       setIsUsername(false)
     } else {
-      setUsernameMessage('올바른 이메일 형식입니다')
+      setUsernameMessage('올바른 형식입니다')
       setIsUsername(true)
     }
   }
 
   // 닉네임 유효성 검사
   const onChangeNickname = (e) => {
-    setNickname(e.target.value)
-    if (e.target.value.length < 2 || e.target.value.length > 11) {
-      setNicknameMessage('2글자 이상 11글자 미만으로 입력해주세요')
+    const nicknameRegex = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/
+    const nicknameCurrent = e.target.value
+    setNickname(nicknameCurrent)
+    if (!nicknameRegex.test(nicknameCurrent)) {
+      setNicknameMessage('영문자 또는 한글 조합으로 2자리 이상 16자리 이하가 맞는지 확인해주세요')
       setIsNickname(false)
     } else {
-      setNicknameMessage('올바른 이름 형식입니다')
+      setNicknameMessage('올바른 형식입니다')
       setIsNickname(true)
     }
   }
 
   // 비밀번호 유효성 검사
   const onChangePassword = (e) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/
     const passwordCurrent = e.target.value
     setPassword(passwordCurrent)
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요')
+      setPasswordMessage('숫자+영문자 조합으로 6자리 이상 16자리 이하가 되도록 입력해주세요')
       setIsPassword(false)
     } else {
-      setPasswordMessage('안전한 비밀번호입니다')
+      setPasswordMessage('유효한 비밀번호입니다')
       setIsPassword(true)
     }
   }
