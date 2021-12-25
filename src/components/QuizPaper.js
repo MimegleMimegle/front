@@ -242,6 +242,11 @@ const QuizBox = styled.div`
     bottom: -20px;
     left: 33%;
     z-index: 2;
+    transition-duration: 0.5s;
+    &:active {
+      margin-left: 1%;
+      margin-top: 4px;
+    }
   }
 
   .box-2 {
@@ -255,6 +260,11 @@ const QuizBox = styled.div`
     height: 100%;
     padding: 0;
     border-radius: 20px;
+    transition-duration: 0.5s;
+    &:active {
+      margin-left: 1%;
+      margin-top: 4px;
+    }
 
     :disabled {
       background-color: #ededed;

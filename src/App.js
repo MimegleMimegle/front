@@ -13,8 +13,8 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <MobileFrame>
-          <ConnectedRouter history={history}>
+        <ConnectedRouter history={history}>
+          <MobileFrame>
             <Route path="/" exact component={Main} />
             <Route path="/join" exact component={Join} />
             <Route path="/login" exact component={Login} />
@@ -30,8 +30,8 @@ function App() {
             <Route path="/dict/write" exact component={DictWrite} />
             <Route path="/dict/edit/:dictId" exact component={DictEdit} />
             {/* <Route path="" exact component={NotFound} /> */}
-          </ConnectedRouter>
-        </MobileFrame>
+          </MobileFrame>
+        </ConnectedRouter>
       </ThemeProvider>
     </>
   )

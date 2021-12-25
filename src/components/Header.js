@@ -1,16 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import Sidebar from './Sidebar'
+
 import { FiMenu } from 'react-icons/fi'
 
 const Header = () => {
-  const [show, setShow] = React.useState(false)
+  const [showSidebar, setShowSidebar] = React.useState(false)
+  const toggleMenu = () => {
+    setShowSidebar(!showSidebar)
+  }
   return (
     <>
       <NavHeader>
         <ul className="nav-list">
           <li>
-            <button className="nav-item-menu">
+            <button className="nav-item-menu" onClick={toggleMenu}>
               <FiMenu />
             </button>
           </li>
@@ -24,6 +29,7 @@ const Header = () => {
           </li>
         </ul>
       </NavHeader>
+      <Sidebar showSidebar={showSidebar} />
     </>
   )
 }
@@ -42,7 +48,7 @@ const NavHeader = styled.nav`
   .nav-list {
     height: 100%;
     margin: 0;
-    padding-right: 50px;
+    padding-right: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
