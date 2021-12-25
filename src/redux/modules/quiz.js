@@ -17,11 +17,12 @@ const initialState = {
 }
 
 /* middleware */
-const getQuizListDB = () => {
+const getQuizListDB = (category) => {
   return async function (dispatch, getState, { history }) {
     await quizApi
-      .getQuizList()
+      .getQuizList(category)
       .then((res) => {
+        console.log(res.data)
         dispatch(getQuizList(res.data))
       })
       .catch((err) => {
