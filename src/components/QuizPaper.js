@@ -35,46 +35,29 @@ const QuizPaper = (props) => {
   return (
     <>
       <Wrapper>
-        <div style={{ width: '100%', padding: '10px 0' }}>
-          <h4 style={{ fontSize: '13px', textAlign: 'left' }}>
-            <span>{user_answer_list.length + 1}</span>/10
-          </h4>
-          <div style={{ height: '56px', fontSize: '18px', fontWeight: 'bold', textAlign: 'left' }}>{quiz_list ? quiz.question : null}</div>
-        </div>
-        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <button
-            className="answer-btn"
-            onClick={() => {
-              setAnswer(quiz_list ? quiz.choice[0] : null)
-            }}
-          >
-            {quiz_list ? quiz.choice[0] : null}
-          </button>
-          <button
-            className="answer-btn"
-            onClick={() => {
-              setAnswer(quiz_list ? quiz.choice[1] : null)
-            }}
-          >
-            {quiz_list ? quiz.choice[1] : null}
-          </button>
-          <button
-            className="answer-btn"
-            onClick={() => {
-              setAnswer(quiz_list ? quiz.choice[2] : null)
-            }}
-          >
-            {quiz_list ? quiz.choice[2] : null}
-          </button>
-          <button
-            className="answer-btn"
-            onClick={() => {
-              setAnswer(quiz_list ? quiz.choice[3] : null)
-            }}
-          >
-            {quiz_list ? quiz.choice[3] : null}
-          </button>
-        </div>
+        <QuizTitle>
+          <div className="question-number-box box-1">Q. 01</div>
+          <div className="question-number-box box-2"></div>
+          <h2 className="title">Q1. Quiz Title Section</h2>
+        </QuizTitle>
+        <QuizBox>
+          <div>
+            <button className="answer-btn">answer 1</button>
+          </div>
+          <div>
+            <button className="answer-btn">answer 2</button>
+          </div>
+          <div>
+            <button className="answer-btn">answer 3</button>
+          </div>
+          <div>
+            <button className="answer-btn btn-4">answer 4</button>
+          </div>
+          <div className="next-btn-box box-1">
+            <button className="next-btn">다음</button>
+          </div>
+          <div className="next-btn-box box-2"></div>
+        </QuizBox>
       </Wrapper>
     </>
   )
@@ -95,23 +78,92 @@ const Wrapper = styled.div`
   transition: all 0.1s ease-in-out;
   &::after {
   }
+`
 
-  .answer-btn {
+const QuizTitle = styled.div`
+  position: relative;
+  width: 100%;
+  height: 105px;
+  margin: 40px 0 0;
+  border: 1px solid #767676;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .question-number-box {
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    border: 1px solid #767676;
+    background-color: #fff;
+  }
+
+  .box-1 {
+    top: -20px;
+    left: 33%;
+    z-index: 2;
+    text-align: center;
+    line-height: 40px;
     font-size: 16px;
-    color: #ffffff;
-    background-color: rgb(115, 98, 255);
-    border-radius: 5px;
-    height: 50px;
-    padding: 4px;
-    margin: 4px;
-    width: 100%;
-    font-weight: 700;
-    transition: background-color 0.1s ease-in-out;
+  }
 
-    &:hover {
-      background-color: rgb(152, 141, 253);
-    }
+  .box-2 {
+    top: -16px;
+    left: 34%;
+    background-color: #faea59;
+  }
+
+  .title {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    padding: 12px 0 0;
   }
 `
 
+const QuizBox = styled.div`
+  position: relative;
+  width: 100%;
+  border: 1px solid #767676;
+  margin: 20px 0 0;
+
+  .answer-btn {
+    width: 100%;
+    padding: 15px 0 25px;
+    font-size: 16px;
+    border-bottom: 1px solid #767676;
+  }
+
+  .btn-4 {
+    border: 0;
+  }
+
+  .next-btn-box {
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    border: 1px solid #767676;
+    border-radius: 20px;
+    background-color: #fff;
+  }
+
+  .box-1 {
+    bottom: -20px;
+    left: 33%;
+    z-index: 2;
+  }
+
+  .box-2 {
+    bottom: -24px;
+    left: 34%;
+    background-color: #faea59;
+  }
+
+  .next-btn {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 50%;
+  }
+`
 export default QuizPaper
