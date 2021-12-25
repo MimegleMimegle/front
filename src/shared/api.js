@@ -33,15 +33,23 @@ export const userApi = {
 export const boardApi = {
   getPosts: () => instance.get('/api/board'),
   getOnePost: (postId) => instance.get(`/api/board/${postId}`),
-  writePost: () => instance.post('/api/board'),
-  editPost: (postId) => instance.put(`/api/board/${postId}`),
+  writePost: (title,content,subject,category) => instance.post('/api/board',{title:title, content:content, subject:subject, category:category}),
+  editPost: (postId,title,content,subject) => instance.put(`/api/board/${postId}`,{title:title, content:content, subject:subject,}),
   deletePost: (postId) => instance.delete(`/api/board/${postId}`),
+
+  // 추가
+  likePost: (postId) => instance.post(`/api/board/${postId}/like`),
+  getSubject: ()=> instance.get('/api/board/subject'),
 }
 
+
+
 export const dictApi = {
-  getDicts: () => instance.get('/api/dict?page=0&size=10'),
-  writeDict: () => instance.post('/api/dict'),
-  editDict: (dickId) => instance.put(`/api/dict/${dickId}`),
+  getDictMain: () => instance.get('/api/dict?page=0&size=10'),
+  getDictDetail: (dictId) => instance.get('/api/dict/{dictId}'),
+  addDict: (title, content) => instance.post('/api/dict', { title: title, cotent: content }),
+  editDict: (dictId) => instance.put(`/api/dict/${dictId}`),
+  deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
@@ -60,7 +68,9 @@ export const mainApi = {
 
 /* 추가 */
 export const commentApi = {
-  writeComment: (postId) => instance.post(`/api/board/${postId}/comment`),
+  getComments: (postId) => instance.get(`/api/board/${postId}/comment?page=0&size=10`),
+  /* writeComment -> addComment 로 수정 */
+  addComment: (postId) => instance.post(`/api/board/${postId}/comment`),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
 }
