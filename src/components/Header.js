@@ -39,7 +39,6 @@ const NavHeader = styled.nav`
   border-bottom: 1px solid #767676;
   /* padding: 10px 0 12px; */
   z-index: 1000;
-
   .nav-list {
     height: 100%;
     margin: 0;
@@ -48,12 +47,10 @@ const NavHeader = styled.nav`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
     .nav-item-menu {
       padding: 5px 10px 0;
       font-size: 20px;
     }
-
     .nav-item-logo {
       width: 100%;
       height: 40px;
@@ -66,5 +63,4 @@ const NavHeader = styled.nav`
     }
   }
 `
-
 export default Header
