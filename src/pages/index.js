@@ -1,6 +1,7 @@
 import Main from './Main'
 import NotFound from './NotFound'
 
+import QuizIntro from './QuizIntro'
 import Quiz from './Quiz'
 import QuizResult from './QuizResult'
 
@@ -17,4 +18,4 @@ import DictEdit from './dict/DictEdit'
 import DictList from './dict/DictList'
 import DictWrite from './dict/DictWrite'
 
-export { Main, NotFound, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, DictEdit, DictList, DictWrite }
+export { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, DictEdit, DictList, DictWrite }
