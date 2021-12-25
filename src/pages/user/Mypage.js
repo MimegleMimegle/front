@@ -1,15 +1,18 @@
 import React from 'react'
 import '../../styles/css/Mypage.css'
-import { MdFace } from 'react-icons/md'
+import EditIcon from '@mui/icons-material/Edit'
 
 const Mypage = (props) => {
   return (
     <>
       <div className="MypageLayout">
         <div className="UserProfileBox">
-          <div className="UserProfileTag">
-            <MdFace className="UserProfileImage" fontSize="50" />
+          <div className="UserProfileImage" />
+          <div className="userProfileNameTag">
             <text className="UserProfileName">Username</text>
+            <div className="VerticalLine" />
+            <text className="UserProfileAge">20대</text>
+            <EditIcon />
           </div>
           <div className="UserActivityInfo">
             <div className="UserMyPostTag">

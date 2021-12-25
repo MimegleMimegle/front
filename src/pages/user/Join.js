@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import '../../styles/css/Join.css'
 import { useDispatch } from 'react-redux'
+import { history } from '../../redux/ConfigureStore'
 import { actionCreators as userActions } from '../../redux/modules/user'
 
 import styled from 'styled-components'
@@ -95,34 +96,45 @@ const Join = () => {
   return (
     <>
       <div className="JoinPageLayout">
-        <text className="JoinText">회원가입</text>
-        <div className="JoinInputTag">
-          <input className="JoinInputBox" placeholder="아이디" type="text" value={username} onChange={onChangeUsername} />
-          {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
+        <div className="MultiInputBoxLayout_join">
+          <div className="LoginOrJoinButtons_join">
+            <div className="LoginButton_join" onClick={() => history.push('/login')}>
+              로그인
+            </div>
+            <div className="JoinButton_join">회원가입</div>
+          </div>
+          <div className="LoginOrJoinInputs_join">
+            <input className="JoinInputBox" placeholder="아이디" type="text" value={username} onChange={onChangeUsername} />
+            {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
+            <input className="JoinInputBox" maxLength="10" placeholder="닉네임" text="이름" type="text" value={nickname} onChange={onChangeNickname} />
+            {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>}
+            <input
+              className="JoinInputBox"
+              type="password"
+              placeholder="비밀번호"
+              onChange={onChangePassword}
+              passwordText="비밀번호 (숫자+영문자+특수문자 조합으로 8자리 이상)"
+              title="비밀번호"
+              value={password}
+            />
+            {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
+            <input className="JoinInputBox" type="password" placeholder="비밀번호 확인" onChange={onChangePasswordCheck} passwordText=" " title="비밀번호 확인" value={passwordCheck} />
+            {setPasswordCheck.length > 0 && <Span className={`message ${isPasswordCheck ? 'success' : 'error'}`}>{passwordCheckMessage}</Span>}
+            <button
+              className="JoinSubmitButton"
+              type="submit"
+              disabled={!(isNickname && isUsername && isPassword && isPasswordCheck)}
+              onClick={join}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  console.log('Enter')
+                }
+              }}
+            >
+              회원가입하기
+            </button>
+          </div>
         </div>
-        <div className="JoinInputTag">
-          <input className="JoinInputBox" maxLength="10" placeholder="닉네임" text="이름" type="text" value={nickname} onChange={onChangeNickname} />
-          {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>}
-        </div>
-        <div className="JoinInputTag">
-          <input
-            className="JoinInputBox"
-            type="password"
-            placeholder="비밀번호"
-            onChange={onChangePassword}
-            passwordText="비밀번호 (숫자+영문자+특수문자 조합으로 8자리 이상)"
-            title="비밀번호"
-            value={password}
-          />
-          {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
-        </div>
-        <div className="JoinInputTag">
-          <input className="JoinInputBox" type="password" placeholder="비밀번호 확인" onChange={onChangePasswordCheck} passwordText=" " title="비밀번호 확인" value={passwordCheck} />
-          {setPasswordCheck.length > 0 && <Span className={`message ${isPasswordCheck ? 'success' : 'error'}`}>{passwordCheckMessage}</Span>}
-        </div>
-        <button className="JoinButton" type="submit" disabled={!(isNickname && isUsername && isPassword && isPasswordCheck)} onClick={join}>
-          회원가입하기
-        </button>
       </div>
     </>
   )
