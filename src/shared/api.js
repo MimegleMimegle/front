@@ -68,7 +68,9 @@ export const mainApi = {
 
 /* 추가 */
 export const commentApi = {
-  writeComment: (postId) => instance.post(`/api/board/${postId}/comment`),
+  getComments: (postId) => instance.get(`/api/board/${postId}/comment?page=0&size=10`),
+  /* writeComment -> addComment 로 수정 */
+  addComment: (postId) => instance.post(`/api/board/${postId}/comment`),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
 }

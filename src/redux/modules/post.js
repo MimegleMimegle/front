@@ -11,7 +11,6 @@ const EDIT_POST="EDIT_POST";
 const DELETE_POST="DELETE_POST";
 const LOADING = "LOADING";
 
-
 // /* action creator */
 const getPosts = createAction(GET_POST, (postlist)=>({postlist}));
 const addPost = createAction(ADD_POST,(post)=>({post}));
@@ -118,7 +117,7 @@ export default handleActions(
         draft.list.unshift(action.payload.post)
       }),
 
-      [LOADING]: (state, action) =>
+    [LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.is_laoding = action.payload.is_loading
       }),
