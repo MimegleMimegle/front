@@ -97,7 +97,6 @@ const QuizResult = (props) => {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-
   .login-page-btn {
     font-size: 16px;
     padding: 10px;
@@ -107,12 +106,10 @@ const Wrapper = styled.div`
     color: #fff;
     font-weight: 700;
     transition: background-color 0.1s ease-in-out;
-
     &:hover {
       background-color: rgb(152, 141, 253);
     }
   }
-
   .share-btn {
     border: 1px solid rgb(115, 98, 255);
     border-radius: 20px;
@@ -124,17 +121,13 @@ const Wrapper = styled.div`
     font-weight: 700;
     margin: 0 0 6px;
   }
-
   .link-copied {
     background-color: #000000;
     background-color: rgba(0, 0, 0, 0.8);
     box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
-
     border-radius: 5px;
-
     color: #ffffff;
     font-size: 12px;
-
     margin-bottom: 10px;
     top: 50%;
     left: 50%;
@@ -145,7 +138,6 @@ const Wrapper = styled.div`
     min-width: 50px;
     max-width: 300px;
     word-wrap: break-word;
-
     z-index: 9999;
   }
 `

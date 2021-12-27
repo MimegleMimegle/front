@@ -1,9 +1,15 @@
 import React from 'react'
+import '../../styles/css/DictList.css'
+import OneDictionaryCard from '../../components/OneDictionaryCard'
 
 const DictList = (props) => {
   return (
     <>
-      <p>사전 목록</p>
+      <div className="DictLayout">
+        <div className="DictList">
+          <OneDictionaryCard />
+        </div>
+      </div>
     </>
   )
 }
