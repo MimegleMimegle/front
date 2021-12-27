@@ -245,7 +245,7 @@ const QuizBox = styled.div`
     transition-duration: 0.5s;
     &:active {
       margin-left: 1%;
-      margin-top: 4px;
+      margin-top: 10px;
     }
   }
 
@@ -260,11 +260,11 @@ const QuizBox = styled.div`
     height: 100%;
     padding: 0;
     border-radius: 20px;
-    transition-duration: 0.5s;
+    /* transition-duration: 0.5s;
     &:active {
       margin-left: 1%;
       margin-top: 4px;
-    }
+    } */
 
     :disabled {
       background-color: #ededed;
