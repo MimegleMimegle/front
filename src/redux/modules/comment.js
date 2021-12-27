@@ -86,7 +86,7 @@ const delCommentDB = (postId, commentId) => {
     }
 
     await commentApi
-      .deleteComment(postId, commentId)
+      .deleteComment(commentId)
       .then((res) => {
         console.log(res)
         dispatch(delComment(postId, commentId))
