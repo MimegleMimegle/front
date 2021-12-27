@@ -9,6 +9,8 @@ import useScript from '../util/useScript'
 import { KakaoShareButton } from '../shared/kakaoShare'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
 
+import OneQuiz from '../components/OneQuiz'
+
 const QuizResult = (props) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
   console.log(window.Kakao)
@@ -51,24 +53,14 @@ const QuizResult = (props) => {
     <>
       <Wrapper>
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ width: '100%', padding: '30px 0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h4>즉시 인터넷을 끊어야 할 당신!</h4>
-            <h1 style={{ padding: '10px 0' }}>{score}점</h1>
-            <p>
-              {answerCnt}/{quiz_list ? quiz_list.length : null}
-            </p>
-          </div>
-          <div>
-            <button
-              className="login-page-btn"
-              onClick={() => {
-                history.push('/login')
-              }}
-            >
-              로그인하고 내 순위 알아보기
-            </button>
-          </div>
-          <div style={{ width: '80%', height: '1px', backgroundColor: '#333' }}></div>
+          <QuizResultBox>
+            <div className="quiz-year-box box-1">2020</div>
+            <div className="quiz-year-box box-2"></div>
+            <div style={{ padding: '50px 0 30px' }}>
+              <h2>점수</h2>
+              <h2 className="result">당신은 심각할 정도의 밈 중독입니다.</h2>
+            </div>
+          </QuizResultBox>
           <div style={{ width: '80%', padding: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div>공유하기</div>
             <div style={{ width: '100%', padding: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -89,15 +81,21 @@ const QuizResult = (props) => {
             </div>
           </div>
         </div>
+        {/* quiz_list.map() */}
+        <OneQuiz />
       </Wrapper>
     </>
   )
 }
 
 const Wrapper = styled.div`
+  margin-left: 0px;
+  padding: 0 20px;
   width: 100%;
   height: 100%;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .login-page-btn {
     font-size: 16px;
     padding: 10px;
@@ -107,12 +105,10 @@ const Wrapper = styled.div`
     color: #fff;
     font-weight: 700;
     transition: background-color 0.1s ease-in-out;
-
     &:hover {
       background-color: rgb(152, 141, 253);
     }
   }
-
   .share-btn {
     border: 1px solid rgb(115, 98, 255);
     border-radius: 20px;
@@ -124,17 +120,13 @@ const Wrapper = styled.div`
     font-weight: 700;
     margin: 0 0 6px;
   }
-
   .link-copied {
     background-color: #000000;
     background-color: rgba(0, 0, 0, 0.8);
     box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
-
     border-radius: 5px;
-
     color: #ffffff;
     font-size: 12px;
-
     margin-bottom: 10px;
     top: 50%;
     left: 50%;
@@ -145,8 +137,48 @@ const Wrapper = styled.div`
     min-width: 50px;
     max-width: 300px;
     word-wrap: break-word;
-
     z-index: 9999;
+  }
+`
+
+const QuizResultBox = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 40px 0 0;
+  border: 1px solid #767676;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .quiz-year-box {
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    border: 1px solid #767676;
+    background-color: #fff;
+  }
+
+  .box-1 {
+    top: -20px;
+    left: 33%;
+    z-index: 2;
+    text-align: center;
+    line-height: 40px;
+    font-size: 16px;
+  }
+
+  .box-2 {
+    top: -16px;
+    left: 34%;
+    background-color: #faea59;
+  }
+
+  .result {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    padding: 12px 0 0;
   }
 `
 
