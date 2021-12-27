@@ -1,20 +1,35 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { GiHamburgerMenu } from 'react-icons/gi'
+import Sidebar from './Sidebar'
+
+import { FiMenu } from 'react-icons/fi'
 
 const Header = () => {
-  const [show, setShow] = React.useState(false)
+  const [showSidebar, setShowSidebar] = React.useState(false)
+  const toggleMenu = () => {
+    setShowSidebar(!showSidebar)
+  }
   return (
     <>
       <NavHeader>
         <ul className="nav-list">
-          <h2>Logo</h2>
-          <li className="nav-item">
-            <GiHamburgerMenu />
+          <li>
+            <button className="nav-item-menu" onClick={toggleMenu}>
+              <FiMenu />
+            </button>
+          </li>
+          <li style={{ width: '100px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <a className="nav-item-logo" href>
+              Logo
+            </a>
+          </li>
+          <li>
+            <div></div>
           </li>
         </ul>
       </NavHeader>
+      <Sidebar showSidebar={showSidebar} />
     </>
   )
 }
@@ -25,25 +40,33 @@ const NavHeader = styled.nav`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 50px;
-  background-color: #d1d1d1;
-  padding: 10px 0 12px;
+  height: 74px;
+  background-color: #fff;
+  border-bottom: 1px solid #767676;
+  /* padding: 10px 0 12px; */
   z-index: 1000;
-
   .nav-list {
     height: 100%;
     margin: 0;
-    padding: 0 10px;
+    padding-right: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
-    .nav-item {
-      padding-top: 5px;
-      font-size: 30px;
+    .nav-item-menu {
+      padding: 5px 10px 0;
+      font-size: 20px;
+    }
+    .nav-item-logo {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      border: 1px solid #767676;
+      border-radius: 20px;
+      background-color: #d1d1d1;
+      text-align: center;
+      font-size: 20px;
     }
   }
 `
-
 export default Header

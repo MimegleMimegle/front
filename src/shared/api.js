@@ -31,23 +31,21 @@ export const userApi = {
 }
 
 export const boardApi = {
-  getPosts: () => instance.get('/api/board'),
+  getPosts: (categoryName) => instance.get(`/api/board/${categoryName}`),
   getOnePost: (postId) => instance.get(`/api/board/${postId}`),
-  writePost: (title,content,subject,category) => instance.post('/api/board',{title:title, content:content, subject:subject, category:category}),
-  editPost: (postId,title,content,subject) => instance.put(`/api/board/${postId}`,{title:title, content:content, subject:subject,}),
+  addPost: (title, content, subject, category) => instance.post('/api/board', { title: title, content: content, subject: subject, category: category }),
+  editPost: (postId, title, content, subject) => instance.put(`/api/board/${postId}`, { title: title, content: content, subject: subject }),
   deletePost: (postId) => instance.delete(`/api/board/${postId}`),
-
+  selectPost: () => instance.get('/api/board?q=query'),
   // 추가
   likePost: (postId) => instance.post(`/api/board/${postId}/like`),
-  getSubject: ()=> instance.get('/api/board/subject'),
+  getSubject: () => instance.get('/api/board/subject'),
 }
-
-
 
 export const dictApi = {
   getDictMain: () => instance.get('/api/dict?page=0&size=10'),
   getDictDetail: (dictId) => instance.get('/api/dict/{dictId}'),
-  addDict: (title, content) => instance.post('/api/dict', { title: title, cotent: content }),
+  addDict: (title, content, category) => instance.post('/api/dict', { title: title, cotent: content, category: category }),
   editDict: (dictId) => instance.put(`/api/dict/${dictId}`),
   deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
@@ -59,7 +57,7 @@ export const dictApi = {
 
 export const quizApi = {
   /* 추가 */
-  getQuizList: () => instance.get('/api/quiz?count=10'),
+  getQuizList: (category) => instance.get(`/api/quiz/${category}?count=10`),
 }
 
 export const mainApi = {

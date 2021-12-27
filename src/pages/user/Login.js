@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import history from '../../redux/ConfigureStore'
+import { history } from '../../redux/ConfigureStore'
 import '../../styles/css/Login.css'
 import styled from 'styled-components'
 import { actionCreators as userActions } from '../../redux/modules/user'
@@ -58,41 +58,40 @@ const Login = (props) => {
   return (
     <>
       <div className="LoginLayout">
-        <text className="LoginText">로그인</text>
-        <input className="IdInputBox" placeholder="아이디를 입력해주세요" type="email" typeName="email" onChange={onChangeUsername} value={username} />
-        {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
-        <input className="PwdInputBox" placeholder="비밀번호를 입력해주세요" type="password" typeName="password" onChange={onChangePassword} value={password} />
-        {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
-        <button
-          className="LoginButton"
-          type="submit"
-          disabled={!(isUsername && isPassword)}
-          onClick={login}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              console.log('Enter')
-            }
-          }}
-        >
-          로그인 하기
-        </button>
-        <text
-          type="button"
-          className="JoinNewUser"
-          onClick={() => {
-            history.push('/join')
-          }}
-        >
-          아직 회원이 아니신가요?
-        </text>
-        <text className="FindUserPwd">비밀번호를 잊어버리셨나요?</text>
-        <div className="SocialLoginHR">SNS 계정으로 로그인하기</div>
-        <div className="SocialLoginBtns">
-          <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=17fb08cb376f564b3375667a799fda1f&redirect_uri=http://localhost:3000/oauth">
-            <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
-          </a>
-          <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
-          <img className="NaverLoginBtn" size="5" src={naver}></img>
+        <div className="MultiInputBoxLayout_login">
+          <div className="LoginOrJoinButtons_login">
+            <div className="LoginButton_login">로그인</div>
+            <div className="JoinButton_login" onClick={() => history.push('/join')}>
+              회원가입
+            </div>
+          </div>
+          <div className="LoginOrJoinInputs_login">
+            <input className="IdInputBox" placeholder="아이디를 입력해주세요" type="email" typeName="email" onChange={onChangeUsername} value={username} />
+            {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
+            <input className="PwdInputBox" placeholder="비밀번호를 입력해주세요" type="password" typeName="password" onChange={onChangePassword} value={password} />
+            {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
+            <button
+              className="LoginSubmitButton"
+              type="submit"
+              disabled={!(isUsername && isPassword)}
+              onClick={login}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  console.log('Enter')
+                }
+              }}
+            >
+              로그인 하기
+            </button>
+          </div>
+          <div className="SocialLoginHR">SNS 계정으로 로그인하기</div>
+          <div className="SocialLoginBtns">
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/&response_type=code">
+              <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
+            </a>
+            <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
+            <img className="NaverLoginBtn" size="5" src={naver}></img>
+          </div>
         </div>
       </div>
     </>

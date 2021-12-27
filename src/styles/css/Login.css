@@ -1,6 +1,5 @@
 .LoginLayout {
-  display: block;
-  border: 3px solid green;
+  /* border: 3px solid green; */
   width: 100%;
   max-width: 400px;
   height: 485px;
@@ -13,7 +12,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  margin: 0 0 0 0;
+  margin: 15px 0 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -23,54 +22,82 @@
   display: none;
 }
 
-.LoginText {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 10px;
+.MultiInputBoxLayout_login {
+  border: 1px solid black;
+}
+
+.LoginOrJoinButtons_login {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: 1px solid black;
+  width: 100%;
+}
+
+.LoginButton_login {
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  border-right: 0.5px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgrey;
+  padding: 10px;
+}
+
+.JoinButton_login {
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  /* border-left: 0.5px solid black; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: none;
+  padding: 10px;
+}
+
+.LoginOrJoinInputs_login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+  border-bottom: 1px solid black;
 }
 
 .IdInputBox {
   border: 0.5px solid black;
-  border-radius: 30px;
   width: 280px;
   height: 40px;
-  margin: 10px;
+  margin: 15px 0 10px 0;
   padding-left: 20px;
 }
 
 .PwdInputBox {
   border: 0.5px solid black;
-  border-radius: 30px;
   width: 280px;
   height: 40px;
-  margin: 15px 0 15px 0;
+  margin: 20px 0 15px 0;
   padding-left: 20px;
 }
 
-.LoginButton {
-  margin: 10px 0 15px 0;
+.LoginSubmitButton {
+  margin: 35px 0 10px 0;
   border: 1px solid rgb(252, 145, 133);
-  border-radius: 5px;
   background-color: rgb(252, 145, 133);
   color: white;
   font-size: 15px;
   font-weight: bold;
   padding: 5px 10px 5px 10px;
 }
-.LoginButton:hover {
+.LoginSubmitButton:hover {
   cursor: pointer;
-}
-
-.JoinNewUser {
-  font-size: 15px;
-  font-weight: 500;
-  margin: 10px 0 5px 0;
-}
-
-.FindUserPwd {
-  font-size: 15px;
-  font-weight: 500;
-  margin: 10px 0 15px 0;
 }
 
 .SocialLoginHR {
@@ -79,7 +106,7 @@
   align-items: center;
   color: rgba(0, 0, 0, 0.4);
   font-size: 12px;
-  margin: 20px 0 40px 0;
+  margin: 40px 0 30px 0;
 }
 .SocialLoginHR::before,
 .SocialLoginHR::after {
