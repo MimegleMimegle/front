@@ -10,7 +10,6 @@ const DictWrite = (props) => {
             <div className="DictCardPreviewTitle">단어 : 알잘딱깔센</div>
             <div className="DictCardPreviewSummary">요약 : 알아서 잘 딱 깔끔하고 센스있게</div>
           </div>
-          <div className="DictionaryCardPreview WordCard2"></div>
         </div>
         <div className="DictCardInputSection">
           <p>단어</p> <input className="DictCardInputTitle" />
