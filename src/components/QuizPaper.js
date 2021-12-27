@@ -244,8 +244,8 @@ const QuizBox = styled.div`
     z-index: 2;
     transition-duration: 0.5s;
     &:active {
-      margin-left: 1%;
-      margin-top: 10px;
+      left: 34%;
+      bottom: -24px;
     }
   }
 
