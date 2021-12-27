@@ -5,23 +5,28 @@ import { AiOutlineEye,AiOutlineHeart } from "react-icons/ai";
 const PostCard = (props) => {
     return (
       <>  
-        <PostBody>
-        <div className="listtitle">
-          <text>Title</text> <br/>
-          <text>작성자</text> <br/>
+        <Container>
+          <text>닉네임+아이디</text>
+          <PostBody>
+          <img className= "uploadimg"src="https://i.pinimg.com/564x/38/9a/01/389a01e78d98f7bdb4304b7980b69a22.jpg" alt=""/>
+          <div className="listtitle">
+            <text>Title</text> <br/>
+            <text>Contents</text>
+          </div>
+          <text>#tag1 #tag2 #teg3</text>
+          </PostBody>
           <AiOutlineEye/> 조회수 <AiOutlineHeart/> 좋아요수
 
-        </div>
- 
-          {/* 사진이 포함된 게시글이면 옆에 작게 이미지를 띄워준다?? */}
-          <img className= "uploadimg"src="https://i.pinimg.com/564x/38/9a/01/389a01e78d98f7bdb4304b7980b69a22.jpg" alt=""/>
-        </PostBody>
+        </Container>
       </>
     )
-  }
+}
   
-  export default PostCard;
+export default PostCard;
   
+const Container = styled.div`
+  background: red;
+`
 
 
 const PostBody = styled.div`
@@ -32,7 +37,6 @@ const PostBody = styled.div`
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  background-color:red;
   
 
   .listtitle{
