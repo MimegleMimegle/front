@@ -32,14 +32,15 @@ export const userApi = {
 
 export const boardApi = {
   getPosts: (categoryName) => instance.get(`/api/board/${categoryName}`),
-  getOnePost: (postId) => instance.get(`/api/board/${postId}`),
-  addPost: (title, content, subject, category) => instance.post('/api/board', { title: title, content: content, subject: subject, category: category }),
-  editPost: (postId, title, content, subject) => instance.put(`/api/board/${postId}`, { title: title, content: content, subject: subject }),
-  deletePost: (postId) => instance.delete(`/api/board/${postId}`),
+  getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
+  writePost: (title, content, subject, category, categoryName) => instance.post(`/api/board/${categoryName}`, { title: title, content: content, subject: subject, category: category }),
+  editPost: (boardId, title, content, subject) => instance.put(`/api/board/${boardId}`, { title: title, content: content, subject: subject }),
+  deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
   selectPost: () => instance.get('/api/board?q=query'),
   // 추가
-  likePost: (postId) => instance.post(`/api/board/${postId}/like`),
+  likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
   getSubject: () => instance.get('/api/board/subject'),
+  recommendHashTag: () => instance.get('/api/board/hashTag'),
 }
 
 export const dictApi = {
@@ -68,7 +69,7 @@ export const mainApi = {
 export const commentApi = {
   getComments: (postId) => instance.get(`/api/board/${postId}/comment?page=0&size=10`),
   /* writeComment -> addComment 로 수정 */
-  addComment: (postId) => instance.post(`/api/board/${postId}/comment`),
-  editComment: (commentId) => instance.put(`/api/board/${commentId}`),
+  addComment: (postId, comment) => instance.post(`/api/board/${postId}/comment`, { content: comment }),
+  editComment: (commentId, content) => instance.put(`/api/board/comment/${commentId}`, { content: content }),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
 }
