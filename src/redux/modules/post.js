@@ -73,6 +73,30 @@ const initalPost = {
 //     }
 
 // }
+    list: [],
+    is_laoding: false,
+
+    postlist: {
+      boardId: "boardId",
+      thumbNail: "thumNail",
+      title: "title",
+      username: "username",
+      writer: "writer",
+      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+      views: 1,
+      likeCnt: 1,
+      hashTags: [],
+    },
+
+    post: {
+      boardId: 0,
+      title: "title",
+      content: "content",
+      category: "category",
+      thumbNail: "imgSrc",
+      createdAt: "2022-01-01 11:11:11",
+    }
+}
 
 // /* middleware */
 
