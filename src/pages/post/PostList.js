@@ -1,21 +1,57 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory, useParams, } from 'react-router'
 import styled from 'styled-components'
 import PostlistSlider from '../../components/PostlistSlide'
 import PostCard from '../../components/PostCard'
 import { MdPostAdd } from "react-icons/md";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import post, { actionCreators as postActions } from '../../redux/modules/post';
+
 
 const PostList = (props) => {
-  const is_login = useSelector((state)=> state.user.is_login)
-
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const token = localStorage.getItem("token") ? true : false;
+
+  const [posts, setPosts] = useState([])
+
+
+  useEffect(() => {
+    dispatch(postActions.getPostsDB());
+  }, []);
+
+  // 해당 게시물로 이동
+  const postDetail = (postId) => {
+    console.log("게시물 페이지 이동");
+    history.push("/post/" + postId);
+  };
+
+  // if (!token) {
+  //   window.alert("로그인 후 이용 가능합니다.");
+  //   history.replace("/");
+  // }
+  const loginCheck = () => {
+    if (!token) {
+      window.alert('로그인 후 작성이 가능합니다.')
+      return ;
+    } else { 
+      history.push("/post/write");
+      }
+  }
+
   return (
     <>
       <Container>
-        <button>+ 밈 글 등록하기</button>
-      <PostCard  />
-      <IconBorder onClick={()=> {history.push("/post/write");}}><MdPostAdd size="30px"/></IconBorder>
+        <button onClick={loginCheck}>+ 밈 글 등록하기</button>
+
+        {posts.map((post, key) => {
+          
+              return (
+                <PostCard key={key} posts={post} />
+              )
+            })}
+       <PostCard  />
       </Container>
     </>
   )
@@ -24,20 +60,3 @@ const PostList = (props) => {
 export default PostList
 
 const Container = styled.div``
-
-
-const IconBorder = styled.div`
-  width: 50px;
-  height: 50px;
-  border: 1px solid black;
-  padding: 10px;
-  border-radius: 40px;
-  position: absolute;
-  right: 10px;
-  bottom: 100px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: lightgray;
-  }
-`

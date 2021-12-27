@@ -27,7 +27,8 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 // /* initial state */
 const initialState = {
-    list: [],
+    postlist: [],
+    post: [],
     is_laoding: false,
 
 }
@@ -81,7 +82,7 @@ const addPostDB = (title,content,thumbNail) => {
     formData.append('content',content)
     formData.append('thumbNail',thumbNail)
 
-    const ADDDB = {
+    const DB = {
       method: 'post',
       url: `http://52.78.155.185/api/board`,
       data: formData,
@@ -89,22 +90,33 @@ const addPostDB = (title,content,thumbNail) => {
         authorization: `Bearer ${token}`
       },
     }
-    axios(ADDDB)
-    .then (()=> {
-      
+    axios(DB)
+    .then(() => {
+      window.alert('', '성공적으로 등록되었습니다', 'success')
+      history.push('/api/board')
     })
 
-    boardApi
-    .addPost(title,content)
-    .then((res)=>{
-      // console.log(res.data)
-      dispatch(addPost(res))
-      console.log(addPost(res))
-      window.location.href="/"
+    .catch((err)=> {
+      if (err.response.status === 403) {
+        window.alert('로그인 세션 만료')
+        history.replace('/')
+
+      }
     })
-    .catch((err) => {
-      console.log('post작성 실패!',err)
-    })
+
+    // boardApi
+    // .addPost(title,content)
+    // .then((res)=>{
+    //   // console.log(res.data)
+    //   dispatch(addPost(res))
+    //   console.log(addPost(res))
+    //   console.log(res.data);
+    //   console.log(res.status);
+    //   window.location.href="/"
+    // })
+    // .catch((err) => {
+    //   console.log('post작성 실패!',err)
+    // })
     
   }
 }
@@ -127,7 +139,8 @@ const delPostDB = (postId) => {
     await boardApi
     .deletePost(postId)
     .then((res) => {
-      console.log("게시글 삭제 성공");
+      console.log("게시글 삭제 성공",res.data);
+      console.log(res.status)
       dispatch(deletePost(postId))
 
     })
@@ -157,7 +170,8 @@ export default handleActions(
 
       [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.unshift(action.payload.post)
+        draft.post=action.payload.post;
+
       }),
 
     [LOADING]: (state, action) =>
