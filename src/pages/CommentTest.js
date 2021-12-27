@@ -21,6 +21,7 @@ const CommentTest = (props) => {
 
   const addComment = () => {
     dispatch(commentActions.addCommentDB(postId, comment))
+    setComment('')
   }
 
   React.useEffect(() => {

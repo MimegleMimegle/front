@@ -1,5 +1,4 @@
 import React from 'react'
-import { Children } from 'react'
 import styled from 'styled-components'
 
 const ModalWrapper = ({ visible, children, onClose, maskClosable }) => {
@@ -20,7 +19,7 @@ const ModalWrapper = ({ visible, children, onClose, maskClosable }) => {
 }
 
 const ModalOverlay = styled.div`
-  /* display: ${(props) => (props.visible ? 'block' : 'none')}; */
+  display: ${(props) => (props.visible ? 'block' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
@@ -31,7 +30,7 @@ const ModalOverlay = styled.div`
 `
 
 const Wrapper = styled.div`
-  /* display: ${(props) => (props.visible ? 'block' : 'none')}; */
+  display: ${(props) => (props.visible ? 'block' : 'none')};
   position: fixed;
   top: 0;
   left: 0;

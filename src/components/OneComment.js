@@ -3,24 +3,44 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { actionCreators as commentActions } from '../redux/modules/comment'
+import { history } from '../redux/ConfigureStore'
 
+import ModalContainer from './ModalContainer'
 import ModalWrapper from './ModalWrapper'
 
 const OneComment = (props) => {
   const dispatch = useDispatch()
 
-  const [modalVisible, setModalVisible] = React.useState(false)
+  const [modalEditVisible, setModalEditVisible] = React.useState(false)
+  const [modalDeleteVisible, setModalDeleteVisible] = React.useState(false)
 
-  const handleOpenModal = (e) => {
-    setModalVisible(true)
+  const handleOpenModalEdit = (e) => {
+    setModalEditVisible(true)
   }
-  const handleCloseModal = (e) => {
-    setModalVisible(false)
+  const handleCloseModalEdit = (e) => {
+    setModalEditVisible(false)
   }
+
+  const handleOpenModalDelete = (e) => {
+    setModalDeleteVisible(true)
+  }
+  const handleCloseModalDelete = (e) => {
+    setModalDeleteVisible(false)
+  }
+
+  window.addEventListener('keyup', (e) => {
+    if (modalDeleteVisible && e.key === 'Escape') {
+      setModalDeleteVisible(false)
+    }
+    if (modalEditVisible && e.key === 'Escape') {
+      setModalEditVisible(false)
+    }
+  })
 
   /* 삭제는 되는데 리프레쉬해야만 반영됨 -> 삭제할 건지 확인하는 모달 생성 후 확인 버튼 누르면 dispatch & history.push로 댓글 페이지로 돌아가게 하기? */
   const delComment = () => {
     dispatch(commentActions.delCommentDB(props.postId, props.commentId))
+    setModalDeleteVisible(false)
   }
 
   return (
@@ -29,36 +49,30 @@ const OneComment = (props) => {
         <p>{props.commentWriter}</p>
         <p>{props.commentContent}</p>
         <p>{props.createdAt}</p>
-        <button>댓글 수정</button>
-        <button onClick={handleOpenModal}>댓글 삭제</button>
+        <button onClick={handleOpenModalEdit}>댓글 수정</button>
+        <button onClick={handleOpenModalDelete}>댓글 삭제</button>
       </div>
-      {modalVisible && (
-        <ModalWrapper visible={true} maskClosable={false} onClose={handleCloseModal}>
-          <ModalDelComment>
-            <div>
+      {modalEditVisible && (
+        <ModalWrapper>
+          <ModalContainer></ModalContainer>
+        </ModalWrapper>
+      )}
+      {modalDeleteVisible && (
+        <ModalWrapper visible={true} maskClosable={false}>
+          <ModalContainer>
+            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <h4>댓글 삭제</h4>
-              <p>댓글을 삭제하시겠습니까?</p>
-              <div>
-                <button>취소</button>
-                <button>삭제</button>
+              <p style={{ padding: '10px 0 20px' }}>댓글을 삭제하시겠습니까?</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+                <button onClick={handleCloseModalDelete}>취소</button>
+                <button onClick={delComment}>삭제</button>
               </div>
             </div>
-          </ModalDelComment>
+          </ModalContainer>
         </ModalWrapper>
       )}
     </>
   )
 }
-
-const ModalDelComment = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: 120px;
-  background-color: #fff;
-  padding: 20px;
-`
 
 export default OneComment
