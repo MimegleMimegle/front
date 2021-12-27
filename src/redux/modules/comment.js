@@ -91,6 +91,9 @@ const delCommentDB = (postId, commentId) => {
         console.log(res)
         dispatch(delComment(postId, commentId))
       })
+      .then(() => {
+        history.replace('/comment')
+      })
       .catch((err) => {
         console.log('댓글을 삭제하는 데 문제가 발생했습니다.', err.response)
       })
