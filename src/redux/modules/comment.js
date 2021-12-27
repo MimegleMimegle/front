@@ -92,7 +92,8 @@ const delCommentDB = (postId, commentId) => {
         dispatch(delComment(postId, commentId))
       })
       .then(() => {
-        history.replace('/comment')
+        // 추후 경로 수정
+        history.push('/comment')
       })
       .catch((err) => {
         console.log('댓글을 삭제하는 데 문제가 발생했습니다.', err.response)
@@ -119,7 +120,9 @@ export default handleActions(
       }),
     [DEL_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.comment_list[action.payload.postId].filter((c) => c.commentId !== action.payload.commentId)
+        let idx = draft.comment_list[action.payload.postId].findIndex((c) => c.commentId === action.payload.commentId)
+        draft.comment_list[action.payload.postId].splice(idx, 1)
+        // draft.comment_list[action.payload.postId].filter((c) => c.commentId !== action.payload.commentId)
       }),
   },
   initialState
