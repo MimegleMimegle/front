@@ -45,7 +45,7 @@ export const boardApi = {
 export const dictApi = {
   getDictMain: () => instance.get('/api/dict?page=0&size=10'),
   getDictDetail: (dictId) => instance.get('/api/dict/{dictId}'),
-  addDict: (title, content) => instance.post('/api/dict', { title: title, cotent: content }),
+  addDict: (title, content, category) => instance.post('/api/dict', { title: title, cotent: content, category: category }),
   editDict: (dictId) => instance.put(`/api/dict/${dictId}`),
   deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),

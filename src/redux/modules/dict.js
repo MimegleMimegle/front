@@ -18,9 +18,9 @@ const ROLLBACK_ONE_DICT = 'ROLLBACK_ONE_DICT'
 const LOADING = 'LOADING'
 
 /* action creator */
-const getDictMain = createAction(GET_DICT_MAIN, (dict_list) => dict_list)
+const getDictMain = createAction(GET_DICT_MAIN, (dict_list, paging) => ({ dict_list, paging }))
 const getDictDetail = createAction(GET_DICT_DETAIL, (dict_list) => dict_list)
-const addDict = createAction(ADD_DICT, (dict_list) => ({ dict_list }))
+const addDict = createAction(ADD_DICT, (dict) => ({ dict }))
 const editDict = createAction(EDIT_DICT, (dict_id, dict) => ({ dict_id }))
 const deleteDict = createAction(DELETE_DICT, (dict_id, dict) => ({ dict_id }))
 const dictCreatedAt = createAction(DICT_CREATED_AT)
@@ -28,22 +28,32 @@ const dictIsLike = createAction(DICT_IS_LIKE, (dict_id) => ({ dict_id }))
 const getDictHistory = createAction(GET_DICT_HISTORY)
 const getDictHistoryDetail = createAction(GET_DICT_HISTORY_DETAIL)
 const rollbackOneDict = createAction(ROLLBACK_ONE_DICT)
-const loading = createAction(LOADING, (loading) => loading)
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
 /* initial state */
 const initialState = {
+  is_loading: false,
   list: [],
-  loading: false,
+  paging: { page: null, size: 10 },
 }
 
 /* middleware */
-const getDictMainDB = () => {
+const getDictMainDB = (page = null, size = null) => {
   return function (dispatch, getState, { history }) {
     dictApi
       .getDictMain()
       .then((res) => {
-        const dict_list = [...res.data]
-        dispatch(getDictMain(dict_list))
+        let paging = {
+          page: page + result.length + 1,
+          size: size + 10,
+        }
+        let result = res.data.slice(page, size)
+        if (result.length === 0) {
+          dispatch(loading(false))
+          return
+        }
+
+        dispatch(getDictMain(result, paging))
       })
       .catch((err) => {
         if (err.res) {
