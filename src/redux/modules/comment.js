@@ -11,8 +11,8 @@ const DEL_COMMENT = 'DEL_COMMENT'
 
 /* action creator */
 
-const getComments = createAction(GET_COMMENTS, (postId, comments) => ({ postId, comments }))
-const addComment = createAction(ADD_COMMNET, (postId, comment) => ({ postId, comment }))
+const getComments = createAction(GET_COMMENTS, (postId, comment_list) => ({ postId, comment_list }))
+const addComment = createAction(ADD_COMMNET, (postId, content) => ({ postId, content }))
 const editComment = createAction(EDIT_COMMENT, (postId, commentId, newComment) => ({ postId, commentId, newComment }))
 const delComment = createAction(DEL_COMMENT, (postId, commentId) => ({ postId, commentId }))
 
@@ -33,8 +33,8 @@ const getCommentsDB = (postId) => {
     await commentApi
       .getComments(postId)
       .then((res) => {
-        console.log(res.data)
-        dispatch(getComments(postId)) // res.data 확인 후 파라미터에 추가
+        const comment_list = res.data.data
+        dispatch(getComments(postId, comment_list))
       })
       .catch((err) => {
         console.log('댓글 목록을 불러오는 데 문제가 발생했습니다.', err.response)
@@ -51,9 +51,9 @@ const addCommentDB = (postId, comment) => {
     await commentApi
       .addComment(postId, comment)
       .then((res) => {
-        /* response로 작성한 comment data 받을 수 있는지 백 확인 필요 */
-        console.log(res)
-        dispatch(addComment(postId, comment))
+        /* response로 작성한 comment의 commentId 받을 수 있는지 백 확인 필요 */
+        const content = res.data.data
+        dispatch(addComment(postId, content))
       })
       .catch((err) => {
         console.log('댓글을 작성하는 데 문제가 발생했습니다.', err.response)
@@ -86,7 +86,7 @@ const delCommentDB = (postId, commentId) => {
     }
 
     await commentApi
-      .deleteComment(postId, commentId)
+      .deleteComment(commentId)
       .then((res) => {
         console.log(res)
         dispatch(delComment(postId, commentId))
@@ -103,11 +103,11 @@ export default handleActions(
   {
     [GET_COMMENTS]: (state, action) =>
       produce(state, (draft) => {
-        draft.comment_list[action.payload.postId] = action.payload.comments
+        draft.comment_list[action.payload.postId] = action.payload.comment_list
       }),
     [ADD_COMMNET]: (state, action) =>
       produce(state, (draft) => {
-        draft.comment_list[action.payload.postId].unshift(action.payload.comment)
+        draft.comment_list[action.payload.postId].unshift(action.payload.content)
       }),
     [EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
