@@ -86,7 +86,7 @@ const Login = (props) => {
           </div>
           <div className="SocialLoginHR">SNS 계정으로 로그인하기</div>
           <div className="SocialLoginBtns">
-            <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=17fb08cb376f564b3375667a799fda1f&redirect_uri=http://localhost:3000/oauth">
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/&response_type=code">
               <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
             </a>
             <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
