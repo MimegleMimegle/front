@@ -29,7 +29,7 @@ const Header = () => {
           </li>
         </ul>
       </NavHeader>
-      <Sidebar showSidebar={showSidebar} />
+      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
     </>
   )
 }

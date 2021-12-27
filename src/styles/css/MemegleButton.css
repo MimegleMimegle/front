@@ -1,16 +1,15 @@
-.OneDictionaryCard {
+.MemegleButton {
   position: absolute;
 }
 
-.Card1 {
+.Box1 {
   border: 1px solid black;
   border-radius: 0 0 0 0;
-  margin: 10px;
-  top: 0px;
-  left: 0px;
+  top: 90px;
+  left: -55px;
   background-color: white;
-  width: 8rem;
-  height: 4rem;
+  width: 100px;
+  height: 40px;
   font-size: 15px;
   font-weight: 500;
   display: flex;
@@ -20,15 +19,14 @@
   z-index: 2;
 }
 
-.Card2 {
+.Box2 {
   border: 1px solid black;
   border-radius: 0 0 0 0;
-  margin: 10px;
-  top: 7px;
-  left: 7px;
+  top: 97px;
+  left: -48px;
   background-color: #faea59;
-  width: 8rem;
-  height: 4rem;
+  width: 100px;
+  height: 40px;
   font-size: 15px;
   font-weight: 500;
 }

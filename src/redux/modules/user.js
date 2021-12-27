@@ -57,10 +57,11 @@ const logInDB = (username, password) => {
     userApi
       .login(username, password)
       .then((res) => {
-        setCookie('token', res.data.token, 3)
-        localStorage.setItem('username', res.username)
-        localStorage.setItem('nickname', res.nickname)
-        dispatch(setUser({ username: res.username, nickname: res.nickname }))
+        console.log(res)
+        setCookie('token', res.headers.authorization, 3)
+        localStorage.setItem('username', res.data.data.username)
+        localStorage.setItem('nickname', res.data.data.nickname)
+        dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
         history.replace('/')
       })
       .catch((err) => {
