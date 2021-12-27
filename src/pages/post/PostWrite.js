@@ -4,43 +4,46 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import post, { actionCreators as postActions } from '../../redux/modules/post';
+
 const PostWrite = (props) => {
   
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const[ content, setContent] = useState("");
   const [title, setTitle] = useState("");
-
-
-  const changeContent = (e) => {
-    setContent(e.target.value);
-  }
-  console.log(content);
+  const [content, setContent] = useState("");
 
   const changeTitle = (e) => {
     setTitle(e.target.value);
+    console.log(e.target.value);
   }
-  console.log(title);
+
+  const changeContent = (e) => {
+    setContent(e.target.value);
+    console.log(e.target.value);
+  }
+
 
   const addPost = () => {
-    dispatch(postActions.addPostDB(post));
+    if(title === "" || content === ""){
+      window.alert ("제목 혹은 내용을 작성해주세요.");
+      return;
+    }
+    dispatch(postActions.addPostDB(title,content));
+    history.replace("/post");
+
   }
 
   return (
     <>
       <Container>
         <PWHeader>
-        <button className="writectgr">말머리선택</button>
-        <input className="writetitle" placeholder="제목을 입력하세요" value={post.title} onChange={changeTitle}/>
+        {/* <button className="writectgr">말머리선택</button> */}
+        <input className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={changeTitle}/>
         </PWHeader>
+        <button>임시저장</button>
         <PWBody>
-          {/* 사진 동영상을 하나로 합치고 아이콘으로 하는게 좋을거같다 스티커는 뭘까! */}
-          <button className="plustfuction">사진</button>
-          <button className="plustfuction">동영상</button>
-          <button className="plustfuction">sns공유</button>
-          <button className="plustfuction">스티커</button>
-
-          <textarea value={post.content} onChange={changeContent} className="writedesc"/>
+          <textarea value={content} onChange={changeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
         </PWBody>
         <PWFooter>
         <button className="postbtn" onClick={addPost} >작성하기</button>
@@ -61,8 +64,9 @@ const PWHeader = styled.div`
     width: 100px;
   }
   .writetitle {
-    border: 1px solid lightgray;
-    border-radius: 10px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    /* border-radius: 10px; */
     width: 200px;
   }
 `
