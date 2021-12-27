@@ -26,7 +26,7 @@ const ModalOverlay = styled.div`
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 2999;
+  z-index: 9999;
 `
 
 const Wrapper = styled.div`
@@ -40,7 +40,7 @@ const Wrapper = styled.div`
   overflow-y: auto;
   outline: 0;
   background-color: rgba(0, 0, 0, 0.1);
-  z-index: 3000;
+  z-index: 10000;
 `
 
 export default ModalWrapper
