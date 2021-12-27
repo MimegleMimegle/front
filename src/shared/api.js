@@ -31,15 +31,16 @@ export const userApi = {
 }
 
 export const boardApi = {
-  getPosts: () => instance.get('/api/board'),
+  getPosts: (categoryName) => instance.get(`/api/board/${categoryName}`),
   getOnePost: (postId) => instance.get(`/api/board/${postId}`),
-  writePost: (title,content,subject,category) => instance.post('/api/board',{title:title, content:content, subject:subject, category:category}),
+  addPost: (title,content,subject,category) => instance.post('/api/board',{title:title, content:content, subject:subject, category:category}),
   editPost: (postId,title,content,subject) => instance.put(`/api/board/${postId}`,{title:title, content:content, subject:subject,}),
   deletePost: (postId) => instance.delete(`/api/board/${postId}`),
-
+  selectPost: ()=>instance.get('/api/board?q=query'),
   // 추가
   likePost: (postId) => instance.post(`/api/board/${postId}/like`),
   getSubject: ()=> instance.get('/api/board/subject'),
+  
 }
 
 
