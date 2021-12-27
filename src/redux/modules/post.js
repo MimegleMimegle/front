@@ -49,7 +49,6 @@ const initialState = {
       thumbNail: "imgSrc",
       createdAt: "2022-01-01 11:11:11",
     }
-
 }
 
 // /* middleware */
