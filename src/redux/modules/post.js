@@ -17,55 +17,69 @@ const LOADING = "LOADING";
 
 // /* action creator */
 const getPosts = createAction(GET_POST, (postlist)=>({postlist}));
-const getOnePost = createAction(GET_ONE_POST, (postId)=> ({postId}));
+const getOnePost = createAction(GET_ONE_POST, (boardId)=> ({boardId}));
 const addPost = createAction(ADD_POST,(post)=>({post}));
-const editPost = createAction(EDIT_POST,(postId, post,newPost)=> ({postId,post,newPost}));
-const deletePost = createAction(DELETE_POST,(postId)=>({postId,}));
+const editPost = createAction(EDIT_POST,(boardId, post,newPost)=> ({boardId,post,newPost}));
+const deletePost = createAction(DELETE_POST,(boardId)=>({boardId,}));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
-
 
 
 // /* initial state */
 const initialState = {
-    postlist: [],
-    post: [],
+    list: [],
     is_laoding: false,
 
-}
+    postlist: {
+      boardId: "boardId",
+      thumbNail: "thumNail",
+      title: "title",
+      username: "username",
+      writer: "writer",
+      createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+      views: 1,
+      likeCnt: 1,
+      hashTags: [],
+    },
 
-// const initialPost = [{
-//     postId: 0,
-//     title:"제목",
-//     content: "내용",
-//     writer: "작성자",
-//     createdAt:  moment().format("YYYY-MM-DD hh:mm:ss"),
-//     subject: "말머리",
-//     view: 0,
-//     likeCnt:0,
-// },]
+    post: {
+      boardId: 0,
+      title: "title",
+      content: "content",
+      category: "category",
+      thumbNail: "imgSrc",
+      createdAt: "2022-01-01 11:11:11",
+    }
+}
 
 // /* middleware */
-const getPostsDB = () => {
-  return async function (dispatch, getState, { history }) {
-    await boardApi
-      .getPosts()
-      .then((res) => {
-        console.log(res.data)
-        dispatch(getPosts(res))
-      })
-      .catch((err) => {
-        console.log(err.res)
-        console.log(err.res.data)
-        console.log(err.res.status)
-      })
-  }
-}
 
-const getOnePostDB = (postId) => {
+const getPostsDB = () => {
+  return async (dispatch, getState, { history }) => {
+  try {
+    console.log("getPostDB 작동");
+
+    const response = await boardApi.getPosts();
+    console.log(response);
+
+    const postlist = response.data;
+    console.log(postlist);
+
+    dispatch(getPosts(postlist));
+  } catch(error) {
+        console.log(error);
+        console.log(error.response.data);
+        console.log(error.response.status);
+      }
+};
+};
+  
+
+
+const getOnePostDB = (boardId) => {
   return async function (dispatch,getState,{history}) {
 
     await boardApi
-    .getOnePost(postId)
+    .getOnePost(boardId)
     .then((res) => {
       console.log(res)
     })
@@ -74,7 +88,7 @@ const getOnePostDB = (postId) => {
 }
 
 const addPostDB = (title,content,thumbNail) => {
-  return async function(dispatch,getState,{history}){
+    return async function(dispatch,getState,{history}){
     
     const token = localStorage.getItem('token')
     let formData=new FormData()
@@ -121,27 +135,27 @@ const addPostDB = (title,content,thumbNail) => {
   }
 }
 
-const editPostDB = (postId, newPost) => {
+const editPostDB = (boardId, newPost) => {
   return async function( dispatch, getState,{history}){
     await boardApi
-    .editPost(postId, newPost)
+    .editPost(boardId, newPost)
     .then((res)=> {
       console.log(res)
-      dispatch(editPost(res,postId,newPost))
+      dispatch(editPost(res.data,boardId,newPost))
     })
     .catch((err)=> console.log('게시글 수정하는데 문제 발생',err.response))
 
   }
 }
 
-const delPostDB = (postId) => {
+const delPostDB = (boardId) => {
   return async function(dispatch, getState, {history}) {
     await boardApi
-    .deletePost(postId)
+    .deletePost(boardId)
     .then((res) => {
       console.log("게시글 삭제 성공",res.data);
       console.log(res.status)
-      dispatch(deletePost(postId))
+      dispatch(deletePost(boardId))
 
     })
 
@@ -165,7 +179,8 @@ export default handleActions(
   {
        [GET_POST]: (state, action) =>
        produce(state, (draft) => {
-         draft.list = action.payload.postlist.list
+         draft.list = action.payload.postlist;
+        //  draft.list.push(...action.payload.articles);
         }),
 
       [ADD_POST]: (state, action) =>
@@ -180,7 +195,7 @@ export default handleActions(
       }),
 
       [EDIT_POST] : (state, action) => produce(state, (draft) => {
-        let idx = draft.list.findIndex((p) => p.postId === action.payload.postId)
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.boardId)
         draft.list[idx] = {...draft.list[idx], ...action.payload.post}
       }), 
     
