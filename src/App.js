@@ -13,15 +13,15 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <MobileFrame>
-          <ConnectedRouter history={history}>
+        <ConnectedRouter history={history}>
+          <MobileFrame>
             <Route path="/" exact component={Main} />
             <Route path="/join" exact component={Join} />
             <Route path="/login" exact component={Login} />
             <Route path="/mypage" exact component={Mypage} />
             <Route path="/quiz" exact component={QuizIntro} />
-            <Route path="/quiz/:year" exact component={Quiz} />
-            <Route path="/quiz/:year/result" exact component={QuizResult} />
+            <Route path="/quiz/:category" exact component={Quiz} />
+            <Route path="/quiz/:category/result" exact component={QuizResult} />
             <Route path="/post" exact component={PostList} />
             <Route path="/post/detail/:postId" exact component={PostDetail} />
             <Route path="/post/write" exact component={PostWrite} />
@@ -30,8 +30,8 @@ function App() {
             <Route path="/dict/write" exact component={DictWrite} />
             <Route path="/dict/edit/:dictId" exact component={DictEdit} />
             {/* <Route path="" exact component={NotFound} /> */}
-          </ConnectedRouter>
-        </MobileFrame>
+          </MobileFrame>
+        </ConnectedRouter>
       </ThemeProvider>
     </>
   )
