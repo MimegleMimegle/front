@@ -17,6 +17,7 @@ const Sidebar = ({ showSidebar }) => {
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
+        <button>X</button>
         <div>프로필사진</div>
         <p>닉네임</p>
         <div>
