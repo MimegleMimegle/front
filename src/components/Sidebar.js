@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { history } from '../redux/ConfigureStore'
-
 import SidebarItem from './SidebarItem'
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
@@ -14,24 +12,19 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
-        <button
-          onClick={() => {
-            setShowSidebar(false)
-          }}
-        >
-          X
-        </button>
-        <div>프로필사진</div>
-        <p>닉네임</p>
+        <div style={{ width: '100%', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>프로필사진</div>
+          <p>닉네임</p>
+          <button
+            onClick={() => {
+              setShowSidebar(false)
+            }}
+          >
+            X
+          </button>
+        </div>
         {menus.map((menu, index) => {
-          return (
-            <SidebarItem
-              menu={menu}
-              onClick={() => {
-                history.push(``)
-              }}
-            />
-          )
+          return <SidebarItem key={index} menu={menu} setShowSidebar={setShowSidebar} />
         })}
         <div>
           {/* 로그인 상태면 로그아웃 */}
@@ -46,9 +39,12 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   )
 }
 
+Sidebar.defaultProps = {}
+
 const Wrapper = styled.div`
   width: 240px;
   height: 100%;
+  padding: 20px;
   position: absolute;
   top: 0;
   left: -240px;

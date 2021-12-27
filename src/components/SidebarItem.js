@@ -1,10 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const SidebarItem = ({ menu, isActive }) => {
+import { history } from '../redux/ConfigureStore'
+
+const SidebarItem = ({ menu, isActive, setShowSidebar }) => {
   return (
     <>
-      <button className={`${isActive ? 'active' : ''}`}>{menu.name}</button>
+      <button
+        className={`${isActive ? 'active' : ''}`}
+        onClick={() => {
+          history.push(`${menu.path}`)
+          setShowSidebar(false)
+        }}
+      >
+        {menu.name}
+      </button>
     </>
   )
 }
