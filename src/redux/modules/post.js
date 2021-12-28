@@ -6,6 +6,7 @@ import moment from 'moment'
 import 'moment'
 import axios from 'axios'
 import { Login } from '../../pages'
+import swal from 'sweetalert'
 
 // /* action type */ 목록/상세/작성/수정/삭제/검색
 const GET_POST = 'GET_POST'
@@ -155,13 +156,13 @@ const addPostDB = (title, content, thumbNail) => {
     }
     axios(DB)
       .then(() => {
-        window.alert('', '성공적으로 등록되었습니다', 'success')
+        swal('', '성공적으로 등록되었습니다', 'success')
         history.push('/api/board/FREEBOARD')
       })
 
       .catch((err) => {
         if (err.response.status) {
-          window.alert('로그인 세션 만료')
+          swal('로그인 세션 만료')
           history.replace('/')
         }
       })
@@ -204,7 +205,7 @@ const editPostDB = (boardId, title, content, thumbNail) => {
         console.log(res.data)
         console.log(res.status)
 
-        window.alert('', '게시글이 수정되었습니다.', 'success')
+        swal('', '게시글이 수정되었습니다.', 'success')
         history.push('/post')
         dispatch(editPost(post_list, thumbNail, content, title, boardId))
       })
