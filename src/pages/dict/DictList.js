@@ -14,11 +14,11 @@ const DictList = (props) => {
 
   const [dict, setDict] = useState([])
   const [size, setSize] = useState(10)
-  const [page, setPage] = useState(1)
-  const [totalCount, setTotalCount] = useState()
+  const [page, setPage] = useState()
+  const [totalCount, setTotalCount] = useState(dict.length)
 
   const handlePageChange = (page) => {
-    setDict({ ...setDict, Page: page })
+    setDict({ ...setDict, page: page })
   }
 
   React.useEffect(() => {
@@ -46,7 +46,11 @@ const DictList = (props) => {
           {dict.map((dict) => (
             <div className="OneDictionaryCardList" key={dict.id}>
               <div className="OneDictionaryCardList WordCardList1">{dict.title}</div>
-              <div className="OneDictionaryCardList WordCardList2"></div>
+              <div className="OneDictionaryCardList WordCardList2">
+                <button className="OneDictCardDetailButton" onClick={() => history.push(`/dict/${dict.dictId}`)}>
+                  자세히보기
+                </button>
+              </div>
             </div>
           ))}
         </div>
