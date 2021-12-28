@@ -31,13 +31,13 @@ export const userApi = {
 }
 
 export const boardApi = {
-  getPosts: (categoryName) => instance.get(`/api/boards/${categoryName}`),
+  getPosts: (categoryName) => instance.get(`/api/board/list/${categoryName}`),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
   writePost: (title, content, subject, category, categoryName) => instance.post(`/api/board/${categoryName}`, { title: title, content: content, subject: subject, category: category }),
   editPost: (boardId, title, content, subject) => instance.put(`/api/board/${boardId}`, { title: title, content: content, subject: subject }),
   deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
   /* [수정] selectPost -> searchPost */
-  searchPost: (search) => instance.get(`/api/board?q=${search}`),
+  searchPost: (search) => instance.get(`/api/board/search?q=${search}`),
   // 추가
   likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
   getSubject: () => instance.get('/api/board/subject'),

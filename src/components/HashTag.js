@@ -13,6 +13,10 @@ const HashTag = (props) => {
       })
       .catch((error) => {
         console.log('해시태그 관련 게시글 정보를 불러오는 데 문제가 발생했습니다.', error.response)
+        if (error.response.status === 404) {
+          props.setNotFound(true)
+          props.closeNotFountModal()
+        }
       })
   }
 
