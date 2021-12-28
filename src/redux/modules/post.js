@@ -102,20 +102,22 @@ const initalPost = {
 
 const getPostsDB = () => {
   return function (dispatch, getState, { history }) {
+    const categoryName = 'FREEBOARD'
     boardApi
-      .getPosts()
-      .then((response) => {
+      .getPosts(categoryName)
+      .then((res) => {
+        console.log(res.data)
         let post_list = []
-        response.data.forEach((post) => {
-          console.log({ ...post })
-          post_list.push({ ...post })
-        })
-        dispatch(getPost(post_list))
+        // res.data.forEach((post) => {
+        //   console.log({ ...post })
+        //   post_list.push({ ...post })
+        // })
+        // dispatch(getPost(post_list))
       })
       .catch((err) => {
         console.log('게시판을 불러오기 문제 발생', err.response.data)
-        console.log(err.response.status)
-        console.log(err.response.headers)
+        // console.log(err.response.status)
+        // console.log(err.res.headers)
       })
   }
 }
