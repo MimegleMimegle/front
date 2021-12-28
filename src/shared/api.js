@@ -29,10 +29,11 @@ export const userApi = {
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
 }
 
-/*  */
+/* 추가 */
 export const mypageApi = {
   getMyInfo: () => instance.get('/api/mypage'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
+  editNickname: (userId, nickname) => instance.post(`/api/user/nickname/${userId}`, { nickname: nickname }),
 }
 
 export const boardApi = {
