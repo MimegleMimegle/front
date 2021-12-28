@@ -9,7 +9,7 @@ import OneComment from '../components/OneComment'
 const CommentTest = (props) => {
   const dispatch = useDispatch()
   // 추후 postId 수정해야 함! url 파라미터나 props로 정보 받아오기
-  const postId = 1
+  const postId = 18
 
   const comment_list = useSelector((state) => state.comment.comment_list[postId])
 
