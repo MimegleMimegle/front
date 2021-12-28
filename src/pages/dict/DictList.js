@@ -43,23 +43,12 @@ const DictList = (props) => {
           </div>
         </div>
         <div className="DictList">
-<<<<<<< HEAD
-          {dict.map((d) => {
-            return (
-              <div className="OneDictionaryCard" key={d.id}>
-                <div className="OneDictionaryCard Card1">{d.title}</div>
-                <div className="OneDictionaryCard Card2"></div>
-              </div>
-            )
-          })}
-=======
           {dict.map((dict) => (
             <div className="OneDictionaryCardList" key={dict.id}>
               <div className="OneDictionaryCardList WordCardList1">{dict.title}</div>
               <div className="OneDictionaryCardList WordCardList2"></div>
             </div>
           ))}
->>>>>>> 06e6973 ([Feat]용어사전 작성 및 페이지네이션)
         </div>
         <Pagination simple page={page} total={totalCount} size={size} onChange={(page) => setPage(page)} />
       </div>
