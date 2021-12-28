@@ -23,13 +23,6 @@ const editPost = createAction(EDIT_POST, (thumbNail, title, boardId, writer) => 
 const deletePost = createAction(DELETE_POST, (boardId,post) => ({ boardId,post }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
-// const getPosts = createAction(GET_POST, (categoryName,boardId,postlist)=>({categoryName,boardId,postlist}));
-// const getOnePost = createAction(GET_ONE_POST, (boardId)=> ({boardId}));
-// const addPost = createAction(ADD_POST,(post)=>({post}));
-// const editPost = createAction(EDIT_POST,(boardId,newPost)=> ({boardId,newPost}));
-// const deletePost = createAction(DELETE_POST,(boardId)=>({boardId,}));
-// const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
-
 // /* initial state */
 const initialState = {
   list: [],
@@ -47,32 +40,6 @@ const initalPost = {
     likeCnt: 1,
     hashTags: [],
 };
-// const initialState = {
-//     list: [],
-//     is_laoding: false,
-
-//     postlist: {
-//       boardId: "boardId",
-//       thumbNail: "thumNail",
-//       title: "title",
-//       username: "username",
-//       writer: "writer",
-//       createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-//       views: 1,
-//       likeCnt: 1,
-//       hashTags: [],
-//     },
-
-//     post: {
-//       boardId: 0,
-//       title: "title",
-//       content: "content",
-//       category: "category",
-//       thumbNail: "imgSrc",
-//       createdAt: "2022-01-01 11:11:11",
-//     }
-
-// }
 
 // /* middleware */
 
@@ -85,6 +52,7 @@ const getPostsDB = () => {
         res.data.forEach((post) => {
         console.log({...post});
         post_list.push({ ...post });
+        console.log(res.status)
       });
         dispatch(getPost(post_list))
       })
@@ -101,7 +69,7 @@ const getPostsDB = () => {
 const getOnePostDB = (boardId) => {
   return function (dispatch,getState,{history}) {
     dispatch(loading(true))
-   boardApi
+    boardApi
     .getOnePost(boardId)
     .then((res) => {
       console.log(res)
@@ -117,14 +85,14 @@ const addPostDB = (title,content,thumbNail) => {
     return function(dispatch,getState,{history}){
     
     const token = localStorage.getItem('token')
-  const formData = new FormData();
+    const formData = new FormData();
     formData.append('title', title)
     formData.append('content',content)
     formData.append('thumbNail',thumbNail)
 
     const DB = {
       method: 'post',
-      url: `http://52.78.155.185/api/board`,
+      url: `http://52.78.155.185/api/board/list/FREEBOARD`,
       data: formData,
       headers: {
         authorization: `Bearer ${token}`
@@ -133,16 +101,16 @@ const addPostDB = (title,content,thumbNail) => {
     axios(DB)
     .then(() => {
       window.alert('', '성공적으로 등록되었습니다', 'success')
-      history.push('/api/board/FREEBOARD')
+      history.replace("/post");
     })
 
     .catch((err)=> {
-      if (err.response.status) {
-        window.alert('로그인 세션 만료')
-        history.replace('/')
+    console.log(err.response)
+    console.log(err.response.data)
+    console.log(err.response.status)        
 
-      }
-    })
+      })
+    
 
     // boardApi
     // .addPost(title,content)

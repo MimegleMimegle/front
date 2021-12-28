@@ -1,11 +1,48 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { history } from '../redux/ConfigureStore'
-
 import SidebarItem from './SidebarItem'
+import { actionCreators as userActions } from '../redux/modules/user'
 
-const Sidebar = ({ showSidebar, setShowSidebar }) => {
+import { IoCloseOutline } from 'react-icons/io5'
+
+const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
+  const dispatch = useDispatch()
+
+  const username = localStorage.getItem('username')
+  const nickname = localStorage.getItem('nickname')
+  const isLogin = username && nickname ? true : false
+  const is_login = useSelector((state) => state.user.is_login)
+  console.log(isLogin, is_login)
+
+  const moveToMypage = () => {
+    history.push('/mypage')
+    setShowSidebar(false)
+  }
+
+  const moveToLogin = () => {
+    history.push('/login')
+    setShowSidebar(false)
+  }
+
+  const moveToJoin = () => {
+    history.push('/join')
+    setShowSidebar(false)
+  }
+
+  const clickLogOut = () => {
+    dispatch(userActions.logOutDB())
+    setShowSidebar(false)
+  }
+
+  window.addEventListener('keyup', (e) => {
+    if (showSidebar && e.key === 'Escape') {
+      setShowSidebar(false)
+    }
+  })
+
   const menus = [
     { name: '퀴즈', path: '/quiz' },
     { name: '용어 사전', path: '/dict' },
@@ -14,36 +51,46 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
-        <button
-          onClick={() => {
-            setShowSidebar(false)
-          }}
-        >
-          X
-        </button>
-        <div>프로필사진</div>
-        <p>닉네임</p>
+        <div style={{ width: '100%', padding: '32px 10px 0 16px' }}>
+          <button
+            onClick={() => {
+              setShowSidebar(false)
+            }}
+            style={{ width: '100%', height: '100%', padding: '0', textAlign: 'right' }}
+          >
+            <IoCloseOutline style={{ fontSize: '30px', paddingTop: '4px' }} />
+          </button>
+        </div>
+        {isLogin && (
+          <div style={{ width: '100%', padding: '16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <ProfileImage src={profileImgUrl} style={{ cursor: 'pointer' }} onClick={moveToMypage} />
+              <p style={{ paddingLeft: '10px', cursor: 'pointer' }} onClick={moveToMypage}>
+                {nickname}
+              </p>
+            </div>
+          </div>
+        )}
         {menus.map((menu, index) => {
-          return (
-            <SidebarItem
-              menu={menu}
-              onClick={() => {
-                history.push(``)
-              }}
-            />
-          )
+          return <SidebarItem key={index} menu={menu} setShowSidebar={setShowSidebar} />
         })}
-        <div>
-          {/* 로그인 상태면 로그아웃 */}
-          <button>로그인</button>
-          <button>회원가입</button>
-        </div>
-        <div>
-          <button>로그아웃</button>
-        </div>
+        <UserMenuBox>
+          {isLogin ? (
+            <UserMenu onClick={clickLogOut}>로그아웃</UserMenu>
+          ) : (
+            <>
+              <UserMenu onClick={moveToLogin}>로그인</UserMenu>
+              <UserMenu onClick={moveToJoin}>회원가입</UserMenu>
+            </>
+          )}
+        </UserMenuBox>
       </Wrapper>
     </>
   )
+}
+
+Sidebar.defaultProps = {
+  profileImgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXdd3u5NqCQXagF3DlT5PqENDPrUx_Dy4BNF0l3v44cFnSOnrIU1JJXnCYtqovHd7lVY8&usqp=CAU',
 }
 
 const Wrapper = styled.div`
@@ -59,6 +106,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: top;
+  z-index: 2000;
 
   -webkit-transform: translateX(0);
   transform: translateX(0);
@@ -81,6 +129,31 @@ const Wrapper = styled.div`
       color: #111;
     }
   }
+`
+
+const ProfileImage = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 1px solid #111;
+  border-radius: 20px;
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
+`
+
+const UserMenuBox = styled.div`
+  width: 100%;
+  padding: 20px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const UserMenu = styled.button`
+  border: 1px solid #111;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 0 10px;
 `
 
 export default Sidebar

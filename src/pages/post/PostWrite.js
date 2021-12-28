@@ -1,25 +1,34 @@
-import React, { useState } from 'react'
-import { CgEnter } from 'react-icons/cg';
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import post, { actionCreators as postActions } from '../../redux/modules/post';
-
+import { actionCreators as postActions } from '../../redux/modules/post';
+import  {actionCreators as imageActions} from '../../redux/modules/image';
 const PostWrite = (props) => {
-  
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [thumbNail, setThumbNail] = useState("");
+  // const [preview, setPreview] = useState("");
+
+  // const postList = useSelector((state) => state.post.list);
+
+  // const boardId = props.match.params.id;
+  // const { history } = props;
+
+  // const selectPostInfo = postList.filter(
+  //   (list) => list.boardId === parseInt(boardId)
+  // );
+
+  
 
   const changeTitle = (e) => {
     setTitle(e.target.value);
-    console.log(e.target.value);
   }
 
   const changeContent = (e) => {
     setContent(e.target.value);
-    console.log(e.target.value);
   }
 
 
@@ -28,24 +37,38 @@ const PostWrite = (props) => {
       window.alert ("제목 혹은 내용을 작성해주세요.");
       return;
     }
-    dispatch(postActions.addPostDB(title,content));
+    dispatch(postActions.addPostDB(title,content,thumbNail));
     history.replace("/post");
-
   }
+
+  // const selectFile = (e) => {
+  //   const reader = new FileReader(); // 미리보기 리더
+  //   const targetThumbNail = e.target.files[0];
+  //   reader.readAsDataURL(targetThumbNail);
+  //   setThumbNail(e.target.files[0]);
+  //   reader.onloadend = () => {
+  //     setPreview(reader.result);
+
+  //     dispatch(imageActions.setPreview(reader.result));
+  //     // dispatch(postActions.addPost(reader.result));
+  //   };
+  // };
+
 
   return (
     <>
       <Container>
         <PWHeader>
-        {/* <button className="writectgr">말머리선택</button> */}
         <input className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={changeTitle}/>
         </PWHeader>
         <button>임시저장</button>
         <PWBody>
           <textarea value={content} onChange={changeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
+          {/* <img style={{scr: "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg"}}/>
+          <input onChange={selectFile}>이미지불러오기</input> */}
         </PWBody>
         <PWFooter>
-        <button className="postbtn" onClick={addPost} >작성하기</button>
+        <button className="postbtn" onClick={() => {addPost()}} >작성하기</button>
         </PWFooter>
       </Container>
     </>

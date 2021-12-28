@@ -1,8 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { AiOutlineEye,AiOutlineHeart } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
-const PostCard = (props) => {
+const PostCard = (posts) => {
+  const history = useHistory;
+  const postlist = posts;
+  console.log(posts)
+  console.log(postlist)
     return (
       <>  
         <Container>

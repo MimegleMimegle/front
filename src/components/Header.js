@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { history } from '../redux/ConfigureStore'
 import Sidebar from './Sidebar'
 
 import { FiMenu } from 'react-icons/fi'
@@ -20,7 +21,13 @@ const Header = () => {
             </button>
           </li>
           <li style={{ width: '100px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <a className="nav-item-logo" href>
+            <a
+              className="nav-item-logo"
+              href
+              onClick={() => {
+                history.push('/')
+              }}
+            >
               Logo
             </a>
           </li>
