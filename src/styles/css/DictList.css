@@ -84,6 +84,10 @@
   font-weight: 500;
 }
 
+.OneDictCardDetailButton {
+  margin: 70px 0 0 65px;
+}
+
 .rc-pagination {
   margin: 0;
   padding: 0;
