@@ -23,6 +23,7 @@ export const userApi = {
   socialLogin: () => instance.get('/api/user/kakao/callback'),
   join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
   userInfo: () => instance.get(`/api/userInfo`),
+  myPage: () => instance.get(`/api/mypage`),
 
   /* 추가 */
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
@@ -37,16 +38,17 @@ export const mypageApi = {
 }
 
 export const boardApi = {
-  getPosts: (categoryName) => instance.get(`/api/board/list/${categoryName}`),
+  getPosts: () => instance.get('/api/board/list/FREEBOARD'),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
-  writePost: (title, content, subject, category, categoryName) => instance.post(`/api/board/${categoryName}`, { title: title, content: content, subject: subject, category: category }),
+  writePost: (title, content, subject, category,) => instance.post('/api/board/FREEBOARD', { title: title, content: content, subject: subject, category: category }),
   editPost: (boardId, title, content, subject) => instance.put(`/api/board/${boardId}`, { title: title, content: content, subject: subject }),
   deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
-  /* [수정] selectPost -> searchPost */
-  searchPost: (search) => instance.get(`/api/board/search?q=${search}`),
+  selectPost: () => instance.get('/api/board?q=query'),
   // 추가
-  likePost: (postId) => instance.post(`/api/board/${postId}/like`),
-  getSubject: () => instance.get('/api/board/subject'),
+  likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
+  getSubject: ()=> instance.get('/api/board/subject'),
+  recommendHashTag: ()=>instance.get('/api/board/hashTag'),
+  
 }
 
 export const dictApi = {
