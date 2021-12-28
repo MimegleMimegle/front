@@ -22,6 +22,8 @@ const DictList = (props) => {
     getDictListDB()
   }, [page])
 
+  console.log(dict)
+
   const getDictListDB = async () => {
     let response = await axios.get(`http://52.78.155.185/api/dict?page=0&size=10`)
     console.log(response)
@@ -33,12 +35,14 @@ const DictList = (props) => {
     <>
       <div className="DictLayout">
         <div className="DictList">
-          {dict.map((dict) => (
-            <div className="OneDictionaryCard" key={dict.id}>
-              <div className="OneDictionaryCard Card1">{dict.title}</div>
-              <div className="OneDictionaryCard Card2"></div>
-            </div>
-          ))}
+          {dict.map((d) => {
+            return (
+              <div className="OneDictionaryCard" key={d.id}>
+                <div className="OneDictionaryCard Card1">{d.title}</div>
+                <div className="OneDictionaryCard Card2"></div>
+              </div>
+            )
+          })}
         </div>
         <Pagination simple page={page} total={totalCount} size={size} onChange={(page) => setPage(page)} />
       </div>
