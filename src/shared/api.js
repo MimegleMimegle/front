@@ -31,7 +31,7 @@ export const userApi = {
 
 /* 추가 */
 export const mypageApi = {
-  getMyInfo: () => instance.get('/api/mypage'),
+  getUserInfo: () => instance.get('/api/mypage'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
   editNickname: (nickname) => instance.post('/api/user/nickname', { nickname: nickname }),
 }

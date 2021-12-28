@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { mypageApi } from '../../shared/api'
 import { userApi } from '../../shared/api'
+import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
 import '../../styles/css/Mypage.css'
 
@@ -13,6 +15,10 @@ import ModalWrapper from '../../components/ModalWrapper'
 import { AiOutlineEdit } from 'react-icons/ai'
 
 const Mypage = ({ profileImgUrl }) => {
+  const dispatch = useDispatch()
+
+  const userId = localStorage.getItem('id')
+
   const fileInput = React.useRef('')
 
   const [myInfo, setMyInfo] = React.useState(null)
@@ -83,35 +89,11 @@ const Mypage = ({ profileImgUrl }) => {
   const _editProfile = async () => {
     if (imageFile) {
       const uploadFile = fileInput.current.files[0]
-      const formData = new FormData()
-
-      formData.append('images', uploadFile)
-      console.log(uploadFile)
-      console.log(formData.entries())
-
-      await mypageApi
-        .editProfileImage(formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then((response) => {
-          console.log(response.data)
-        })
-        .catch((error) => {
-          console.log('프로필 사진을 변경하는 데 문제가 발생했습니다.', error.response)
-        })
+      dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
     }
 
     if (nickname && isNickname && isNicknameChecked) {
-      await mypageApi
-        .editNickname(nickname)
-        .then((response) => {
-          console.log(response.data)
-        })
-        .catch((error) => {
-          console.log('닉네임을 변경하는 데 문제가 발생했습니다.', error.response)
-        })
+      dispatch(mypageActions.editNicknameDB(userId, nickname))
     } else {
       window.alert('닉네임을 확인해주세요!')
     }
@@ -123,17 +105,7 @@ const Mypage = ({ profileImgUrl }) => {
     setIsNicknameChecked(false)
   }
 
-  React.useEffect(() => {
-    // mypageApi
-    //   .getMyInfo()
-    //   .then((response) => {
-    //     console.log(response.data)
-    //     // setMyInfo(response.data.data)
-    //   })
-    //   .catch((error) => {
-    //     console.log('마이 페이지 정보를 불러오는 데 문제가 발생했습니다.', error.response)
-    //   })
-  }, [])
+  React.useEffect(() => {}, [])
 
   return (
     <>
