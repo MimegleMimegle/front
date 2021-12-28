@@ -33,7 +33,7 @@ export const userApi = {
 export const mypageApi = {
   getMyInfo: () => instance.get('/api/mypage'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
-  editNickname: (userId, nickname) => instance.post(`/api/user/nickname/${userId}`, { nickname: nickname }),
+  editNickname: (nickname) => instance.post('/api/user/nickname', { nickname: nickname }),
 }
 
 export const boardApi = {
@@ -52,7 +52,7 @@ export const boardApi = {
 export const dictApi = {
   getDictMain: () => instance.get('/api/dict?page=0&size=10'),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
-  addDict: (title, content) => instance.post('/api/dict', { title: title, content: content }),
+  addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
   editDict: (dictId) => instance.put(`/api/dict/${dictId}`),
   deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
@@ -75,7 +75,7 @@ export const mainApi = {
 export const commentApi = {
   getComments: (postId) => instance.get(`/api/board/${postId}/comment?page=0&size=10`),
   /* writeComment -> addComment 로 수정 */
-  addComment: (postId) => instance.post(`/api/board/${postId}/comment`),
+  addComment: (postId, comment) => instance.post(`/api/board/${postId}/comment`, { content: comment }),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
 }

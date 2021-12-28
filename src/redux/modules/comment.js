@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 import { commentApi } from '../../shared/api'
+import swal from 'sweetalert'
 
 /* action type */
 

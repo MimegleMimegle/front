@@ -18,5 +18,6 @@ import PostSearch from './post/PostSearch'
 import DictEdit from './dict/DictEdit'
 import DictList from './dict/DictList'
 import DictWrite from './dict/DictWrite'
+import DictDetail from './dict/DictDetail'
 
-export { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, PostSearch, DictEdit, DictList, DictWrite }
+export { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, PostSearch, DictEdit, DictList, DictWrite, DictDetail }
