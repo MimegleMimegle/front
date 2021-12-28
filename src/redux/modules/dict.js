@@ -43,16 +43,15 @@ const getDictMainDB = (page = null, size = null) => {
     dictApi
       .getDictMain()
       .then((res) => {
+        let result = res.data.data.slice(page, size)
         let paging = {
           page: page + result.length + 1,
           size: size + 10,
         }
-        let result = res.data.slice(page, size)
         if (result.length === 0) {
           dispatch(loading(false))
           return
         }
-
         dispatch(getDictMain(result, paging))
       })
       .catch((err) => {
@@ -78,13 +77,13 @@ const getDictDetailDB = (dictId) => {
   }
 }
 
-const addDictDB = (title, content) => {
+const addDictDB = (title, summary, content) => {
   return function (dispatch, getState, { history }) {
     dictApi
-      .addDict(title, content)
+      .addDict(title, summary, content)
       .then((res) => {
         swal('', '성공적으로 등록되었습니다', 'success')
-        history.push('/api/dict?page=0&size=10')
+        history.push('/dict')
       })
       .catch((err) => {
         if (err.response.status === 403) {
@@ -95,13 +94,13 @@ const addDictDB = (title, content) => {
   }
 }
 
-const editDictDB = (dictId, title, content) => {
+const editDictDB = (dictId, title, summary, content) => {
   return function (dispatch, getState, { history }) {
     dictApi
-      .editDict(dictId, title, content)
+      .editDict(dictId, title, summary, content)
       .then(() => {
         swal('', '게시글이 수정되었습니다.', 'success')
-        history.push('/api/dict?page=0&size=10')
+        history.push('/dict')
       })
       .catch((err) => {
         if (err.response.status === 403) {
