@@ -1,26 +1,79 @@
-import React from 'react'
-import { CgEnter } from 'react-icons/cg'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import post, { actionCreators as postActions } from '../../redux/modules/post';
+import  {actionCreators as imageActions} from '../../redux/modules/image';
+import { boardApi } from '../../shared/api';
+
 
 const PostEdit = (props) => {
+
+  const fileInput = React.useRef();
+  const dispatch = useDispatch();
+  const { history } = props;
+
+
+  const postList = useSelector((state) => state.post.list);
+  const boardId = props.match.params.id;
+
+  const selectPostInfo = postList.filter(
+    (list) => list.boardId === parseInt(boardId)
+  );
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [thumbNail, setThumbNail] = useState("");
+  const [preview, setPreview] = useState("");
+
+  const changeTitle = (e) => {
+    setTitle(e.target.value);
+  }
+
+  const changeContent = (e) => {
+    setContent(e.target.value);
+  }
+
+  const selectFile = (e) => {
+    const reader = new FileReader(); // 미리보기 리더
+    const targetThumbNail = fileInput.current.files[0];
+    reader.readAsDataURL(targetThumbNail);
+    setThumbNail(e.target.files[0]);
+    reader.onloadend = () => {
+      setPreview(reader.result);
+  
+      dispatch(imageActions.setPreview(reader.result));
+      // dispatch(postActions.addPost(reader.result));
+    };
+  };
+
+  const editPost = () => {
+
+    dispatch(postActions.editPostDB(thumbNail, title,content, boardId));
+  };
+
   return (
     <>
       <Container>
         <PWHeader>
-          <button className="writectgr">말머리선택</button>
-          <input className="writetitle" placeholder="제목을 입력하세요" />
+          <input value={title} onChange={changeTitle} className="writetitle" placeholder="수정할 제목을 입력하세요" />
         </PWHeader>
+        {/* <button>임시저장</button> */}
         <PWBody>
-          <button className="plustfuction">사진</button>
-          <button className="plustfuction">동영상</button>
-          <button className="plustfuction">sns공유</button>
-          <button className="plustfuction">스티커</button>
+        <ContentBox
+              defaultValue={selectPostInfo[0] && selectPostInfo[0].content}
+              onChange={changeContent}
+              label="게시글 내용"
+              placeholder="문구 수정 입력..."
+              multiLine
+            />     
+            {/* <img src={preview? preview: "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg"}/>
+            <input ref={fileInput} onChange={selectFile}>이미지불러오기</input>
+             */}
 
-          <textarea className="writedesc" />
         </PWBody>
         <PWFooter>
-          <button className="postbtn">수정하기</button>
-          <button className="postbtn">뒤로가기</button>
+        <button className="postbtn" onClick={editPost} >작성하기</button>
         </PWFooter>
       </Container>
     </>
@@ -67,6 +120,10 @@ const PWFooter = styled.div`
     border-radius: 10px;
     margin: 0px 5px;
   }
+`
+
+const ContentBox = styled.textarea`
+
 `
 
 export default PostEdit
