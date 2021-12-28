@@ -29,10 +29,11 @@ export const userApi = {
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
 }
 
-/*  */
+/* 추가 */
 export const mypageApi = {
   getMyInfo: () => instance.get('/api/mypage'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
+  editNickname: (userId, nickname) => instance.post(`/api/user/nickname/${userId}`, { nickname: nickname }),
 }
 
 export const boardApi = {
@@ -52,7 +53,7 @@ export const dictApi = {
   getDictMain: () => instance.get('/api/dict?page=0&size=10'),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
-  editDict: (dictId) => instance.put(`/api/dict/${dictId}`),
+  editDict: (dictId, summary, content) => instance.put(`/api/dict/${dictId}`, { dictId: dictId, summary: summary, content: content }),
   deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),

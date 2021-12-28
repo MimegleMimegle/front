@@ -69,11 +69,18 @@ const getDictDetailDB = (dictId) => {
     dispatch(loading(true))
     dictApi
       .getDictDetail(dictId)
-      .then((res) => {
-        const dict_list = [...res.data.dict]
+      .then((response) => {
+        const dict_list = [...response.data.data]
+
         dispatch(loading(false))
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
+        }
+      })
   }
 }
 
@@ -86,26 +93,28 @@ const addDictDB = (title, summary, content) => {
         history.push('/dict')
       })
       .catch((err) => {
-        if (err.response.status === 403) {
-          swal('로그인 시간이 만료되었습니다. 다시 로그인해주세요')
-          history.replace('/')
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
         }
       })
   }
 }
 
-const editDictDB = (dictId, title, summary, content) => {
+const editDictDB = (dictId, summary, content) => {
   return function (dispatch, getState, { history }) {
     dictApi
-      .editDict(dictId, title, summary, content)
-      .then(() => {
-        swal('', '게시글이 수정되었습니다.', 'success')
+      .editDict(dictId, summary, content)
+      .then((res) => {
+        swal('', '단어가 수정되었습니다.', 'success')
         history.push('/dict')
       })
       .catch((err) => {
-        if (err.response.status === 403) {
-          swal('로그인 시간이 만료되었습니다. 다시 로그인해주세요')
-          history.replace('/')
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
         }
       })
   }
@@ -118,13 +127,15 @@ const deleteDictDB = (dictId) => {
     dictApi
       .deleteDict(dictId)
       .then((res) => {
-        history.push('/api/dict?page=0&size=10')
+        swal('', '삭제요청이 완료되었습니다.', 'success')
+        history.push('/dict')
       })
       .catch((err) => {
-        if (err.res.status === 403) {
-          swal('로그인 시간이 만료되었습니다. 다시 로그인해주세요')
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
         }
-        history.replace('/')
       })
   }
 }
