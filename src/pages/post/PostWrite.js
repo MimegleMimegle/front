@@ -9,7 +9,6 @@ const PostWrite = (props) => {
   
   const dispatch = useDispatch();
   const history = useHistory();
-
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
