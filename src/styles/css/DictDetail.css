@@ -1,0 +1,68 @@
+.OneDictCardDetailPageLayout {
+  width: 100%;
+  height: 545px;
+  border: 3px solid cornflowerblue;
+  justify-self: space-around;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  display: flex;
+  justify-content: center;
+}
+.OneDictCardDetailPageLayout::-webkit-scrollbar {
+  display: none;
+}
+
+.OneDictCardDetailInfoSection {
+  border: 1px solid black;
+  width: 95%;
+}
+
+.OneDictCardDetailInfoTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 30px;
+}
+
+.OneDictCardDetailInfoSummary {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 30px;
+}
+
+.OneDictCardDetailInfoContent {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 30px;
+}
+
+.OneDictCardDetailInfoLikeAndWriter {
+  display: flex;
+  flex-direction: row;
+}
+
+.OneDictCardDetailInfoLikeCnt {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 20px 0 0 50px;
+}
+
+.OneDictCardDetailInfoFirstWriter {
+  font-size: 9px;
+  font-weight: 500;
+  margin: 22.5px 0 0 70px;
+}
+
+.OneDictCardDetailInfoCreatedAt {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 30px 0 0 10px;
+}
+
+.OneDictCardDetailInfoModifiedAt {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 5px 0 0 10px;
+}

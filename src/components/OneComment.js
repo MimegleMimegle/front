@@ -49,7 +49,7 @@ const OneComment = (props) => {
         <p>{props.commentWriter}</p>
         <p>{props.commentContent}</p>
         <p>{props.createdAt}</p>
-        <button onClick={handleOpenModalEdit}>댓글 수정</button>
+        {/* <button onClick={handleOpenModalEdit}>댓글 수정</button> */}
         <button onClick={handleOpenModalDelete}>댓글 삭제</button>
       </div>
       {modalEditVisible && (

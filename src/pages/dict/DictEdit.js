@@ -1,18 +1,30 @@
-import React from 'react'
-import '../../styles/css/DictWrite.css'
+import React, { useState, useEffect } from 'react'
+import '../../styles/css/DictEdit.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
+import axios from 'axios'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
 
 const DictEdit = (props) => {
   const dispatch = useDispatch()
 
-  const dictList = useSelector((state) => state.dict.list)
-  const dictId = Number(props.match.params.dictId)
-  const is_edit = dictId ? true : false
+  const [dict, setDict] = useState([])
 
-  console.log(props)
+  const getDictListDB = async () => {
+    let response = await axios.get(`http://52.78.155.185/api/dict/${dictId}`)
+    console.log(response)
+    setDict(response.data.data)
+  }
+
+  React.useEffect(() => {
+    getDictListDB()
+  }, [])
+
+  const dictId = Number(props.match.params.dictId)
+
+  console.log(dict)
+  console.log(dictId)
 
   const [summary, setSummary] = React.useState('')
   const [content, setContent] = React.useState('')
@@ -21,16 +33,20 @@ const DictEdit = (props) => {
     setSummary(e.target.value)
   }
 
+  console.log(summary)
+
   const onChangeContent = (e) => {
     setContent(e.target.value)
   }
 
-  const editDict = (dictId, summary, content) => {
+  console.log(content)
+
+  const editDict = () => {
     if (summary === '' || content === '') {
       swal('빈칸을 모두 입력해주세요!')
       return
     }
-    dispatch(dictActions.editDictDB(dictId, summary, content), [])
+    dispatch(dictActions.editDictDB(dictId, summary, content))
   }
 
   return (
@@ -38,9 +54,9 @@ const DictEdit = (props) => {
       <div className="DictCardEditLayout">
         <div className="DictCardEditPreviewSection">
           <div className="DictCardEditPreview">
-            <div className="DictCardEditPreviewTitle">단어 : {dictId.title}</div>
-            <div className="DictCardEditPreviewSummary">요약 : {dictId.summary}</div>
-            <div className="DictCardEditPreviewContent">설명 : {dictId.content}</div>
+            <div className="DictCardEditPreviewTitle">단어 : {dict.title}</div>
+            <div className="DictCardEditPreviewSummary">요약 : {dict.summary}</div>
+            <div className="DictCardEditPreviewContent">설명 : {dict.meaning}</div>
           </div>
         </div>
         <div className="DictCardEditInputSection">
