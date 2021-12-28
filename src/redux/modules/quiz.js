@@ -22,8 +22,10 @@ const getQuizListDB = (category) => {
     await quizApi
       .getQuizList(category)
       .then((res) => {
+        const quiz_list = res.data.data
         console.log(res.data)
-        dispatch(getQuizList(res.data))
+        console.log(quiz_list)
+        dispatch(getQuizList(quiz_list))
       })
       .catch((err) => {
         console.log('퀴즈 데이터를 불러오는 데 문제가 발생했습니다.', err.response)
