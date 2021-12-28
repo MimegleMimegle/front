@@ -12,6 +12,28 @@
   display: none;
 }
 
+.NewDictAddButtonSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+.NewDictAddButton {
+  border: 1px solid black;
+  background-color: whitesmoke;
+  width: 180px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+.NewDictAddButton:hover {
+  cursor: pointer;
+}
+
 .DictList {
   width: 100%;
   height: 100%;
@@ -26,6 +48,40 @@
 }
 .DictList::-webkit-scrollbar {
   display: none;
+}
+
+.OneDictionaryCardList {
+  position: relative;
+  margin: 10px;
+}
+
+.WordCardList1 {
+  border: 1px solid black;
+  border-radius: 0 0 0 0;
+  top: 0px;
+  left: -12px;
+  background-color: white;
+  width: 140px;
+  height: 70px;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2;
+}
+
+.WordCardList2 {
+  border: 1px solid black;
+  border-radius: 0 0 0 0;
+  top: -70px;
+  left: 0px;
+  background-color: #faea59;
+  width: 140px;
+  height: 70px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .rc-pagination {
