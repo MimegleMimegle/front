@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 import { quizApi } from '../../shared/api'
+import swal from 'sweetalert'
 
 /* action type */
 const GET_QUIZ_LIST = 'GET_QUIZ_LIST'
