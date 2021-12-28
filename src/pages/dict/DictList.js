@@ -25,6 +25,8 @@ const DictList = (props) => {
     getDictListDB()
   }, [page])
 
+  console.log(dict)
+
   const getDictListDB = async () => {
     let response = await axios.get(`http://52.78.155.185/api/dict?page=0&size=10`)
     console.log(response)

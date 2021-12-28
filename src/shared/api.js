@@ -23,11 +23,16 @@ export const userApi = {
   socialLogin: () => instance.get('/api/user/kakao/callback'),
   join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
   userInfo: () => instance.get(`/api/userInfo`),
-  myPage: () => instance.get(`/api/mypage`),
 
   /* 추가 */
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
+}
+
+/*  */
+export const mypageApi = {
+  getMyInfo: () => instance.get('/api/mypage'),
+  editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
 }
 
 export const boardApi = {
