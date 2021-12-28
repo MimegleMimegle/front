@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import '../../styles/css/Join.css'
 import { useDispatch } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
+import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
 
 import styled from 'styled-components'
@@ -87,7 +88,7 @@ const Join = () => {
 
   const join = () => {
     if (username === '' || nickname === '' || password === '' || passwordCheck === '') {
-      window.alert('모두 입력해주세요!')
+      swal('빈칸을 모두 입력해주세요!')
       return
     }
     dispatch(userActions.joinDB(username, nickname, password, passwordCheck))
