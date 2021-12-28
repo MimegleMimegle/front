@@ -82,9 +82,8 @@ const QuizPaper = (props) => {
   const quiz = quiz_list ? quiz_list[currentIndex] : null
 
   React.useEffect(() => {
-    if (quiz_list === null) {
-      dispatch(quizActions.getQuizListDB(category))
-    }
+    dispatch(quizActions.getQuizListDB(category))
+
     //   if (quiz_list && user_answer_list.length === quiz_list.length) {
     //     history.push('/quiz/result')
     //     return
@@ -94,7 +93,7 @@ const QuizPaper = (props) => {
     // if (quiz_list && user_answer_list.length === quiz_list.length) {
     //   return null
     // }
-  })
+  }, [dispatch])
 
   return (
     <>

@@ -12,14 +12,20 @@
   display: none;
 }
 
+.DictCardPreviewGuideText {
+  margin: 0 0 0 30px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
 .DictCardPreviewSection {
-  position: absolute;
+  /* position: absolute; */
 }
 
 .WordCard1 {
   border: 1px solid black;
   border-radius: 0 0 0 0;
-  margin: 20px;
+  margin: 5px 0 0 20px;
   background-color: white;
   width: 20rem;
   height: 10rem;
@@ -33,24 +39,8 @@
   z-index: 2;
 }
 
-.WordCard2 {
-  border: 1px solid black;
-  border-radius: 0 0 0 0;
-  margin: 20px;
-  top: 15px;
-  left: 15px;
-  background-color: #faea59;
-  width: 20rem;
-  height: 10rem;
-  font-size: 15px;
-  font-weight: 500;
-  position: absolute;
-
-  z-index: -1;
-}
-
 .DictCardPreviewTitle {
-  font-size: 20px;
+  font-size: 18px;
   margin: 0 0 20px 20px;
 }
 
@@ -65,10 +55,10 @@
   justify-content: center;
   align-items: flex-start;
   width: 300px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   margin-left: 50px;
-  margin-top: 250px;
+  margin-top: 50px;
 }
 
 .DictCardInputTitle {
@@ -76,7 +66,7 @@
   margin: 0 0 30px 0;
   border: none;
   border-bottom: 1px solid black;
-  font-size: 15px;
+  font-size: 16px;
   background-color: transparent;
 }
 
@@ -85,7 +75,7 @@
   margin: 0 0 30px 0;
   border: none;
   border-bottom: 1px solid black;
-  font-size: 15px;
+  font-size: 16px;
   background-color: transparent;
   resize: none;
   overflow: auto;
@@ -96,17 +86,42 @@
   margin: 0 0 30px 0;
   border: none;
   border-bottom: 1px solid black;
-  font-size: 15px;
+  font-size: 16px;
   background-color: transparent;
   resize: none;
   overflow: auto;
 }
 
-.DictCardSubmitButton {
+.DictCardSubmitSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.DictCardSubmitButton1 {
   width: 100px;
   height: 40px;
-  background-color: thistle;
+  background-color: white;
+  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  z-index: 2;
+}
+
+.DictCardSubmitButton1:active {
+  margin: 15px -8px 0 0;
+  transition: 0.1s ease;
+}
+
+.DictCardSubmitButton2 {
+  background-color: #faea59;
+  border: 1px solid black;
+  width: 100px;
+  height: 40px;
+  margin: 15px 0 0 -92px;
+
+  z-index: -1;
 }
