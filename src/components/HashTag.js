@@ -9,7 +9,7 @@ const HashTag = (props) => {
       .searchPost(props.hashtag)
       .then((response) => {
         console.log(response.data)
-        // props.setFilteredPosts(response.data.data)
+        props.setFilteredPosts(response.data.data)
       })
       .catch((error) => {
         console.log('해시태그 관련 게시글 정보를 불러오는 데 문제가 발생했습니다.', error.response)
@@ -22,7 +22,7 @@ const HashTag = (props) => {
 
   return (
     <>
-      <HashTagButton onClick={clickHashTag}>{props.hashtag}</HashTagButton>
+      <HashTagButton onClick={clickHashTag}># {props.hashtag}</HashTagButton>
     </>
   )
 }
