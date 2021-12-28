@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import '../../styles/css/Login.css'
 import styled from 'styled-components'
+import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import KaKaoLogin from 'react-kakao-login'
 import kakaotalk from '../../styles/image/kakaotalk.svg'
@@ -11,6 +12,7 @@ import googleColor from '../../styles/image/google_color.svg'
 
 const Login = (props) => {
   const dispatch = useDispatch()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -50,7 +52,7 @@ const Login = (props) => {
 
   const login = () => {
     if (username === '' || password === '') {
-      window.alert('아이디, 비밀번호를 입력해주세요!')
+      swal('아이디, 비밀번호를 입력해주세요!')
       return
     }
     dispatch(userActions.logInDB(username, password))
@@ -86,7 +88,7 @@ const Login = (props) => {
           </div>
           <div className="SocialLoginHR">SNS 계정으로 로그인하기</div>
           <div className="SocialLoginBtns">
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/&response_type=code">
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
               <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
             </a>
             <img className="GoogleLoginBtn" size="5" src={googleColor}></img>

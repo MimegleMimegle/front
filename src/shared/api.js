@@ -23,11 +23,16 @@ export const userApi = {
   socialLogin: () => instance.get('/api/user/kakao/callback'),
   join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
   userInfo: () => instance.get(`/api/userInfo`),
-  myPage: () => instance.get(`/api/mypage`),
 
   /* 추가 */
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
+}
+
+/*  */
+export const mypageApi = {
+  getMyInfo: () => instance.get('/api/mypage'),
+  editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
 }
 
 export const boardApi = {
@@ -39,15 +44,14 @@ export const boardApi = {
   /* [수정] selectPost -> searchPost */
   searchPost: (search) => instance.get(`/api/board/search?q=${search}`),
   // 추가
-  likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
+  likePost: (postId) => instance.post(`/api/board/${postId}/like`),
   getSubject: () => instance.get('/api/board/subject'),
-  recommendHashTag: () => instance.get('/api/board/hashTag'),
 }
 
 export const dictApi = {
   getDictMain: () => instance.get('/api/dict?page=0&size=10'),
-  getDictDetail: (dictId) => instance.get('/api/dict/{dictId}'),
-  addDict: (title, content, category) => instance.post('/api/dict', { title: title, cotent: content, category: category }),
+  getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
+  addDict: (title, content) => instance.post('/api/dict', { title: title, content: content }),
   editDict: (dictId) => instance.put(`/api/dict/${dictId}`),
   deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
@@ -70,7 +74,7 @@ export const mainApi = {
 export const commentApi = {
   getComments: (postId) => instance.get(`/api/board/${postId}/comment?page=0&size=10`),
   /* writeComment -> addComment 로 수정 */
-  addComment: (postId, comment) => instance.post(`/api/board/${postId}/comment`, { content: comment }),
-  editComment: (commentId, content) => instance.put(`/api/board/comment/${commentId}`, { content: content }),
+  addComment: (postId) => instance.post(`/api/board/${postId}/comment`),
+  editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
 }
