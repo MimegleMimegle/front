@@ -80,21 +80,9 @@ const getDictDetailDB = (dictId) => {
 
 const addDictDB = (title, content) => {
   return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
-    let formData = new FormData()
-    formData.append('title', title)
-    formData.append('content', content)
-
-    const DB = {
-      method: 'post',
-      url: `http://52.78.155.185/api/dict`,
-      data: formData,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    }
-    axios(DB)
-      .then(() => {
+    dictApi
+      .addDict(title, content)
+      .then((res) => {
         swal('', '성공적으로 등록되었습니다', 'success')
         history.push('/api/dict?page=0&size=10')
       })
@@ -109,19 +97,8 @@ const addDictDB = (title, content) => {
 
 const editDictDB = (dictId, title, content) => {
   return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
-    let formData = new FormData()
-    formData.append('title', title)
-    formData.append('content', content)
-
-    axios({
-      method: 'put',
-      url: `http://52.78.155.185/api/dict/${dictId}`,
-      data: formData,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    })
+    dictApi
+      .editDict(dictId, title, content)
       .then(() => {
         swal('', '게시글이 수정되었습니다.', 'success')
         history.push('/api/dict?page=0&size=10')
