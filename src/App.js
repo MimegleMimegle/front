@@ -5,7 +5,7 @@ import { history } from './redux/ConfigureStore'
 import { ThemeProvider } from 'styled-components'
 import GlobalStyle from './styles/GlobalStyle'
 import theme from './styles/theme'
-import { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, DictEdit, DictList, DictWrite } from './pages'
+import { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, PostSearch, DictEdit, DictList, DictWrite, DictDetail } from './pages'
 import MobileFrame from './components/MobileFrame'
 import CommentTest from './pages/CommentTest'
 
@@ -27,9 +27,11 @@ function App() {
             <Route path="/post/detail/:postId" exact component={PostDetail} />
             <Route path="/post/write" exact component={PostWrite} />
             <Route path="/post/edit/:postId" exact component={PostEdit} />
+            <Route path="/post/search" exact component={PostSearch} />
             <Route path="/dict" exact component={DictList} />
             <Route path="/dict/write" exact component={DictWrite} />
             <Route path="/dict/edit/:dictId" exact component={DictEdit} />
+            <Route path="/dict/:dictId" exact component={DictDetail} />
             {/* 댓글 서버 연결 확인 후 삭제 예정 */}
             <Route path="/comment" exact component={CommentTest} />
             {/* <Route path="" exact component={NotFound} /> */}

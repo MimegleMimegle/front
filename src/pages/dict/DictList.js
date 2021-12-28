@@ -1,28 +1,56 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../styles/css/DictList.css'
 import { useDispatch, useSelector } from 'react-redux'
-import OneDictionaryCard from '../../components/OneDictionaryCard'
+import { history } from '../../redux/ConfigureStore'
+import axios from 'axios'
+// import OneDictionaryCard from '../../components/OneDictionaryCard'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
+import Pagination from 'rc-pagination'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
 
-  const dict_list = useSelector((state) => state.dict.list)
+  // const dictId = Number(props.match.params.dictId)
+
+  const [dict, setDict] = useState([])
+  const [size, setSize] = useState(10)
+  const [page, setPage] = useState(1)
+  const [totalCount, setTotalCount] = useState()
+
+  const handlePageChange = (page) => {
+    setDict({ ...setDict, Page: page })
+  }
 
   React.useEffect(() => {
-    if (dict_list.length === 0) {
-      dispatch(dictActions.getDictMainDB())
-    }
-  }, [])
+    getDictListDB()
+  }, [page])
+
+  console.log(dict)
+
+  const getDictListDB = async () => {
+    let response = await axios.get(`http://52.78.155.185/api/dict?page=0&size=10`)
+    console.log(response)
+    setDict(response.data.data)
+    setTotalCount(response.data.total)
+  }
 
   return (
     <>
       <div className="DictLayout">
-        <div className="DictList">
-          {dict_list.map((d) => {
-            return <OneDictionaryCard key={d.id} {...d} />
-          })}
+        <div className="NewDictAddButtonSection">
+          <div className="NewDictAddButton" onClick={() => history.push('/dict/write')}>
+            + 새로운 용어 등록하기
+          </div>
         </div>
+        <div className="DictList">
+          {dict.map((dict) => (
+            <div className="OneDictionaryCardList" key={dict.id}>
+              <div className="OneDictionaryCardList WordCardList1">{dict.title}</div>
+              <div className="OneDictionaryCardList WordCardList2"></div>
+            </div>
+          ))}
+        </div>
+        <Pagination simple page={page} total={totalCount} size={size} onChange={(page) => setPage(page)} />
       </div>
     </>
   )
