@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import ReactQuill from 'react-quill'
-
 import { actionCreators as postActions } from '../../redux/modules/post'
 import { actionCreators as imageActions } from '../../redux/modules/image'
 import HashTag from '../../components/HashTag'
+import swal from 'sweetalert'
 
 const PostEdit = (props) => {
   const history = useHistory()
