@@ -33,10 +33,6 @@ const PostList = (props) => {
           postList.map((post, index) => {
             return <PostCard post={post} key={post.boardId} />
           })}
-        {/* {/* {post_list.map((p,key)=> {
-          return <PostCard key={p.boardId} {...p} />
-        })} */}
-        {/* <PostCard  /> */}
       </Container>
     </>
   )
