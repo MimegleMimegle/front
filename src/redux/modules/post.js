@@ -98,30 +98,19 @@ const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
       .catch((error) => {
         console.log('게시글을 작성하는 데 문제가 발생했습니다.', error.response)
       })
-
-    // boardApi
-    // .addPost(title,content)
-    // .then((res)=>{
-    //   // console.log(res.data)
-    //   dispatch(addPost(res))
-    //   console.log(addPost(res))
-    //   console.log(res.data);
-    //   console.log(res.status);
-    //   window.location.href="/"
-    // })
-    // .catch((err) => {
-    //   console.log('post작성 실패!',err)
-    // })
   }
 }
 
-const editPostDB = (boardId, title, content, thumbNail) => {
+const editPostDB = (boardId, uploadFile, title, content, thumbNail,) => {
   return async function (dispatch, getState, { history }) {
     const token = localStorage.getItem('token')
     let formData = new FormData()
-    formData.append('title', title)
-    formData.append('content', content)
-    formData.append('thumbNail', thumbNail)
+    const post={
+      title:title,
+      content:content,
+    }
+    formData.append('boardUploadRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
+    formData.append('thumbNail', uploadFile)
 
     axios({
       method: 'put',
@@ -132,14 +121,11 @@ const editPostDB = (boardId, title, content, thumbNail) => {
       },
     })
       .then((res) => {
-        let post_list = res.data
-        console.log(post_list)
-        console.log(res.data)
-        console.log(res.status)
+        const post = res.data.data
+        dispatch(editPost(post))
 
         window.alert('', '게시글이 수정되었습니다.', 'success')
         history.push('/post')
-        dispatch(editPost(post_list, thumbNail, content, title, boardId))
       })
       .catch((err) => {
         console.log('게시글 수정하는데 문제 발생', err.response)

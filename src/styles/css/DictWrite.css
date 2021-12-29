@@ -1,4 +1,4 @@
-.DictionaryCardWriteLayout {
+.DictCardWritePageLayout {
   height: 550px;
   border: 3px solid green;
   overflow-x: hidden;
@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
 }
-.DictionaryCardWriteLayout::-webkit-scrollbar {
+.DictCardWritePageLayout::-webkit-scrollbar {
   display: none;
 }
 
