@@ -1,79 +1,114 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import post, { actionCreators as postActions } from '../../redux/modules/post';
-import  {actionCreators as imageActions} from '../../redux/modules/image';
-import { boardApi } from '../../shared/api';
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
+import ReactQuill from 'react-quill'
 
+import { actionCreators as postActions } from '../../redux/modules/post'
+import { actionCreators as imageActions } from '../../redux/modules/image'
+import HashTag from '../../components/HashTag'
 
 const PostEdit = (props) => {
+  const history = useHistory()
+  const dispatch = useDispatch()
 
-  const fileInput = React.useRef();
-  const dispatch = useDispatch();
-  const { history } = props;
+  const fileInput = React.useRef('')
 
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [thumbNail, setThumbNail] = useState(null)
+  const [hashTag, setHashTag] = useState('')
+  const [hashTagList, setHashTagList] = useState([])
 
-  const postList = useSelector((state) => state.post.list);
-  const boardId = props.match.params.id;
-
-  const selectPostInfo = postList.filter(
-    (list) => list.boardId === parseInt(boardId)
-  );
-
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [thumbNail, setThumbNail] = useState("");
-  const [preview, setPreview] = useState("");
-
-  const changeTitle = (e) => {
-    setTitle(e.target.value);
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value)
   }
 
-  const changeContent = (e) => {
-    setContent(e.target.value);
+  const onChangeContent = (e) => {
+    setContent(e.target.value)
   }
 
-  const selectFile = (e) => {
-    const reader = new FileReader(); // 미리보기 리더
-    const targetThumbNail = fileInput.current.files[0];
-    reader.readAsDataURL(targetThumbNail);
-    setThumbNail(e.target.files[0]);
-    reader.onloadend = () => {
-      setPreview(reader.result);
-  
-      dispatch(imageActions.setPreview(reader.result));
-      // dispatch(postActions.addPost(reader.result));
-    };
-  };
+  const onChangeHashTag = (e) => {
+    setHashTag(e.target.value)
+  }
+
+  const onKeyUp = React.useCallback(
+    (e) => {
+      // if (process.browser) {
+      /* 요소 불러오기, 만들기*/
+      const $hashWrapOutter = document.querySelector('.hashWrapOutter')
+      const $hashWrapInner = document.createElement('div')
+      $hashWrapInner.className = 'hashWrapInner'
+
+      /* 태그를 클릭 이벤트 관련 로직 */
+      $hashWrapInner.addEventListener('click', () => {
+        $hashWrapOutter?.removeChild($hashWrapInner)
+        console.log($hashWrapInner.innerHTML)
+        setHashTagList(hashTagList.filter((hashTag) => hashTag))
+      })
+
+      /* enter 키 코드 :13 */
+      if (e.keyCode === 13 && e.target.value.trim() !== '') {
+        console.log('Enter Key 입력됨!', e.target.value)
+        $hashWrapInner.innerHTML = '#' + e.target.value
+        $hashWrapOutter?.appendChild($hashWrapInner)
+        setHashTagList((hashTagList) => [...hashTagList, hashTag])
+        setHashTag('')
+      }
+    },
+    // },
+    [hashTag, hashTagList]
+  )
+
+  const onChangeFile = (e) => {
+    setThumbNail(e.target.files)
+    let reader = new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+
+    reader.onload = () => {
+      const file = reader.result
+
+      if (file) {
+        let fileInfo = file.toString()
+        setThumbNail(fileInfo)
+      }
+    }
+  }
+  console.log(title)
+  console.log(content)
+  console.log(hashTagList)
 
   const editPost = () => {
+    if (title === '' || content === '') {
+      window.alert('제목 혹은 내용을 작성해주세요.')
+      return
+    }
 
-    dispatch(postActions.editPostDB(thumbNail, title,content, boardId));
-  };
+    const uploadFile = thumbNail ? fileInput.current.files[0] : ''
+    const category = 'FREEBOARD'
+
+    dispatch(postActions.editPostDB(category, title, content, uploadFile, hashTagList))
+  }
 
   return (
     <>
       <Container>
         <PWHeader>
-          <input value={title} onChange={changeTitle} className="writetitle" placeholder="수정할 제목을 입력하세요" />
+          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle}/>
         </PWHeader>
-        {/* <button>임시저장</button> */}
-        <PWBody>
-        <ContentBox
-              defaultValue={selectPostInfo[0] && selectPostInfo[0].content}
-              onChange={changeContent}
-              label="게시글 내용"
-              placeholder="문구 수정 입력..."
-              multiLine
-            />     
-            {/* <img src={preview? preview: "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg"}/>
-            <input ref={fileInput} onChange={selectFile}>이미지불러오기</input>
-             */}
-
+          <PWBody>
+          <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
+          <Preview src={thumbNail}></Preview>
+          <input type="file" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
+          <HashDivWrap className="hashWrap">
+            <div className="hashWrapOutter"></div>
+            <input className="hashInput" type="text" placeholder="해시태그 입력" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
+          </HashDivWrap>
         </PWBody>
         <PWFooter>
-        <button className="postbtn" onClick={editPost} >작성하기</button>
+          <button className="postbtn" onClick={editPost}>
+            수정하기
+          </button>
         </PWFooter>
       </Container>
     </>
@@ -91,8 +126,9 @@ const PWHeader = styled.div`
     width: 100px;
   }
   .writetitle {
-    border: 1px solid lightgray;
-    border-radius: 10px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    /* border-radius: 10px; */
     width: 200px;
   }
 `
@@ -104,7 +140,7 @@ const PWBody = styled.div`
   }
   .writedesc {
     width: 300px;
-    height: 350px;
+    height: 200px;
     border: 1px solid lightgray;
     border-radius: 10px;
   }
@@ -115,15 +151,62 @@ const PWFooter = styled.div`
   justify-content: center;
   .postbtn {
     width: 100px;
-    pading: 2px;
+    padding: 20px;
     border: 1px solid lightgray;
     border-radius: 10px;
-    margin: 0px 5px;
   }
 `
 
-const ContentBox = styled.textarea`
+const Preview = styled.div`
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
+`
 
+const HashDivWrap = styled.div`
+  margin-top: 24px;
+  color: rgb(52, 58, 64);
+  font-size: 1.125rem;
+  display: flex;
+  flex-wrap: wrap;
+  letter-spacing: -0.6px;
+  color: #444241;
+  border-bottom: 1.6px solid #767676;
+  padding: 2px 2px 8px 2px;
+
+  .hashWrapOutter {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .hashWrapInner {
+    margin: 5px 5px 0 0;
+    height: 24px;
+    background: #fff27b;
+    border-radius: 56px;
+    padding: 5px 10px;
+    color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    line-height: 24px;
+    cursor: pointer;
+  }
+
+  .hashInput {
+    width: auto;
+    margin: 10px;
+    display: inline-flex;
+    outline: none;
+    cursor: text;
+    line-height: 2rem;
+    margin-bottom: 0.75rem;
+    min-width: 8rem;
+    border: none;
+  }
 `
 
 export default PostEdit
