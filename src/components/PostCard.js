@@ -5,19 +5,24 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
 const PostCard = (posts) => {
-  const history = useHistory;
-  const postlist = posts;
+  const history = useHistory();
+  const postList = posts;
   console.log(posts)
-  console.log(postlist)
+  console.log(postList)
+
+  const onC = () => {
+    history.push(`/post/detail/${postList.boardId}`);
+  };
+
     return (
       <>  
-        <Container>
+        <Container postList={postList} onClick={onC}>
           <text>닉네임+아이디</text>
           <PostBody>
           <img className= "uploadimg"src="https://i.pinimg.com/564x/38/9a/01/389a01e78d98f7bdb4304b7980b69a22.jpg" alt=""/>
           <div className="listtitle">
-            <text>Title</text> <br/>
-            <text>Contents</text>
+            <text>{postList.title}</text> <br/>
+            <text>{postList.contents}</text>
           </div>
           <text>#tag1 #tag2 #teg3</text>
           </PostBody>

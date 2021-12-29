@@ -1,31 +1,33 @@
-import React from 'react'
-import { Dropdown } from 'semantic-ui-react'
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
-const categoryOption = [
-    {
-      key: '전체 게시글',
-      text: '전체 게시글',
-      value: '전체 게시글',
-    },
-    {
-      key: '조회 순',
-      text: '조회 순',
-      value: '조회 순',
-    },
-    {
-      key: '좋아요 순',
-      text: '좋아요 순',
-      value: '좋아요 순',
-    },
-]
+export default function BasicSelect() {
+  const [view, setView] = React.useState('');
 
-const PostListDropdown = () => (
-  <Dropdown
-    placeholder='전체 게시글'
-    fluid
-    selection
-    options={categoryOption}
-  />
-)
+  const handleChange = (event) => {
+    setView(event.target.value);
+  };
 
-export default PostListDropdown
+  return (
+    <Box sx={{ minWidth: 100 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">보기</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={view}
+          label="View"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>전체게시글</MenuItem>
+          <MenuItem value={20}>좋아요순</MenuItem>
+          <MenuItem value={30}>조회순</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+  );
+}

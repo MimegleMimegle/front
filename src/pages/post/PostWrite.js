@@ -38,7 +38,6 @@ const PostWrite = (props) => {
       return;
     }
     dispatch(postActions.addPostDB(title,content,thumbNail));
-    history.replace("/post");
   }
 
   // const selectFile = (e) => {
