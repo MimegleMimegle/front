@@ -38,11 +38,11 @@ const DictDetail = (props) => {
     console.log(response.data.data.createdAt)
   }
 
-  function formatDate(date) {
-    return date.getFullYear() + '년 ' + (date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' + date.getHours() + '시 ' + date.getMinutes() + '분'
-  }
+  // function formatDate(date) {
+  //   return date.getFullYear() + '년 ' + (date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' + date.getHours() + '시 ' + date.getMinutes() + '분'
+  // }
 
-  let response = axios.get(`http://52.78.155.185/api/dict/${dictId}`)
+  // let response = axios.get(`http://52.78.155.185/api/dict/${dictId}`)
 
   return (
     <>
