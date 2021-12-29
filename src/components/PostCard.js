@@ -1,21 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
+import HashTag from './HashTag'
 
-const PostCard = (props) => {
+const PostCard = ({ post }) => {
+  const history = useHistory()
+
+  console.log(post)
+  const onC = () => {
+    history.push(`/post/detail/${post.boardId}`)
+  }
+
+  /* post 정보에 해시태그 리스트 없음 > 회의에서 확인 필요! */
+
   return (
     <>
-      <Container>
-        <text>닉네임+아이디</text>
+      <Container postList={post} onClick={onC}>
+        <p>{post.writer}</p>
+        <p>{post.username}</p>
         <PostBody>
-          <img className="uploadimg" src="https://i.pinimg.com/564x/38/9a/01/389a01e78d98f7bdb4304b7980b69a22.jpg" alt="" />
+          <img className="uploadimg" src={post.thumbNail} alt="" />
           <div className="listtitle">
-            <text>Title</text> <br />
-            <text>Contents</text>
+            <h4>{post.title}</h4>
+            <p>{post.content}</p>
           </div>
-          <text>#tag1 #tag2 #teg3</text>
+          {post.hashTags &&
+            post.hashTags.map((hashTag) => {
+              return <p>#{hashTag}</p>
+            })}
         </PostBody>
-        <AiOutlineEye /> 조회수 <AiOutlineHeart /> 좋아요수
+        <p>{post.createdAt}</p>
+        <AiOutlineEye /> {post.views} <AiOutlineHeart />
+        {post.likeCnt}
       </Container>
     </>
   )

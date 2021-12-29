@@ -5,31 +5,34 @@ import PostCard from '../../components/PostCard'
 import { MdPostAdd } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import post, { actionCreators as postActions } from '../../redux/modules/post'
+import PostListDropdown from '../../components/PostListDropdown'
 
 const PostList = (props) => {
+  const history = useHistory()
   const dispatch = useDispatch()
-  // const boardList = useSelector((state) => state.board.list) // state는 리덕스 스토어의 전체 데이터
-
-  const [board, setBoard] = useState([])
-
-  console.log(board)
+  const postList = useSelector((state) => state.post.list) // state는 리덕스 스토어의 전체 데이터
+  console.log(postList)
 
   useEffect(() => {
     dispatch(postActions.getPostsDB())
-  }, [board])
+  }, [])
 
   return (
     <>
       <Container>
-        <button className="pluspost">+ 밈 글 등록하기</button>
-
-        {board.map((board) => {
-          return (
-            <div key={board.Id}>
-              <PostCard boardId={board.Id} {...board} />
-            </div>
-          )
-        })}
+        <button
+          className="pluspost"
+          onClick={() => {
+            history.push('/post/write')
+          }}
+        >
+          + 밈 글 등록하기
+        </button>
+        <PostListDropdown />
+        {postList &&
+          postList.map((post, index) => {
+            return <PostCard post={post} key={post.boardId} />
+          })}
         {/* {/* {post_list.map((p,key)=> {
           return <PostCard key={p.boardId} {...p} />
         })} */}

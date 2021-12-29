@@ -6,7 +6,6 @@ import moment from 'moment'
 import 'moment'
 import axios from 'axios'
 import { Login } from '../../pages'
-import swal from 'sweetalert'
 
 // /* action type */ 목록/상세/작성/수정/삭제/검색
 const GET_POST = 'GET_POST'
@@ -19,17 +18,10 @@ const LOADING = 'LOADING'
 // /* action creator */
 const getPost = createAction(GET_POST, (post_list) => ({ post_list }))
 const getOnePost = createAction(GET_ONE_POST, (post, boardId) => ({ post, boardId }))
-const addPost = createAction(ADD_POST, (post_list) => ({ post_list }))
+const addPost = createAction(ADD_POST, (post) => ({ post }))
 const editPost = createAction(EDIT_POST, (thumbNail, title, boardId, writer) => ({ thumbNail, title, boardId, writer }))
 const deletePost = createAction(DELETE_POST, (boardId, post) => ({ boardId, post }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
-
-// const getPosts = createAction(GET_POST, (categoryName,boardId,postlist)=>({categoryName,boardId,postlist}));
-// const getOnePost = createAction(GET_ONE_POST, (boardId)=> ({boardId}));
-// const addPost = createAction(ADD_POST,(post)=>({post}));
-// const editPost = createAction(EDIT_POST,(boardId,newPost)=> ({boardId,newPost}));
-// const deletePost = createAction(DELETE_POST,(boardId)=>({boardId,}));
-// const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 // /* initial state */
 const initialState = {
@@ -48,77 +40,21 @@ const initalPost = {
   likeCnt: 1,
   hashTags: [],
 }
-// const initialState = {
-//     list: [],
-//     is_laoding: false,
-
-//     postlist: {
-//       boardId: "boardId",
-//       thumbNail: "thumNail",
-//       title: "title",
-//       username: "username",
-//       writer: "writer",
-//       createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-//       views: 1,
-//       likeCnt: 1,
-//       hashTags: [],
-//     },
-
-//     post: {
-//       boardId: 0,
-//       title: "title",
-//       content: "content",
-//       category: "category",
-//       thumbNail: "imgSrc",
-//       createdAt: "2022-01-01 11:11:11",
-//     }
-
-// }
-//     list: [],
-//     is_laoding: false,
-
-//     postlist: {
-//       boardId: "boardId",
-//       thumbNail: "thumNail",
-//       title: "title",
-//       username: "username",
-//       writer: "writer",
-//       createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-//       views: 1,
-//       likeCnt: 1,
-//       hashTags: [],
-//     },
-
-//     post: {
-//       boardId: 0,
-//       title: "title",
-//       content: "content",
-//       category: "category",
-//       thumbNail: "imgSrc",
-//       createdAt: "2022-01-01 11:11:11",
-//     }
-// }
 
 // /* middleware */
 
 const getPostsDB = () => {
   return function (dispatch, getState, { history }) {
-    const categoryName = 'FREEBOARD'
     boardApi
-      .getPosts(categoryName)
+      .getPosts()
       .then((res) => {
-        console.log(res.data)
-        let post_list = []
-        // res.data.forEach((post) => {
-        //   console.log({ ...post })
-        //   post_list.push({ ...post })
-        // })
-        // dispatch(getPost(post_list))
+        const post_list = res.data.data
+        dispatch(getPost(post_list))
       })
       .catch((err) => {
         console.log('게시판을 불러오기 문제 발생', err.response.data)
-        // console.log(err.response.status)
-        // console.log(err.res.headers)
+        console.log(err.response.status)
+        console.log(err.res.headers)
       })
   }
 }
@@ -138,33 +74,29 @@ const getOnePostDB = (boardId) => {
   }
 }
 
-const addPostDB = (title, content, thumbNail) => {
-  return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
+const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
+  return async function (dispatch, getState, { history }) {
     const formData = new FormData()
-    formData.append('title', title)
-    formData.append('content', content)
-    formData.append('thumbNail', thumbNail)
-
-    const DB = {
-      method: 'post',
-      url: `http://52.78.155.185/api/board`,
-      data: formData,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
+    const post = {
+      title: title,
+      content: content,
+      hashTags: hashTag_list,
     }
-    axios(DB)
-      .then(() => {
-        swal('', '성공적으로 등록되었습니다', 'success')
-        history.push('/api/board/FREEBOARD')
-      })
 
-      .catch((err) => {
-        if (err.response.status) {
-          swal('로그인 세션 만료')
-          history.replace('/')
-        }
+    formData.append('thumbNail', uploadFile)
+    formData.append('boardUploadRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
+
+    await boardApi
+      .writePost(category, formData)
+      .then((response) => {
+        const post = response.data.data
+        dispatch(addPost(post))
+      })
+      .then(() => {
+        history.push('/post')
+      })
+      .catch((error) => {
+        console.log('게시글을 작성하는 데 문제가 발생했습니다.', error.response)
       })
 
     // boardApi
@@ -205,7 +137,7 @@ const editPostDB = (boardId, title, content, thumbNail) => {
         console.log(res.data)
         console.log(res.status)
 
-        swal('', '게시글이 수정되었습니다.', 'success')
+        window.alert('', '게시글이 수정되었습니다.', 'success')
         history.push('/post')
         dispatch(editPost(post_list, thumbNail, content, title, boardId))
       })
