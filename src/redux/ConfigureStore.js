@@ -8,6 +8,7 @@ import User from './modules/user'
 import Dict from './modules/dict'
 import Main from './modules/main'
 import Comment from './modules/comment'
+import Mypage from './modules/mypage'
 
 export const history = createBrowserHistory()
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   dict: Dict,
   main: Main,
   comment: Comment,
+  mypage: Mypage,
   router: connectRouter(history),
 })
 

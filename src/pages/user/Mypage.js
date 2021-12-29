@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { mypageApi } from '../../shared/api'
 import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
@@ -21,12 +20,13 @@ const Mypage = ({ profileImgUrl }) => {
 
   const fileInput = React.useRef('')
 
-  const [myInfo, setMyInfo] = React.useState(null)
   const [showModal, setShowModal] = React.useState(false)
   const [imageFile, setImageFile] = React.useState(null)
   const [nickname, setNickname] = React.useState('')
   const [isNickname, setIsNickname] = React.useState(false)
   const [isNicknameChecked, setIsNicknameChecked] = React.useState(false)
+
+  const user_info = useSelector((state) => state.mypage.user_info)
 
   const editProfile = () => {
     setShowModal(true)
@@ -105,7 +105,9 @@ const Mypage = ({ profileImgUrl }) => {
     setIsNicknameChecked(false)
   }
 
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {
+    dispatch(mypageActions.getUserInfoDB())
+  }, [dispatch])
 
   return (
     <>
@@ -139,9 +141,16 @@ const Mypage = ({ profileImgUrl }) => {
             </div>
             <div className="profile-info box-2"></div>
           </UserProfile>
-          <DropDown>sort dropbox section</DropDown>
+          <DropDown>
+            <div>
+              <div>전체</div>
+              <button>최신순</button>
+              <button>좋아요순</button>
+            </div>
+          </DropDown>
           <UserActivity>
-            <PostCard />
+            {/*  */}
+            {/* <PostCard /> */}
           </UserActivity>
         </div>
         {showModal && (

@@ -13,8 +13,6 @@ const PostCard = ({ post }) => {
     history.push(`/post/detail/${post.boardId}`)
   }
 
-  /* post 정보에 해시태그 리스트 없음 > 회의에서 확인 필요! */
-
   return (
     <>
       <Container postList={post} onClick={onC}>
@@ -27,8 +25,8 @@ const PostCard = ({ post }) => {
             <p>{post.content}</p>
           </div>
           {post.hashTags &&
-            post.hashTags.map((hashTag) => {
-              return <p>#{hashTag}</p>
+            post.hashTags.map((hashTag, index) => {
+              return <p key={index}>#{hashTag}</p>
             })}
         </PostBody>
         <p>{post.createdAt}</p>

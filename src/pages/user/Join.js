@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
+import { userApi } from '../../shared/api'
 
 import styled from 'styled-components'
 
@@ -23,10 +24,14 @@ const Join = () => {
   const [passwordCheckMessage, setPasswordCheckMessage] = useState('')
 
   // 유효성 검사
-  const [isUsername, setIsUsername] = useState('false')
-  const [isNickname, setIsNickname] = useState('false')
-  const [isPassword, setIsPassword] = useState('false')
-  const [isPasswordCheck, setIsPasswordCheck] = useState('false')
+  const [isUsername, setIsUsername] = useState(false)
+  const [isNickname, setIsNickname] = useState(false)
+  const [isPassword, setIsPassword] = useState(false)
+  const [isPasswordCheck, setIsPasswordCheck] = useState(false)
+
+  // 아이디 & 닉네임 중복확인
+  const [isUsernameChecked, setIsUsernameChecked] = useState(false)
+  const [isNicknameChecked, setIsNicknameChecked] = useState(false)
 
   // 유저네임 유효성 검사
   const onChangeUsername = (e) => {
@@ -86,6 +91,42 @@ const Join = () => {
     }
   }
 
+  const checkUsername = async () => {
+    await userApi
+      .checkUsername(username)
+      .then((response) => {
+        console.log(response.data)
+        if (response.data.result === true) {
+          window.alert('사용 가능한 아이디입니다.')
+          setIsUsernameChecked(true)
+        } else {
+          window.alert('사용 중인 아이디입니다.')
+          setIsUsernameChecked(false)
+        }
+      })
+      .catch((error) => {
+        console.log('아이디를 중복확인하는 데 문제가 발생했습니다.', error.response)
+      })
+  }
+
+  const checkNickname = async () => {
+    await userApi
+      .checkNickname(nickname)
+      .then((response) => {
+        console.log(response.data)
+        if (response.data.result === true) {
+          window.alert('사용 가능한 닉네임입니다.')
+          setIsNicknameChecked(true)
+        } else {
+          window.alert('사용 중인 닉네임입니다.')
+          setIsNicknameChecked(false)
+        }
+      })
+      .catch((error) => {
+        console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
+      })
+  }
+
   const join = () => {
     if (username === '' || nickname === '' || password === '' || passwordCheck === '') {
       swal('빈칸을 모두 입력해주세요!')
@@ -105,12 +146,22 @@ const Join = () => {
             <div className="JoinButton_join">회원가입</div>
           </div>
           <div className="LoginOrJoinInputs_join">
-            <input className="JoinInputBox" placeholder="아이디" type="text" value={username} onChange={onChangeUsername} />
-            {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
-            <input className="JoinInputBox" maxLength="10" placeholder="닉네임" text="이름" type="text" value={nickname} onChange={onChangeNickname} />
-            {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>}
+            <DoubleCheckBox>
+              <input className="JoinInputBox input1" placeholder="아이디" type="text" value={username} onChange={onChangeUsername} />
+              {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
+              <button className="doubleCheckButton" onClick={checkUsername}>
+                중복확인
+              </button>
+            </DoubleCheckBox>
+            <DoubleCheckBox>
+              <input className="JoinInputBox input1" maxLength="10" placeholder="닉네임" text="이름" type="text" value={nickname} onChange={onChangeNickname} />
+              {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>}
+              <button className="doubleCheckButton" onClick={checkNickname}>
+                중복확인
+              </button>
+            </DoubleCheckBox>
             <input
-              className="JoinInputBox"
+              className="JoinInputBox input2"
               type="password"
               placeholder="비밀번호"
               onChange={onChangePassword}
@@ -119,7 +170,7 @@ const Join = () => {
               value={password}
             />
             {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
-            <input className="JoinInputBox" type="password" placeholder="비밀번호 확인" onChange={onChangePasswordCheck} passwordText=" " title="비밀번호 확인" value={passwordCheck} />
+            <input className="JoinInputBox input2" type="password" placeholder="비밀번호 확인" onChange={onChangePasswordCheck} passwordText=" " title="비밀번호 확인" value={passwordCheck} />
             {setPasswordCheck.length > 0 && <Span className={`message ${isPasswordCheck ? 'success' : 'error'}`}>{passwordCheckMessage}</Span>}
             <button
               className="JoinSubmitButton"
@@ -145,4 +196,10 @@ const Span = styled.span`
   font-size: 12px;
   color: #ffa07a;
 `
+const DoubleCheckBox = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`
+
 export default Join
