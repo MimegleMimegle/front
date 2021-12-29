@@ -27,7 +27,7 @@ const Header = () => {
           <li style={{ width: '100px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Logo
               className="nav-item-logo"
-              href="true"
+              href
               onClick={() => {
                 history.push('/')
               }}

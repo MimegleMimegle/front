@@ -11,7 +11,6 @@ import QuizResult from '../pages/QuizResult'
 
 const QuizPaper = (props) => {
   const category = useParams().category
-
   const dispatch = useDispatch()
 
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
