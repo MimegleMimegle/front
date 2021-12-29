@@ -31,7 +31,7 @@ function App() {
             <Route path="/dict" exact component={DictList} />
             <Route path="/dict/write" exact component={DictWrite} />
             <Route path="/dict/edit/:dictId" exact component={DictEdit} />
-            <Route path="/dict/:dictId" exact component={DictDetail} />
+            <Route path="/dict/detail/:dictId" exact component={DictDetail} />
             {/* 댓글 서버 연결 확인 후 삭제 예정 */}
             <Route path="/comment" exact component={CommentTest} />
             {/* <Route path="" exact component={NotFound} /> */}

@@ -43,14 +43,23 @@
   flex-direction: row;
 }
 
+.OneDictCardDetailInfoLike {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px 0 0 30px;
+}
+.OneDictCardDetailInfoLike:hover {
+  cursor: pointer;
+}
+
 .OneDictCardDetailInfoLikeCnt {
   font-size: 14px;
   font-weight: 500;
-  margin: 20px 0 0 50px;
+  margin: 20px 0 0 10px;
 }
 
 .OneDictCardDetailInfoFirstWriter {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 500;
   margin: 22.5px 0 0 70px;
 }

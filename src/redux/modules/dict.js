@@ -16,6 +16,8 @@ const GET_DICT_HISTORY = 'GET_DICT_HISTORY'
 const GET_DICT_HISTORY_DETAIL = 'GET_DICT_HISTORY_DETAIL'
 const ROLLBACK_ONE_DICT = 'ROLLBACK_ONE_DICT'
 const LOADING = 'LOADING'
+const LIKE_DICT = 'LIKE_DICT'
+const TELL_ME_TOTAL_LENGTH = 'TELL_ME_TOTAL_LENGTH'
 
 /* action creator */
 const getDictMain = createAction(GET_DICT_MAIN, (dict_list, paging) => ({ dict_list, paging }))
@@ -29,10 +31,16 @@ const getDictHistory = createAction(GET_DICT_HISTORY)
 const getDictHistoryDetail = createAction(GET_DICT_HISTORY_DETAIL)
 const rollbackOneDict = createAction(ROLLBACK_ONE_DICT)
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
+const likeDict = createAction(LIKE_DICT, (dictId, isLike = false) => ({
+  dictId,
+  isLike,
+}))
+const tellMeTotalLength = createAction(TELL_ME_TOTAL_LENGTH)
 
 /* initial state */
 const initialState = {
   is_loading: false,
+  isLike: false,
   list: [],
   paging: { page: null, size: 10 },
 }
@@ -140,6 +148,21 @@ const deleteDictDB = (dictId) => {
   }
 }
 
+const likeDictDB = (dictId, isLike) => {
+  return function (dispatch, getState, { history }) {
+    dictApi
+      .likeDict(dictId)
+      .then((res) => {
+        // console.log(res);
+        window.location.reload()
+        dispatch(likeDict(dictId, isLike))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
+
 /* reducer */
 export default handleActions(
   {
@@ -187,6 +210,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.loading = action.payload.loading
       }),
+    [TELL_ME_TOTAL_LENGTH]: (state, action) =>
+      produce(state, (draft) => {
+        draft.loading = action.payload.loagding
+      }),
   },
   initialState
 )
@@ -208,6 +235,8 @@ const actionCreators = {
   addDictDB,
   editDictDB,
   deleteDictDB,
+  likeDictDB,
+  tellMeTotalLength,
 }
 
 export { actionCreators }

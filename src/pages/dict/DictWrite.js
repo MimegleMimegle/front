@@ -32,13 +32,9 @@ const DictWrite = (props) => {
     dispatch(dictActions.addDictDB(title, summary, content), [])
   }
 
-  const editDict = (dictId, title, summary, content) => {
-    dispatch(dictActions.editDictDB(dictId, title, summary, content), [])
-  }
-
   return (
     <>
-      <div className="DictionaryCardWriteLayout">
+      <div className="DictCardWritePageLayout">
         <text className="DictCardPreviewGuideText">예시</text>
         <div className="DictCardPreviewSection">
           <div className="DictionaryCardPreview WordCard1">

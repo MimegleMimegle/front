@@ -40,19 +40,18 @@ export const mypageApi = {
 export const boardApi = {
   getPosts: () => instance.get('/api/board/list/FREEBOARD'),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
-  writePost: (title, content, subject, category,) => instance.post('/api/board/FREEBOARD', { title: title, content: content, subject: subject, category: category }),
+  writePost: (title, content, subject, category) => instance.post('/api/board/FREEBOARD', { title: title, content: content, subject: subject, category: category }),
   editPost: (boardId, title, content, subject) => instance.put(`/api/board/${boardId}`, { title: title, content: content, subject: subject }),
   deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
   selectPost: () => instance.get('/api/board?q=query'),
   // 추가
   likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
-  getSubject: ()=> instance.get('/api/board/subject'),
-  recommendHashTag: ()=>instance.get('/api/board/hashTag'),
-  
+  getSubject: () => instance.get('/api/board/subject'),
+  recommendHashTag: () => instance.get('/api/board/hashTag'),
 }
 
 export const dictApi = {
-  getDictMain: () => instance.get('/api/dict?page=0&size=10'),
+  getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
   editDict: (dictId, summary, content) => instance.put(`/api/dict/${dictId}`, { dictId: dictId, summary: summary, content: content }),
@@ -61,7 +60,8 @@ export const dictApi = {
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
   /* 추가 */
-  liked: (dictId) => instance.get(`/api/dict/${dictId}/like`),
+  likeDict: (dictId) => instance.get(`/api/dict/${dictId}/like`),
+  tellMeTotalLength: () => instance.get('/api/count/dict'),
 }
 
 export const quizApi = {
