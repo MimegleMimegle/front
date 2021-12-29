@@ -62,6 +62,7 @@ const logInDB = (username, password) => {
         setCookie('token', res.headers.authorization, 3)
         localStorage.setItem('username', res.data.data.username)
         localStorage.setItem('nickname', res.data.data.nickname)
+        localStorage.setItem('id', res.data.data.userId)
         dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
         history.replace('/')
       })

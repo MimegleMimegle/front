@@ -6,7 +6,6 @@ import moment from 'moment'
 import 'moment'
 import axios from 'axios'
 import { Login } from '../../pages'
-import swal from 'sweetalert'
 
 // /* action type */ 목록/상세/작성/수정/삭제/검색
 const GET_POST = 'GET_POST'
@@ -23,13 +22,6 @@ const addPost = createAction(ADD_POST, (post_list) => ({ post_list }))
 const editPost = createAction(EDIT_POST, (thumbNail, title, boardId, writer) => ({ thumbNail, title, boardId, writer }))
 const deletePost = createAction(DELETE_POST, (boardId, post) => ({ boardId, post }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
-
-// const getPosts = createAction(GET_POST, (categoryName,boardId,postlist)=>({categoryName,boardId,postlist}));
-// const getOnePost = createAction(GET_ONE_POST, (boardId)=> ({boardId}));
-// const addPost = createAction(ADD_POST,(post)=>({post}));
-// const editPost = createAction(EDIT_POST,(boardId,newPost)=> ({boardId,newPost}));
-// const deletePost = createAction(DELETE_POST,(boardId)=>({boardId,}));
-// const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 // /* initial state */
 const initialState = {
@@ -48,77 +40,26 @@ const initalPost = {
   likeCnt: 1,
   hashTags: [],
 }
-// const initialState = {
-//     list: [],
-//     is_laoding: false,
-
-//     postlist: {
-//       boardId: "boardId",
-//       thumbNail: "thumNail",
-//       title: "title",
-//       username: "username",
-//       writer: "writer",
-//       createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-//       views: 1,
-//       likeCnt: 1,
-//       hashTags: [],
-//     },
-
-//     post: {
-//       boardId: 0,
-//       title: "title",
-//       content: "content",
-//       category: "category",
-//       thumbNail: "imgSrc",
-//       createdAt: "2022-01-01 11:11:11",
-//     }
-
-// }
-//     list: [],
-//     is_laoding: false,
-
-//     postlist: {
-//       boardId: "boardId",
-//       thumbNail: "thumNail",
-//       title: "title",
-//       username: "username",
-//       writer: "writer",
-//       createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
-//       views: 1,
-//       likeCnt: 1,
-//       hashTags: [],
-//     },
-
-//     post: {
-//       boardId: 0,
-//       title: "title",
-//       content: "content",
-//       category: "category",
-//       thumbNail: "imgSrc",
-//       createdAt: "2022-01-01 11:11:11",
-//     }
-// }
 
 // /* middleware */
 
 const getPostsDB = () => {
   return function (dispatch, getState, { history }) {
-    const categoryName = 'FREEBOARD'
     boardApi
-      .getPosts(categoryName)
+      .getPosts()
       .then((res) => {
-        console.log(res.data)
         let post_list = []
-        // res.data.forEach((post) => {
-        //   console.log({ ...post })
-        //   post_list.push({ ...post })
-        // })
-        // dispatch(getPost(post_list))
+        res.data.forEach((post) => {
+          console.log({ ...post })
+          post_list.push({ ...post })
+          console.log(res.status)
+        })
+        dispatch(getPost(post_list))
       })
       .catch((err) => {
         console.log('게시판을 불러오기 문제 발생', err.response.data)
-        // console.log(err.response.status)
-        // console.log(err.res.headers)
+        console.log(err.response.status)
+        console.log(err.res.headers)
       })
   }
 }
@@ -148,7 +89,7 @@ const addPostDB = (title, content, thumbNail) => {
 
     const DB = {
       method: 'post',
-      url: `http://52.78.155.185/api/board`,
+      url: `http://52.78.155.185/api/board/list/FREEBOARD`,
       data: formData,
       headers: {
         authorization: `Bearer ${token}`,
@@ -156,15 +97,14 @@ const addPostDB = (title, content, thumbNail) => {
     }
     axios(DB)
       .then(() => {
-        swal('', '성공적으로 등록되었습니다', 'success')
-        history.push('/api/board/FREEBOARD')
+        window.alert('', '성공적으로 등록되었습니다', 'success')
+        history.replace('/post')
       })
 
       .catch((err) => {
-        if (err.response.status) {
-          swal('로그인 세션 만료')
-          history.replace('/')
-        }
+        console.log(err.response)
+        console.log(err.response.data)
+        console.log(err.response.status)
       })
 
     // boardApi
@@ -205,7 +145,7 @@ const editPostDB = (boardId, title, content, thumbNail) => {
         console.log(res.data)
         console.log(res.status)
 
-        swal('', '게시글이 수정되었습니다.', 'success')
+        window.alert('', '게시글이 수정되었습니다.', 'success')
         history.push('/post')
         dispatch(editPost(post_list, thumbNail, content, title, boardId))
       })

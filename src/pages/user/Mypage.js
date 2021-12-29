@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { mypageApi } from '../../shared/api'
+import { userApi } from '../../shared/api'
+import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
 import '../../styles/css/Mypage.css'
 
@@ -12,11 +15,18 @@ import ModalWrapper from '../../components/ModalWrapper'
 import { AiOutlineEdit } from 'react-icons/ai'
 
 const Mypage = ({ profileImgUrl }) => {
+  const dispatch = useDispatch()
+
+  const userId = localStorage.getItem('id')
+
   const fileInput = React.useRef('')
 
   const [myInfo, setMyInfo] = React.useState(null)
   const [showModal, setShowModal] = React.useState(false)
   const [imageFile, setImageFile] = React.useState(null)
+  const [nickname, setNickname] = React.useState('')
+  const [isNickname, setIsNickname] = React.useState(false)
+  const [isNicknameChecked, setIsNicknameChecked] = React.useState(false)
 
   const editProfile = () => {
     setShowModal(true)
@@ -43,42 +53,59 @@ const Mypage = ({ profileImgUrl }) => {
     }
   }
 
-  const _editProfileImage = async () => {
-    if (imageFile) {
-      const uploadFile = fileInput.current.files[0]
-      const formData = new FormData()
-
-      formData.append('images', uploadFile)
-      console.log(uploadFile)
-      console.log(formData.entries())
-
-      await mypageApi
-        .editProfileImage(formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then((response) => {
-          console.log(response.data)
-        })
-        .catch((error) => {
-          console.log('프로필 사진을 변경하는 데 문제가 발생했습니다.', error.response)
-        })
+  const handleChangeNickname = (e) => {
+    const nicknameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/
+    const currentNickname = e.target.value
+    setNickname(currentNickname)
+    if (!nicknameRegExp.test(currentNickname)) {
+      setIsNickname(false)
+    } else {
+      setIsNickname(true)
     }
-    setShowModal(false)
   }
 
-  React.useEffect(() => {
-    // mypageApi
-    //   .getMyInfo()
-    //   .then((response) => {
-    //     console.log(response.data)
-    //     // setMyInfo(response.data.data)
-    //   })
-    //   .catch((error) => {
-    //     console.log('마이 페이지 정보를 불러오는 데 문제가 발생했습니다.', error.response)
-    //   })
-  }, [])
+  const checkNickname = async () => {
+    await userApi
+      .checkNickname(nickname)
+      .then((response) => {
+        console.log(response.data)
+        if (response.data.result === true) {
+          window.alert('사용 가능한 닉네임입니다.')
+          setIsNicknameChecked(true)
+        } else {
+          window.alert('사용 중인 닉네임입니다.')
+          setIsNicknameChecked(false)
+        }
+      })
+      .catch((error) => {
+        console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
+      })
+  }
+
+  console.log(nickname)
+  console.log(isNickname)
+  console.log(isNicknameChecked)
+
+  const _editProfile = async () => {
+    if (imageFile) {
+      const uploadFile = fileInput.current.files[0]
+      dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
+    }
+
+    if (nickname && isNickname && isNicknameChecked) {
+      dispatch(mypageActions.editNicknameDB(userId, nickname))
+    } else {
+      window.alert('닉네임을 확인해주세요!')
+    }
+
+    setShowModal(false)
+    setImageFile(null)
+    setNickname('')
+    setIsNickname(false)
+    setIsNicknameChecked(false)
+  }
+
+  React.useEffect(() => {}, [])
 
   return (
     <>
@@ -125,6 +152,10 @@ const Mypage = ({ profileImgUrl }) => {
                   <ProfileImagePreview src={imageFile ? imageFile : profileImgUrl} />
                 </div>
                 <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg" />
+                <div>
+                  <input type="text" onChange={handleChangeNickname} />
+                  <button onClick={checkNickname}>중복확인</button>
+                </div>
               </ModalBody>
               <ModalFooter>
                 <button
@@ -135,8 +166,8 @@ const Mypage = ({ profileImgUrl }) => {
                 >
                   취소
                 </button>
-                <button className="btn upload-btn" onClick={_editProfileImage}>
-                  프로필 사진 변경
+                <button className="btn upload-btn" onClick={_editProfile}>
+                  프로필 변경
                 </button>
               </ModalFooter>
             </ModalContainer>
@@ -288,7 +319,7 @@ const UserActivity = styled.div`
 
 const ModalContainer = styled.div`
   width: 70%;
-  height: 200px;
+  height: 300px;
   background-color: #fff;
   /* border-radius: 10px; */
   position: absolute;
@@ -331,11 +362,11 @@ const ModalFooter = styled.div`
   }
 
   .cancel-btn {
-    width: 30%;
+    width: 35%;
     background-color: #e8e8e8;
   }
   .upload-btn {
-    width: 70%;
+    width: 65%;
     background-color: #faea59;
   }
 `
