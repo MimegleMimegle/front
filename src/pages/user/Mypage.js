@@ -9,6 +9,7 @@ import { history } from '../../redux/ConfigureStore'
 import '../../styles/css/Mypage.css'
 
 import PostCard from '../../components/PostCard'
+import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
 import ModalWrapper from '../../components/ModalWrapper'
 
 import { AiOutlineEdit } from 'react-icons/ai'
@@ -167,7 +168,13 @@ const Mypage = ({ profileImgUrl }) => {
             {/* Board */}
             {showBoard && <div>내가 작성한 밈글</div>}
             {/* Photo */}
-            {showPhoto && <div>내가 올린 짤</div>}
+            {showPhoto && (
+              <div style={{ width: '100%', padding: '0 20px' }}>
+                <MyPageOneImageCard />
+                <MyPageOneImageCard />
+                <MyPageOneImageCard />
+              </div>
+            )}
           </UserActivity>
         </div>
         {showModal && (
