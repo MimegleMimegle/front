@@ -43,10 +43,11 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
     }
   })
 
-  const menus = [
+  const menu_list = [
     { name: '퀴즈', path: '/quiz' },
     { name: '용어 사전', path: '/dict' },
     { name: '커뮤니티', path: '/post' },
+    { name: '짤방', path: '/image' },
   ]
   return (
     <>
@@ -82,7 +83,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
           </div>
         </div>
 
-        {menus.map((menu, index) => {
+        {menu_list.map((menu, index) => {
           return <SidebarItem key={index} menu={menu} setShowSidebar={setShowSidebar} />
         })}
         <UserMenuBox>
