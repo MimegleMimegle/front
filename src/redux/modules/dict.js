@@ -3,6 +3,7 @@ import { produce } from 'immer'
 import { dictApi } from '../../shared/api'
 import axios from 'axios'
 import swal from 'sweetalert'
+import { getCookie } from '../../shared/cookie'
 
 /* action type */
 const GET_DICT_MAIN = 'GET_DICT_MAIN'
@@ -16,7 +17,6 @@ const GET_DICT_HISTORY = 'GET_DICT_HISTORY'
 const GET_DICT_HISTORY_DETAIL = 'GET_DICT_HISTORY_DETAIL'
 const ROLLBACK_ONE_DICT = 'ROLLBACK_ONE_DICT'
 const LOADING = 'LOADING'
-const LIKE_DICT = 'LIKE_DICT'
 const TELL_ME_TOTAL_LENGTH = 'TELL_ME_TOTAL_LENGTH'
 
 /* action creator */
@@ -31,10 +31,7 @@ const getDictHistory = createAction(GET_DICT_HISTORY)
 const getDictHistoryDetail = createAction(GET_DICT_HISTORY_DETAIL)
 const rollbackOneDict = createAction(ROLLBACK_ONE_DICT)
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
-const likeDict = createAction(LIKE_DICT, (dictId, isLike = false) => ({
-  dictId,
-  isLike,
-}))
+//추가
 const tellMeTotalLength = createAction(TELL_ME_TOTAL_LENGTH)
 
 /* initial state */
@@ -130,7 +127,7 @@ const editDictDB = (dictId, summary, content) => {
 
 const deleteDictDB = (dictId) => {
   return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
+    const token = getCookie('token')
 
     dictApi
       .deleteDict(dictId)
@@ -144,21 +141,6 @@ const deleteDictDB = (dictId) => {
           console.log(err.res.status)
           console.log(err.res.headers)
         }
-      })
-  }
-}
-
-const likeDictDB = (dictId, isLike) => {
-  return function (dispatch, getState, { history }) {
-    dictApi
-      .likeDict(dictId)
-      .then((res) => {
-        // console.log(res);
-        window.location.reload()
-        dispatch(likeDict(dictId, isLike))
-      })
-      .catch((err) => {
-        console.log(err)
       })
   }
 }
@@ -212,7 +194,7 @@ export default handleActions(
       }),
     [TELL_ME_TOTAL_LENGTH]: (state, action) =>
       produce(state, (draft) => {
-        draft.loading = action.payload.loagding
+        draft.list = action.payload
       }),
   },
   initialState
@@ -235,7 +217,6 @@ const actionCreators = {
   addDictDB,
   editDictDB,
   deleteDictDB,
-  likeDictDB,
   tellMeTotalLength,
 }
 
