@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
+import { history } from '../../redux/ConfigureStore'
 
 import '../../styles/css/Mypage.css'
 
-import OneDictionaryCard from '../../components/OneDictionaryCard'
 import PostCard from '../../components/PostCard'
 import ModalWrapper from '../../components/ModalWrapper'
 
@@ -25,6 +25,10 @@ const Mypage = ({ profileImgUrl }) => {
   const [nickname, setNickname] = React.useState('')
   const [isNickname, setIsNickname] = React.useState(false)
   const [isNicknameChecked, setIsNicknameChecked] = React.useState(false)
+
+  const [showDictionary, setShowDictionary] = React.useState(true)
+  const [showBoard, setShowBoard] = React.useState(false)
+  const [showPhoto, setShowPhoto] = React.useState(false)
 
   const user_info = useSelector((state) => state.mypage.user_info)
 
@@ -82,22 +86,16 @@ const Mypage = ({ profileImgUrl }) => {
       })
   }
 
-  console.log(nickname)
-  console.log(isNickname)
-  console.log(isNicknameChecked)
-
   const _editProfile = async () => {
     if (imageFile) {
       const uploadFile = fileInput.current.files[0]
       dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
     }
-
     if (nickname && isNickname && isNicknameChecked) {
       dispatch(mypageActions.editNicknameDB(userId, nickname))
     } else {
       window.alert('닉네임을 확인해주세요!')
     }
-
     setShowModal(false)
     setImageFile(null)
     setNickname('')
@@ -105,21 +103,35 @@ const Mypage = ({ profileImgUrl }) => {
     setIsNicknameChecked(false)
   }
 
+  const handleShowDictionary = () => {
+    setShowDictionary(true)
+    setShowBoard(false)
+    setShowPhoto(false)
+  }
+  const handleShowBoard = () => {
+    setShowDictionary(false)
+    setShowBoard(true)
+    setShowPhoto(false)
+  }
+  const handleShowPhoto = () => {
+    setShowDictionary(false)
+    setShowBoard(false)
+    setShowPhoto(true)
+  }
+
   React.useEffect(() => {
     dispatch(mypageActions.getUserInfoDB())
-  }, [dispatch])
+  }, [dispatch, setShowDictionary, setShowBoard, setShowPhoto])
 
   return (
     <>
       <Wrapper>
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>
           <UserProfile>
             <ProfileImage src={profileImgUrl} />
             <div className="profile-info box-1">
               <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className="user-info">nickname</div>
-                <div className="user-info">|</div>
-                <div className="user-info">나이대</div>
                 <button className="user-info" onClick={editProfile}>
                   <AiOutlineEdit />
                 </button>
@@ -133,24 +145,28 @@ const Mypage = ({ profileImgUrl }) => {
                   <div>게시글</div>
                   <div>2</div>
                 </div>
-                <div className="user-activity-info">
-                  <div>좋아요</div>
-                  <div>1225</div>
-                </div>
               </div>
             </div>
             <div className="profile-info box-2"></div>
           </UserProfile>
-          <DropDown>
-            <div>
-              <div>전체</div>
-              <button>최신순</button>
-              <button>좋아요순</button>
-            </div>
-          </DropDown>
+          <Filter>
+            <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
+              단어장
+            </button>
+            <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
+              밈글
+            </button>
+            <button className={`filter-button ${showPhoto ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
+              짤방
+            </button>
+          </Filter>
           <UserActivity>
-            {/*  */}
-            {/* <PostCard /> */}
+            {/* Dictionary */}
+            {showDictionary && <div>내가 등록한 단어</div>}
+            {/* Board */}
+            {showBoard && <div>내가 작성한 밈글</div>}
+            {/* Photo */}
+            {showPhoto && <div>내가 올린 짤</div>}
           </UserActivity>
         </div>
         {showModal && (
@@ -240,14 +256,6 @@ const Wrapper = styled.div`
   max-width: 400px;
   max-height: 545px;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &:-webkit-scrollbar {
-    display: none;
-  }
 `
 
 const UserProfile = styled.div`
@@ -261,11 +269,9 @@ const UserProfile = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* border: 5px solid #333; */
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 360px;
-  /* transition: all 0.1s ease-in-out; */
 
   .profile-info {
     /* max-width: 310px; */
@@ -317,9 +323,21 @@ const ProfileImage = styled.div`
   background-position: center;
 `
 
-const DropDown = styled.div`
+const Filter = styled.div`
   width: 100%;
-  padding: 30px 0 20px;
+  padding: 30px 0 10px;
+
+  .filter-button {
+    width: 56px;
+    height: 28px;
+    border: 1px solid #111;
+    border-radius: 14px;
+    font-size: 12px;
+    margin-right: 13px;
+  }
+  .filter-button-active {
+    background-color: #00a0ff;
+  }
 `
 
 const UserActivity = styled.div`

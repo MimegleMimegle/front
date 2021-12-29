@@ -148,18 +148,18 @@ const Join = () => {
           <div className="LoginOrJoinInputs_join">
             <DoubleCheckBox>
               <input className="JoinInputBox input1" placeholder="아이디" type="text" value={username} onChange={onChangeUsername} />
-              {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
               <button className="doubleCheckButton" onClick={checkUsername}>
                 중복확인
               </button>
             </DoubleCheckBox>
+            {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
             <DoubleCheckBox>
               <input className="JoinInputBox input1" maxLength="10" placeholder="닉네임" text="이름" type="text" value={nickname} onChange={onChangeNickname} />
-              {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>}
               <button className="doubleCheckButton" onClick={checkNickname}>
                 중복확인
               </button>
             </DoubleCheckBox>
+            {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>}
             <input
               className="JoinInputBox input2"
               type="password"
