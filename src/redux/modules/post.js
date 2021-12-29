@@ -18,7 +18,7 @@ const LOADING = 'LOADING'
 // /* action creator */
 const getPost = createAction(GET_POST, (post_list) => ({ post_list }))
 const getOnePost = createAction(GET_ONE_POST, (post, boardId) => ({ post, boardId }))
-const addPost = createAction(ADD_POST, (post_list) => ({ post_list }))
+const addPost = createAction(ADD_POST, (post) => ({ post }))
 const editPost = createAction(EDIT_POST, (thumbNail, title, boardId, writer) => ({ thumbNail, title, boardId, writer }))
 const deletePost = createAction(DELETE_POST, (boardId, post) => ({ boardId, post }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
@@ -48,12 +48,7 @@ const getPostsDB = () => {
     boardApi
       .getPosts()
       .then((res) => {
-        let post_list = []
-        res.data.forEach((post) => {
-          console.log({ ...post })
-          post_list.push({ ...post })
-          console.log(res.status)
-        })
+        const post_list = res.data.data
         dispatch(getPost(post_list))
       })
       .catch((err) => {
@@ -79,32 +74,29 @@ const getOnePostDB = (boardId) => {
   }
 }
 
-const addPostDB = (title, content, thumbNail) => {
-  return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
+const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
+  return async function (dispatch, getState, { history }) {
     const formData = new FormData()
-    formData.append('title', title)
-    formData.append('content', content)
-    formData.append('thumbNail', thumbNail)
-
-    const DB = {
-      method: 'post',
-      url: `http://52.78.155.185/api/board/list/FREEBOARD`,
-      data: formData,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
+    const post = {
+      title: title,
+      content: content,
+      hashTags: hashTag_list,
     }
-    axios(DB)
-      .then(() => {
-        window.alert('', '성공적으로 등록되었습니다', 'success')
-        history.replace('/post')
-      })
 
-      .catch((err) => {
-        console.log(err.response)
-        console.log(err.response.data)
-        console.log(err.response.status)
+    formData.append('thumbNail', uploadFile)
+    formData.append('boardUploadRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
+
+    await boardApi
+      .writePost(category, formData)
+      .then((response) => {
+        const post = response.data.data
+        dispatch(addPost(post))
+      })
+      .then(() => {
+        history.push('/post')
+      })
+      .catch((error) => {
+        console.log('게시글을 작성하는 데 문제가 발생했습니다.', error.response)
       })
 
     // boardApi

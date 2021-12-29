@@ -40,7 +40,7 @@ export const mypageApi = {
 export const boardApi = {
   getPosts: () => instance.get('/api/board/list/FREEBOARD'),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
-  writePost: (title, content, subject, category) => instance.post('/api/board/FREEBOARD', { title: title, content: content, subject: subject, category: category }),
+  writePost: (category, post) => instance.post(`/api/board/${category}`, post),
   editPost: (boardId, title, content, subject) => instance.put(`/api/board/${boardId}`, { title: title, content: content, subject: subject }),
   deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
   selectPost: () => instance.get('/api/board?q=query'),
