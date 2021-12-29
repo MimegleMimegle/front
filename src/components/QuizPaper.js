@@ -11,7 +11,6 @@ import QuizResult from '../pages/QuizResult'
 
 const QuizPaper = (props) => {
   const category = useParams().category
-
   const dispatch = useDispatch()
 
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
@@ -83,16 +82,6 @@ const QuizPaper = (props) => {
 
   React.useEffect(() => {
     dispatch(quizActions.getQuizListDB(category))
-
-    //   if (quiz_list && user_answer_list.length === quiz_list.length) {
-    //     history.push('/quiz/result')
-    //     return
-    //   }
-    // }, [user_answer_list])
-
-    // if (quiz_list && user_answer_list.length === quiz_list.length) {
-    //   return null
-    // }
   }, [dispatch])
 
   return (
@@ -126,16 +115,9 @@ const QuizPaper = (props) => {
               </button>
             </div>
             <div className="next-btn-box box-1">
-              {/* 추후 quiz_list? currentIndex === quiz_list.length -1 ? 로 조건문 변경 */}
-              {currentIndex === 9 ? (
-                <button className="next-btn" onClick={submitAnswer} disabled={!(clicked1 || clicked2 || clicked3 || clicked4)}>
-                  결과
-                </button>
-              ) : (
-                <button className="next-btn" onClick={submitAnswer} disabled={!(clicked1 || clicked2 || clicked3 || clicked4)}>
-                  다음
-                </button>
-              )}
+              <button className="next-btn" onClick={submitAnswer} disabled={!(clicked1 || clicked2 || clicked3 || clicked4)}>
+                {currentIndex === 9 ? '결과' : '다음'}
+              </button>
             </div>
             <div className="next-btn-box box-2"></div>
           </QuizBox>

@@ -1,12 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 
 import { history } from '../redux/ConfigureStore'
+import { actionCreators as mypageActions } from '../redux/modules/mypage'
 import Sidebar from './Sidebar'
 
 import { FiMenu } from 'react-icons/fi'
 
 const Header = () => {
+  const dispatch = useDispatch()
+
   const [showSidebar, setShowSidebar] = React.useState(false)
   const toggleMenu = () => {
     setShowSidebar(!showSidebar)
@@ -21,7 +25,7 @@ const Header = () => {
             </button>
           </li>
           <li style={{ width: '100px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <a
+            <Logo
               className="nav-item-logo"
               href
               onClick={() => {
@@ -29,7 +33,7 @@ const Header = () => {
               }}
             >
               Logo
-            </a>
+            </Logo>
           </li>
           <li>
             <div></div>
@@ -76,4 +80,14 @@ const NavHeader = styled.nav`
     }
   }
 `
+
+const Logo = styled.a`
+  &:link,
+  &:visited,
+  &:active {
+    text-decoration: none;
+    color: #111;
+  }
+`
+
 export default Header

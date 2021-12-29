@@ -20,4 +20,6 @@ import DictList from './dict/DictList'
 import DictWrite from './dict/DictWrite'
 import DictDetail from './dict/DictDetail'
 
-export { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, PostSearch, DictEdit, DictList, DictWrite, DictDetail }
+import ImageList from './image/ImageList'
+
+export { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, PostSearch, DictEdit, DictList, DictWrite, DictDetail, ImageList }
