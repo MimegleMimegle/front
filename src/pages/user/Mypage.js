@@ -149,6 +149,7 @@ const Mypage = ({ profileImgUrl }) => {
             </div>
             <div className="profile-info box-2"></div>
           </UserProfile>
+
           <Filter>
             <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
               단어장
@@ -251,7 +252,6 @@ Mypage.defaultProps = {
 }
 
 const Wrapper = styled.div`
-  padding: 0 20px;
   width: 100%;
   max-width: 400px;
   max-height: 545px;
@@ -275,7 +275,7 @@ const UserProfile = styled.div`
 
   .profile-info {
     /* max-width: 310px; */
-    width: 98%;
+    width: 90%;
     max-height: 150px;
     height: 100%;
     border: 1px solid #111;
@@ -296,12 +296,14 @@ const UserProfile = styled.div`
   }
   .box-1 {
     top: 0;
-    left: 0;
+    left: 40%;
+    transform: translateX(-40%);
     background-color: #fff;
     z-index: 999;
   }
   .box-2 {
-    left: 7px;
+    left: 60%;
+    transform: translateX(-60%);
     top: 7px;
     background-color: #fff27b;
   }
@@ -314,8 +316,8 @@ const ProfileImage = styled.div`
   border: 1px solid #111;
   border-radius: 40px;
   top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 49%;
+  transform: translateX(-49%);
   z-index: 1000;
   /* background-color: #fff; */
   background-size: cover;
@@ -325,23 +327,25 @@ const ProfileImage = styled.div`
 
 const Filter = styled.div`
   width: 100%;
-  padding: 30px 0 10px;
+  padding: 40px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid #c4c4c4;
 
   .filter-button {
-    width: 56px;
-    height: 28px;
-    border: 1px solid #111;
-    border-radius: 14px;
-    font-size: 12px;
-    margin-right: 13px;
+    font-size: 16px;
+    padding: 0;
+    border-bottom: 3px solid transparent;
   }
   .filter-button-active {
-    background-color: #00a0ff;
+    transition: all 0.2s ease-in-out;
+    border-bottom: 3px solid #c4c4c4;
   }
 `
 
 const UserActivity = styled.div`
   width: 100%;
+  padding: 20px 0 0;
 `
 
 const ModalContainer = styled.div`

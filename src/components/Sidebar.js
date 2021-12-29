@@ -61,16 +61,27 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             <IoCloseOutline style={{ fontSize: '30px', paddingTop: '4px' }} />
           </button>
         </div>
-        {isLogin && (
-          <div style={{ width: '100%', padding: '16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <ProfileImage src={profileImgUrl} style={{ cursor: 'pointer' }} onClick={moveToMypage} />
-              <p style={{ paddingLeft: '10px', cursor: 'pointer' }} onClick={moveToMypage}>
-                {nickname}
-              </p>
-            </div>
+
+        <div style={{ width: '100%', padding: '16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {isLogin ? (
+              <>
+                <ProfileImage src={profileImgUrl} style={{ cursor: 'pointer' }} onClick={moveToMypage} />
+                <p style={{ paddingLeft: '10px', cursor: 'pointer' }} onClick={moveToMypage}>
+                  {nickname}
+                </p>
+              </>
+            ) : (
+              <>
+                <ProfileImage src={profileImgUrl} style={{ cursor: 'pointer' }} onClick={moveToLogin} />
+                <p style={{ paddingLeft: '10px', cursor: 'pointer' }} onClick={moveToLogin}>
+                  로그인이 필요합니다.
+                </p>
+              </>
+            )}
           </div>
-        )}
+        </div>
+
         {menus.map((menu, index) => {
           return <SidebarItem key={index} menu={menu} setShowSidebar={setShowSidebar} />
         })}
