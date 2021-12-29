@@ -132,19 +132,19 @@ const Mypage = ({ profileImgUrl }) => {
             <ProfileImage src={profileImgUrl} />
             <div className="profile-info box-1">
               <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className="user-info">nickname</div>
-                <button className="user-info" onClick={editProfile}>
-                  <AiOutlineEdit />
+                <div className="user-nickname">nickname</div>
+                <button onClick={editProfile}>
+                  <AiOutlineEdit fontSize="20px" />
                 </button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className="user-activity-info">
-                  <div>단어장</div>
-                  <div>35</div>
+                  <div className="user-activity-info-subject">단어장</div>
+                  <div className="user-activity-info-count">35</div>
                 </div>
                 <div className="user-activity-info">
-                  <div>게시글</div>
-                  <div>2</div>
+                  <div className="user-activity-info-subject">게시글</div>
+                  <div className="user-activity-info-count">2</div>
                 </div>
               </div>
             </div>
@@ -169,11 +169,13 @@ const Mypage = ({ profileImgUrl }) => {
             {showBoard && <div>내가 작성한 밈글</div>}
             {/* Photo */}
             {showPhoto && (
-              <div style={{ width: '100%', padding: '0 20px' }}>
+              <MyImageList>
                 <MyPageOneImageCard />
                 <MyPageOneImageCard />
                 <MyPageOneImageCard />
-              </div>
+                <MyPageOneImageCard />
+                <MyPageOneImageCard />
+              </MyImageList>
             )}
           </UserActivity>
         </div>
@@ -181,7 +183,7 @@ const Mypage = ({ profileImgUrl }) => {
           <ModalWrapper visible={true}>
             <ModalContainer>
               <ModalBody>
-                <div style={{ padding: '20px 0 10px' }}>
+                <div>
                   <ProfileImagePreview src={imageFile ? imageFile : profileImgUrl} />
                 </div>
                 <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg" />
@@ -288,9 +290,10 @@ const UserProfile = styled.div`
     border: 1px solid #111;
     position: absolute;
 
-    .user-info {
+    .user-nickname {
       padding: 0 5px;
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: 700;
     }
 
     .user-activity-info {
@@ -299,6 +302,12 @@ const UserProfile = styled.div`
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      .user-activity-info-subject {
+        font-size: 16px;
+      }
+      .user-activity-info-count {
+        font-size: 14px;
+      }
     }
   }
   .box-1 {
@@ -306,7 +315,7 @@ const UserProfile = styled.div`
     left: 40%;
     transform: translateX(-40%);
     background-color: #fff;
-    z-index: 999;
+    z-index: 500;
   }
   .box-2 {
     left: 60%;
@@ -325,7 +334,7 @@ const ProfileImage = styled.div`
   top: -40px;
   left: 49%;
   transform: translateX(-49%);
-  z-index: 1000;
+  z-index: 999;
   /* background-color: #fff; */
   background-size: cover;
   background-image: url('${(props) => props.src}');
@@ -342,17 +351,25 @@ const Filter = styled.div`
   .filter-button {
     font-size: 16px;
     padding: 0;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
   }
   .filter-button-active {
     transition: all 0.2s ease-in-out;
-    border-bottom: 3px solid #c4c4c4;
+    border-bottom: 2px solid #c4c4c4;
   }
 `
 
 const UserActivity = styled.div`
   width: 100%;
-  padding: 20px 0 0;
+  padding: 30px 0 0;
+`
+
+const MyImageList = styled.div`
+  width: 100%;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 `
 
 const ModalContainer = styled.div`
