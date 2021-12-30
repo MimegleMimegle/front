@@ -75,8 +75,8 @@ const QuizResult = ({ quiz_list }) => {
               <CopyToClipboard onCopy={onCopy} text={currentUrl}>
                 <button className="share-btn">URL</button>
               </CopyToClipboard>
-              {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
             </div>
+            {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
             <p style={{ fontSize: '14px', padding: '15px 0' }}>또는</p>
           </div>
           <ResultButtonContainer>
