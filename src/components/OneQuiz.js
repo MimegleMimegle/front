@@ -7,16 +7,16 @@ const OneQuiz = ({ quiz, index }) => {
 
   return (
     <>
-      <div>
-        <div style={{ display: 'flex' }}>
-          <span>Q.{index + 1}</span>
-          <h4>{quiz.question}</h4>
-        </div>
+      <div style={{ padding: '10px 0' }}>
+        <h4>
+          Q.{index + 1}
+          {quiz.question}
+        </h4>
         <AnswerSection>
-          <p className={`${quiz.solution === quiz.choice[0] ? 'solution' : ''} ${user_answer_list[index] === quiz.choice[0] ? 'user-answer' : ''}`}>1. {quiz.choice[0]}</p>
-          <p className={`${quiz.solution === quiz.choice[1] ? 'solution' : ''} ${user_answer_list[index] === quiz.choice[1] ? 'user-answer' : ''}`}>2. {quiz.choice[1]}</p>
-          <p className={`${quiz.solution === quiz.choice[2] ? 'solution' : ''} ${user_answer_list[index] === quiz.choice[2] ? 'user-answer' : ''}`}>3. {quiz.choice[2]}</p>
-          <p className={`${quiz.solution === quiz.choice[3] ? 'solution' : ''} ${user_answer_list[index] === quiz.choice[3] ? 'user-answer' : ''}`}>4. {quiz.choice[3]}</p>
+          <p className={`${quiz.solution === quiz.choice[0] ? 'solution' : ''}`}>(1) {quiz.choice[0]}</p>
+          <p className={`${quiz.solution === quiz.choice[1] ? 'solution' : ''}`}>(2) {quiz.choice[1]}</p>
+          <p className={`${quiz.solution === quiz.choice[2] ? 'solution' : ''}`}>(3) {quiz.choice[2]}</p>
+          <p className={`${quiz.solution === quiz.choice[3] ? 'solution' : ''}`}>(4) {quiz.choice[3]}</p>
         </AnswerSection>
       </div>
     </>

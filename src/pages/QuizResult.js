@@ -5,24 +5,16 @@ import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { history } from '../redux/ConfigureStore'
-import { actionCreators as quizActions } from '../redux/modules/quiz'
 import useScript from '../util/useScript'
 
 import { KakaoShareButton } from '../shared/kakaoShare'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
 
 import OneQuiz from '../components/OneQuiz'
-import MemegleButton from '../shared/MemegleButton'
 
 const QuizResult = ({ quiz_list }) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
-  console.log(window.Kakao)
 
-  const category = useParams().category
-
-  const dispatch = useDispatch()
-
-  // const quiz_list = useSelector((state) => state.quiz.quiz_list)
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
 
   const [copied, setCopied] = React.useState(false)
@@ -53,12 +45,6 @@ const QuizResult = ({ quiz_list }) => {
 
   const score = quiz_list ? (100 / quiz_list.length) * answerCnt : null
 
-  // React.useEffect(() => {
-  //   if (quiz_list === null) {
-  //     dispatch(quizActions.getQuizListDB(category))
-  //   }
-  // }, [])
-
   return (
     <>
       <Wrapper>
@@ -73,7 +59,8 @@ const QuizResult = ({ quiz_list }) => {
             </div>
           </QuizResultBox>
           <div style={{ width: '80%', padding: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <div>공유하기</div>
+            <button style={{ fontSize: '14px', fontWeight: '700', padding: '10px 0' }}>다른 퀴즈 풀러 가기</button>
+            <p style={{ fontSize: '14px', fontWeight: '700', padding: '10px 0' }}>친구에게 공유하기</p>
             <div style={{ width: '100%', padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <FacebookShareButton url={currentUrl}>
                 <FacebookIcon size={40} round={true} />
@@ -90,6 +77,7 @@ const QuizResult = ({ quiz_list }) => {
               </CopyToClipboard>
               {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
             </div>
+            <p style={{ fontSize: '14px', padding: '15px 0' }}>또는</p>
           </div>
           <ResultButtonContainer>
             <div className="resultButtonBox box1">
@@ -115,27 +103,6 @@ const QuizResult = ({ quiz_list }) => {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  .login-page-btn {
-    font-size: 16px;
-    padding: 10px;
-    margin: 20px auto;
-    background-color: rgb(115, 98, 255);
-    border-radius: 5px;
-    color: #fff;
-    font-weight: 700;
-    transition: background-color 0.1s ease-in-out;
-    &:hover {
-      background-color: rgb(152, 141, 253);
-    }
-  }
   .share-btn {
     border: 1px solid rgb(115, 98, 255);
     border-radius: 20px;
@@ -182,23 +149,28 @@ const QuizResultBox = styled.div`
     width: 100px;
     height: 40px;
     position: absolute;
-    border: 1px solid #767676;
+    border: 1px solid #111;
     background-color: #fff;
+    font-size: 18px;
+    font-weight: 700;
   }
 
   .box-1 {
     top: -20px;
-    left: 33%;
+    left: 49.5%;
+    transform: translateX(-49.5%);
     z-index: 2;
     text-align: center;
     line-height: 40px;
     font-size: 16px;
+    background-color: #faea59;
   }
 
   .box-2 {
     top: -16px;
-    left: 34%;
-    background-color: #faea59;
+    left: 51%;
+    transform: translateX(-51%);
+    background-color: #fff;
   }
 
   .resultDesc {
@@ -223,34 +195,39 @@ const ResultButtonContainer = styled.div`
   position: relative;
 
   .resultButtonBox {
-    width: 100px;
+    width: 135px;
     height: 40px;
     position: absolute;
     border: 1px solid #767676;
     border-radius: 20px;
     background-color: #fff;
-
     .resultButton {
       padding: 0;
-      width: 100px;
+      width: 135px;
       height: 40px;
+      font-size: 18px;
+      font-weight: 700;
     }
   }
 
   .box1 {
-    left: 34%;
+    left: 49.5%;
+    transform: translateX(-49.5%);
+    background-color: #00a0ff;
     z-index: 2;
     transition-duration: 0.5s;
     &:active {
-      left: 35%;
+      left: 51%;
+      transform: translateX(-51%);
       margin-top: 4px;
     }
   }
 
   .box2 {
-    left: 35%;
+    left: 51%;
+    transform: translateX(-51%);
     margin-top: 4px;
-    background-color: #faea59;
+    background-color: #fff;
   }
 `
 
