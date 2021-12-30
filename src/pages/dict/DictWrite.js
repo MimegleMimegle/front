@@ -53,7 +53,6 @@ const DictWrite = (props) => {
           <br></br>
         </div>
         <div className="DictCardSubmitSection">
-          ㅗ
           <button className="DictCardSubmitButton1" type="submit" onClick={addDict}>
             단어 등록하기
           </button>

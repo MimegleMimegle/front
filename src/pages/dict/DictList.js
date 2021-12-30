@@ -17,10 +17,6 @@ const DictList = (props) => {
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
-  const handlePageChange = (page) => {
-    setDict({ ...setDict, page: page })
-  }
-
   React.useEffect(() => {
     getDictListDB()
   }, [currentPage])
