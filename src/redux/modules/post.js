@@ -20,7 +20,7 @@ const LOADING = 'LOADING'
 const getPost = createAction(GET_POST, (post_list) => ({ post_list }))
 const getOnePost = createAction(GET_ONE_POST, (post, boardId) => ({ post, boardId }))
 const addPost = createAction(ADD_POST, (post) => ({ post }))
-const editPost = createAction(EDIT_POST, (boardId,newPost) => ({ boardId, newPost }))
+const editPost = createAction(EDIT_POST, (boardId,post) => ({ boardId, post }))
 const deletePost = createAction(DELETE_POST, (boardId, post) => ({ boardId, post }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
@@ -102,23 +102,29 @@ const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
   }
 }
 
-const editPostDB = (boardId, uploadFile, newPost) => {
+const editPostDB = (boardId, post) => {
   return async function (dispatch, getState, { history }) {
     if(!boardId){
       console.log('게시물의 정보가 없습니다.')
       return
     }
-    await boardApi
-    .editPost(boardId, newPost)
-      .then(() => {
-        dispatch(editPost(boardId,newPost))
 
-        swal('', '게시글이 수정되었습니다.', 'success')
-        history.push('/post')
+    const _post_idx = getState().post.list.findIndex(p=> p.boardId===boardId)
+    const _post = getState().post.list[_post_idx];
+    console.log(_post)
+
+    await boardApi
+    .editPost(boardId, post)
+      .then(() => {
+        dispatch(editPost(boardId,post))
       })
       .catch((err) => {
         console.log('게시글 수정하는데 문제 발생', err.response)
         console.log(err.response.status)
+      })
+      .then(()=> {
+        swal('', '게시글이 수정되었습니다.', 'success')
+        history.push('/post')
       })
   }
 }
@@ -168,11 +174,11 @@ export default handleActions(
 
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
-        let index = draft.list.findIndex((l) => l.boardId === action.payload.boardId)
+        let index = draft.list.findIndex((p) => p.boardId === action.payload.boardId)
 
         draft.list[index] = {
           ...draft.list[index],
-          ...action.payload.new_post,
+          ...action.payload.post,
         }
       }),
     // [EDIT_POST] : (state, action) => produce(state, (draft) => {
