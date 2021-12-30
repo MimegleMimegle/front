@@ -13,7 +13,8 @@ const QuizIntro = (props) => {
             <button
               className="select-btn"
               onClick={() => {
-                history.push('/quiz/2000')
+                history.push('/quiz/y2000')
+                window.location.reload()
               }}
             >
               '2000
@@ -23,7 +24,8 @@ const QuizIntro = (props) => {
             <button
               className="select-btn"
               onClick={() => {
-                history.push('/quiz/2010')
+                history.push('/quiz/y2010')
+                window.location.reload()
               }}
             >
               '2010
@@ -33,7 +35,8 @@ const QuizIntro = (props) => {
             <button
               className="select-btn"
               onClick={() => {
-                history.push('/quiz/2020')
+                history.push('/quiz/y2020')
+                window.location.reload()
               }}
             >
               '2020

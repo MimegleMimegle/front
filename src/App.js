@@ -5,33 +5,60 @@ import { history } from './redux/ConfigureStore'
 import { ThemeProvider } from 'styled-components'
 import GlobalStyle from './styles/GlobalStyle'
 import theme from './styles/theme'
-import { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, DictEdit, DictList, DictWrite } from './pages'
+import {
+  Main,
+  NotFound,
+  QuizIntro,
+  Quiz,
+  QuizResult,
+  Join,
+  Login,
+  Mypage,
+  PostDetail,
+  PostEdit,
+  PostList,
+  PostWrite,
+  PostSearch,
+  DictEdit,
+  DictList,
+  DictWrite,
+  DictDetail,
+  ImageList,
+  DictSearch,
+} from './pages'
 import MobileFrame from './components/MobileFrame'
+import CommentTest from './pages/CommentTest'
 
 function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <MobileFrame>
-          <ConnectedRouter history={history}>
+        <ConnectedRouter history={history}>
+          <MobileFrame>
             <Route path="/" exact component={Main} />
             <Route path="/join" exact component={Join} />
             <Route path="/login" exact component={Login} />
             <Route path="/mypage" exact component={Mypage} />
             <Route path="/quiz" exact component={QuizIntro} />
-            <Route path="/quiz/:year" exact component={Quiz} />
-            <Route path="/quiz/:year/result" exact component={QuizResult} />
+            <Route path="/quiz/:category" exact component={Quiz} />
+            <Route path="/quiz/:category/result" exact component={QuizResult} />
             <Route path="/post" exact component={PostList} />
-            <Route path="/post/detail/:postId" exact component={PostDetail} />
+            <Route path="/post/detail/:boardId" exact component={PostDetail} />
             <Route path="/post/write" exact component={PostWrite} />
-            <Route path="/post/edit/:postId" exact component={PostEdit} />
+            <Route path="/post/edit/:boardId" exact component={PostEdit} />
+            <Route path="/post/search" exact component={PostSearch} />
             <Route path="/dict" exact component={DictList} />
             <Route path="/dict/write" exact component={DictWrite} />
             <Route path="/dict/edit/:dictId" exact component={DictEdit} />
+            <Route path="/dict/detail/:dictId" exact component={DictDetail} />
+            <Route path="/dict/search" exact component={DictSearch} />
+            <Route path="/image" exact component={ImageList} />
+            {/* 댓글 서버 연결 확인 후 삭제 예정 */}
+            <Route path="/comment" exact component={CommentTest} />
             {/* <Route path="" exact component={NotFound} /> */}
-          </ConnectedRouter>
-        </MobileFrame>
+          </MobileFrame>
+        </ConnectedRouter>
       </ThemeProvider>
     </>
   )

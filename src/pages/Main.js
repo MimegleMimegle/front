@@ -1,11 +1,17 @@
 import React from 'react'
-import '../styles/css/Main.css'
+
 import MainPageImageSlide from '../components/MainPageImageSlide'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination, Navigation } from 'swiper'
+import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
+
+import 'swiper/css'
+import 'swiper/css/lazy'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+import '../styles/css/Main.css'
 
 const Main = (props) => {
-  SwiperCore.use([Lazy, Autoplay, Keyboard, Pagination, Navigation])
+  SwiperCore.use([Lazy, Autoplay, Keyboard, Pagination])
 
   return (
     <>

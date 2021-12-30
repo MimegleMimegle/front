@@ -30,36 +30,44 @@ export const userApi = {
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
 }
 
-export const boardApi = {
-  getPosts: () => instance.get('/api/board'),
-  getOnePost: (postId) => instance.get(`/api/board/${postId}`),
-  writePost: (title,content,subject,category) => instance.post('/api/board',{title:title, content:content, subject:subject, category:category}),
-  editPost: (postId,title,content,subject) => instance.put(`/api/board/${postId}`,{title:title, content:content, subject:subject,}),
-  deletePost: (postId) => instance.delete(`/api/board/${postId}`),
-
-  // 추가
-  likePost: (postId) => instance.post(`/api/board/${postId}/like`),
-  getSubject: ()=> instance.get('/api/board/subject'),
+/* 추가 */
+export const mypageApi = {
+  getUserInfo: () => instance.get('/api/mypage'),
+  editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
+  editNickname: (nickname) => instance.post('/api/user/nickname', { nickname: nickname }),
 }
 
-
+export const boardApi = {
+  getPosts: () => instance.get('/api/board/list/FREEBOARD'),
+  getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
+  writePost: (category, post) => instance.post(`/api/board/${category}`, post),
+  editPost: (boardId, title, content, subject) => instance.put(`/api/board/${boardId}`, { title: title, content: content, subject: subject }),
+  deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
+  selectPost: () => instance.get('/api/board?q=query'),
+  // 추가
+  likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
+  getSubject: () => instance.get('/api/board/subject'),
+  recommendHashTag: () => instance.get('/api/board/hashTag'),
+  searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
+}
 
 export const dictApi = {
-  getDictMain: () => instance.get('/api/dict?page=0&size=10'),
-  getDictDetail: (dictId) => instance.get('/api/dict/{dictId}'),
-  addDict: (title, content) => instance.post('/api/dict', { title: title, cotent: content }),
-  editDict: (dictId) => instance.put(`/api/dict/${dictId}`),
+  getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
+  addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
+  editDict: (dictId, summary, content) => instance.put(`/api/dict/${dictId}`, { dictId: dictId, summary: summary, content: content }),
   deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
   /* 추가 */
-  liked: (dictId) => instance.get(`/api/dict/${dictId}/like`),
+  tellMeTotalLength: () => instance.get('/api/count/dict'),
+  tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
 }
 
 export const quizApi = {
   /* 추가 */
-  getQuizList: () => instance.get('/api/quiz?count=10'),
+  getQuizList: (category) => instance.get(`/api/quiz/${category}?count=10`),
 }
 
 export const mainApi = {
@@ -70,7 +78,12 @@ export const mainApi = {
 export const commentApi = {
   getComments: (postId) => instance.get(`/api/board/${postId}/comment?page=0&size=10`),
   /* writeComment -> addComment 로 수정 */
-  addComment: (postId) => instance.post(`/api/board/${postId}/comment`),
+  addComment: (postId, comment) => instance.post(`/api/board/${postId}/comment`, { content: comment }),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
+}
+
+export const likeApi = {
+  likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
+  likeDict: (dictId) => instance.post(`/api/dict/${dictId}/like`),
 }

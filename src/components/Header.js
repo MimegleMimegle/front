@@ -1,29 +1,46 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+
+import { history } from '../redux/ConfigureStore'
+import { actionCreators as mypageActions } from '../redux/modules/mypage'
+import Sidebar from './Sidebar'
 
 import { FiMenu } from 'react-icons/fi'
 
 const Header = () => {
-  const [show, setShow] = React.useState(false)
+  const dispatch = useDispatch()
+
+  const [showSidebar, setShowSidebar] = React.useState(false)
+  const toggleMenu = () => {
+    setShowSidebar(!showSidebar)
+  }
   return (
     <>
       <NavHeader>
         <ul className="nav-list">
           <li>
-            <button className="nav-item-menu">
+            <button className="nav-item-menu" onClick={toggleMenu}>
               <FiMenu />
             </button>
           </li>
           <li style={{ width: '100px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <a className="nav-item-logo" href>
+            <Logo
+              className="nav-item-logo"
+              href
+              onClick={() => {
+                history.push('/')
+              }}
+            >
               Logo
-            </a>
+            </Logo>
           </li>
           <li>
             <div></div>
           </li>
         </ul>
       </NavHeader>
+      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
     </>
   )
 }
@@ -42,7 +59,7 @@ const NavHeader = styled.nav`
   .nav-list {
     height: 100%;
     margin: 0;
-    padding-right: 50px;
+    padding-right: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -63,4 +80,14 @@ const NavHeader = styled.nav`
     }
   }
 `
+
+const Logo = styled.a`
+  &:link,
+  &:visited,
+  &:active {
+    text-decoration: none;
+    color: #111;
+  }
+`
+
 export default Header

@@ -3,6 +3,7 @@ import { produce } from 'immer'
 import { dictApi } from '../../shared/api'
 import axios from 'axios'
 import swal from 'sweetalert'
+import { getCookie } from '../../shared/cookie'
 
 /* action type */
 const GET_DICT_MAIN = 'GET_DICT_MAIN'
@@ -16,11 +17,13 @@ const GET_DICT_HISTORY = 'GET_DICT_HISTORY'
 const GET_DICT_HISTORY_DETAIL = 'GET_DICT_HISTORY_DETAIL'
 const ROLLBACK_ONE_DICT = 'ROLLBACK_ONE_DICT'
 const LOADING = 'LOADING'
+const TELL_ME_TOTAL_LENGTH = 'TELL_ME_TOTAL_LENGTH'
+const SEARCH_DICT = 'SEARCH_DICT'
 
 /* action creator */
-const getDictMain = createAction(GET_DICT_MAIN, (dict_list) => dict_list)
+const getDictMain = createAction(GET_DICT_MAIN, (dict_list, paging) => ({ dict_list, paging }))
 const getDictDetail = createAction(GET_DICT_DETAIL, (dict_list) => dict_list)
-const addDict = createAction(ADD_DICT, (dict_list) => ({ dict_list }))
+const addDict = createAction(ADD_DICT, (dict) => ({ dict }))
 const editDict = createAction(EDIT_DICT, (dict_id, dict) => ({ dict_id }))
 const deleteDict = createAction(DELETE_DICT, (dict_id, dict) => ({ dict_id }))
 const dictCreatedAt = createAction(DICT_CREATED_AT)
@@ -28,22 +31,35 @@ const dictIsLike = createAction(DICT_IS_LIKE, (dict_id) => ({ dict_id }))
 const getDictHistory = createAction(GET_DICT_HISTORY)
 const getDictHistoryDetail = createAction(GET_DICT_HISTORY_DETAIL)
 const rollbackOneDict = createAction(ROLLBACK_ONE_DICT)
-const loading = createAction(LOADING, (loading) => loading)
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
+//추가
+const tellMeTotalLength = createAction(TELL_ME_TOTAL_LENGTH)
+const searchDict = createAction(SEARCH_DICT, (query, paging) => ({ query, paging }))
 
 /* initial state */
 const initialState = {
+  is_loading: false,
+  isLike: false,
   list: [],
-  loading: false,
+  paging: { page: null, size: 10 },
 }
 
 /* middleware */
-const getDictMainDB = () => {
+const getDictMainDB = (page = null, size = null) => {
   return function (dispatch, getState, { history }) {
     dictApi
       .getDictMain()
       .then((res) => {
-        const dict_list = [...res.data]
-        dispatch(getDictMain(dict_list))
+        let result = res.data.data.slice(page, size)
+        let paging = {
+          page: page + result.length + 1,
+          size: size + 10,
+        }
+        if (result.length === 0) {
+          dispatch(loading(false))
+          return
+        }
+        dispatch(getDictMain(result, paging))
       })
       .catch((err) => {
         if (err.res) {
@@ -60,66 +76,52 @@ const getDictDetailDB = (dictId) => {
     dispatch(loading(true))
     dictApi
       .getDictDetail(dictId)
-      .then((res) => {
-        const dict_list = [...res.data.dict]
+      .then((response) => {
+        const dict_list = [...response.data.data]
+
         dispatch(loading(false))
       })
-      .catch((err) => console.log(err))
-  }
-}
-
-const addDictDB = (title, content) => {
-  return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
-    let formData = new FormData()
-    formData.append('title', title)
-    formData.append('content', content)
-
-    const DB = {
-      method: 'post',
-      url: `http://52.78.155.185/api/dict`,
-      data: formData,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    }
-    axios(DB)
-      .then(() => {
-        swal('', '성공적으로 등록되었습니다', 'success')
-        history.push('/api/dict?page=0&size=10')
-      })
       .catch((err) => {
-        if (err.response.status === 403) {
-          swal('로그인 시간이 만료되었습니다. 다시 로그인해주세요')
-          history.replace('/')
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
         }
       })
   }
 }
 
-const editDictDB = (dictId, title, content) => {
+const addDictDB = (title, summary, content) => {
   return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
-    let formData = new FormData()
-    formData.append('title', title)
-    formData.append('content', content)
-
-    axios({
-      method: 'put',
-      url: `http://52.78.155.185/api/dict/${dictId}`,
-      data: formData,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    })
-      .then(() => {
-        swal('', '게시글이 수정되었습니다.', 'success')
-        history.push('/api/dict?page=0&size=10')
+    dictApi
+      .addDict(title, summary, content)
+      .then((res) => {
+        swal('', '성공적으로 등록되었습니다', 'success')
+        history.push('/dict')
       })
       .catch((err) => {
-        if (err.response.status === 403) {
-          swal('로그인 시간이 만료되었습니다. 다시 로그인해주세요')
-          history.replace('/')
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
+        }
+      })
+  }
+}
+
+const editDictDB = (dictId, summary, content) => {
+  return function (dispatch, getState, { history }) {
+    dictApi
+      .editDict(dictId, summary, content)
+      .then((res) => {
+        swal('', '단어가 수정되었습니다.', 'success')
+        history.push('/dict')
+      })
+      .catch((err) => {
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
         }
       })
   }
@@ -127,18 +129,46 @@ const editDictDB = (dictId, title, content) => {
 
 const deleteDictDB = (dictId) => {
   return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
+    const token = getCookie('token')
 
     dictApi
       .deleteDict(dictId)
       .then((res) => {
-        history.push('/api/dict?page=0&size=10')
+        swal('', '삭제요청이 완료되었습니다.', 'success')
+        history.push('/dict')
       })
       .catch((err) => {
-        if (err.res.status === 403) {
-          swal('로그인 시간이 만료되었습니다. 다시 로그인해주세요')
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
         }
-        history.replace('/')
+      })
+  }
+}
+
+const searchDictDB = (keyword = '', page = null, size = null) => {
+  return function (dispatch, getState, { history }) {
+    dictApi
+      .searchDict(keyword)
+      .then((res) => {
+        let result = res.data.data.slice(page, size)
+        let paging = {
+          page: page + result.length + 1,
+          size: size + 10,
+        }
+        if (result.length === 0) {
+          dispatch(loading(false))
+          return
+        }
+        dispatch(getDictMain(result, paging))
+      })
+      .catch((err) => {
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
+        }
       })
   }
 }
@@ -190,6 +220,14 @@ export default handleActions(
       produce(state, (draft) => {
         draft.loading = action.payload.loading
       }),
+    [TELL_ME_TOTAL_LENGTH]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload
+      }),
+    [SEARCH_DICT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload
+      }),
   },
   initialState
 )
@@ -211,6 +249,9 @@ const actionCreators = {
   addDictDB,
   editDictDB,
   deleteDictDB,
+  tellMeTotalLength,
+  searchDict,
+  searchDictDB,
 }
 
 export { actionCreators }

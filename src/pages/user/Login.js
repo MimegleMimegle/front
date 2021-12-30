@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import '../../styles/css/Login.css'
 import styled from 'styled-components'
+import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import KaKaoLogin from 'react-kakao-login'
 import kakaotalk from '../../styles/image/kakaotalk.svg'
@@ -11,6 +12,7 @@ import googleColor from '../../styles/image/google_color.svg'
 
 const Login = (props) => {
   const dispatch = useDispatch()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -50,7 +52,7 @@ const Login = (props) => {
 
   const login = () => {
     if (username === '' || password === '') {
-      window.alert('아이디, 비밀번호를 입력해주세요!')
+      swal('아이디, 비밀번호를 입력해주세요!')
       return
     }
     dispatch(userActions.logInDB(username, password))
@@ -60,18 +62,18 @@ const Login = (props) => {
       <div className="LoginLayout">
         <div className="MultiInputBoxLayout_login">
           <div className="LoginOrJoinButtons_login">
-            <div className="LoginButton_login">로그인</div>
             <div className="JoinButton_login" onClick={() => history.push('/join')}>
               회원가입
             </div>
+            <div className="LoginButton_login">로그인</div>
           </div>
           <div className="LoginOrJoinInputs_login">
-            <input className="IdInputBox" placeholder="아이디를 입력해주세요" type="email" typeName="email" onChange={onChangeUsername} value={username} />
-            {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
-            <input className="PwdInputBox" placeholder="비밀번호를 입력해주세요" type="password" typeName="password" onChange={onChangePassword} value={password} />
-            {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
-            <button
-              className="LoginSubmitButton"
+            <input className="IdInputBox" placeholder="영어, 숫자 3~16자" type="email" typeName="email" onChange={onChangeUsername} value={username} />
+            {/* {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>} */}
+            <input className="PwdInputBox" placeholder="영어 대소문자, 숫자, 특수문자 6~16자" type="password" typeName="password" onChange={onChangePassword} value={password} />
+            {/* {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>} */}
+            <div
+              className="MemegleButton_LoginSubmit"
               type="submit"
               disabled={!(isUsername && isPassword)}
               onClick={login}
@@ -81,12 +83,13 @@ const Login = (props) => {
                 }
               }}
             >
-              로그인 하기
-            </button>
+              <div className="MemegleButton_LoginSubmit Login1">로그인</div>
+              <div className="MemegleButton_LoginSubmit Login2"></div>
+            </div>
           </div>
-          <div className="SocialLoginHR">SNS 계정으로 로그인하기</div>
+          <div className="SocialLoginHR">또는</div>
           <div className="SocialLoginBtns">
-            <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=17fb08cb376f564b3375667a799fda1f&redirect_uri=http://localhost:3000/oauth">
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
               <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
             </a>
             <img className="GoogleLoginBtn" size="5" src={googleColor}></img>

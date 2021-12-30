@@ -1,45 +1,62 @@
-import React from "react"
-import styled from "styled-components"
-import { AiOutlineEye,AiOutlineHeart } from "react-icons/ai";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
+import HashTag from './HashTag'
 
-const PostCard = (props) => {
-    return (
-      <>  
-        <PostBody>
-        <div className="listtitle">
-          <text>Title</text> <br/>
-          <text>작성자</text> <br/>
-          <AiOutlineEye/> 조회수 <AiOutlineHeart/> 좋아요수
+const PostCard = ({ post }) => {
+  const history = useHistory()
 
-        </div>
- 
-          {/* 사진이 포함된 게시글이면 옆에 작게 이미지를 띄워준다?? */}
-          <img className= "uploadimg"src="https://i.pinimg.com/564x/38/9a/01/389a01e78d98f7bdb4304b7980b69a22.jpg" alt=""/>
-        </PostBody>
-      </>
-    )
+  console.log(post)
+  const onC = () => {
+    history.push(`/post/detail/${post.boardId}`)
   }
-  
-  export default PostCard;
-  
 
+  return (
+    <>
+      <Container postList={post} onClick={onC}>
+        <p>{post ? post.writer : null}</p>
+        <p>{post ? post.username : null}</p>
+        <PostBody>
+          <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
+          <div className="listtitle">
+            <h4>{post ? post.title : null}</h4>
+            <p>{post ? post.content : null}</p>
+          </div>
+          {post
+            ? post.hashTags.map((hashTag, index) => {
+                return <p key={index}>#{hashTag}</p>
+              })
+            : null}
+        </PostBody>
+        <p>{post ? post.createdAt : null}</p>
+        <AiOutlineEye /> {post ? post.views : null} <AiOutlineHeart />
+        {post ? post.likeCnt : null}
+      </Container>
+    </>
+  )
+}
+
+export default PostCard
+
+const Container = styled.div`
+  background: red;
+`
 
 const PostBody = styled.div`
-    
   width: 100%;
-  height:auto;
+  height: auto;
   padding: 8px;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  background-color:red;
-  
 
-  .listtitle{
-      margin: 5px 10px
+  .listtitle {
+    margin: 5px 10px;
   }
-  .uploadimg{
+  .uploadimg {
     width: 70px;
     height: 70px;
-    }
-`;
+  }
+`

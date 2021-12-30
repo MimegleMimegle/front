@@ -4,6 +4,7 @@ import { setCookie, deleteCookie } from '../../shared/cookie'
 import { applyMiddleware } from 'redux'
 import axios from 'axios'
 import { userApi } from '../../shared/api'
+import swal from 'sweetalert'
 
 const { Kakao } = window
 
@@ -44,10 +45,10 @@ const joinDB = (username, nickname, password, passwordCheck) => {
       .join(username, nickname, password, passwordCheck)
       .then((res) => {
         history.push('/login')
-        window.alert('회원가입을 축하드립니다! 로그인 후 이용하실 수 있어요')
+        swal('회원가입을 축하드립니다! 로그인 후 이용하실 수 있어요')
       })
       .catch((err) => {
-        window.alert('이미 등록된 사용자 입니다! 아이디 또는 닉네임을 변경해주세요')
+        swal('이미 등록된 사용자 입니다! 아이디 또는 닉네임을 변경해주세요')
       })
   }
 }
@@ -57,14 +58,16 @@ const logInDB = (username, password) => {
     userApi
       .login(username, password)
       .then((res) => {
-        setCookie('token', res.data.token, 3)
-        localStorage.setItem('username', res.username)
-        localStorage.setItem('nickname', res.nickname)
-        dispatch(setUser({ username: res.username, nickname: res.nickname }))
+        console.log(res)
+        setCookie('token', res.headers.authorization, 3)
+        localStorage.setItem('username', res.data.data.username)
+        localStorage.setItem('nickname', res.data.data.nickname)
+        localStorage.setItem('id', res.data.data.userId)
+        dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
         history.replace('/')
       })
       .catch((err) => {
-        window.alert('잘못된 아이디나 비밀번호 입니다. 다시 확인해주세요!')
+        swal('잘못된 아이디나 비밀번호 입니다. 다시 확인해주세요!')
       })
   }
 }
