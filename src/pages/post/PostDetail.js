@@ -45,13 +45,18 @@ const PostDetail = (props) => {
         <button onClick={()=>{history.push(`/post/edit/${boardId}`)}}>수정</button>
         <button onClick={del}>삭제</button> </> : null }
 
-        <div> 작성번호: {post.boardId}</div>
-          <div >제목 : {post.title}</div>
-          <div >작성자: {post.writer}</div>
-          <div >내용: {post.content}</div>
+          <img src={post.profileImageUrl} alt=""/>
+          <div >{post.writer}</div>
+          <div>{post.createdAt}</div>
+
+          <div >{post.title}</div>
+          
+          <div >{post.content}</div>
+          <img src={post ? post.thumbNail : null} alt="" />
+
           <div >좋아요수 : {post.likeCnt}</div>
           <div >등록 날짜 : {post.createdAt}</div>
-          <div >조회수 : {post.views}</div>
+          {/* <div >조회수 : {post.views}</div> */}
         </Container>
     </>
   )
