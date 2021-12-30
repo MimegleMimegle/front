@@ -52,7 +52,7 @@ export const boardApi = {
 }
 
 export const dictApi = {
-  getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}}`),
+  getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
   editDict: (dictId, summary, content) => instance.put(`/api/dict/${dictId}`, { dictId: dictId, summary: summary, content: content }),
@@ -62,6 +62,7 @@ export const dictApi = {
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
   /* 추가 */
   tellMeTotalLength: () => instance.get('/api/count/dict'),
+  searchDict: (keyword, pageSize, currentPage) => instance.get(`/api/dict/search?q=${encodeURIComponent(keyword)}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
 }
 
 export const quizApi = {

@@ -1,23 +1,46 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
+import { actionCreators as dictActions } from '../redux/modules/dict'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { dictApi } from '../shared/api'
 
 function SearchBar({ onAddKeyword }) {
-  // 1. 검색어를 state 로 다루도록 변경
-  // 2. 이벤트 연결
-  // 3. Link to 설명
+  const dispatch = useDispatch()
 
-  //form을 관련 요소를 다룰때는 2-way 데이터 바인딩을 해줍니다! (input 의 value에 state를 넣는 것)
+  const [data, setData] = useState([])
+
+  const [dict, setDict] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [totalCount, setTotalCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+
   const [keyword, setKeyword] = useState('')
+
+  const searchDictDB = async () => {
+    let completed = false
+    let response = await axios(`/api/dict/search?q=${encodeURIComponent(keyword)}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
+    if (!completed) {
+      setData(response.data)
+      console.log(response)
+      console.log(keyword)
+    }
+    return () => {
+      completed = true
+    }
+  }
 
   const handleKeyword = (e) => {
     setKeyword(e.target.value)
   }
+
   const handleEnter = (e) => {
     if (keyword && e.keyCode === 13) {
       //엔터일때 부모의 addkeyword에 전달
       onAddKeyword(keyword)
       setKeyword('')
+      searchDictDB(encodeURIComponent(keyword))
     }
   }
 
@@ -36,13 +59,10 @@ function SearchBar({ onAddKeyword }) {
 
   return (
     <Container>
-      <ArrowIcon to="/" />
       <InputContainer>
         <Input placeholder="검색어를 입력해주세요" active={hasKeyword} value={keyword} onChange={handleKeyword} onKeyDown={handleEnter} />
-
         {keyword && <RemoveIcon onClick={handleClearKeyword} />}
       </InputContainer>
-      <SearchIcon />
     </Container>
   )
 }
@@ -60,37 +80,6 @@ const Container = styled.div`
   background-color: #fff;
   padding: 20px 60px;
   box-sizing: border-box;
-`
-
-//Link태그의 스타일을 입히는거임(페이지이동하는 버튼)
-//horizontalCenter 스타일 컴포넌트를 믹스인하여 속성값 전달
-//홈으로 가기 위한 뒤로가기 버튼입니다
-const ArrowIcon = styled(Link)`
-  ${horizontalCenter}
-  left: 18px;
-  display: block;
-  width: 21px;
-  height: 18px;
-  background-position: -164px -343px;
-  vertical-align: top;
-  background-image: url(https://s.pstatic.net/static/www/m/uit/2020/sp_search.623c21.png);
-  background-size: 467px 442px;
-  background-repeat: no-repeat;
-`
-
-const SearchIcon = styled.span`
-  ${horizontalCenter}
-  right: 18px;
-  width: 24px;
-  height: 24px;
-  background-position: -356px -260px;
-  display: inline-block;
-  overflow: hidden;
-  color: transparent;
-  vertical-align: middle;
-  background-image: url(https://s.pstatic.net/static/www/m/uit/2020/sp_search.623c21.png);
-  background-size: 467px 442px;
-  background-repeat: no-repeat;
 `
 
 //글자를 입력하면 RemoveIcon이 나오게 되고 누르면 input의 value값이 사라집니다
