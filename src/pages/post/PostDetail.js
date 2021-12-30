@@ -9,11 +9,19 @@ import { Link } from 'react-router-dom'
 
 const PostDetail = (props) => {
   const dispatch = useDispatch()
-  const user_info = useSelector((state)=> state.user.user)
-  const post_list = useSelector((state)=> state.post)
-  console.log(user_info);
-  console.log(post_list);
+
+ 
+  const del = () => {
+    dispatch(postActions.delPostDB(boardId));
+  };
+  const token = localStorage.getItem('token')
+  const nickName = window.localStorage.getItem('nickname')
+  console.log(token)
+  console.log(nickName)
+
+
   const [post, setPost] = useState([])
+
 
   const getOnePostDB = async () => {
     let response = await axios.get(`http://52.78.155.185/api/board/${boardId}`)
@@ -32,8 +40,10 @@ const PostDetail = (props) => {
   return (
     <>
       <Container>
+        {nickName===post.writer?
+        <>
         <button onClick={()=>{history.push(`/post/edit/${boardId}`)}}>수정</button>
-        <button>삭제</button>
+        <button onClick={del}>삭제</button> </> : null }
 
         <div> 작성번호: {post.boardId}</div>
           <div >제목 : {post.title}</div>

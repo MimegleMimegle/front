@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import History from '../shared/SearchHistory'
 import SearchBar from '../shared/SearchBar'
 
 function SearchPage() {
+  const dispatch = useDispatch()
   //string은 map을 사용 할 수 없기때문에 object 형태로 변환 시키기 위해 parsing을 해줘야함
   const [keywords, setKeywords] = useState(JSON.parse(localStorage.getItem('keywords') || '[]'))
 
@@ -27,7 +29,7 @@ function SearchPage() {
   //검색어 삭제
   const handleRemoveKeyword = (id) => {
     const nextKeyword = keywords.filter((thisKeyword) => {
-      return thisKeyword.id != id
+      return thisKeyword.id !== id
     })
     setKeywords(nextKeyword)
   }

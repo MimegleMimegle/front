@@ -32,11 +32,11 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
             </KeywordContainer>
           )
         })}
-        <hr />
+        {/* <hr />
         <RecommendKeyWordSection>
           <RecommendKeyWordTitle>추천 검색어</RecommendKeyWordTitle>
           <RecommendKeyWordList>ㅈㅂㅈㅇ</RecommendKeyWordList>
-        </RecommendKeyWordSection>
+        </RecommendKeyWordSection> */}
       </ListContainer>
     </HistoryContainer>
   )
