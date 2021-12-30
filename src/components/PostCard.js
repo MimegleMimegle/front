@@ -16,22 +16,23 @@ const PostCard = ({ post }) => {
   return (
     <>
       <Container postList={post} onClick={onC}>
-        <p>{post.writer}</p>
-        <p>{post.username}</p>
+        <p>{post ? post.writer : null}</p>
+        <p>{post ? post.username : null}</p>
         <PostBody>
-          <img className="uploadimg" src={post.thumbNail} alt="" />
+          <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
           <div className="listtitle">
-            <h4>{post.title}</h4>
-            <p>{post.content}</p>
+            <h4>{post ? post.title : null}</h4>
+            <p>{post ? post.content : null}</p>
           </div>
-          {post.hashTags &&
-            post.hashTags.map((hashTag, index) => {
-              return <p key={index}>#{hashTag}</p>
-            })}
+          {post
+            ? post.hashTags.map((hashTag, index) => {
+                return <p key={index}>#{hashTag}</p>
+              })
+            : null}
         </PostBody>
-        <p>{post.createdAt}</p>
-        <AiOutlineEye /> {post.views} <AiOutlineHeart />
-        {post.likeCnt}
+        <p>{post ? post.createdAt : null}</p>
+        <AiOutlineEye /> {post ? post.views : null} <AiOutlineHeart />
+        {post ? post.likeCnt : null}
       </Container>
     </>
   )

@@ -48,6 +48,7 @@ export const boardApi = {
   likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
   getSubject: () => instance.get('/api/board/subject'),
   recommendHashTag: () => instance.get('/api/board/hashTag'),
+  searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
 }
 
 export const dictApi = {
@@ -60,7 +61,6 @@ export const dictApi = {
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
   /* 추가 */
-  likeDict: (dictId) => instance.get(`/api/dict/${dictId}/like`),
   tellMeTotalLength: () => instance.get('/api/count/dict'),
 }
 
@@ -80,4 +80,9 @@ export const commentApi = {
   addComment: (postId, comment) => instance.post(`/api/board/${postId}/comment`, { content: comment }),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
+}
+
+export const likeApi = {
+  likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
+  likeDict: (dictId) => instance.post(`/api/dict/${dictId}/like`),
 }

@@ -134,15 +134,14 @@ const editPostDB = (boardId, uploadFile, title, content, thumbNail,) => {
   }
 }
 
-const delPostDB = (boardId, categoryName) => {
+const delPostDB = (boardId) => {
   return async function (dispatch, getState, { history }) {
     await boardApi
       .deletePost(boardId)
       .then((res) => {
-        console.log('게시글 삭제 성공', res.data)
-        console.log(res.status)
-        history.push(`/api/board/${categoryName}`)
-        dispatch(deletePost(boardId))
+        console.log(res.data)
+        dispatch(deletePost(boardId));
+        history.push('/post')
       })
 
       .catch((err) => {

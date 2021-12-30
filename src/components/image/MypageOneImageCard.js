@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { HiOutlineHeart } from 'react-icons/hi'
+import { IoCloseOutline } from 'react-icons/io5'
 
 const MyPageOneImageCard = (props) => {
   const tempImgUrl = 'https://image.idus.com/image/files/92e848f447904facb3fb7fcf5b3cdf6a_1080.jpg'
@@ -35,7 +36,18 @@ const MyPageOneImageCard = (props) => {
             <p style={{ fontSize: '9px', textAlign: 'right', paddingTop: '7px' }}>2021년 12월 28일</p>
           </DateSection>
         </div>
-        {toggleMenu && <Menu></Menu>}
+        {toggleMenu && (
+          <Menu>
+            <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+              <button style={{ padding: '0', height: '100%' }} onClick={clickToggleMenu}>
+                <IoCloseOutline style={{ fontSize: '18px' }} />
+              </button>
+            </div>
+            <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+              <button style={{ fontSize: '12px', padding: '0' }}>삭제하기</button>
+            </div>
+          </Menu>
+        )}
       </Wrapper>
     </>
   )
@@ -58,14 +70,17 @@ const Wrapper = styled.div`
 
 const Menu = styled.div`
   position: absolute;
-  top: 20px;
+  top: 0;
   right: 0;
   width: 80px;
   height: 80px;
   border: 1px solid #c4c4c4;
   background-color: #fff;
-  transition: 1s;
+  transition: all 0.3s ease-in-out;
   z-index: 400;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `
 
 const ImageSection = styled.div`
