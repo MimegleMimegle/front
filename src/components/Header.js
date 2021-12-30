@@ -53,7 +53,7 @@ const NavHeader = styled.nav`
   width: 100%;
   height: 74px;
   background-color: #fff;
-  border-bottom: 1px solid #767676;
+  border-bottom: 1px solid #111;
   /* padding: 10px 0 12px; */
   z-index: 1000;
   .nav-list {
@@ -72,7 +72,7 @@ const NavHeader = styled.nav`
       width: 100%;
       height: 40px;
       line-height: 40px;
-      border: 1px solid #767676;
+      border: 1px solid #111;
       border-radius: 20px;
       background-color: #d1d1d1;
       text-align: center;
