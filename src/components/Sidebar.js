@@ -44,26 +44,16 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   })
 
   const menu_list = [
-    { name: '퀴즈', path: '/quiz' },
-    { name: '용어 사전', path: '/dict' },
-    { name: '커뮤니티', path: '/post' },
-    { name: '짤방', path: '/image' },
+    { name: '메인', path: '/' },
+    { name: '밈퀴즈', path: '/quiz' },
+    { name: '밈+글 커뮤니티', path: '/post' },
+    { name: '오픈 밈사전', path: '/dict' },
+    { name: '짤방앗간', path: '/image' },
   ]
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
-        <div style={{ width: '100%', padding: '32px 10px 0 16px' }}>
-          <button
-            onClick={() => {
-              setShowSidebar(false)
-            }}
-            style={{ width: '100%', height: '100%', padding: '0', textAlign: 'right' }}
-          >
-            <IoCloseOutline style={{ fontSize: '30px', paddingTop: '4px' }} />
-          </button>
-        </div>
-
-        <div style={{ width: '100%', padding: '16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ width: '100%', padding: '48px 10px 16px 16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {isLogin ? (
               <>
@@ -81,6 +71,14 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
               </>
             )}
           </div>
+          <button
+            onClick={() => {
+              setShowSidebar(false)
+            }}
+            style={{ width: '100%', height: '100%', padding: '0', textAlign: 'right' }}
+          >
+            <IoCloseOutline style={{ fontSize: '30px', paddingTop: '4px' }} />
+          </button>
         </div>
 
         {menu_list.map((menu, index) => {
