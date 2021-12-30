@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
+import { history } from '../redux/ConfigureStore'
 import { actionCreators as dictActions } from '../redux/modules/dict'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
@@ -9,26 +10,28 @@ import { dictApi } from '../shared/api'
 function SearchBar({ onAddKeyword }) {
   const dispatch = useDispatch()
 
-  const [data, setData] = useState([])
+  const [keyword, setKeyword] = useState('')
+  const [filteredPosts, setFilteredPosts] = React.useState([])
+  const [notFound, setNotFound] = React.useState(false)
 
-  const [dict, setDict] = useState([])
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(5)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
-  const [keyword, setKeyword] = useState('')
-
   const searchDictDB = async () => {
-    let completed = false
-    let response = await axios(`/api/dict/search?q=${encodeURIComponent(keyword)}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
-    if (!completed) {
-      setData(response.data)
-      console.log(response)
-      console.log(keyword)
-    }
-    return () => {
-      completed = true
-    }
+    let response = await axios.get(`http://52.78.155.185/api/dict/search?q=${keyword}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
+    let searchTotalLength = await dictApi.tellMeTotalLengthSearch()
+
+    console.log(response.data.data)
+    console.log(totalCount)
+    setFilteredPosts(response.data.data)
+    setTotalCount(searchTotalLength.data.data)
+  }
+
+  const closeNotFountModal = () => {
+    setTimeout(() => {
+      setNotFound(false)
+    }, 2000)
   }
 
   const handleKeyword = (e) => {
@@ -40,7 +43,8 @@ function SearchBar({ onAddKeyword }) {
       //엔터일때 부모의 addkeyword에 전달
       onAddKeyword(keyword)
       setKeyword('')
-      searchDictDB(encodeURIComponent(keyword))
+      searchDictDB(keyword)
+      dispatch(history.push('/dict/search'))
     }
   }
 
@@ -60,7 +64,7 @@ function SearchBar({ onAddKeyword }) {
   return (
     <Container>
       <InputContainer>
-        <Input placeholder="검색어를 입력해주세요" active={hasKeyword} value={keyword} onChange={handleKeyword} onKeyDown={handleEnter} />
+        <Input placeholder="🔍 검색어를 입력해주세요" active={hasKeyword} value={keyword} onChange={handleKeyword} onKeyDown={handleEnter} />
         {keyword && <RemoveIcon onClick={handleClearKeyword} />}
       </InputContainer>
     </Container>
@@ -76,7 +80,7 @@ const horizontalCenter = css`
 const Container = styled.div`
   position: relative;
   width: 100%;
-  border-bottom: 2px solid #0bde8b;
+  /* border-bottom: 1px solid grey; */
   background-color: #fff;
   padding: 20px 60px;
   box-sizing: border-box;
@@ -108,6 +112,9 @@ const Input = styled.input`
   font-weight: 500;
   font-size: 14px;
   box-sizing: border-box;
+  border: 1px solid gray;
+  border-radius: 30px;
+  padding-left: 20px;
 
   ${({ active }) =>
     active &&
