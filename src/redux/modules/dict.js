@@ -18,6 +18,7 @@ const GET_DICT_HISTORY_DETAIL = 'GET_DICT_HISTORY_DETAIL'
 const ROLLBACK_ONE_DICT = 'ROLLBACK_ONE_DICT'
 const LOADING = 'LOADING'
 const TELL_ME_TOTAL_LENGTH = 'TELL_ME_TOTAL_LENGTH'
+const SEARCH_DICT = 'SEARCH_DICT'
 
 /* action creator */
 const getDictMain = createAction(GET_DICT_MAIN, (dict_list, paging) => ({ dict_list, paging }))
@@ -33,6 +34,7 @@ const rollbackOneDict = createAction(ROLLBACK_ONE_DICT)
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 //추가
 const tellMeTotalLength = createAction(TELL_ME_TOTAL_LENGTH)
+const searchDict = createAction(SEARCH_DICT, (query, paging) => ({ query, paging }))
 
 /* initial state */
 const initialState = {
@@ -145,6 +147,32 @@ const deleteDictDB = (dictId) => {
   }
 }
 
+const searchDictDB = (keyword = '', page = null, size = null) => {
+  return function (dispatch, getState, { history }) {
+    dictApi
+      .searchDict(keyword)
+      .then((res) => {
+        let result = res.data.data.slice(page, size)
+        let paging = {
+          page: page + result.length + 1,
+          size: size + 10,
+        }
+        if (result.length === 0) {
+          dispatch(loading(false))
+          return
+        }
+        dispatch(getDictMain(result, paging))
+      })
+      .catch((err) => {
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
+        }
+      })
+  }
+}
+
 /* reducer */
 export default handleActions(
   {
@@ -196,6 +224,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload
       }),
+    [SEARCH_DICT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload
+      }),
   },
   initialState
 )
@@ -218,6 +250,8 @@ const actionCreators = {
   editDictDB,
   deleteDictDB,
   tellMeTotalLength,
+  searchDict,
+  searchDictDB,
 }
 
 export { actionCreators }
