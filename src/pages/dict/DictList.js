@@ -12,8 +12,6 @@ import { dictApi } from '../../shared/api'
 const DictList = (props) => {
   const dispatch = useDispatch()
 
-  // const dictId = Number(props.match.params.dictId)
-
   const [dict, setDict] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
