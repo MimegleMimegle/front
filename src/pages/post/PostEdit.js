@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
@@ -9,18 +9,35 @@ import HashTag from '../../components/HashTag'
 import swal from 'sweetalert'
 
 const PostEdit = (props) => {
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const boardId = Number(props.match.params.boardId)
+  const username = window.localStorage.getItem('username')
   const post_list = useSelector((state)=> state.post.list)
-  const _post = post_list.find((p)=>p.boardId === boardId)
+  const post_id = props.match.params.boardId
+  const is_edit= post_id? true: false
+
+  const _post = is_edit? post_list.find((p)=>p.username === username) : null;
+
+  useEffect(()=> {
+    if(!_post){
+      console.log('포스트 정보가 없어요!');
+      history.goBack();
+
+      return;
+    }
+    }, []); 
+
+
 
   const fileInput = React.useRef('')
+  
 
   const [title, setTitle] = useState(_post.title)
   const [content, setContent] = useState(_post.content)
-  // const [thumbNail, setThumbNail] = useState(_post.thumbNail)
+  const [thumbNail, setThumbNail] = useState(_post.thumbNail)
+  const [hashTag, setHashTag] = useState(_post.thumbNail)
+  const [hashTagList, setHashTagList] = useState([])
 
 
   const onChangeTitle = (e) => {
@@ -31,34 +48,88 @@ const PostEdit = (props) => {
     setContent(e.target.value)
   }
 
-  // const onChangeFile = (e) => {
-  //   setThumbNail(e.target.files)
-  //   let reader = new FileReader()
-  //   reader.readAsDataURL(e.target.files[0])
+  const onChangeHashTag = (e) => {
+    setHashTag(e.target.value)
+  }
 
-  //   reader.onload = () => {
-  //     const file = reader.result
+  const onKeyUp = React.useCallback(
+    (e) => {
+      // if (process.browser) {
+      /* 요소 불러오기, 만들기*/
+      const $hashWrapOutter = document.querySelector('.hashWrapOutter')
+      const $hashWrapInner = document.createElement('div')
+      $hashWrapInner.className = 'hashWrapInner'
 
-  //     if (file) {
-  //       let fileInfo = file.toString()
-  //       setThumbNail(fileInfo)
-  //     }
-  //   }
-  // }
+      /* 태그를 클릭 이벤트 관련 로직 */
+      $hashWrapInner.addEventListener('click', () => {
+        $hashWrapOutter?.removeChild($hashWrapInner)
+        console.log($hashWrapInner.innerHTML)
+        setHashTagList(hashTagList.filter((hashTag) => hashTag))
+      })
+
+      /* enter 키 코드 :13 */
+      if (e.keyCode === 13 && e.target.value.trim() !== '') {
+        console.log('Enter Key 입력됨!', e.target.value)
+        $hashWrapInner.innerHTML = '#' + e.target.value
+        $hashWrapOutter?.appendChild($hashWrapInner)
+        setHashTagList((hashTagList) => [...hashTagList, hashTag])
+        setHashTag('')
+      }
+    },
+    // },
+    [hashTag, hashTagList]
+  )
+
+  const onChangeFile = (e) => {
+    setThumbNail(e.target.files)
+    let reader = new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+
+    reader.onload = () => {
+      const file = reader.result
+
+      if (file) {
+        let fileInfo = file.toString()
+        setThumbNail(fileInfo)
+      }
+    }
+  }
   console.log(title)
   console.log(content)
+  console.log(hashTagList)
+
+  
+  // const editPost = (boardId) => {
+  //   if (title === '' || content === '') {
+  //     window.alert('제목 혹은 내용을 작성해주세요.')
+  //     return
+  //   }
+  //   const uploadFile = thumbNail ? fileInput.current.files[0] : ''
+
+  //   const editFormData = new FormData()
+
+  //   const postData = [{
+  //     title: title,
+  //     content: content,
+  //   }]
+
+  //   editFormData.append('thumbNail', uploadFile)
+  //   editFormData.append('boardUploadRequestDto', new Blob([JSON.stringify(postData)], { type: 'application/json' }))
+
+  //   history.push(`/post/detail/${boardId}`)
+  //   dispatch(postActions.editPostDB(boardId, {title:title, content:content}, editFormData))
+  // }
 
   const editPost = () => {
-    if (title === '' || content === '') {
-      window.alert('제목 혹은 내용을 작성해주세요.')
+    if (title == '' || content == '') {
+      window.alert('게시물을 모두 작성해주세요')
       return
+    } else {
+      dispatch(postActions.editPostDB(post_id, hashTagList, title, content, ))
     }
-
-    // const uploadFile = thumbNail ? fileInput.current.files[0] : ''
-    const category = 'FREEBOARD'
-    history.push(`/post/detail/${boardId}`)
-    dispatch(postActions.editPostDB(boardId,category, title, content, ))
   }
+
+
 
   return (
     <>
@@ -68,8 +139,8 @@ const PostEdit = (props) => {
         </PWHeader>
           <PWBody>
           <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
-          {/* <Preview src={thumbNail}></Preview> */}
-          {/* <input type="file" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} /> */}
+          <Preview src={thumbNail}></Preview>
+          <input type="file" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           <HashDivWrap className="hashWrap">
             <div className="hashWrapOutter"></div>
             <input className="hashInput" type="text" placeholder="해시태그 입력" />

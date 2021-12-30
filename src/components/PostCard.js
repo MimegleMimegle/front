@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai'
+import { FiMessageSquare } from 'react-icons/fi'
+
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import HashTag from './HashTag'
@@ -16,23 +18,28 @@ const PostCard = ({ post }) => {
   return (
     <>
       <Container postList={post} onClick={onC}>
+        <UserInfo>
+        <img/>
         <p>{post ? post.writer : null}</p>
-        <p>{post ? post.username : null}</p>
+        <p>{post ? post.createdAt : null}</p>
+        </UserInfo>
         <PostBody>
-          <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
-          <div className="listtitle">
+          <div className="text">
             <h4>{post ? post.title : null}</h4>
             <p>{post ? post.content : null}</p>
+            <HashTagHere>
+              {post
+                ? post.hashTags.map((hashTag, index) => {
+                    return <p key={index}>#{hashTag}</p>
+                  })
+                : null}
+          </HashTagHere>  
           </div>
-          {post
-            ? post.hashTags.map((hashTag, index) => {
-                return <p key={index}>#{hashTag}</p>
-              })
-            : null}
+          <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
+
         </PostBody>
-        <p>{post ? post.createdAt : null}</p>
         <AiOutlineEye /> {post ? post.views : null} <AiOutlineHeart />
-        {post ? post.likeCnt : null}
+        {post ? post.likeCnt : null} <FiMessageSquare/> 댓글수
       </Container>
     </>
   )
@@ -44,19 +51,23 @@ const Container = styled.div`
   background: red;
 `
 
+const UserInfo = styled.div`
+`
+
 const PostBody = styled.div`
   width: 100%;
   height: auto;
-  padding: 8px;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
 
-  .listtitle {
-    margin: 5px 10px;
+  .text {
   }
   .uploadimg {
     width: 70px;
     height: 70px;
   }
+`
+const HashTagHere = styled.div`
+  display: flex;
 `

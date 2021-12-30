@@ -16,6 +16,8 @@ const OneImageCard = (props) => {
     setToggleMenu(!toggleMenu)
   }
 
+  const handleClickDetail = () => {}
+
   return (
     <>
       <ImageBox
@@ -59,9 +61,10 @@ const OneImageCard = (props) => {
 
 const ImageBox = styled.div`
   position: relative;
-  max-width: 105px;
+  max-width: 160px;
+  max-height: 270px;
   width: 100%;
-  height: 121px;
+  height: 100%;
   overflow: hidden;
   cursor: pointer;
 `
