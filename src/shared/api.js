@@ -48,6 +48,7 @@ export const boardApi = {
   likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
   getSubject: () => instance.get('/api/board/subject'),
   recommendHashTag: () => instance.get('/api/board/hashTag'),
+  searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
 }
 
 export const dictApi = {
