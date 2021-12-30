@@ -14,6 +14,7 @@ import styled from '@emotion/styled'
 
 const PostDetail = (props) => {
   const dispatch = useDispatch()
+  const [isLike, setIsLike] = useState(false);
 
  
   const del = () => {
@@ -34,6 +35,12 @@ const PostDetail = (props) => {
     setPost(response.data.data)
   }
 
+  const likePost = async () => {
+    let response = await axios.get(`http://52.78.155.185/api/board/${boardId}/like`)
+    setIsLike(response.data.data.like)
+
+    console.log(response.data.data.createdAt)
+  }
 
   React.useEffect(() => {
     getOnePostDB()
