@@ -26,7 +26,13 @@ const ImageList = (props) => {
           <div style={{ borderBottom: '1px solid #e5e5e5' }}>
             <h2 style={{ fontSize: '16px', fontWeight: '700' }}>명예의 전당</h2>
           </div>
-          <Container>이미지 섹션</Container>
+          <Container>
+            <PopularGridLayout>
+              <OneImageCard />
+              <OneImageCard />
+              <OneImageCard />
+            </PopularGridLayout>
+          </Container>
         </PopularSection>
         <GeneralSection>
           <div style={{ borderBottom: '1px solid #e5e5e5', display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
@@ -42,7 +48,7 @@ const ImageList = (props) => {
           </div>
           <Container>
             {sortByDate && (
-              <GridLayout>
+              <GeneralGridLayout>
                 <OneImageCard />
                 <OneImageCard />
                 <OneImageCard />
@@ -51,13 +57,7 @@ const ImageList = (props) => {
                 <OneImageCard />
                 <OneImageCard />
                 <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-              </GridLayout>
+              </GeneralGridLayout>
             )}
             {sortByPopularity && <OneImageCard />}
           </Container>
@@ -74,7 +74,7 @@ const Wrapper = styled.div`
 
 const PopularSection = styled.div`
   width: 100%;
-  padding: 20px 20px 0;
+  padding: 20px 20px;
 `
 
 const GeneralSection = styled.div`
@@ -99,10 +99,33 @@ const Container = styled.div`
   padding: 24px 0 0;
 `
 
-const GridLayout = styled.div`
+const PopularGridLayout = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 110px 152px;
+  gap: 8px;
+
+  div {
+    &:nth-child(1) {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+    &:nth-child(2) {
+      grid-column: 2 / 3;
+      grid-row: 1 / 3;
+    }
+    &:nth-child(3) {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+    }
+  }
+`
+
+const GeneralGridLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
+  grid-auto-rows: minmax(121px, 121px);
+  gap: 8px;
 `
 
 export default ImageList
