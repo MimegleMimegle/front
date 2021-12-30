@@ -14,14 +14,15 @@ import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, Lin
 import OneQuiz from '../components/OneQuiz'
 import MemegleButton from '../shared/MemegleButton'
 
-const QuizResult = (props) => {
+const QuizResult = ({ quiz_list }) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
   console.log(window.Kakao)
 
   const category = useParams().category
+
   const dispatch = useDispatch()
 
-  const quiz_list = useSelector((state) => state.quiz.quiz_list)
+  // const quiz_list = useSelector((state) => state.quiz.quiz_list)
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
 
   const [copied, setCopied] = React.useState(false)
@@ -52,21 +53,22 @@ const QuizResult = (props) => {
 
   const score = quiz_list ? (100 / quiz_list.length) * answerCnt : null
 
-  React.useEffect(() => {
-    if (quiz_list === null) {
-      dispatch(quizActions.getQuizListDB(category))
-    }
-  }, [])
+  // React.useEffect(() => {
+  //   if (quiz_list === null) {
+  //     dispatch(quizActions.getQuizListDB(category))
+  //   }
+  // }, [])
 
   return (
     <>
       <Wrapper>
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <QuizResultBox>
-            <div className="quiz-year-box box-1">2020</div>
+            <div className="quiz-year-box box-1">결과</div>
             <div className="quiz-year-box box-2"></div>
             <div style={{ padding: '50px 0 30px' }}>
               <h2>점수 {score}점</h2>
+              <span>{answerCnt}/10</span>
               <h2 className="resultDesc">당신은 심각할 정도의 밈 중독입니다.</h2>
             </div>
           </QuizResultBox>
@@ -92,16 +94,17 @@ const QuizResult = (props) => {
           <ResultButtonContainer>
             <div className="resultButtonBox box1">
               <button className="resultButton" onClick={handleShowQuiz}>
-                결과보기
+                정답확인
               </button>
             </div>
             <div className="resultButtonBox box2"></div>
           </ResultButtonContainer>
           <QuizContainer>
-            {showQuiz && (
-              // quiz_list.map()
-              <OneQuiz />
-            )}
+            {showQuiz &&
+              quiz_list &&
+              quiz_list.map((quiz, index) => {
+                return <OneQuiz key={index} quiz={quiz} index={index} />
+              })}
           </QuizContainer>
         </div>
       </Wrapper>
