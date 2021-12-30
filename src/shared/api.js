@@ -48,6 +48,7 @@ export const boardApi = {
   likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
   getSubject: () => instance.get('/api/board/subject'),
   recommendHashTag: () => instance.get('/api/board/hashTag'),
+  searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
 }
 
 export const dictApi = {
@@ -61,7 +62,7 @@ export const dictApi = {
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
   /* 추가 */
   tellMeTotalLength: () => instance.get('/api/count/dict'),
-  searchDict: (keyword, pageSize, currentPage) => instance.get(`/api/dict/search?q=${encodeURIComponent(keyword)}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
 }
 
 export const quizApi = {

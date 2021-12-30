@@ -34,8 +34,8 @@ const PostSearch = (props) => {
     }, 2000)
   }
 
-  const clickSearch = () => {
-    boardApi
+  const clickSearch = async () => {
+    await boardApi
       .searchPost(search)
       .then((response) => {
         console.log(response.data)
@@ -84,7 +84,7 @@ const PostSearch = (props) => {
             {/* 검색어 관련 게시글 목록 잘 불러와지는 지 확인 후 주석 해제 */}
             {filteredPosts.length > 0
               ? filteredPosts.map((post) => {
-                  return <PostCard key={post.boardId} {...post} />
+                  return <PostCard key={post.boardId} post={post} />
                 })
               : null}
             <PostCard />

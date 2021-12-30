@@ -56,6 +56,7 @@ const QuizPaper = (props) => {
     setClicked4(true)
   }
 
+  console.log(quiz_list)
   console.log(currentIndex)
   console.log(answer)
   console.log(clicked1)
@@ -78,40 +79,42 @@ const QuizPaper = (props) => {
     }
   }
 
-  const quiz = quiz_list ? quiz_list[currentIndex] : null
-
   React.useEffect(() => {
-    dispatch(quizActions.getQuizListDB(category))
+    if (quiz_list === null) {
+      dispatch(quizActions.getQuizListDB(category))
+    }
   }, [dispatch])
+
+  const quiz = quiz_list ? quiz_list[currentIndex] : null
 
   return (
     <>
       {!showResult ? (
         <Wrapper>
           <QuizTitle>
-            <div className="question-number-box box-1">Q. 01</div>
+            <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
             <div className="question-number-box box-2"></div>
-            <h2 className="title">Q1. Quiz Title Section</h2>
+            <h2 className="title">{quiz ? quiz.question : null}</h2>
           </QuizTitle>
           <QuizBox>
             <div>
-              <button className={`answer-btn ${clicked1 ? 'clicked' : ''}`} value="answer1" onClick={clickAnswer1}>
-                answer1
+              <button className={`answer-btn ${clicked1 ? 'clicked' : ''}`} value={quiz ? quiz.choice[0] : ''} onClick={clickAnswer1}>
+                {quiz ? quiz.choice[0] : null}
               </button>
             </div>
             <div>
-              <button className={`answer-btn ${clicked2 ? 'clicked' : ''}`} value="answer2" onClick={clickAnswer2}>
-                answer2
+              <button className={`answer-btn ${clicked2 ? 'clicked' : ''}`} value={quiz ? quiz.choice[1] : ''} onClick={clickAnswer2}>
+                {quiz ? quiz.choice[1] : null}
               </button>
             </div>
             <div>
-              <button className={`answer-btn ${clicked3 ? 'clicked' : ''}`} value="answer3" onClick={clickAnswer3}>
-                answer3
+              <button className={`answer-btn ${clicked3 ? 'clicked' : ''}`} value={quiz ? quiz.choice[2] : ''} onClick={clickAnswer3}>
+                {quiz ? quiz.choice[2] : null}
               </button>
             </div>
             <div>
-              <button className={`answer-btn btn-4 ${clicked4 ? 'clicked' : ''}`} value="answer4" onClick={clickAnswer4}>
-                answer4
+              <button className={`answer-btn btn-4 ${clicked4 ? 'clicked' : ''}`} value={quiz ? quiz.choice[3] : ''} onClick={clickAnswer4}>
+                {quiz ? quiz.choice[3] : null}
               </button>
             </div>
             <div className="next-btn-box box-1">
@@ -123,7 +126,7 @@ const QuizPaper = (props) => {
           </QuizBox>
         </Wrapper>
       ) : (
-        <QuizResult />
+        <QuizResult quiz_list={quiz_list} />
       )}
     </>
   )
