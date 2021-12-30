@@ -11,6 +11,8 @@ const PostList = (props) => {
   const history = useHistory()
   const dispatch = useDispatch()
 
+
+
   const postList = useSelector((state) => state.post.list) // state는 리덕스 스토어의 전체 데이터
   console.log(postList)
 

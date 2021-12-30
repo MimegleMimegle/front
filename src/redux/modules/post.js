@@ -6,6 +6,7 @@ import moment from 'moment'
 import 'moment'
 import axios from 'axios'
 import { Login } from '../../pages'
+import swal from 'sweetalert'
 
 // /* action type */ 목록/상세/작성/수정/삭제/검색
 const GET_POST = 'GET_POST'
@@ -19,7 +20,7 @@ const LOADING = 'LOADING'
 const getPost = createAction(GET_POST, (post_list) => ({ post_list }))
 const getOnePost = createAction(GET_ONE_POST, (post, boardId) => ({ post, boardId }))
 const addPost = createAction(ADD_POST, (post) => ({ post }))
-const editPost = createAction(EDIT_POST, (thumbNail, title, boardId, writer) => ({ thumbNail, title, boardId, writer }))
+const editPost = createAction(EDIT_POST, (boardId,newPost) => ({ boardId, newPost }))
 const deletePost = createAction(DELETE_POST, (boardId, post) => ({ boardId, post }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
@@ -101,30 +102,18 @@ const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
   }
 }
 
-const editPostDB = (boardId, uploadFile, title, content, thumbNail,) => {
+const editPostDB = (boardId, uploadFile, newPost) => {
   return async function (dispatch, getState, { history }) {
-    const token = localStorage.getItem('token')
-    let formData = new FormData()
-    const post={
-      title:title,
-      content:content,
+    if(!boardId){
+      console.log('게시물의 정보가 없습니다.')
+      return
     }
-    formData.append('boardUploadRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
-    formData.append('thumbNail', uploadFile)
+    await boardApi
+    .editPost(boardId, newPost)
+      .then(() => {
+        dispatch(editPost(boardId,newPost))
 
-    axios({
-      method: 'put',
-      url: `http://52.78.155.185/api/board/${boardId}`,
-      data: formData,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        const post = res.data.data
-        dispatch(editPost(post))
-
-        window.alert('', '게시글이 수정되었습니다.', 'success')
+        swal('', '게시글이 수정되었습니다.', 'success')
         history.push('/post')
       })
       .catch((err) => {
