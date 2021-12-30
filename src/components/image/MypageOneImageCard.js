@@ -73,7 +73,7 @@ const Menu = styled.div`
   top: 0;
   right: 0;
   width: 80px;
-  height: 80px;
+  height: 70px;
   border: 1px solid #c4c4c4;
   background-color: #fff;
   transition: all 0.3s ease-in-out;

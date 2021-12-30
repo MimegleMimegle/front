@@ -62,7 +62,7 @@ export const dictApi = {
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
   /* 추가 */
   tellMeTotalLength: () => instance.get('/api/count/dict'),
-  searchDict: (keyword, pageSize, currentPage) => instance.get(`/api/dict/search?q=${encodeURIComponent(keyword)}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
 }
 
 export const quizApi = {
@@ -76,7 +76,7 @@ export const mainApi = {
 
 /* 추가 */
 export const commentApi = {
-  getComments: (postId) => instance.get(`/api/board/${postId}/comment?page=0&size=10`),
+  getComments: (postId) => instance.get(`/api/board/${postId}/comment`),
   /* writeComment -> addComment 로 수정 */
   addComment: (postId, comment) => instance.post(`/api/board/${postId}/comment`, { content: comment }),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
