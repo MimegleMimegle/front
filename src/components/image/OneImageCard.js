@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { history } from '../../redux/ConfigureStore'
+
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
@@ -16,7 +18,7 @@ const OneImageCard = (props) => {
     setToggleMenu(!toggleMenu)
   }
 
-  const handleClickDetail = () => {}
+  const tempImageId = 1
 
   return (
     <>
@@ -27,6 +29,9 @@ const OneImageCard = (props) => {
         onMouseLeave={() => {
           setHover(false)
           setToggleMenu(false)
+        }}
+        onClick={() => {
+          history.push(`/image/${tempImageId}`)
         }}
       >
         <ImageThumbnail src={tempImgUrl}></ImageThumbnail>
