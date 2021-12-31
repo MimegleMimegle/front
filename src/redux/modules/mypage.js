@@ -22,18 +22,12 @@ const initialState = {
 
 /* middleware */
 
-const getUserInfoDB = (userId) => {
+const getUserInfoDB = () => {
   return async function (dispatch, getState, { history }) {
-    if (!userId) {
-      return
-    }
-
     await mypageApi
       .getUserInfo()
       .then((response) => {
-        console.log(response.data)
-        const user_info = response.data
-        console.log(user_info)
+        const user_info = response.data.data
         dispatch(getUserInfo(user_info))
       })
       .catch((error) => {

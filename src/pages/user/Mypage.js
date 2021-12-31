@@ -14,7 +14,7 @@ import ModalWrapper from '../../components/ModalWrapper'
 
 import { AiOutlineEdit } from 'react-icons/ai'
 
-const Mypage = ({ profileImgUrl }) => {
+const Mypage = (props) => {
   const dispatch = useDispatch()
 
   const userId = localStorage.getItem('id')
@@ -31,7 +31,8 @@ const Mypage = ({ profileImgUrl }) => {
   const [showBoard, setShowBoard] = React.useState(false)
   const [showPhoto, setShowPhoto] = React.useState(false)
 
-  const user_info = useSelector((state) => state.mypage.user_info)
+  const user = useSelector((state) => state.mypage.user_info)
+  console.log(user)
 
   const editProfile = () => {
     setShowModal(true)
@@ -121,143 +122,104 @@ const Mypage = ({ profileImgUrl }) => {
   }
 
   React.useEffect(() => {
-    dispatch(mypageActions.getUserInfoDB())
-  }, [dispatch, setShowDictionary, setShowBoard, setShowPhoto])
+    if (user === null) {
+      dispatch(mypageActions.getUserInfoDB())
+    }
+  }, [])
 
   return (
-    <>
-      <Wrapper>
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>
-          <UserProfile>
-            <ProfileImage src={profileImgUrl} />
-            <div className="profile-info box-1">
-              <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className="user-nickname">nickname</div>
-                <button onClick={editProfile}>
-                  <AiOutlineEdit fontSize="20px" />
-                </button>
+    <Wrapper>
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>
+        <UserProfile>
+          <ProfileImage src={user.profileImageUrl} />
+          <div className="profile-info box-1">
+            <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="user-nickname">{user.nickname}</div>
+              <button onClick={editProfile}>
+                <AiOutlineEdit fontSize="20px" />
+              </button>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="user-activity-info">
+                <div className="user-activity-info-subject">단어장</div>
+                <div className="user-activity-info-count">{user.dictCount}</div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className="user-activity-info">
-                  <div className="user-activity-info-subject">단어장</div>
-                  <div className="user-activity-info-count">35</div>
-                </div>
-                <div className="user-activity-info">
-                  <div className="user-activity-info-subject">게시글</div>
-                  <div className="user-activity-info-count">2</div>
-                </div>
+              <div className="user-activity-info">
+                <div className="user-activity-info-subject">게시글</div>
+                <div className="user-activity-info-count">{user.postCount}</div>
               </div>
             </div>
-            <div className="profile-info box-2"></div>
-          </UserProfile>
+          </div>
+          <div className="profile-info box-2"></div>
+        </UserProfile>
 
-          <Filter>
-            <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
-              단어장
-            </button>
-            <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
-              밈글
-            </button>
-            <button className={`filter-button ${showPhoto ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
-              짤방
-            </button>
-          </Filter>
-          <UserActivity>
-            {/* Dictionary */}
-            {showDictionary && <div>내가 등록한 단어</div>}
-            {/* Board */}
-            {showBoard && <div>내가 작성한 밈글</div>}
-            {/* Photo */}
-            {showPhoto && (
-              <MyImageList>
-                <MyPageOneImageCard />
-                <MyPageOneImageCard />
-                <MyPageOneImageCard />
-                <MyPageOneImageCard />
-                <MyPageOneImageCard />
-              </MyImageList>
-            )}
-          </UserActivity>
-        </div>
-        {showModal && (
-          <ModalWrapper visible={true}>
-            <ModalContainer>
-              <ModalBody>
-                <div>
-                  <ProfileImagePreview src={imageFile ? imageFile : profileImgUrl} />
-                </div>
-                <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg" />
-                <div>
-                  <input type="text" onChange={handleChangeNickname} />
-                  <button onClick={checkNickname}>중복확인</button>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <button
-                  className="btn cancel-btn"
-                  onClick={() => {
-                    setShowModal(false)
-                  }}
-                >
-                  취소
-                </button>
-                <button className="btn upload-btn" onClick={_editProfile}>
-                  프로필 변경
-                </button>
-              </ModalFooter>
-            </ModalContainer>
-          </ModalWrapper>
-        )}
-      </Wrapper>
-      {/* <div className="MypageLayout">
-        <div className="UserProfileBox">
-          <div className="UserProfileImage" />
-          <div className="userProfileNameTag">
-            <text className="UserProfileName">Username</text>
-            <div className="VerticalLine" />
-            <text className="UserProfileAge">20대</text>
-          </div>
-          <div className="UserActivityInfo">
-            <div className="UserMyDictTag">
-              <text className="UserMyDict">단어</text>
-              <text className="UserMyDictCount">5개</text>
-            </div>
-            <div className="UserMyPostTag">
-              <text className="UserMyPost">게시물</text>
-              <text className="UserMyPostCount">10개</text>
-            </div>
-            <div className="UserGetMyLikeTag">
-              <text className="UserGetMyLike">좋아요</text>
-              <text className="USerGetMyLikeCount">3개</text>
-            </div>
-          </div>
-        </div>
-        <div className="UserMyPostList">
-          <div className="UserMyPostListButton1">전체</div>
-          <div className="UserMyPostListButton2">최신순</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-      </div> */}
-    </>
+        <Filter>
+          <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
+            단어장
+          </button>
+          <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
+            밈글
+          </button>
+          <button className={`filter-button ${showPhoto ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
+            짤방
+          </button>
+        </Filter>
+        <UserActivity>
+          {/* Dictionary */}
+          {showDictionary && <div>내가 등록한 단어</div>}
+          {/* Board */}
+          {showBoard && user.postBoards
+            ? user.postBoards.map((post) => {
+                return (
+                  <div key={post.postId}>
+                    <PostCard post={post} />
+                  </div>
+                )
+              })
+            : null}
+          {/* Photo */}
+          {showPhoto && (
+            <MyImageList>
+              <MyPageOneImageCard />
+              <MyPageOneImageCard />
+              <MyPageOneImageCard />
+              <MyPageOneImageCard />
+              <MyPageOneImageCard />
+            </MyImageList>
+          )}
+        </UserActivity>
+      </div>
+      {showModal && (
+        <ModalWrapper visible={true}>
+          <ModalContainer>
+            <ModalBody>
+              <div>
+                <ProfileImagePreview src={imageFile ? imageFile : user.profileImageUrl} />
+              </div>
+              <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg" />
+              <div>
+                <input type="text" onChange={handleChangeNickname} />
+                <button onClick={checkNickname}>중복확인</button>
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <button
+                className="btn cancel-btn"
+                onClick={() => {
+                  setShowModal(false)
+                }}
+              >
+                취소
+              </button>
+              <button className="btn upload-btn" onClick={_editProfile}>
+                프로필 변경
+              </button>
+            </ModalFooter>
+          </ModalContainer>
+        </ModalWrapper>
+      )}
+    </Wrapper>
   )
-}
-
-Mypage.defaultProps = {
-  profileImgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXdd3u5NqCQXagF3DlT5PqENDPrUx_Dy4BNF0l3v44cFnSOnrIU1JJXnCYtqovHd7lVY8&usqp=CAU',
 }
 
 const Wrapper = styled.div`

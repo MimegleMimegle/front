@@ -11,11 +11,12 @@ import { IoCloseOutline } from 'react-icons/io5'
 const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const dispatch = useDispatch()
 
+  const profile = useSelector((state) => state.user.profile)
+  console.log(profile)
+
   const username = localStorage.getItem('username')
   const nickname = localStorage.getItem('nickname')
   const isLogin = username && nickname ? true : false
-  const is_login = useSelector((state) => state.user.is_login)
-  console.log(isLogin, is_login)
 
   const moveToMypage = () => {
     history.push('/mypage')
@@ -50,6 +51,13 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
     { name: '오픈 밈사전', path: '/dict' },
     { name: '짤방앗간', path: '/image' },
   ]
+
+  React.useEffect(() => {
+    if (profile === null) {
+      dispatch(userActions.getProfileInfoDB())
+    }
+  }, [])
+
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
@@ -57,9 +65,9 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
           <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
             {isLogin ? (
               <>
-                <ProfileImage src={profileImgUrl} onClick={moveToMypage} />
+                <ProfileImage src={profile ? profile.profileImage : null} onClick={moveToMypage} />
                 <p style={{ paddingLeft: '10px', cursor: 'pointer', fontSize: '14px' }} onClick={moveToMypage}>
-                  {nickname}
+                  {profile ? profile.nickname : null}
                 </p>
               </>
             ) : (

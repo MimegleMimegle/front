@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { history } from '../../redux/ConfigureStore'
+
 import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
@@ -14,7 +16,12 @@ const ImageDetail = (props) => {
       <Wrapper>
         <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ width: '100%', padding: '0 15px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <button className="icon-button">
+            <button
+              className="icon-button"
+              onClick={() => {
+                history.goBack()
+              }}
+            >
               <IoCloseOutline style={{ fontSize: '24px' }} />
             </button>
             <button className="icon-button">
