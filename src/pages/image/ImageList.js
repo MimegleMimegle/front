@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 
+import InfinityScroll from '../../shared/InfinityScroll'
 import OneImageCard from '../../components/image/OneImageCard'
 
 const ImageList = (props) => {
@@ -18,6 +19,8 @@ const ImageList = (props) => {
     setSortByDate(false)
     setSortByPopularity(true)
   }
+
+  React.useEffect(() => {}, [])
 
   return (
     <>
