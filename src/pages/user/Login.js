@@ -28,7 +28,7 @@ const Login = (props) => {
     setUsername(usernameCurrent)
 
     if (!emailRegex.test(usernameCurrent)) {
-      setUsernameMessage('영문자와 숫자로 이루어진 3자 이상 16자 이하')
+      setUsernameMessage('영문+숫자 3~16자')
       setIsUsername(false)
     } else {
       setUsernameMessage('올바른 형식입니다')
@@ -42,7 +42,7 @@ const Login = (props) => {
     setPassword(passwordCurrent)
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 6자리 이상 입력해주세요')
+      setPasswordMessage('숫자+영문+특수문자 조합으로 6~16자')
       setIsPassword(false)
     } else {
       setPasswordMessage('올바른 비밀번호입니다')
@@ -56,24 +56,31 @@ const Login = (props) => {
       return
     }
     dispatch(userActions.logInDB(username, password))
+    swal(`${username}님 만반잘부!`, { timer: 3000 })
   }
   return (
     <>
       <div className="LoginLayout">
         <div className="MultiInputBoxLayout_login">
           <div className="LoginOrJoinButtons_login">
-            <div className="LoginButton_login">로그인</div>
             <div className="JoinButton_login" onClick={() => history.push('/join')}>
               회원가입
             </div>
+            <div className="LoginButton_login">로그인</div>
           </div>
           <div className="LoginOrJoinInputs_login">
-            <input className="IdInputBox" placeholder="아이디를 입력해주세요" type="email" typeName="email" onChange={onChangeUsername} value={username} />
-            {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
-            <input className="PwdInputBox" placeholder="비밀번호를 입력해주세요" type="password" typeName="password" onChange={onChangePassword} value={password} />
-            {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
-            <button
-              className="LoginSubmitButton"
+            <label className="IdInputLabel" for="IdInput">
+              아이디
+            </label>
+            <input className="IdInputBox" id="IdInput" placeholder="영어, 숫자 3~16자" type="email" typeName="email" onChange={onChangeUsername} value={username} />
+            {username.length > 0 && <SpanUsername className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</SpanUsername>}
+            <label className="PwdInputLabel" for="PwdInput">
+              비밀번호
+            </label>
+            <input className="PwdInputBox" id="PwdInput" placeholder="영어 대소문자, 숫자, 특수문자 6~16자" type="password" typeName="password" onChange={onChangePassword} value={password} />
+            {password.length > 0 && <SpanPassword className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</SpanPassword>}
+            <div
+              className="MemegleButton_LoginSubmit"
               type="submit"
               disabled={!(isUsername && isPassword)}
               onClick={login}
@@ -83,26 +90,34 @@ const Login = (props) => {
                 }
               }}
             >
-              로그인 하기
-            </button>
+              <div className="MemegleButton_LoginSubmit Login1">로그인</div>
+              <div className="MemegleButton_LoginSubmit Login2"></div>
+            </div>
           </div>
-          <div className="SocialLoginHR">SNS 계정으로 로그인하기</div>
-          <div className="SocialLoginBtns">
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
-              <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
-            </a>
-            <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
-            <img className="NaverLoginBtn" size="5" src={naver}></img>
-          </div>
+        </div>
+        <div className="SocialLoginHR">또는</div>
+        <div className="SocialLoginBtns">
+          <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
+            <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
+          </a>
+          <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
+          <img className="NaverLoginBtn" size="5" src={naver}></img>
         </div>
       </div>
     </>
   )
 }
 
-const Span = styled.span`
+const SpanUsername = styled.span`
   font-size: 12px;
   color: #ffa07a;
+  margin-top: -10px;
+`
+
+const SpanPassword = styled.span`
+  font-size: 12px;
+  color: #ffa07a;
+  margin-top: -15px;
 `
 
 export default Login

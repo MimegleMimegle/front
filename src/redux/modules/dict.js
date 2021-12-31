@@ -8,6 +8,7 @@ import { getCookie } from '../../shared/cookie'
 /* action type */
 const GET_DICT_MAIN = 'GET_DICT_MAIN'
 const GET_DICT_DETAIL = 'GET_DICT_DETAIL'
+const GET_TODAY_DICT_LIST = 'GET_TODAY_DICT_LIST'
 const ADD_DICT = 'ADD_DICT'
 const EDIT_DICT = 'EDIT_DICT'
 const DELETE_DICT = 'DELETE_DICT'
@@ -23,6 +24,7 @@ const SEARCH_DICT = 'SEARCH_DICT'
 /* action creator */
 const getDictMain = createAction(GET_DICT_MAIN, (dict_list, paging) => ({ dict_list, paging }))
 const getDictDetail = createAction(GET_DICT_DETAIL, (dict_list) => dict_list)
+const getTodayDictList = createAction(GET_TODAY_DICT_LIST, (dictId) => ({ dictId }))
 const addDict = createAction(ADD_DICT, (dict) => ({ dict }))
 const editDict = createAction(EDIT_DICT, (dict_id, dict) => ({ dict_id }))
 const deleteDict = createAction(DELETE_DICT, (dict_id, dict) => ({ dict_id }))
@@ -79,6 +81,25 @@ const getDictDetailDB = (dictId) => {
       .then((response) => {
         const dict_list = [...response.data.data]
 
+        dispatch(loading(false))
+      })
+      .catch((err) => {
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
+        }
+      })
+  }
+}
+
+const getTodayDictListDB = () => {
+  return function (dispatch, getState, { history }) {
+    dictApi
+      .getTodayDict()
+      .then((response) => {
+        const todayDict_list = response.data.data
+        dispatch(getTodayDictList(todayDict_list))
         dispatch(loading(false))
       })
       .catch((err) => {
@@ -184,6 +205,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.detail_list = action.payload
       }),
+    [GET_TODAY_DICT_LIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.todayDict_list = action.payload
+      }),
     [ADD_DICT]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload
@@ -236,6 +261,7 @@ export default handleActions(
 const actionCreators = {
   getDictMain,
   getDictDetail,
+  getTodayDictList,
   addDict,
   editDict,
   deleteDict,
@@ -246,6 +272,7 @@ const actionCreators = {
   rollbackOneDict,
   getDictMainDB,
   getDictDetailDB,
+  getTodayDictListDB,
   addDictDB,
   editDictDB,
   deleteDictDB,

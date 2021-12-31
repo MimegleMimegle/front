@@ -186,7 +186,7 @@ const Mypage = ({ profileImgUrl }) => {
                 <div>
                   <ProfileImagePreview src={imageFile ? imageFile : profileImgUrl} />
                 </div>
-                <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg" />
+                <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg, image/png" />
                 <div>
                   <input type="text" onChange={handleChangeNickname} />
                   <button onClick={checkNickname}>중복확인</button>
@@ -403,6 +403,7 @@ const ProfileImagePreview = styled.div`
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
+  background-color: white;
 `
 
 const ModalFooter = styled.div`
