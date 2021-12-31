@@ -22,5 +22,29 @@ import DictDetail from './dict/DictDetail'
 import DictSearch from './dict/DictSearch'
 
 import ImageList from './image/ImageList'
+import ImageDetail from './image/ImageDetail'
+import ImageUpload from './image/ImageUpload'
 
-export { Main, NotFound, QuizIntro, Quiz, QuizResult, Join, Login, Mypage, PostDetail, PostEdit, PostList, PostWrite, PostSearch, DictEdit, DictList, DictWrite, DictDetail, ImageList, DictSearch }
+export {
+  Main,
+  NotFound,
+  QuizIntro,
+  Quiz,
+  QuizResult,
+  Join,
+  Login,
+  Mypage,
+  PostDetail,
+  PostEdit,
+  PostList,
+  PostWrite,
+  PostSearch,
+  DictEdit,
+  DictList,
+  DictWrite,
+  DictDetail,
+  ImageList,
+  ImageDetail,
+  ImageUpload,
+  DictSearch,
+}

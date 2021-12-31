@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai'
+import { FiMessageSquare } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import HashTag from './HashTag'
@@ -8,55 +9,66 @@ import HashTag from './HashTag'
 const PostCard = ({ post }) => {
   const history = useHistory()
 
-  console.log(post)
   const onC = () => {
     history.push(`/post/detail/${post.boardId}`)
   }
 
   return (
     <>
-      <Container postList={post} onClick={onC}>
-        <p>{post ? post.writer : null}</p>
-        <p>{post ? post.username : null}</p>
+      <Wrap postList={post} onClick={onC}>
+        <UserInfo>
+          <img src={post ? post.profileImageUrl : null} alt="" style={{ borderRadius: '160px', width: '15%' }} />
+          <div>
+            <p>{post ? post.writer : null}</p>
+            <p>{post ? post.createdAt : null}</p>
+          </div>
+        </UserInfo>
         <PostBody>
-          <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
-          <div className="listtitle">
+          <div className="text">
             <h4>{post ? post.title : null}</h4>
             <p>{post ? post.content : null}</p>
+            <HashTagHere>
+              {post
+                ? post.hashTags.map((hashTag, index) => {
+                    return <p key={index}>#{hashTag}</p>
+                  })
+                : null}
+            </HashTagHere>
           </div>
-          {post
-            ? post.hashTags.map((hashTag, index) => {
-                return <p key={index}>#{hashTag}</p>
-              })
-            : null}
+          <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
         </PostBody>
-        <p>{post ? post.createdAt : null}</p>
         <AiOutlineEye /> {post ? post.views : null} <AiOutlineHeart />
-        {post ? post.likeCnt : null}
-      </Container>
+        {post ? post.likeCnt : null} <FiMessageSquare /> {post ? post.commentCnt : null}
+      </Wrap>
     </>
   )
 }
 
 export default PostCard
 
-const Container = styled.div`
-  background: red;
+const Wrap = styled.div`
+  padding: 0 10px;
+  margin: 10px 0px;
+`
+
+const UserInfo = styled.div`
+  display: flex;
 `
 
 const PostBody = styled.div`
   width: 100%;
   height: auto;
-  padding: 8px;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
 
-  .listtitle {
-    margin: 5px 10px;
+  .text {
   }
   .uploadimg {
     width: 70px;
     height: 70px;
   }
+`
+const HashTagHere = styled.div`
+  display: flex;
 `

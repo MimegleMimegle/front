@@ -95,15 +95,15 @@ const PostWrite = (props) => {
       <Container>
         <PWHeader>
           <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
+          <hr/>
         </PWHeader>
-        <button>임시저장</button>
         <PWBody>
           <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
           <Preview src={thumbNail}></Preview>
           <input type="file" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           <HashDivWrap className="hashWrap">
             <div className="hashWrapOutter"></div>
-            <input className="hashInput" type="text" placeholder="해시태그 입력" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
+            <input className="hashInput" type="text" placeholder="해시태그를 입력해주세요 (#으로 구분, 최대5개)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
           </HashDivWrap>
         </PWBody>
         <PWFooter>
@@ -117,21 +117,21 @@ const PostWrite = (props) => {
 }
 
 const Container = styled.div`
-  margin: 10px 20px;
+  
 `
 
 const PWHeader = styled.div`
-  display: flex;
-
-  .writectgr {
-    width: 100px;
-  }
+  
   .writetitle {
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
-    /* border-radius: 10px; */
-    width: 200px;
+    width: 100%;
+    border: none;
   }
+  
+  hr{
+    color: lightgray;
+  }
+
+  
 `
 
 const PWBody = styled.div`
@@ -198,7 +198,7 @@ const HashDivWrap = styled.div`
   }
 
   .hashInput {
-    width: auto;
+    width: 100%;
     margin: 10px;
     display: inline-flex;
     outline: none;
