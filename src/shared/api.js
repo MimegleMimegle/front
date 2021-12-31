@@ -53,6 +53,7 @@ export const boardApi = {
 export const dictApi = {
   getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
+  getTodayDict: () => instance.get(`/api/bestDict/dict`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
   editDict: (dictId, summary, content) => instance.put(`/api/dict/${dictId}`, { dictId: dictId, summary: summary, content: content }),
   deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),

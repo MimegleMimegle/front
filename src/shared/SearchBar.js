@@ -44,7 +44,7 @@ function SearchBar({ onAddKeyword }) {
       onAddKeyword(keyword)
       setKeyword('')
       searchDictDB(keyword)
-      dispatch(history.push('/dict/search'))
+      dispatch(history.push(`/dict/search/${keyword}`))
     }
   }
 
@@ -81,7 +81,7 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   /* border-bottom: 1px solid grey; */
-  background-color: #fff;
+  background-color: none;
   padding: 20px 60px;
   box-sizing: border-box;
 `
@@ -108,7 +108,7 @@ const InputContainer = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  background-color: #fff;
+  background-color: rgba(196, 196, 196, 0.4);
   font-weight: 500;
   font-size: 14px;
   box-sizing: border-box;

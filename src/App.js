@@ -54,7 +54,7 @@ function App() {
             <Route path="/dict/write" exact component={DictWrite} />
             <Route path="/dict/edit/:dictId" exact component={DictEdit} />
             <Route path="/dict/detail/:dictId" exact component={DictDetail} />
-            <Route path="/dict/search" exact component={DictSearch} />
+            <Route path="/dict/search/:keyword" exact component={DictSearch} />
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/:imageId" exact component={ImageDetail} />
             <Route path="/image/upload" exact component={ImageUpload} />
