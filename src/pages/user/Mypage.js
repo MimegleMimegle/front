@@ -2,39 +2,30 @@ import React from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
-import { history } from '../../redux/ConfigureStore'
 
 import '../../styles/css/Mypage.css'
 
+import EditProfile from '../../components/mypage/EditProfile'
 import PostCard from '../../components/PostCard'
 import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
-import ModalWrapper from '../../components/ModalWrapper'
 
 import { AiOutlineEdit } from 'react-icons/ai'
 
 const Mypage = (props) => {
   const dispatch = useDispatch()
 
-  const userId = localStorage.getItem('id')
-
-  const fileInput = React.useRef('')
-
   const [showModal, setShowModal] = React.useState(false)
-  const [imageFile, setImageFile] = React.useState(null)
-  const [nickname, setNickname] = React.useState('')
-  const [isNickname, setIsNickname] = React.useState(false)
-  const [isNicknameChecked, setIsNicknameChecked] = React.useState(false)
-
   const [showDictionary, setShowDictionary] = React.useState(true)
   const [showBoard, setShowBoard] = React.useState(false)
-  const [showPhoto, setShowPhoto] = React.useState(false)
+  const [showImage, setShowImage] = React.useState(false)
 
-  const user = useSelector((state) => state.mypage.user_info)
-  console.log(user)
+  const my = useSelector((state) => state.mypage.myPageData)
+  const myMemeDictList = my && my.dict
+  const myMemePostList = my && my.postBoards.filter((post) => post.category === 'FREEBOARD')
+  const myMemeImageList = my && my.postBoards.filter((post) => post.category === 'IMAGEBOARD')
 
-  const editProfile = () => {
+  const openEditProfile = () => {
     setShowModal(true)
   }
 
@@ -44,85 +35,24 @@ const Mypage = (props) => {
     }
   })
 
-  const handleChangeFile = (e) => {
-    setImageFile(e.target.files)
-    let reader = new FileReader()
-    reader.readAsDataURL(e.target.files[0])
-
-    reader.onload = () => {
-      const file = reader.result
-
-      if (file) {
-        let fileInfo = file.toString()
-        setImageFile(fileInfo)
-      }
-    }
-  }
-
-  const handleChangeNickname = (e) => {
-    const nicknameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/
-    const currentNickname = e.target.value
-    setNickname(currentNickname)
-    if (!nicknameRegExp.test(currentNickname)) {
-      setIsNickname(false)
-    } else {
-      setIsNickname(true)
-    }
-  }
-
-  const checkNickname = async () => {
-    await userApi
-      .checkNickname(nickname)
-      .then((response) => {
-        console.log(response.data)
-        if (response.data.result === true) {
-          window.alert('사용 가능한 닉네임입니다.')
-          setIsNicknameChecked(true)
-        } else {
-          window.alert('사용 중인 닉네임입니다.')
-          setIsNicknameChecked(false)
-        }
-      })
-      .catch((error) => {
-        console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
-      })
-  }
-
-  const _editProfile = async () => {
-    if (imageFile) {
-      const uploadFile = fileInput.current.files[0]
-      dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
-    }
-    if (nickname && isNickname && isNicknameChecked) {
-      dispatch(mypageActions.editNicknameDB(userId, nickname))
-    } else {
-      window.alert('닉네임을 확인해주세요!')
-    }
-    setShowModal(false)
-    setImageFile(null)
-    setNickname('')
-    setIsNickname(false)
-    setIsNicknameChecked(false)
-  }
-
   const handleShowDictionary = () => {
     setShowDictionary(true)
     setShowBoard(false)
-    setShowPhoto(false)
+    setShowImage(false)
   }
   const handleShowBoard = () => {
     setShowDictionary(false)
     setShowBoard(true)
-    setShowPhoto(false)
+    setShowImage(false)
   }
   const handleShowPhoto = () => {
     setShowDictionary(false)
     setShowBoard(false)
-    setShowPhoto(true)
+    setShowImage(true)
   }
 
   React.useEffect(() => {
-    if (user === null) {
+    if (my == null) {
       dispatch(mypageActions.getUserInfoDB())
     }
   }, [])
@@ -131,22 +61,22 @@ const Mypage = (props) => {
     <Wrapper>
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>
         <UserProfile>
-          <ProfileImage src={user.profileImageUrl} />
+          <ProfileImage src={my && my.profileImageUrl} />
           <div className="profile-info box-1">
             <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div className="user-nickname">{user.nickname}</div>
-              <button onClick={editProfile}>
+              <div className="user-nickname">{my && my.nickname}</div>
+              <button onClick={openEditProfile}>
                 <AiOutlineEdit fontSize="20px" />
               </button>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div className="user-activity-info">
                 <div className="user-activity-info-subject">단어장</div>
-                <div className="user-activity-info-count">{user.dictCount}</div>
+                <div className="user-activity-info-count">{my && my.dictCount}</div>
               </div>
               <div className="user-activity-info">
                 <div className="user-activity-info-subject">게시글</div>
-                <div className="user-activity-info-count">{user.postCount}</div>
+                <div className="user-activity-info-count">{my && my.postCount}</div>
               </div>
             </div>
           </div>
@@ -160,7 +90,7 @@ const Mypage = (props) => {
           <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
             밈글
           </button>
-          <button className={`filter-button ${showPhoto ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
+          <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
             짤방
           </button>
         </Filter>
@@ -168,17 +98,13 @@ const Mypage = (props) => {
           {/* Dictionary */}
           {showDictionary && <div>내가 등록한 단어</div>}
           {/* Board */}
-          {showBoard && user.postBoards
-            ? user.postBoards.map((post) => {
-                return (
-                  <div key={post.postId}>
-                    <PostCard post={post} />
-                  </div>
-                )
+          {showBoard && myMemePostList.length > 0
+            ? myMemePostList.map((post) => {
+                return <PostCard key={post.boardId} post={post} />
               })
             : null}
           {/* Photo */}
-          {showPhoto && (
+          {showImage && (
             <MyImageList>
               <MyPageOneImageCard />
               <MyPageOneImageCard />
@@ -189,35 +115,7 @@ const Mypage = (props) => {
           )}
         </UserActivity>
       </div>
-      {showModal && (
-        <ModalWrapper visible={true}>
-          <ModalContainer>
-            <ModalBody>
-              <div>
-                <ProfileImagePreview src={imageFile ? imageFile : user.profileImageUrl} />
-              </div>
-              <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg" />
-              <div>
-                <input type="text" onChange={handleChangeNickname} />
-                <button onClick={checkNickname}>중복확인</button>
-              </div>
-            </ModalBody>
-            <ModalFooter>
-              <button
-                className="btn cancel-btn"
-                onClick={() => {
-                  setShowModal(false)
-                }}
-              >
-                취소
-              </button>
-              <button className="btn upload-btn" onClick={_editProfile}>
-                프로필 변경
-              </button>
-            </ModalFooter>
-          </ModalContainer>
-        </ModalWrapper>
-      )}
+      {showModal && <EditProfile setShowModal={setShowModal} my={my} />}
     </Wrapper>
   )
 }
@@ -334,57 +232,4 @@ const MyImageList = styled.div`
   gap: 20px;
 `
 
-const ModalContainer = styled.div`
-  width: 70%;
-  height: 300px;
-  background-color: #fff;
-  /* border-radius: 10px; */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const ModalBody = styled.div`
-  width: 100%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-
-const ProfileImagePreview = styled.div`
-  width: 80px;
-  height: 80px;
-  /* border: 1px solid #111; */
-  border-radius: 40px;
-  background-size: cover;
-  background-image: url('${(props) => props.src}');
-  background-position: center;
-`
-
-const ModalFooter = styled.div`
-  width: 100%;
-  height: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .btn {
-    height: 100%;
-  }
-
-  .cancel-btn {
-    width: 35%;
-    background-color: #e8e8e8;
-  }
-  .upload-btn {
-    width: 65%;
-    background-color: #faea59;
-  }
-`
 export default Mypage
