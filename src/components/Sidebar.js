@@ -56,7 +56,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
     if (profile === null) {
       dispatch(userActions.getProfileInfoDB())
     }
-  }, [])
+  }, [setShowSidebar])
 
   return (
     <>
@@ -107,10 +107,6 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   )
 }
 
-Sidebar.defaultProps = {
-  profileImgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXdd3u5NqCQXagF3DlT5PqENDPrUx_Dy4BNF0l3v44cFnSOnrIU1JJXnCYtqovHd7lVY8&usqp=CAU',
-}
-
 const Wrapper = styled.div`
   width: 240px;
   height: 100%;
@@ -158,6 +154,7 @@ const ProfileImage = styled.div`
   background-image: url('${(props) => props.src}');
   background-position: center;
   cursor: pointer;
+  background-color: #fff;
 `
 
 const UserMenuBox = styled.div`

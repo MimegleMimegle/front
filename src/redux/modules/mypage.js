@@ -10,14 +10,14 @@ const EDIT_NICKNAME = 'EDIT_NICKNAME'
 
 /* action creator */
 
-const getUserInfo = createAction(GET_USER_INFO, (user_info) => ({ user_info }))
+const getUserInfo = createAction(GET_USER_INFO, (myPageData) => ({ myPageData }))
 const editProfileImage = createAction(EDIT_PROFILE_IMAGE, (newProfileImageUrl) => ({ newProfileImageUrl }))
 const editNickname = createAction(EDIT_NICKNAME, (newNickname) => ({ newNickname }))
 
 /* initial state */
 
 const initialState = {
-  user_info: null,
+  myPageData: null,
 }
 
 /* middleware */
@@ -27,8 +27,9 @@ const getUserInfoDB = () => {
     await mypageApi
       .getUserInfo()
       .then((response) => {
-        const user_info = response.data.data
-        dispatch(getUserInfo(user_info))
+        const myPageData = response.data.data
+        console.log(myPageData)
+        dispatch(getUserInfo(myPageData))
       })
       .catch((error) => {
         console.log('마이 페이지 정보를 불러오는 데 문제가 발생했습니다.', error.response)
@@ -88,15 +89,15 @@ export default handleActions(
   {
     [GET_USER_INFO]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_info = action.payload.user_info
+        draft.myPageData = action.payload.myPageData
       }),
     [EDIT_PROFILE_IMAGE]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_info = { ...draft.user_info, profileImageUrl: action.payload.newProfileImageUrl }
+        draft.myPageData = { ...draft.myPageData, profileImageUrl: action.payload.newProfileImageUrl }
       }),
     [EDIT_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
-        draft.user_info = { ...draft.user_info, nickname: action.payload.newNickname }
+        draft.myPageData = { ...draft.myPageData, nickname: action.payload.newNickname }
       }),
   },
   initialState
