@@ -88,7 +88,7 @@ const EditProfile = ({ setShowModal, my }) => {
             <div>
               <ProfileImagePreview src={imageFile ? imageFile : my.profileImageUrl} />
             </div>
-            <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg" />
+            <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg, image/png" />
             <div>
               <input type="text" onChange={handleChangeNickname} />
               <button onClick={checkNickname}>중복확인</button>
