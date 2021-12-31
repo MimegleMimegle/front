@@ -59,7 +59,11 @@ const ImageList = (props) => {
                 <OneImageCard />
               </GeneralGridLayout>
             )}
-            {sortByPopularity && <OneImageCard />}
+            {sortByPopularity && (
+              <GeneralGridLayout>
+                <OneImageCard />
+              </GeneralGridLayout>
+            )}
           </Container>
         </GeneralSection>
       </Wrapper>

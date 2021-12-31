@@ -54,18 +54,18 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
         <div style={{ width: '100%', padding: '48px 10px 16px 16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
             {isLogin ? (
               <>
-                <ProfileImage src={profileImgUrl} style={{ cursor: 'pointer' }} onClick={moveToMypage} />
-                <p style={{ paddingLeft: '10px', cursor: 'pointer' }} onClick={moveToMypage}>
+                <ProfileImage src={profileImgUrl} onClick={moveToMypage} />
+                <p style={{ paddingLeft: '10px', cursor: 'pointer', fontSize: '14px' }} onClick={moveToMypage}>
                   {nickname}
                 </p>
               </>
             ) : (
               <>
-                <ProfileImage src={profileImgUrl} style={{ cursor: 'pointer' }} onClick={moveToLogin} />
-                <p style={{ paddingLeft: '10px', cursor: 'pointer' }} onClick={moveToLogin}>
+                <ProfileImage src={profileImgUrl} onClick={moveToLogin} />
+                <p style={{ display: 'inline-block', paddingLeft: '8px', cursor: 'pointer', fontSize: '14px' }} onClick={moveToLogin}>
                   로그인이 필요합니다.
                 </p>
               </>
@@ -75,7 +75,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             onClick={() => {
               setShowSidebar(false)
             }}
-            style={{ width: '100%', height: '100%', padding: '0', textAlign: 'right' }}
+            style={{ height: '100%', padding: '0', textAlign: 'right' }}
           >
             <IoCloseOutline style={{ fontSize: '30px', paddingTop: '4px' }} />
           </button>
@@ -149,6 +149,7 @@ const ProfileImage = styled.div`
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
+  cursor: pointer;
 `
 
 const UserMenuBox = styled.div`
