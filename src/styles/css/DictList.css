@@ -94,6 +94,8 @@
 .DictListSummary {
   font-size: 12px;
   margin-left: 30px;
+  width: 300px;
+  word-break: keep-all;
 }
 
 .DictWriteInfo {
