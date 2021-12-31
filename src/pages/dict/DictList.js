@@ -8,6 +8,7 @@ import { actionCreators as dictActions } from '../../redux/modules/dict'
 import Pagination from 'rc-pagination'
 import SearchPage from '../../shared/SearchPage'
 import { dictApi } from '../../shared/api'
+import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
@@ -37,24 +38,33 @@ const DictList = (props) => {
     <>
       <div className="DictLayout">
         <SearchPage />
-        <div className="NewDictAddButtonSection">
+        {/* <div className="NewDictAddButtonSection">
           <div className="NewDictAddButton" onClick={() => history.push('/dict/write')}>
             + 새로운 용어 등록하기
           </div>
-        </div>
-        <div className="DictList">
-          {dict.map((dict) => (
-            <div className="OneDictionaryCardList" key={dict.id}>
-              <div className="OneDictionaryCardList WordCardList1">{dict.title}</div>
-              <div className="OneDictionaryCardList WordCardList2">
-                <button className="OneDictCardDetailButton" onClick={() => history.push(`/dict/detail/${dict.dictId}`)}>
-                  자세히보기
-                </button>
+        </div> */}
+        <div className="TodayDictListText">오늘의 밈 카드</div>
+        <hr className="TodayDictListHr" />
+        <TodayDictCardSwiper />
+        <div className="DictListPagination">
+          <div className="DictListText">밈 목록</div>
+          <div className="DictList">
+            {dict.map((dict) => (
+              <div className="OneDictionaryCardSection">
+                <div className="OneDictionaryCardList" key={dict.id} onClick={() => history.push(`/dict/detail/${dict.dictId}`)}>
+                  <div className="OneDictionaryCardList DictListTitle">{dict.title}</div>
+                  <div className="OneDictionaryCardList DictListSummary">{dict.summary}</div>
+                  <div className="OneDictionaryCardList DictWriteInfo">
+                    <div className="OneDictionaryCardList DictListFirstWriter">dict.writer</div>
+                    <div className="OneDictionaryCardList DictListCreatedAt">dict.createdAt</div>
+                    <div className="OneDictionaryCardList DictListLikeCount">{dict.likeCount}</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
         </div>
-        <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
       </div>
     </>
   )
