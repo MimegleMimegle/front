@@ -195,7 +195,7 @@ const ProfileImage = styled.div`
   left: 49%;
   transform: translateX(-49%);
   z-index: 999;
-  /* background-color: #fff; */
+  background-color: #fff;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
