@@ -86,3 +86,11 @@ export const likeApi = {
   likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
   likeDict: (dictId) => instance.post(`/api/dict/${dictId}/like`),
 }
+
+export const imageApi = {
+  getImageList: (category, page, size) => instance.get(`/api/board/list/${category}?page=${page}&size=${size}`),
+  getImageDetail: (boardId) => instance.get(`/api/board/${boardId}`),
+  uploadImage: (category, imageData) => instance.post(`/api/board/${category}`, imageData),
+  deleteImage: (boardId) => instance.delete(`/api/board/${boardId}`),
+  giveMeTotalLength: (category) => instance.get(`/api/count/board/${category}`),
+}

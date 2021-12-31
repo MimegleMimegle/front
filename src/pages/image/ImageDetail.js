@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { history } from '../../redux/ConfigureStore'
+import { imageApi } from '../../shared/api'
 
 import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'

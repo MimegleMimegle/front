@@ -23,6 +23,7 @@ import DictSearch from './dict/DictSearch'
 
 import ImageList from './image/ImageList'
 import ImageDetail from './image/ImageDetail'
+import ImageUpload from './image/ImageUpload'
 
 export {
   Main,
@@ -44,5 +45,6 @@ export {
   DictDetail,
   ImageList,
   ImageDetail,
+  ImageUpload,
   DictSearch,
 }
