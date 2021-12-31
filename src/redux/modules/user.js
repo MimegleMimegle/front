@@ -11,15 +11,18 @@ const { Kakao } = window
 const LOG_OUT = 'LOG_OUT'
 const GET_USER = 'GET_USER'
 const SET_USER = 'SET_USER'
+const GET_PROFILE_INFO = 'GET_PROFILE_INFO'
 
 // const logIn = createAction(LOG_IN, (user) => ({ user }))
 const logOut = createAction(LOG_OUT, (user) => ({ user }))
 const getUser = createAction(GET_USER, (user) => ({ user }))
 const setUser = createAction(SET_USER, (user) => ({ user }))
+const getProfileInfo = createAction(GET_PROFILE_INFO, (profile) => ({ profile }))
 
 const initialState = {
   user: null,
   is_login: false,
+  profile: null,
 }
 
 //middleware
@@ -95,6 +98,20 @@ const loginCheckDB = () => {
   }
 }
 
+const getProfileInfoDB = () => {
+  return async function (dispatch, getState, { history }) {
+    await userApi
+      .getProfileInfo()
+      .then((response) => {
+        const profile = response.data.data
+        dispatch(getProfileInfo(profile))
+      })
+      .catch((error) => {
+        console.log('프로필 정보를 불러오는 데 문제가 발생했습니다.', error.response)
+      })
+  }
+}
+
 //reducer
 export default handleActions(
   {
@@ -113,6 +130,10 @@ export default handleActions(
         draft.user = action.payload.user
         draft.is_login = true
       }),
+    [GET_PROFILE_INFO]: (state, action) =>
+      produce(state, (draft) => {
+        draft.profile = action.payload.profile
+      }),
   },
   initialState
 )
@@ -126,6 +147,8 @@ const actionCreators = {
   logOutDB,
   loginCheckDB,
   KakaoLogin,
+  getProfileInfo,
+  getProfileInfoDB,
 }
 
 export { actionCreators }

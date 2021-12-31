@@ -22,8 +22,7 @@ export const userApi = {
   login: (username, password) => instance.post('/api/user', { username: username, password: password }),
   socialLogin: () => instance.get('/api/user/kakao/callback'),
   join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
-  userInfo: () => instance.get(`/api/userInfo`),
-  myPage: () => instance.get(`/api/mypage`),
+  getProfileInfo: () => instance.get('/api/userInfo'),
 
   /* 추가 */
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),

@@ -38,10 +38,10 @@ const OneImageCard = (props) => {
         {hover && (
           <Overlay>
             <div style={{ width: '100%', height: '100%', padding: '5px 0 5px 2px', display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
-              <button style={{ color: '#FFF' }}>
+              <button style={{ color: '#FFF', zIndex: '1000' }}>
                 <HiOutlineHeart fontSize="20px" />
               </button>
-              <button style={{ color: '#FFF' }} onClick={clickToggleMenu}>
+              <button style={{ color: '#FFF', zIndex: '1000' }} onClick={clickToggleMenu}>
                 <BsThreeDotsVertical fontSize="20px" />
               </button>
             </div>
