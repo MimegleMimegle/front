@@ -144,6 +144,7 @@ const ProfileImagePreview = styled.div`
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
+  background-color: #fff;
 `
 
 const ModalFooter = styled.div`
