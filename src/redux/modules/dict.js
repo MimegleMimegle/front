@@ -24,7 +24,7 @@ const SEARCH_DICT = 'SEARCH_DICT'
 /* action creator */
 const getDictMain = createAction(GET_DICT_MAIN, (dict_list, paging) => ({ dict_list, paging }))
 const getDictDetail = createAction(GET_DICT_DETAIL, (dict_list) => dict_list)
-const getTodayDictList = createAction(GET_TODAY_DICT_LIST, (dictId) => ({ dictId }))
+const getTodayDictList = createAction(GET_TODAY_DICT_LIST, (todayDict_list) => ({ todayDict_list }))
 const addDict = createAction(ADD_DICT, (dict) => ({ dict }))
 const editDict = createAction(EDIT_DICT, (dict_id, dict) => ({ dict_id }))
 const deleteDict = createAction(DELETE_DICT, (dict_id, dict) => ({ dict_id }))
@@ -101,6 +101,7 @@ const getTodayDictListDB = () => {
         const todayDict_list = response.data.data
         dispatch(getTodayDictList(todayDict_list))
         dispatch(loading(false))
+        console.log(todayDict_list)
       })
       .catch((err) => {
         if (err.res) {
@@ -207,7 +208,7 @@ export default handleActions(
       }),
     [GET_TODAY_DICT_LIST]: (state, action) =>
       produce(state, (draft) => {
-        draft.todayDict_list = action.payload
+        draft.todayDict_list = action.payload.todayDict_list
       }),
     [ADD_DICT]: (state, action) =>
       produce(state, (draft) => {
