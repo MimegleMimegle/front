@@ -8,7 +8,7 @@ import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
 import { IoCloseOutline } from 'react-icons/io5'
 
-const OneImageCard = ({ image }) => {
+const PopularOneImageCard = (props) => {
   const tempImgUrl = 'https://image.idus.com/image/files/92e848f447904facb3fb7fcf5b3cdf6a_1080.jpg'
 
   const [hover, setHover] = React.useState(false)
@@ -28,10 +28,10 @@ const OneImageCard = ({ image }) => {
           setToggleMenu(false)
         }}
         onClick={() => {
-          history.push(`/image/detail/${image && image.boardId}`)
+          history.push(`/image/${tempImgUrl}`)
         }}
       >
-        <ImageThumbnail src={image && image.thumbNail}></ImageThumbnail>
+        <ImageThumbnail src={tempImgUrl}></ImageThumbnail>
         {hover && (
           <Overlay>
             <div style={{ width: '100%', height: '100%', padding: '5px 0 5px 2px', display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
@@ -102,4 +102,4 @@ const Menu = styled.div`
   align-items: flex-end;
 `
 
-export default OneImageCard
+export default PopularOneImageCard

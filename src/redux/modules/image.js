@@ -24,10 +24,11 @@ const initialState = {
 }
 
 /* middleware */
-const getImageListDB = (page) => {
+const getImageListDB = () => {
   return async function (dispatch, getState, { history }) {
     const category = 'IMAGEBOARD'
-    const size = 9
+    const page = 0
+    const size = 12
     await imageApi
       .getImageList(category, page, size)
       .then((response) => {
@@ -66,11 +67,12 @@ const getImageDetailDB = (boardId) => {
 
 const uploadImageDB = (uploadFile) => {
   return async function (dispatch, getState, { history }) {
+    console.log(uploadFile)
     const formData = new FormData()
     const category = 'IMAGEBOARD'
     const post = {
-      title: '',
-      content: '',
+      title: 'IMAGEBOARD',
+      content: 'IMAGEBOARD',
       hashTags: [],
     }
 
@@ -84,10 +86,9 @@ const uploadImageDB = (uploadFile) => {
         const image = response.data.data
         console.log(image)
         dispatch(loading(false))
-        dispatch(uploadImage(image))
       })
       .then(() => {
-        history.push('/image')
+        history.go('/image')
       })
       .catch((error) => {
         console.log('이미지를 업로드하는 데 문제가 발생했습니다.', error.response)
@@ -105,10 +106,9 @@ const deleteImageDB = (boardId) => {
       .then((response) => {
         console.log(response.data)
         dispatch(loading(false))
-        dispatch(deleteImage(boardId))
       })
       .then(() => {
-        history.push('/image')
+        history.go('/image')
       })
       .catch((error) => {
         console.log('이미지를 삭제하는 데 문제가 발생했습니다.', error.response)
@@ -122,6 +122,14 @@ export default handleActions(
       produce(state, (draft) => {
         draft.image_list.push(...action.payload.image_data.data)
         draft.page = action.payload.image_data.page
+      }),
+    [UPLOAD_IMAGE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.image_list.unshift(action.payload.image)
+      }),
+    [DELETE_IMAGE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.image_list = action.payload
       }),
   },
   initialState

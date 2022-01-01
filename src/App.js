@@ -56,7 +56,7 @@ function App() {
             <Route path="/dict/detail/:dictId" exact component={DictDetail} />
             <Route path="/dict/search/:keyword" exact component={DictSearch} />
             <Route path="/image" exact component={ImageList} />
-            <Route path="/image/:imageId" exact component={ImageDetail} />
+            <Route path="/image/detail/:imageId" exact component={ImageDetail} />
             <Route path="/image/upload" exact component={ImageUpload} />
             {/* 댓글 서버 연결 확인 후 삭제 예정 */}
             <Route path="/comment" exact component={CommentTest} />
