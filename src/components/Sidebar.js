@@ -5,14 +5,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
 import SidebarItem from './SidebarItem'
 import { actionCreators as userActions } from '../redux/modules/user'
+import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
 import { IoCloseOutline } from 'react-icons/io5'
 
 const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const dispatch = useDispatch()
 
-  const profile = useSelector((state) => state.user.profile)
-  console.log(profile)
+  // const profile = useSelector((state) => state.user.profile)
+  const my = useSelector((state) => state.mypage.myPageData)
+
+  console.log(my)
 
   const username = localStorage.getItem('username')
   const nickname = localStorage.getItem('nickname')
@@ -53,10 +56,14 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   ]
 
   React.useEffect(() => {
-    if (profile === null) {
-      dispatch(userActions.getProfileInfoDB())
-    }
-  }, [setShowSidebar])
+    // if (my == null) {
+    dispatch(mypageActions.getUserInfoDB())
+    // }
+  }, [])
+
+  // React.useEffect(() => {
+  //   dispatch(userActions.getProfileInfoDB())
+  // }, [setShowSidebar])
 
   return (
     <>
@@ -65,9 +72,9 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
           <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
             {isLogin ? (
               <>
-                <ProfileImage src={profile ? profile.profileImage : null} onClick={moveToMypage} />
+                <ProfileImage src={my ? my.profileImageUrl : null} onClick={moveToMypage} />
                 <p style={{ paddingLeft: '10px', cursor: 'pointer', fontSize: '14px' }} onClick={moveToMypage}>
-                  {profile ? profile.nickname : null}
+                  {my ? my.nickname : null}
                 </p>
               </>
             ) : (

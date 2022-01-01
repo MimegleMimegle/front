@@ -94,4 +94,5 @@ export const imageApi = {
   uploadImage: (category, imageData) => instance.post(`/api/board/${category}`, imageData),
   deleteImage: (boardId) => instance.delete(`/api/board/${boardId}`),
   giveMeTotalLength: (category) => instance.get(`/api/count/board/${category}`),
+  getPopularImageList: (category) => instance.get(`api/board/${category}/best`),
 }

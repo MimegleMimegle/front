@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
@@ -25,10 +25,13 @@ const ImageDetail = (props) => {
   const [isMyImage, setIsMyImage] = React.useState(false)
   const [isLiked, setIsLiked] = React.useState(false)
   const [toggleMenu, setToggleMenu] = React.useState(false)
+  const [profile, setProfile] = React.useState(null)
+  console.log(profile)
 
   const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
   }
+  console.log(imageData)
 
   const handleDeleteImage = async () => {
     await imageApi
@@ -57,6 +60,17 @@ const ImageDetail = (props) => {
       })
   }, [])
 
+  React.useEffect(() => {
+    userApi
+      .getProfileInfo()
+      .then((response) => {
+        setProfile(response.data.data)
+      })
+      .catch((error) => {
+        console.log('프로필 정보 문제 발생', error.response)
+      })
+  }, [])
+
   return (
     <>
       <ImageWrapper>
@@ -72,9 +86,11 @@ const ImageDetail = (props) => {
             <button>
               <MdShare style={{ fontSize: '20px', color: '#FFF' }} />
             </button>
-            <button>
-              <BsThreeDotsVertical style={{ fontSize: '20px', color: '#FFF' }} onClick={handleToggleMenu} />
-            </button>
+            {imageData && profile && imageData.writer === profile.nickname && (
+              <button>
+                <BsThreeDotsVertical style={{ fontSize: '20px', color: '#FFF' }} onClick={handleToggleMenu} />
+              </button>
+            )}
           </div>
         </div>
         <div style={{ width: '100%', height: '80%', display: 'flex', alignItems: 'center' }}>
