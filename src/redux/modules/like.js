@@ -8,8 +8,8 @@ const ADD_LIKE_DICT = 'ADD_LIKE_DICT'
 const SET_LIKE_BOARD = 'SET_LIKE_BOARD'
 const ADD_LIKE_BOARD = 'ADD_LIKE_BOARD'
 
-const setLikeDict = createAction(SET_LIKE_DICT, (dictId, result = false) => ({ dictId, result }))
-const addLikeDict = createAction(ADD_LIKE_DICT, (dictId, result = true) => ({ dictId, result }))
+const setLikeDict = createAction(SET_LIKE_DICT, (dictId, like = false) => ({ dictId, like }))
+const addLikeDict = createAction(ADD_LIKE_DICT, (dictId, like = true) => ({ dictId, like }))
 
 const setLikeBoard = createAction(SET_LIKE_BOARD, (boardId, result = false) => ({ boardId, result }))
 const addLikeBoard = createAction(ADD_LIKE_BOARD, (boardId, result = true) => ({ boardId, result }))
@@ -18,7 +18,7 @@ const initialState = {
   like: [],
 }
 
-const changeLikeDictDB = (dictId, result) => {
+const changeLikeDictDB = (dictId) => {
   return function (dispatch, getState, { history }) {
     likeApi
       .likeDict(dictId)
@@ -26,15 +26,15 @@ const changeLikeDictDB = (dictId, result) => {
         // console.log(response.data)
         let like_data = []
         // response에서 필요한 데이터를 분류하여 like_data에 저장
-        for (let i = 0; i < response.data.post_list.length; i++) {
+        for (let i = 0; i < response.data.data.length; i++) {
           console.log(response)
           like_data.push({
-            post_id: response.data.post_list[i].post_Id,
-            like_user: response.data.post_list[i].like_user,
-            like_count: response.data.post_list[i].like_count,
+            dict_id: response.data.data[i].dictId,
+            like_count: response.data.data[i].likeCount,
+            like: response.data.data[i].isLike,
           })
         }
-        // console.log(like_data)
+        console.log(like_data)
         // 리덕스 상태 업데이트
         dispatch(setLikeDict(like_data))
       })
@@ -70,11 +70,11 @@ export default handleActions(
   {
     [SET_LIKE_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.like = action.payload.result
+        draft.like = action.payload.like_data
       }),
     [ADD_LIKE_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.like = action.payload.result
+        draft.like = action.payload.like_data
       }),
 
     [SET_LIKE_BOARD]: (state, action) =>

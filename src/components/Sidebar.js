@@ -5,17 +5,21 @@ import { useSelector, useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
 import SidebarItem from './SidebarItem'
 import { actionCreators as userActions } from '../redux/modules/user'
+import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
 import { IoCloseOutline } from 'react-icons/io5'
 
 const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const dispatch = useDispatch()
 
+  // const profile = useSelector((state) => state.user.profile)
+  const my = useSelector((state) => state.mypage.myPageData)
+
+  console.log(my)
+
   const username = localStorage.getItem('username')
   const nickname = localStorage.getItem('nickname')
   const isLogin = username && nickname ? true : false
-  const is_login = useSelector((state) => state.user.is_login)
-  console.log(isLogin, is_login)
 
   const moveToMypage = () => {
     history.push('/mypage')
@@ -50,22 +54,33 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
     { name: '오픈 밈사전', path: '/dict' },
     { name: '짤방앗간', path: '/image' },
   ]
+
+  React.useEffect(() => {
+    // if (my == null) {
+    dispatch(mypageActions.getUserInfoDB())
+    // }
+  }, [])
+
+  // React.useEffect(() => {
+  //   dispatch(userActions.getProfileInfoDB())
+  // }, [setShowSidebar])
+
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
         <div style={{ width: '100%', padding: '48px 10px 16px 16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
             {isLogin ? (
               <>
-                <ProfileImage src={profileImgUrl} style={{ cursor: 'pointer' }} onClick={moveToMypage} />
-                <p style={{ paddingLeft: '10px', cursor: 'pointer' }} onClick={moveToMypage}>
-                  {nickname}
+                <ProfileImage src={my ? my.profileImageUrl : null} onClick={moveToMypage} />
+                <p style={{ paddingLeft: '10px', cursor: 'pointer', fontSize: '14px' }} onClick={moveToMypage}>
+                  {my ? my.nickname : null}
                 </p>
               </>
             ) : (
               <>
-                <ProfileImage src={profileImgUrl} style={{ cursor: 'pointer' }} onClick={moveToLogin} />
-                <p style={{ paddingLeft: '10px', cursor: 'pointer' }} onClick={moveToLogin}>
+                <ProfileImage src={profileImgUrl} onClick={moveToLogin} />
+                <p style={{ display: 'inline-block', paddingLeft: '8px', cursor: 'pointer', fontSize: '14px' }} onClick={moveToLogin}>
                   로그인이 필요합니다.
                 </p>
               </>
@@ -75,7 +90,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             onClick={() => {
               setShowSidebar(false)
             }}
-            style={{ width: '100%', height: '100%', padding: '0', textAlign: 'right' }}
+            style={{ height: '100%', padding: '0', textAlign: 'right' }}
           >
             <IoCloseOutline style={{ fontSize: '30px', paddingTop: '4px' }} />
           </button>
@@ -97,10 +112,6 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
       </Wrapper>
     </>
   )
-}
-
-Sidebar.defaultProps = {
-  profileImgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXdd3u5NqCQXagF3DlT5PqENDPrUx_Dy4BNF0l3v44cFnSOnrIU1JJXnCYtqovHd7lVY8&usqp=CAU',
 }
 
 const Wrapper = styled.div`
@@ -149,6 +160,8 @@ const ProfileImage = styled.div`
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
+  cursor: pointer;
+  background-color: #fff;
 `
 
 const UserMenuBox = styled.div`

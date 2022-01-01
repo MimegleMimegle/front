@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { history } from '../../redux/ConfigureStore'
+
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
 import { IoCloseOutline } from 'react-icons/io5'
 
-const OneImageCard = (props) => {
+const OneImageCard = ({ image }) => {
   const tempImgUrl = 'https://image.idus.com/image/files/92e848f447904facb3fb7fcf5b3cdf6a_1080.jpg'
 
   const [hover, setHover] = React.useState(false)
@@ -15,9 +17,6 @@ const OneImageCard = (props) => {
   const clickToggleMenu = () => {
     setToggleMenu(!toggleMenu)
   }
-
-  const handleClickDetail = () => {}
-
   return (
     <>
       <ImageBox
@@ -28,15 +27,18 @@ const OneImageCard = (props) => {
           setHover(false)
           setToggleMenu(false)
         }}
+        onClick={() => {
+          history.push(`/image/detail/${image && image.boardId}`)
+        }}
       >
-        <ImageThumbnail src={tempImgUrl}></ImageThumbnail>
+        <ImageThumbnail src={image && image.thumbNail}></ImageThumbnail>
         {hover && (
           <Overlay>
             <div style={{ width: '100%', height: '100%', padding: '5px 0 5px 2px', display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
-              <button style={{ color: '#FFF' }}>
+              <button style={{ color: '#FFF', zIndex: '1000' }}>
                 <HiOutlineHeart fontSize="20px" />
               </button>
-              <button style={{ color: '#FFF' }} onClick={clickToggleMenu}>
+              <button style={{ color: '#FFF', zIndex: '1000' }} onClick={clickToggleMenu}>
                 <BsThreeDotsVertical fontSize="20px" />
               </button>
             </div>

@@ -1,68 +1,80 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
+import InfinityScroll from '../../shared/InfinityScroll'
+import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
+import PopularOneImageCard from '../../components/image/PopularOneImageCard'
+
+import image, { actionCreators as imageActions } from '../../redux/modules/image'
 
 const ImageList = (props) => {
   const dispatch = useDispatch()
 
-  const [sortByDate, setSortByDate] = React.useState(true)
-  const [sortByPopularity, setSortByPopularity] = React.useState(false)
+  const fileInput = React.useRef('')
 
-  const handleChangeDate = () => {
-    setSortByDate(true)
-    setSortByPopularity(false)
+  const [preview, setPreview] = React.useState(null)
+
+  const image_data = useSelector((state) => state.image)
+  const image_list = image_data && image_data.image_list
+  const page = image_data && image_data.page
+
+  const handleChangeFile = (e) => {
+    setPreview(e.target.value)
+    let reader = new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+
+    reader.onload = () => {
+      const file = reader.result
+
+      if (file) {
+        let fileInfo = file.toString()
+        setPreview(fileInfo)
+      }
+    }
   }
-  const handleChangePopularity = () => {
-    setSortByDate(false)
-    setSortByPopularity(true)
-  }
+
+  /* 무한 스크롤 구현 끝나면 getImageListDB 파라미터에 page 정보 넘겨주기! */
+  React.useEffect(() => {
+    if (image_list.length < 2) {
+      dispatch(imageActions.getImageListDB())
+    }
+  }, [dispatch])
 
   return (
     <>
       <Wrapper>
+        <div>
+          <input type="file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+        </div>
         <PopularSection>
           <div style={{ borderBottom: '1px solid #e5e5e5' }}>
             <h2 style={{ fontSize: '16px', fontWeight: '700' }}>명예의 전당</h2>
           </div>
           <Container>
             <PopularGridLayout>
-              <OneImageCard />
-              <OneImageCard />
-              <OneImageCard />
+              <PopularOneImageCard />
+              <PopularOneImageCard />
+              <PopularOneImageCard />
             </PopularGridLayout>
           </Container>
         </PopularSection>
         <GeneralSection>
           <div style={{ borderBottom: '1px solid #e5e5e5', display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
             <h2 style={{ fontSize: '16px', fontWeight: '700' }}>짤 방앗간</h2>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <button className={`sort-button ${sortByDate ? 'active' : ''}`} onClick={handleChangeDate}>
-                최신순
-              </button>
-              <button className={`sort-button ${sortByPopularity ? 'active' : ''}`} onClick={handleChangePopularity}>
-                인기순
-              </button>
-            </div>
           </div>
           <Container>
-            {sortByDate && (
-              <GeneralGridLayout>
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-                <OneImageCard />
-              </GeneralGridLayout>
-            )}
-            {sortByPopularity && <OneImageCard />}
+            <GeneralGridLayout>
+              {image_list.length > 0 &&
+                image_list.map((image) => {
+                  return <OneImageCard key={image.boardId} image={image} />
+                })}
+            </GeneralGridLayout>
           </Container>
         </GeneralSection>
       </Wrapper>
+      {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
     </>
   )
 }

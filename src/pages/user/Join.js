@@ -42,7 +42,7 @@ const Join = () => {
     setUsername(usernameCurrent)
 
     if (!emailRegex.test(usernameCurrent)) {
-      setUsernameMessage('영문자 + 숫자 조합으로 3자리 이상 16자리 이하인지 확인해주세요')
+      setUsernameMessage('영문+숫자 조합으로 3~16자가 맞는지 확인해주세요')
       setIsUsername(false)
     } else {
       setUsernameMessage('올바른 형식입니다')
@@ -56,7 +56,7 @@ const Join = () => {
     const nicknameCurrent = e.target.value
     setNickname(nicknameCurrent)
     if (!nicknameRegex.test(nicknameCurrent)) {
-      setNicknameMessage('영문자 또는 한글 조합으로 2자리 이상 16자리 이하가 맞는지 확인해주세요')
+      setNicknameMessage('영문+한글 조합으로 2~16자리가 맞는지 확인해주세요')
       setIsNickname(false)
     } else {
       setNicknameMessage('올바른 형식입니다')
@@ -71,7 +71,7 @@ const Join = () => {
     setPassword(passwordCurrent)
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자 조합으로 6자리 이상 16자리 이하가 되도록 입력해주세요')
+      setPasswordMessage('숫자+영문 조합으로 6~16자리가 맞는지 확인해주세요')
       setIsPassword(false)
     } else {
       setPasswordMessage('유효한 비밀번호입니다')
@@ -148,22 +148,42 @@ const Join = () => {
             </div>
           </div>
           <div className="LoginOrJoinInputs_join">
+            <label className="JoinInputLabel_Username" for="UsernameInput_Join">
+              아이디
+            </label>
             <DoubleCheckBox>
-              <input className="JoinInputBox input1" placeholder="영어, 숫자 3~16자" type="text" value={username} onChange={onChangeUsername} />
+              <input className="JoinInputBox input1" id="UsernameInput_Join" maxLength="16" placeholder="영어, 숫자 3~16자" type="text" value={username} onChange={onChangeUsername} />
               <button className="doubleCheckButton" onClick={checkUsername}>
                 중복확인
               </button>
             </DoubleCheckBox>
-            {/* {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>} */}
+            {username.length > 0 && <SpanUsername className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</SpanUsername>}
+            <label className="JoinInputLabel_Nickname" for="NicknameInput_Join">
+              닉네임
+            </label>
             <DoubleCheckBox>
-              <input className="JoinInputBox input1" maxLength="10" placeholder="한글,영어 대소문자, 숫자 2~16자" text="이름" type="text" value={nickname} onChange={onChangeNickname} />
+              <input
+                className="JoinInputBox input1"
+                id="NicknameInput_Join"
+                maxLength="16"
+                placeholder="한글,영어 대소문자, 숫자 2~16자"
+                text="이름"
+                type="text"
+                value={nickname}
+                onChange={onChangeNickname}
+              />
               <button className="doubleCheckButton" onClick={checkNickname}>
                 중복확인
               </button>
             </DoubleCheckBox>
-            {/* {nickname.length > 0 && <Span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</Span>} */}
+            {nickname.length > 0 && <SpanNickname className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</SpanNickname>}
+            <label className="JoinInputLabel_Password" for="PasswordInput_Join">
+              비밀번호
+            </label>
             <input
               className="JoinInputBox input2"
+              id="PasswordInput_Join"
+              maxLength="16"
               type="password"
               placeholder="영어 대소문자, 숫자, 특수문자 6~16자"
               onChange={onChangePassword}
@@ -171,9 +191,14 @@ const Join = () => {
               title="비밀번호"
               value={password}
             />
-            {/* {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>} */}
+            {password.length > 0 && <SpanPassword className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</SpanPassword>}
+            <label className="JoinInputLabel_PasswordCheck" for="PasswordCheckInput_Join">
+              비밀번호 확인
+            </label>
             <input
               className="JoinInputBox input2"
+              id="PasswordCheckInput_Join"
+              maxLength="16"
               type="password"
               placeholder="영어 대소문자, 숫자, 특수문자 6~16자"
               onChange={onChangePasswordCheck}
@@ -181,7 +206,7 @@ const Join = () => {
               title="비밀번호 확인"
               value={passwordCheck}
             />
-            {/* {setPasswordCheck.length > 0 && <Span className={`message ${isPasswordCheck ? 'success' : 'error'}`}>{passwordCheckMessage}</Span>} */}
+            {setPasswordCheck.length > 0 && <SpanPasswordCheck className={`message ${isPasswordCheck ? 'success' : 'error'}`}>{passwordCheckMessage}</SpanPasswordCheck>}
             <div
               className="MemegleButton_JoinSubmit"
               type="submit"
@@ -211,15 +236,32 @@ const Join = () => {
   )
 }
 
-const Span = styled.span`
-  font-size: 12px;
-  color: #ffa07a;
-`
 const DoubleCheckBox = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: row;
   width: 100%;
   margin: 0 0 0 0;
+`
+const SpanUsername = styled.span`
+  font-size: 12px;
+  margin-bottom: -15px;
+  color: #ffa07a;
+`
+
+const SpanNickname = styled.span`
+  font-size: 12px;
+  margin-bottom: -15px;
+  color: #ffa07a;
+`
+const SpanPassword = styled.span`
+  font-size: 12px;
+  margin-bottom: -15px;
+  color: #ffa07a;
+`
+const SpanPasswordCheck = styled.span`
+  font-size: 12px;
+  margin-bottom: -15px;
+  color: #ffa07a;
 `
 
 export default Join
