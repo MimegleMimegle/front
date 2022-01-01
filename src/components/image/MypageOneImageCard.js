@@ -10,7 +10,7 @@ const MyPageOneImageCard = (props) => {
 
   const [toggleMenu, setToggleMenu] = React.useState(false)
 
-  const clickToggleMenu = () => {
+  const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
   }
 
@@ -21,7 +21,7 @@ const MyPageOneImageCard = (props) => {
           <ImageSection>
             <Image src={tempImgUrl} />
             <div>
-              <button style={{ padding: '0' }} onClick={clickToggleMenu}>
+              <button style={{ padding: '0' }} onClick={handleToggleMenu}>
                 <BsThreeDotsVertical style={{ fontSize: '18px' }} />
               </button>
             </div>
@@ -39,7 +39,7 @@ const MyPageOneImageCard = (props) => {
         {toggleMenu && (
           <Menu>
             <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ padding: '0', height: '100%' }} onClick={clickToggleMenu}>
+              <button style={{ padding: '0', height: '100%' }} onClick={handleToggleMenu}>
                 <IoCloseOutline style={{ fontSize: '18px' }} />
               </button>
             </div>
