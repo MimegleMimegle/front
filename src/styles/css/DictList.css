@@ -82,18 +82,21 @@
   height: 150px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .DictListTitle {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: bold;
   margin-left: 30px;
+  margin-top: 20px;
+  color: rgba(1, 109, 173, 1);
 }
 
 .DictListSummary {
   font-size: 12px;
   margin-left: 30px;
+  margin-top: -15px;
   width: 300px;
   word-break: keep-all;
 }
@@ -115,11 +118,20 @@
   font-size: 9px;
   height: fit-content;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.DictListLikeButton {
+  font-size: 8px;
+  height: fit-content;
+  display: flex;
+  align-items: flex-end;
+  margin-right: -55px;
+  margin-bottom: 1px;
 }
 
 .DictListLikeCount {
-  font-size: 9px;
+  font-size: 12px;
   height: fit-content;
   display: flex;
   align-items: center;

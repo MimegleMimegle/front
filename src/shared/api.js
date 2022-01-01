@@ -61,6 +61,7 @@ export const dictApi = {
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
+  searchDict: (keyword, pageSize, currentPage) => instance.get(`/api/dict/search?q=${keyword}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   /* 추가 */
   tellMeTotalLength: () => instance.get('/api/count/dict'),
   tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
@@ -85,6 +86,6 @@ export const commentApi = {
 }
 
 export const likeApi = {
-  likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
-  likeDict: (dictId) => instance.post(`/api/dict/${dictId}/like`),
+  likePost: (boardId) => instance.get(`/api/board/${boardId}/like`),
+  likeDict: (dictId) => instance.get(`/api/dict/${dictId}/like`),
 }
