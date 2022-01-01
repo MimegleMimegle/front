@@ -49,7 +49,16 @@ const changeLikeBoardDB = (boardId, result) => {
     likeApi
       .likeBoard(boardId)
       .then((response) => {
-        dispatch(setLikeBoard())
+        let like_data = []
+        for (let i = 0; i < response.data.post_list.length; i++) {
+          console.log(response)
+          like_data.push({
+            post_id: response.data.post_list[i].post_Id,
+            like_user: response.data.post_list[i].like_user,
+            like_count: response.data.post_list[i].like_count,
+          })
+        }
+        dispatch(setLikeBoard(like_data))
       })
       .catch((error) => {
         console.log(error)
