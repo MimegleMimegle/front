@@ -57,7 +57,7 @@ function App() {
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/:imageId" exact component={ImageDetail} />
             {/* 댓글 서버 연결 확인 후 삭제 예정 */}
-            <Route path="/comment" exact component={CommentTest} />
+            {/* <Route path="/comment" exact component={CommentTest} /> */}
             {/* <Route path="" exact component={NotFound} /> */}
           </MobileFrame>
         </ConnectedRouter>

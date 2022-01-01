@@ -40,7 +40,7 @@ const PostCard = ({ post }) => {
 
         </PostBody>
         <AiOutlineEye /> {post ? post.views : null} <AiOutlineHeart />
-        {post ? post.likeCnt : null} <FiMessageSquare/> {post ? post.commetCnt : null}
+        {post ? post.likeCnt : null} <FiMessageSquare/> {post ? post.commentCnt : null}
       </Wrap>
     </>
   )
