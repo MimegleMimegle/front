@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { history } from '../redux/ConfigureStore'
 import axios from 'axios'
+import { dictApi } from '../shared/api'
 import { actionCreators as dictActions } from '../redux/modules/dict'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -24,16 +25,16 @@ const TodayDictCardSwiper = (props) => {
   const [todayDict, setTodayDict] = useState([])
 
   React.useEffect(() => {
-    dispatch(dictActions.getTodayDictListDB())
+    getTodayDictList()
   }, [])
 
-  console.log(todayDict)
-
-  const getTodayDictListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/bestDict/dict`)
-
+  const getTodayDictList = async () => {
+    let response = await dictApi.getTodayDict()
+    setTodayDict(response.data.data)
     console.log(response)
   }
+
+  console.log(todayDict)
 
   return (
     <>
@@ -43,8 +44,8 @@ const TodayDictCardSwiper = (props) => {
         keyboard={{
           enabled: true,
         }}
-        // centeredSlides={true}
-        slidesPerGroupSkip={1}
+        centeredSlides={true}
+        slidesPerGroupSkip={0}
         grabCursor={true}
         breakpoints={{
           769: {
@@ -54,58 +55,24 @@ const TodayDictCardSwiper = (props) => {
         }}
         scrollbar={false}
         autoplay={{
-          delay: 3000,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         freeMode={true}
         loop={true}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <div className="TodayDictCard">
-            <div className="TodayDictCard_1">
-              <div className="TodayDictCard_Title">알잘딱깔센</div>
-              <div className="TodayDictCard_Summary">알아서 잘 딱 깔끔하고 센스있게</div>
+        {todayDict.map((todayDict) => (
+          <SwiperSlide>
+            <div className="TodayDictCard" onClick={() => history.push(`/dict/detail/${todayDict.dictId}`)}>
+              <div className="TodayDictCard_1" key={todayDict.id}>
+                <div className="TodayDictCard_Title">{todayDict.title}</div>
+                <div className="TodayDictCard_Summary">{todayDict.summary}</div>
+              </div>
+              <div className="TodayDictCard_2"></div>
             </div>
-            <div className="TodayDictCard_2"></div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="TodayDictCard">
-            <div className="TodayDictCard_1">
-              <div className="TodayDictCard_Title">알잘딱깔센</div>
-              <div className="TodayDictCard_Summary">알아서 잘 딱 깔끔하고 센스있게</div>
-            </div>
-            <div className="TodayDictCard_2"></div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="TodayDictCard">
-            <div className="TodayDictCard_1">
-              <div className="TodayDictCard_Title">알잘딱깔센</div>
-              <div className="TodayDictCard_Summary">알아서 잘 딱 깔끔하고 센스있게</div>
-            </div>
-            <div className="TodayDictCard_2"></div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="TodayDictCard">
-            <div className="TodayDictCard_1">
-              <div className="TodayDictCard_Title">알잘딱깔센</div>
-              <div className="TodayDictCard_Summary">알아서 잘 딱 깔끔하고 센스있게</div>
-            </div>
-            <div className="TodayDictCard_2"></div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="TodayDictCard">
-            <div className="TodayDictCard_1">
-              <div className="TodayDictCard_Title">알잘딱깔센</div>
-              <div className="TodayDictCard_Summary">알아서 잘 딱 깔끔하고 센스있게</div>
-            </div>
-            <div className="TodayDictCard_2"></div>
-          </div>
-        </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   )
