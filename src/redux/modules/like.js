@@ -31,7 +31,7 @@ const changeLikeDictDB = (dictId) => {
           like_data.push({
             dict_id: response.data.data[i].dictId,
             like_count: response.data.data[i].likeCount,
-            like: response.data.data[i].like,
+            like: response.data.data[i].isLike,
           })
         }
         console.log(like_data)
@@ -61,11 +61,11 @@ export default handleActions(
   {
     [SET_LIKE_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.like = action.payload.isLike
+        draft.like = action.payload.like_data
       }),
     [ADD_LIKE_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.like = action.payload.isLike
+        draft.like = action.payload.like_data
       }),
 
     [SET_LIKE_BOARD]: (state, action) =>

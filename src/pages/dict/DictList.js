@@ -55,7 +55,7 @@ const DictList = (props) => {
                   <div className="OneDictionaryCardList DictListTitle">{dict.title}</div>
                   <div className="OneDictionaryCardList DictListSummary">{dict.summary}</div>
                   <div className="OneDictionaryCardList DictWriteInfo">
-                    <div className="OneDictionaryCardList DictListFirstWriter">{dict.writer}</div>
+                    <div className="OneDictionaryCardList DictListFirstWriter">{dict.firstWriter}</div>
                     <div className="OneDictionaryCardList DictListCreatedAt">{dict.createdAt}</div>
                     <div className="OneDictionaryCardList DictListLikeButton">
                       <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="40px" fill="#000000">

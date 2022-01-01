@@ -70,11 +70,32 @@ const DictDetail = (props) => {
           </div>
           <div className="OneDictCardDetailInfoWriterAndAt">
             <img className="OneDictCardDetailInfoFirstWriterProfileImage" src={dict.firstWriterProfileImage} />
-            <div className="OneDictCardDetailInfoFirstWriter">최초작성자 : {dict.firstWriter}</div>
-            <div className="OneDictCardDetailInfoCreatedAt">{dict.createdAt}</div>
+            <div className="OneDictCardDetailInfoFirstWriterCreatedAt">
+              <div className="OneDictCardDetailInfoFirstWriter">{dict.firstWriter}(최초 작성자)</div>
+              <div className="OneDictCardDetailInfoCreatedAt">{dict.createdAt}</div>
+            </div>
+            <div className="OneDictCardDetailInfoWriterAndAtLine" />
             <img className="OneDictCardDetailInfoRecentWriterProfileImage" src={dict.recentWriterProfileImage} />
-            <div className="OneDictCardDetailInfoRecentWriter">최근 편집자 : {dict.recentWriter}</div>
-            <div className="OneDictCardDetailInfoModifiedAt">{dict.modifiedAt}</div>
+            <div className="OneDictCardDetailInfoRecentWriterModifiedAt">
+              <div className="OneDictCardDetailInfoRecentWriter">{dict.recentWriter}(최근 작성자)</div>
+              <div className="OneDictCardDetailInfoModifiedAt">{dict.modifiedAt}</div>
+            </div>
+          </div>
+          <div className="OneDictCardDetailInfoModifiedGuideText">다른 유저들이 이전에 작성한 내용을 확인하거나 직접 편집 할 수 있어요!</div>
+          <div className="OneDictCardDetailInfoModifiedButtonAndHistory">
+            <div className="OneDictCardDetailInfoModifiedHistoryButton">
+              <div className="OneDictCardDetailInfoModifiedHistoryButton_1">편집 기록</div>
+              <div className="OneDictCardDetailInfoModifiedHistoryButton_2"></div>
+            </div>
+            <div
+              className="OneDictCardDetailInfoModifiedButton"
+              onClick={() => {
+                history.push(`/dict/edit/${dictId}`)
+              }}
+            >
+              <div className="OneDictCardDetailInfoModifiedButton_1">편집하기</div>
+              <div className="OneDictCardDetailInfoModifiedButton_2"></div>
+            </div>
           </div>
         </div>
       </div>
