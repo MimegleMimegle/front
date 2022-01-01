@@ -9,9 +9,10 @@ import OneComment from '../components/OneComment'
 const CommentTest = (props) => {
   const dispatch = useDispatch()
   // 추후 postId 수정해야 함! url 파라미터나 props로 정보 받아오기
-  const postId = 18
+  const boardId = props.boardId;
+  console.log(props);
 
-  const comment_list = useSelector((state) => state.comment.comment_list[postId])
+  const comment_list = useSelector((state) => state.comment.comment_list[boardId])
 
   const [comment, setComment] = React.useState('')
 
@@ -20,12 +21,12 @@ const CommentTest = (props) => {
   }
 
   const addComment = () => {
-    dispatch(commentActions.addCommentDB(postId, comment))
+    dispatch(commentActions.addCommentDB(boardId, comment))
     setComment('')
   }
 
   React.useEffect(() => {
-    dispatch(commentActions.getCommentsDB(postId))
+    dispatch(commentActions.getCommentsDB(boardId))
   }, [dispatch])
 
   return (
@@ -36,7 +37,7 @@ const CommentTest = (props) => {
       </div>
       {comment_list
         ? comment_list.map((c) => {
-            return <OneComment key={c.commentId} postId={postId} {...c} />
+            return <OneComment key={c.commentId} boardId={boardId} {...c} />
           })
         : null}
     </>

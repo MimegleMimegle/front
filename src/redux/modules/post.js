@@ -75,7 +75,7 @@ const getOnePostDB = (boardId) => {
   }
 }
 
-const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
+const addPostDB = (title, content, uploadFile, hashTag_list) => {
   return async function (dispatch, getState, { history }) {
     const formData = new FormData()
     const post = {
@@ -88,7 +88,7 @@ const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
     formData.append('boardUploadRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
 
     await boardApi
-      .writePost(category, formData)
+      .writePost(formData)
       .then((response) => {
         const post = response.data.data
         dispatch(addPost(post))

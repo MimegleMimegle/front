@@ -24,6 +24,7 @@ import {
   DictWrite,
   DictDetail,
   ImageList,
+  ImageDetail,
   DictSearch,
 } from './pages'
 import MobileFrame from './components/MobileFrame'
@@ -54,8 +55,9 @@ function App() {
             <Route path="/dict/detail/:dictId" exact component={DictDetail} />
             <Route path="/dict/search" exact component={DictSearch} />
             <Route path="/image" exact component={ImageList} />
+            <Route path="/image/:imageId" exact component={ImageDetail} />
             {/* 댓글 서버 연결 확인 후 삭제 예정 */}
-            <Route path="/comment" exact component={CommentTest} />
+            {/* <Route path="/comment" exact component={CommentTest} /> */}
             {/* <Route path="" exact component={NotFound} /> */}
           </MobileFrame>
         </ConnectedRouter>
