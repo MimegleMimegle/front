@@ -51,27 +51,34 @@ const DictEdit = (props) => {
 
   return (
     <>
-      <div className="DictCardEditLayout">
-        <div className="DictCardEditPreviewSection">
-          <div className="DictCardEditPreview">
-            <div className="DictCardEditPreviewTitle">단어 : {dict.title}</div>
-            <div className="DictCardEditPreviewSummary">요약 : {dict.summary}</div>
-            <div className="DictCardEditPreviewContent">설명 : {dict.meaning}</div>
+      <div className="DictCardEditPageLayout">
+        <div className="DictCardEditInputSection">
+          <div className="DictCardEditInputTitleContainer">
+            <div className="DictCardEditInputTitleGuideText">단어</div>
+            <div className="DictCardEditInputTitle">{dict.title}</div>
+          </div>
+          <div className="DictCardEditInputSummaryContainer">
+            <div className="DictCardEditInputSummaryGuideText">한줄설명</div>
+            <textarea className="DictCardEditInputSummary" type="text" cols="40" rows="3" value={summary} onChange={onChangeSummary} placeholder={dict.summary}>
+              {dict.summary}
+            </textarea>
+          </div>
+          <div className="DictCardEditInputContentContainer">
+            <div className="DictCardEditInputContentGuideText">부가설명</div>
+            <textarea className="DictCardEditInputContent" type="text" cols="40" rows="5" value={content} onChange={onChangeContent} placeholder={dict.meaning}>
+              {dict.meaning}
+            </textarea>
           </div>
         </div>
-        <div className="DictCardEditInputSection">
-          <p>한줄 요약</p>
-          <input className="DictCardEditInputSummary" type="text" value={summary} onChange={onChangeSummary} placeholder="한줄 요약을 입력하세요" />
-          <br></br>
-          <p>설명</p>
-          <input className="DictCardEditInputContent" type="text" value={content} onChange={onChangeContent} placeholder="설명을 입력하세요" />
-          <br></br>
-        </div>
-        <div className="DictCardEditSubmitSection">
-          <button className="DictCardEditSubmitButton1" type="submit" onClick={editDict}>
-            단어 수정하기
-          </button>
-          <button className="DictCardEditSubmitButton2"></button>
+        <div className="DictCardEditTemporaryOrSubmitButton">
+          <div className="DictCardEditTemporaryButton">
+            <div className="DictCardEditTemporaryButton_1">삭제</div>
+            <div className="DictCardEditTemporaryButton_2"></div>
+          </div>
+          <div className="DictCardEditSubmitButton" type="submit" onClick={editDict}>
+            <div className="DictCardEditSubmitButton_1">편집</div>
+            <div className="DictCardEditSubmitButton_2"></div>
+          </div>
         </div>
       </div>
     </>

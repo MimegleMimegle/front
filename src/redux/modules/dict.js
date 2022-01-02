@@ -118,7 +118,12 @@ const addDictDB = (title, summary, content) => {
     dictApi
       .addDict(title, summary, content)
       .then((res) => {
-        swal('', '성공적으로 등록되었습니다', 'success')
+        swal({
+          buttons: {
+            cancel: true,
+            confirm: true,
+          },
+        })
         history.push('/dict')
       })
       .catch((err) => {

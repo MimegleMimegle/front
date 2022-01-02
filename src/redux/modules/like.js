@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 import { likeApi } from '../../shared/api'
+import swal from 'sweetalert'
 
 const SET_LIKE_DICT = 'SET_LIKE_DICT'
 const ADD_LIKE_DICT = 'ADD_LIKE_DICT'
@@ -37,9 +38,11 @@ const changeLikeDictDB = (dictId) => {
         console.log(like_data)
         // 리덕스 상태 업데이트
         dispatch(setLikeDict(like_data))
+        swal('좋아요를 눌렀습니다', { timer: 2000 })
       })
       .catch((error) => {
         console.log(error)
+        swal('좋아요가 제대로 반영되지 않았어요', { timer: 2000 })
       })
   }
 }
