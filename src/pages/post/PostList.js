@@ -10,7 +10,6 @@ import SearchPage from '../../shared/SearchPage'
 import { boardApi } from '../../shared/api'
 import axios from 'axios'
 
-
 const PostList = (props) => {
   const dispatch = useDispatch()
 
@@ -50,11 +49,11 @@ const PostList = (props) => {
         >
           + 밈 글 등록하기
         </button>
-        
+
         {postList &&
           postList.map((post, index) => {
             return <PostCard post={post} key={post.boardId} />
-        })}
+          })}
         <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
       </Container>
     </>

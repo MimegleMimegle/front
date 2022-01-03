@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-
 import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
 import { userApi } from '../../shared/api'
-
+import { likeApi } from '../../shared/api'
 import ImageWrapper from '../../components/image/ImageWrapper'
+import ShareMenu from '../../components/image/ShareMenu'
+import ThreeDotsMenu from '../../components/image/ThreeDotsMenu'
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { MdShare } from 'react-icons/md'
@@ -16,51 +16,67 @@ import { HiHeart } from 'react-icons/hi'
 import { IoCloseOutline } from 'react-icons/io5'
 
 const ImageDetail = (props) => {
-  const dispatch = useDispatch()
-
-  const tempImgUrl = 'https://t1.daumcdn.net/cfile/tistory/99F374385C14B20635'
   const boardId = useParams().imageId
 
-  const [imageData, setImageData] = React.useState('')
-  const [isMyImage, setIsMyImage] = React.useState(false)
-  const [isLiked, setIsLiked] = React.useState(false)
-  const [toggleMenu, setToggleMenu] = React.useState(false)
-  const [profile, setProfile] = React.useState(null)
-  console.log(profile)
+  const [imageData, setImageData] = useState('')
+  const [likeCount, setLikeCount] = useState(0)
+  const [isLiked, setIsLiked] = useState(false)
+  const [shareToggleMenu, setShareToggleMenu] = useState(false)
+  const [threeDotsToggleMenu, setThreeDotsToggleMenu] = useState(false)
+  const [profile, setProfile] = useState(null)
 
-  const handleToggleMenu = () => {
-    setToggleMenu(!toggleMenu)
-  }
-  console.log(imageData)
-
-  const handleDeleteImage = async () => {
-    await imageApi
-      .deleteImage(boardId)
-      .then((response) => {
-        console.log(response.data)
-      })
-      .then(() => {
-        history.push('/image')
-      })
-      .catch((error) => {
-        console.log('이미지 삭제 문제 발생', error.response)
-      })
+  const handleShareToggleMenu = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShareToggleMenu(!shareToggleMenu)
   }
 
-  React.useEffect(() => {
+  const handleThreeDotsToggleMenu = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setThreeDotsToggleMenu(!threeDotsToggleMenu)
+  }
+
+  const handleClickLike = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isLiked) {
+      await likeApi
+        .likePost(boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(false)
+          setLikeCount(likeCount - 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 취소 문제 발생', error.response)
+        })
+    } else {
+      await likeApi
+        .likePost(boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(true)
+          setLikeCount(likeCount + 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 문제 발생', error.response)
+        })
+    }
+  }
+
+  useEffect(() => {
     imageApi
       .getImageDetail(boardId)
       .then((response) => {
         const image_data = response.data.data
         setImageData(image_data)
+        setLikeCount(image_data.likeCnt)
         setIsLiked(image_data.isLike)
       })
       .catch((error) => {
         console.log('상세 이미지를 불러오는 데 문제가 발생했습니다.', error.response)
       })
-  }, [])
-
-  React.useEffect(() => {
     userApi
       .getProfileInfo()
       .then((response) => {
@@ -80,60 +96,52 @@ const ImageDetail = (props) => {
               history.goBack()
             }}
           >
-            <IoCloseOutline style={{ fontSize: '24px', color: '#FFF' }} />
+            <IoCloseOutline style={{ fontSize: '24px' }} />
           </button>
+        </div>
+        <div style={{ width: '100%', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+            <ProfileImage src={imageData.profileImageUrl} />
+            <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'column' }}>
+              <p style={{ cursor: 'pointer', fontSize: '14px', color: '#FFF' }}>{imageData.writer}</p>
+              <p style={{ fontSize: '9px', color: '#FFF' }}>{imageData.createdAt}</p>
+            </div>
+          </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button>
-              <MdShare style={{ fontSize: '20px', color: '#FFF' }} />
+            <button onClick={handleShareToggleMenu}>
+              <MdShare style={{ fontSize: '20px' }} />
             </button>
             {imageData && profile && imageData.writer === profile.nickname && (
-              <button>
-                <BsThreeDotsVertical style={{ fontSize: '20px', color: '#FFF' }} onClick={handleToggleMenu} />
+              <button onClick={handleThreeDotsToggleMenu}>
+                <BsThreeDotsVertical style={{ fontSize: '20px' }} />
               </button>
             )}
           </div>
         </div>
-        <div style={{ width: '100%', height: '80%', display: 'flex', alignItems: 'center' }}>
+        <div style={{ width: '100%', height: '70%', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
           <img src={imageData.thumbNail} style={{ width: '100%', objectFit: 'cover' }} />
         </div>
-        <div style={{ width: '100%', padding: '0 10px', display: 'flex', alignItems: 'center' }}>
-          <button>
-            <HiOutlineHeart style={{ fontSize: '22px', color: '#FFF' }} />
-          </button>
-          <span style={{ color: '#FFF', fontSize: '14px' }}>{imageData.likeCnt}</span>
+        <div style={{ width: '100%', padding: '10px 10px 0', display: 'flex', alignItems: 'center' }}>
+          <button>{isLiked ? <HiHeart style={{ fontSize: '22px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '22px' }} onClick={handleClickLike} />}</button>
+          <span style={{ color: '#FFF', fontSize: '14px' }}>{likeCount}</span>
         </div>
-        {toggleMenu && (
-          <Menu>
-            <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ padding: '0', height: '100%' }} onClick={handleToggleMenu}>
-                <IoCloseOutline style={{ fontSize: '18px' }} />
-              </button>
-            </div>
-            <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ fontSize: '12px', padding: '0' }} onClick={handleDeleteImage}>
-                삭제하기
-              </button>
-            </div>
-          </Menu>
-        )}
+        {shareToggleMenu && <ShareMenu handleShareToggleMenu={handleShareToggleMenu} imageUrl={imageData.thumbNail} />}
+        {threeDotsToggleMenu && <ThreeDotsMenu boardId={boardId} handleThreeDotsToggleMenu={handleThreeDotsToggleMenu} />}
       </ImageWrapper>
     </>
   )
 }
 
-const Menu = styled.div`
-  position: absolute;
-  top: 35px;
-  right: 15px;
-  width: 80px;
-  height: 70px;
-  border: 1px solid #c4c4c4;
+const ProfileImage = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 1px solid #111;
+  border-radius: 20px;
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
+  cursor: pointer;
   background-color: #fff;
-  transition: all 0.3s ease-in-out;
-  z-index: 400;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 `
 
 export default ImageDetail

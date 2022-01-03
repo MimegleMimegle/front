@@ -23,6 +23,7 @@ import {
   DictList,
   DictWrite,
   DictDetail,
+  DictHistory,
   ImageList,
   ImageDetail,
   ImageUpload,
@@ -55,12 +56,13 @@ function App() {
             <Route path="/dict/edit/:dictId" exact component={DictEdit} />
             <Route path="/dict/detail/:dictId" exact component={DictDetail} />
             <Route path="/dict/search/:keyword" exact component={DictSearch} />
+            <Route path="/dict/history/:dictId" exact component={DictHistory} />
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/detail/:imageId" exact component={ImageDetail} />
             <Route path="/image/upload" exact component={ImageUpload} />
             {/* 댓글 서버 연결 확인 후 삭제 예정 */}
             {/* <Route path="/comment" exact component={CommentTest} /> */}
-            {/* <Route path="" exact component={NotFound} /> */}
+            {/* <Route path={'*'} component={NotFound} /> */}
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>
