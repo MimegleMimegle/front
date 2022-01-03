@@ -37,7 +37,7 @@ export const mypageApi = {
 }
 
 export const boardApi = {
-  getPosts: (pageSize, currentPage) => instance.get( `/api/board/list/imageboard?page=0&size=10`),
+  getPosts: (pageSize, currentPage) => instance.get(`/api/board/list/FREEBOARD?page=0&size=10`),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
   writePost: (post) => instance.post('/api/board/imageboard', post),
   editPost: (boardId, title, content, subject) => instance.put(`/api/board/${boardId}`, { title: title, content: content, subject: subject }),
@@ -84,7 +84,7 @@ export const commentApi = {
 }
 
 export const likeApi = {
-  likePost: (boardId) => instance.get(`/api/board/${boardId}/like`),
+  likePost: (boardId) => instance.post(`/api/board/${boardId}/like`),
   likeDict: (dictId) => instance.get(`/api/dict/${dictId}/like`),
 }
 
