@@ -22,8 +22,7 @@ export const userApi = {
   login: (username, password) => instance.post('/api/user', { username: username, password: password }),
   socialLogin: () => instance.get('/api/user/kakao/callback'),
   join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
-  userInfo: () => instance.get(`/api/userInfo`),
-  myPage: () => instance.get(`/api/mypage`),
+  getProfileInfo: () => instance.get('/api/userInfo'),
 
   /* 추가 */
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
@@ -55,12 +54,14 @@ export const boardApi = {
 export const dictApi = {
   getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
+  getTodayDict: () => instance.get(`/api/bestDict/dict`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
   editDict: (dictId, summary, content) => instance.put(`/api/dict/${dictId}`, { dictId: dictId, summary: summary, content: content }),
   deleteDict: (dictId) => instance.delete(`/api/dict/${dictId}`),
   dictEditHistory: (dictId) => instance.get(`/api/dict/${dictId}/history`),
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
+  searchDict: (keyword, pageSize, currentPage) => instance.get(`/api/dict/search?q=${keyword}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   /* 추가 */
   tellMeTotalLength: () => instance.get('/api/count/dict'),
   tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
@@ -86,4 +87,13 @@ export const commentApi = {
 export const likeApi = {
   likeBoard: (boardId) => instance.post(`/api/board/${boardId}/like`),
   likeDict: (dictId) => instance.post(`/api/dict/${dictId}/like`),
+}
+
+export const imageApi = {
+  getImageList: (category, page, size) => instance.get(`/api/board/list/${category}?page=${page}&size=${size}`),
+  getImageDetail: (boardId) => instance.get(`/api/board/${boardId}`),
+  uploadImage: (category, imageData) => instance.post(`/api/board/${category}`, imageData),
+  deleteImage: (boardId) => instance.delete(`/api/board/${boardId}`),
+  giveMeTotalLength: (category) => instance.get(`/api/count/board/${category}`),
+  getPopularImageList: (category) => instance.get(`api/board/${category}/best`),
 }

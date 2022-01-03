@@ -14,16 +14,16 @@ function SearchBar({ onAddKeyword }) {
   const [filteredPosts, setFilteredPosts] = React.useState([])
   const [notFound, setNotFound] = React.useState(false)
 
-  const [pageSize, setPageSize] = useState(5)
+  const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
   const searchDictDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/dict/search?q=${keyword}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
-    let searchTotalLength = await dictApi.tellMeTotalLengthSearch()
+    let response = await dictApi.searchDict(keyword, pageSize, currentPage)
+    let searchTotalLength = await dictApi.tellMeTotalLengthSearch(keyword)
 
     console.log(response.data.data)
-    console.log(totalCount)
+    console.log(searchTotalLength)
     setFilteredPosts(response.data.data)
     setTotalCount(searchTotalLength.data.data)
   }
@@ -44,7 +44,7 @@ function SearchBar({ onAddKeyword }) {
       onAddKeyword(keyword)
       setKeyword('')
       searchDictDB(keyword)
-      dispatch(history.push('/dict/search'))
+      history.push(`/dict/search/${keyword}`)
     }
   }
 
@@ -81,7 +81,7 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   /* border-bottom: 1px solid grey; */
-  background-color: #fff;
+  background-color: none;
   padding: 20px 60px;
   box-sizing: border-box;
 `
@@ -108,7 +108,7 @@ const InputContainer = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  background-color: #fff;
+  background-color: rgba(196, 196, 196, 0.4);
   font-weight: 500;
   font-size: 14px;
   box-sizing: border-box;

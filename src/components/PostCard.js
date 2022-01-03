@@ -9,7 +9,6 @@ import HashTag from './HashTag'
 const PostCard = ({ post }) => {
   const history = useHistory()
 
-  console.log(post)
   const onC = () => {
     history.push(`/post/detail/${post.boardId}`)
   }
@@ -18,11 +17,11 @@ const PostCard = ({ post }) => {
     <>
       <Wrap postList={post} onClick={onC}>
         <UserInfo>
-        <img src={post? post.profileImageUrl: null} alt="" style={{borderRadius:"160px", width:"15%"}}/>
-        <div>
-        <p>{post ? post.writer : null}</p>
-        <p>{post ? post.createdAt : null}</p>
-        </div>
+          <img src={post ? post.profileImageUrl : null} alt="" style={{ borderRadius: '160px', width: '15%' }} />
+          <div>
+            <p>{post ? post.writer : null}</p>
+            <p>{post ? post.createdAt : null}</p>
+          </div>
         </UserInfo>
         <PostBody>
           <div className="text">
@@ -34,13 +33,12 @@ const PostCard = ({ post }) => {
                     return <p key={index}>#{hashTag}</p>
                   })
                 : null}
-          </HashTagHere>  
+            </HashTagHere>
           </div>
           <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
-
         </PostBody>
         <AiOutlineEye /> {post ? post.views : null} <AiOutlineHeart />
-        {post ? post.likeCnt : null} <FiMessageSquare/> {post ? post.commentCnt : null}
+        {post ? post.likeCnt : null} <FiMessageSquare /> {post ? post.commentCnt : null}
       </Wrap>
     </>
   )
@@ -49,12 +47,12 @@ const PostCard = ({ post }) => {
 export default PostCard
 
 const Wrap = styled.div`
-  padding:0 10px;
+  padding: 0 10px;
   margin: 10px 0px;
 `
 
 const UserInfo = styled.div`
-display: flex;
+  display: flex;
 `
 
 const PostBody = styled.div`

@@ -1,17 +1,37 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { history } from '../../redux/ConfigureStore'
+import { imageApi } from '../../shared/api'
+
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { IoCloseOutline } from 'react-icons/io5'
 
-const MyPageOneImageCard = (props) => {
+const MyPageOneImageCard = ({ image }) => {
   const tempImgUrl = 'https://image.idus.com/image/files/92e848f447904facb3fb7fcf5b3cdf6a_1080.jpg'
+
+  const boardId = image && image.boardId
 
   const [toggleMenu, setToggleMenu] = React.useState(false)
 
-  const clickToggleMenu = () => {
+  const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
+  }
+
+  const handleDeleteImage = async () => {
+    await imageApi
+      .deleteImage(boardId)
+      .then((response) => {
+        console.log(response.data)
+      })
+      .then(() => {
+        window.location.reload()
+        // history.go('/mypage')
+      })
+      .catch((error) => {
+        console.log('이미지 삭제 문제 발생', error.response)
+      })
   }
 
   return (
@@ -19,9 +39,9 @@ const MyPageOneImageCard = (props) => {
       <Wrapper>
         <div className="container">
           <ImageSection>
-            <Image src={tempImgUrl} />
+            <Image src={image && image.thumbNail} />
             <div>
-              <button style={{ padding: '0' }} onClick={clickToggleMenu}>
+              <button style={{ padding: '0' }} onClick={handleToggleMenu}>
                 <BsThreeDotsVertical style={{ fontSize: '18px' }} />
               </button>
             </div>
@@ -30,21 +50,23 @@ const MyPageOneImageCard = (props) => {
             <button style={{ padding: '0 0 0 2px' }}>
               <HiOutlineHeart style={{ fontSize: '16px' }} />
             </button>
-            <span style={{ fontSize: '9px', paddingLeft: '4px' }}>531</span>
+            <span style={{ fontSize: '9px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
           </LikeSection>
           <DateSection>
-            <p style={{ fontSize: '9px', textAlign: 'right', paddingTop: '7px' }}>2021년 12월 28일</p>
+            <p style={{ fontSize: '9px', textAlign: 'right', paddingTop: '7px' }}>{image && image.createdAt}</p>
           </DateSection>
         </div>
         {toggleMenu && (
           <Menu>
             <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ padding: '0', height: '100%' }} onClick={clickToggleMenu}>
+              <button style={{ padding: '0', height: '100%' }} onClick={handleToggleMenu}>
                 <IoCloseOutline style={{ fontSize: '18px' }} />
               </button>
             </div>
             <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ fontSize: '12px', padding: '0' }}>삭제하기</button>
+              <button style={{ fontSize: '12px', padding: '0' }} onClick={handleDeleteImage}>
+                삭제하기
+              </button>
             </div>
           </Menu>
         )}
@@ -92,7 +114,7 @@ const Image = styled.div`
   width: 100%;
   height: 106px;
   border: 1px solid #111;
-  background-color: salmon;
+  /* background-color: salmon; */
   background-image: url('${(props) => props.src}');
   background-size: cover;
   background-position: center;
