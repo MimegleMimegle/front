@@ -30,7 +30,7 @@ const editDict = createAction(EDIT_DICT, (dict_id, dict) => ({ dict_id }))
 const deleteDict = createAction(DELETE_DICT, (dict_id, dict) => ({ dict_id }))
 const dictCreatedAt = createAction(DICT_CREATED_AT)
 const dictIsLike = createAction(DICT_IS_LIKE, (dict_id) => ({ dict_id }))
-const getDictHistory = createAction(GET_DICT_HISTORY)
+const getDictHistory = createAction(GET_DICT_HISTORY, (dictHistory_list, paging) => ({ dictHistory_list, paging }))
 const getDictHistoryDetail = createAction(GET_DICT_HISTORY_DETAIL)
 const rollbackOneDict = createAction(ROLLBACK_ONE_DICT)
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
@@ -118,12 +118,6 @@ const addDictDB = (title, summary, content) => {
     dictApi
       .addDict(title, summary, content)
       .then((res) => {
-        swal({
-          buttons: {
-            cancel: true,
-            confirm: true,
-          },
-        })
         history.push('/dict')
       })
       .catch((err) => {
@@ -136,10 +130,10 @@ const addDictDB = (title, summary, content) => {
   }
 }
 
-const editDictDB = (dictId, summary, content) => {
+const editDictDB = (dictId, summary, content, recentWriter) => {
   return function (dispatch, getState, { history }) {
     dictApi
-      .editDict(dictId, summary, content)
+      .editDict(dictId, summary, content, recentWriter)
       .then((res) => {
         swal('', '단어가 수정되었습니다.', 'success')
         history.push('/dict')
@@ -200,32 +194,62 @@ const searchDictDB = (keyword = '', page = null, size = null) => {
   }
 }
 
+const getDictHistoryDB = (dictId) => {
+  return function (dispatch, getState, { history }) {
+    dictApi
+      .getDictHistory(dictId)
+      .then((response) => {
+        const dictHistory_list = response.data.data
+        dispatch(getDictHistory(dictHistory_list))
+        dispatch(loading(false))
+        console.log(dictHistory_list)
+      })
+      .catch((err) => {
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
+        }
+      })
+  }
+}
+
 /* reducer */
 export default handleActions(
   {
     [GET_DICT_MAIN]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload
+        draft.list = action.payload.dictList
       }),
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        draft.detail_list = action.payload
+        draft.list = action.payload.oneDict
       }),
     [GET_TODAY_DICT_LIST]: (state, action) =>
       produce(state, (draft) => {
-        draft.todayDict_list = action.payload.todayDict_list
+        draft.list = action.payload.todayDictList
       }),
     [ADD_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload
+        draft.list.unshift(action.payload.dictList)
       }),
     [EDIT_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload
+        let index = draft.list.findIndex((p) => p.dictId === action.payload.dictId)
+
+        draft.list[index] = {
+          ...draft.list[index],
+          ...action.payload.dict,
+        }
       }),
     [DELETE_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload
+        let newDictList = draft.list.filter((p) => {
+          if (p.dictId !== action.payload.dict) {
+            return p
+          }
+        })
+        draft.list = newDictList
       }),
     [DICT_CREATED_AT]: (state, action) =>
       produce(state, (draft) => {
@@ -237,7 +261,7 @@ export default handleActions(
       }),
     [GET_DICT_HISTORY]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload
+        draft.list = action.payload.dictHistory_list
       }),
     [GET_DICT_HISTORY_DETAIL]: (state, action) =>
       produce(state, (draft) => {
@@ -258,6 +282,10 @@ export default handleActions(
     [SEARCH_DICT]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload
+      }),
+    [GET_DICT_HISTORY]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.dictHistory
       }),
   },
   initialState
@@ -285,6 +313,7 @@ const actionCreators = {
   tellMeTotalLength,
   searchDict,
   searchDictDB,
+  getDictHistoryDB,
 }
 
 export { actionCreators }

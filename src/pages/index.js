@@ -20,6 +20,7 @@ import DictList from './dict/DictList'
 import DictWrite from './dict/DictWrite'
 import DictDetail from './dict/DictDetail'
 import DictSearch from './dict/DictSearch'
+import DictHistory from './dict/DictHistory'
 
 import ImageList from './image/ImageList'
 import ImageDetail from './image/ImageDetail'
@@ -47,4 +48,5 @@ export {
   ImageDetail,
   ImageUpload,
   DictSearch,
+  DictHistory,
 }

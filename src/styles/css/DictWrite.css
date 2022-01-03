@@ -207,3 +207,18 @@
 
   z-index: -1;
 }
+
+/* sweet alret */
+.swal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.swal-modal {
+  position: relative;
+  width: 250px;
+  height: fit-content;
+}
+
+.swal-title {
+  font-size: 14px;
+}

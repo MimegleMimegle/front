@@ -32,6 +32,27 @@ const DictWrite = (props) => {
     dispatch(dictActions.addDictDB(title, summary, content), [])
   }
 
+  const allClearKeyword = () => {
+    swal({
+      title: '초기화를 하시면 작성하신 모든 내용이 사라집니다.',
+      text: '그래도 초기화 하시겠습니까?',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((allClearKeyword) => {
+      if (allClearKeyword) {
+        swal('작성하신 모든 내용이 초기화되었습니다.', {
+          icon: 'success',
+        })
+        setTitle('')
+        setSummary('')
+        setContent('')
+      } else {
+        swal('초기화가 취소되었습니다.')
+      }
+    })
+  }
+
   return (
     <>
       <div className="DictCardWritePageLayout">
@@ -49,7 +70,7 @@ const DictWrite = (props) => {
           </div>
         </div>
         <div className="DictCardTemporaryOrSubmitButton">
-          <div className="DictCardTemporaryButton">
+          <div className="DictCardTemporaryButton" onClick={allClearKeyword}>
             <div className="DictCardTemporaryButton_1">삭제</div>
             <div className="DictCardTemporaryButton_2"></div>
           </div>

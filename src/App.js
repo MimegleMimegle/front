@@ -23,6 +23,7 @@ import {
   DictList,
   DictWrite,
   DictDetail,
+  DictHistory,
   ImageList,
   ImageDetail,
   ImageUpload,
@@ -55,6 +56,7 @@ function App() {
             <Route path="/dict/edit/:dictId" exact component={DictEdit} />
             <Route path="/dict/detail/:dictId" exact component={DictDetail} />
             <Route path="/dict/search/:keyword" exact component={DictSearch} />
+            <Route path="/dict/history/:dictId" exact component={DictHistory} />
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/detail/:imageId" exact component={ImageDetail} />
             <Route path="/image/upload" exact component={ImageUpload} />

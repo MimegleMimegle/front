@@ -10,6 +10,7 @@ import { BiLike } from 'react-icons/bi'
 import 'moment'
 import 'moment/locale/ko'
 import moment from 'moment'
+import { push } from 'connected-react-router'
 
 const DictDetail = (props) => {
   const dispatch = useDispatch()
@@ -38,6 +39,10 @@ const DictDetail = (props) => {
 
     // console.log(response.data.data.like)
   }
+
+  // const pushDictHistory = (dictId) => (e) => {
+  //   history.push(`/dict/history/${dictId}`)
+  // }
 
   return (
     <>
@@ -88,7 +93,7 @@ const DictDetail = (props) => {
           </div>
           <div className="OneDictCardDetailInfoModifiedGuideText">다른 유저들이 이전에 작성한 내용을 확인하거나 직접 편집 할 수 있어요!</div>
           <div className="OneDictCardDetailInfoModifiedAndHistoryButton">
-            <div className="OneDictCardDetailInfoModifiedHistoryButton">
+            <div className="OneDictCardDetailInfoModifiedHistoryButton" onClick={() => history.push(`/dict/history/${dictId}`)}>
               <div className="OneDictCardDetailInfoModifiedHistoryButton_1">편집 기록</div>
               <div className="OneDictCardDetailInfoModifiedHistoryButton_2"></div>
             </div>
