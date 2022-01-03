@@ -18,6 +18,9 @@ const editNickname = createAction(EDIT_NICKNAME, (newNickname) => ({ newNickname
 
 const initialState = {
   myPageData: null,
+  myDictList: [],
+  myPostList: [],
+  myImageList: [],
 }
 
 /* middleware */
@@ -90,6 +93,9 @@ export default handleActions(
     [GET_USER_INFO]: (state, action) =>
       produce(state, (draft) => {
         draft.myPageData = action.payload.myPageData
+        draft.myDictList = action.payload.myPageData.dict
+        draft.myPostList = action.payload.myPageData.postBoards.filter((post) => post.category === 'FREEBOARD')
+        draft.myImageList = action.payload.myPageData.postBoards.filter((post) => post.category === 'IMAGEBOARD')
       }),
     [EDIT_PROFILE_IMAGE]: (state, action) =>
       produce(state, (draft) => {

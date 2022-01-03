@@ -1,0 +1,17 @@
+.DictSearchPageLayout {
+  width: 100%;
+  border: 3px solid cornflowerblue;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.DictSearchPageLayout::-webkit-scrollbar {
+  display: none;
+}
+
+.DictSearchListSection {
+  width: 100%;
+  height: 100%;
+}

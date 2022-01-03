@@ -24,6 +24,7 @@ const Mypage = (props) => {
   const myMemeDictList = my && my.dict
   const myMemePostList = my && my.postBoards.filter((post) => post.category === 'FREEBOARD')
   const myMemeImageList = my && my.postBoards.filter((post) => post.category === 'IMAGEBOARD')
+  console.log(myMemeImageList)
 
   const openEditProfile = () => {
     setShowModal(true)
@@ -52,9 +53,9 @@ const Mypage = (props) => {
   }
 
   React.useEffect(() => {
-    if (my == null) {
-      dispatch(mypageActions.getUserInfoDB())
-    }
+    // if (my == null) {
+    dispatch(mypageActions.getUserInfoDB())
+    // }
   }, [])
 
   return (
@@ -106,11 +107,11 @@ const Mypage = (props) => {
           {/* Photo */}
           {showImage && (
             <MyImageList>
-              <MyPageOneImageCard />
-              <MyPageOneImageCard />
-              <MyPageOneImageCard />
-              <MyPageOneImageCard />
-              <MyPageOneImageCard />
+              {myMemeImageList.length > 0
+                ? myMemeImageList.map((image) => {
+                    return <MyPageOneImageCard key={image.boardId} image={image} />
+                  })
+                : null}
             </MyImageList>
           )}
         </UserActivity>
@@ -195,7 +196,7 @@ const ProfileImage = styled.div`
   left: 49%;
   transform: translateX(-49%);
   z-index: 999;
-  /* background-color: #fff; */
+  background-color: #fff;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;

@@ -1,6 +1,7 @@
-.DictCardEditLayout {
-  height: 550px;
-  border: 3px solid green;
+.DictCardEditPageLayout {
+  width: 100%;
+  height: fit-content;
+  /* border: 3px solid green; */
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -8,44 +9,8 @@
   justify-content: center;
   align-items: center;
 }
-.DictCardEditLayout::-webkit-scrollbar {
+.DictCardEditPageLayout::-webkit-scrollbar {
   display: none;
-}
-
-.DictCardEditPreviewSection {
-  /* position: absolute; */
-}
-
-.DictCardEditPreview {
-  border: 1px solid black;
-  border-radius: 0 0 0 0;
-  margin: 5px 0 0 20px;
-  background-color: white;
-  width: 20rem;
-  height: 10rem;
-  font-size: 15px;
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-
-  z-index: 2;
-}
-
-.DictCardEditPreviewTitle {
-  font-size: 18px;
-  margin: 0 0 20px 20px;
-}
-
-.DictCardEditPreviewSummary {
-  font-size: 18px;
-  margin: 0 0 20px 20px;
-}
-
-.DictCardEditPreviewContent {
-  font-size: 18px;
-  margin: 0 0 0 20px;
 }
 
 .DictCardEditInputSection {
@@ -53,65 +18,191 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 300px;
+  width: 100%;
+  height: fit-content;
   font-size: 16px;
   font-weight: bold;
-  margin-left: 50px;
-  margin-top: 50px;
+}
+
+.DictCardEditInputTitleContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  padding: 15px 0 15px 20px;
+}
+
+.DictCardEditInputTitleGuideText {
+  width: 60px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-self: flex-start;
+  padding-top: 3px;
+}
+
+.DictCardEditInputTitle {
+  width: 265px;
+  height: 25px;
+  word-wrap: break-word;
+  word-break: keep-all;
+  display: flex;
+  align-self: flex-start;
+  padding-top: 5px;
+  margin: 0 0 0 12.5px;
+  border: none;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: transparent;
+}
+
+.DictCardEditInputSummaryContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  padding: 20px 0 20px 20px;
+}
+
+.DictCardEditInputSummaryGuideText {
+  width: 60px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-self: flex-start;
+  padding-top: 5px;
 }
 
 .DictCardEditInputSummary {
-  width: 80%;
-  margin: 0 0 30px 0;
+  width: 265px;
+  height: fit-content;
+  word-wrap: break-word;
+  word-break: keep-all;
+  display: flex;
+  align-self: center;
+  padding-top: 8px;
+  margin: 0 0 0 0;
   border: none;
-  border-bottom: 1px solid black;
-  font-size: 16px;
+  font-size: 12px;
   background-color: transparent;
+  min-height: 5rem;
+  overflow-y: hidden;
   resize: none;
-  overflow: auto;
+}
+
+.DictCardEditInputContentContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  padding: 20px 0 20px 20px;
+}
+
+.DictCardEditInputContentGuideText {
+  width: 60px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-self: flex-start;
+  padding-top: 5px;
 }
 
 .DictCardEditInputContent {
-  width: 80%;
-  margin: 0 0 30px 0;
+  width: 265px;
+  height: fit-content;
+  word-wrap: break-word;
+  word-break: keep-all;
+  display: flex;
+  align-self: center;
+  padding-top: 8px;
+  margin: 0 0 0 0;
   border: none;
-  border-bottom: 1px solid black;
-  font-size: 16px;
+  font-size: 12px;
   background-color: transparent;
+  min-height: 5rem;
+  overflow-y: hidden;
   resize: none;
-  overflow: auto;
 }
 
-.DictCardEditSubmitSection {
+.DictCardEditTemporaryOrSubmitButton {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 50px;
+  justify-content: space-evenly;
+  margin: 30px 0 0 0;
+  padding: 10px 30px 50px 30px;
 }
 
-.DictCardEditSubmitButton1 {
-  width: 100px;
-  height: 40px;
-  background-color: white;
+.DictCardEditTemporaryButton {
+  position: relative;
+}
+.DictCardEditTemporaryButton:hover {
+  cursor: pointer;
+}
+
+.DictCardEditTemporaryButton_1 {
+  width: 60px;
+  height: 26px;
   border: 1px solid black;
+  background-color: rgba(196, 196, 196, 1);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
 
   z-index: 2;
 }
 
-.DictCardEditSubmitButton1:active {
-  margin: 15px -8px 0 0;
-  transition: 0.1s ease;
+.DictCardEditTemporaryButton_2 {
+  border: 1px solid black;
+  top: 4px;
+  left: 4px;
+  background-color: white;
+  width: 60px;
+  height: 26px;
+  position: absolute;
+
+  z-index: -1;
 }
 
-.DictCardEditSubmitButton2 {
-  background-color: #faea59;
+.DictCardEditSubmitButton {
+  position: relative;
+}
+.DictCardEditSubmitButton:hover {
+  cursor: pointer;
+}
+
+.DictCardEditSubmitButton_1 {
+  width: 60px;
+  height: 26px;
   border: 1px solid black;
-  width: 100px;
-  height: 40px;
-  margin: 15px 0 0 -92px;
+  background-color: rgba(0, 160, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+
+  z-index: 2;
+}
+
+.DictCardEditSubmitButton_2 {
+  border: 1px solid black;
+  top: 4px;
+  left: 4px;
+  background-color: white;
+  width: 60px;
+  height: 26px;
+  border: 1px solid black;
+  position: absolute;
 
   z-index: -1;
 }
