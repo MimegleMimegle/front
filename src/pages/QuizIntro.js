@@ -5,6 +5,7 @@ import { history } from '../redux/ConfigureStore'
 
 import ModalWrapper from '../components/ModalWrapper'
 import ModalContainer from '../components/ModalContainer'
+import QuizIntroImage from '../styles/image/quiz_main_image1.gif'
 
 const QuizIntro = (props) => {
   const [showModal, setShowModal] = React.useState(false)
@@ -56,7 +57,9 @@ const QuizIntro = (props) => {
   return (
     <>
       <Wrapper>
-        <ImageSection />
+        <ImageSection>
+          <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        </ImageSection>
         <SubjectSection>
           <div style={{ padding: '20px 0 12px', fontSize: '18px', textAlign: 'center' }}>
             어느 시대의 밈을
@@ -109,10 +112,8 @@ const Wrapper = styled.div`
 
 const ImageSection = styled.div`
   width: 100%;
-  height: 160px;
-  background-color: #faea59;
-  border-bottom: 1px solid #111;
-  background-image: url(${(props) => props.src});
+  height: 100%;
+  overflow: hidden;
 `
 
 const SubjectSection = styled.div`
