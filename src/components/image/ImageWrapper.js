@@ -19,6 +19,9 @@ const Wrapper = styled.div`
   right: 0;
   background-color: #111;
   z-index: 3000;
+  svg {
+    color: #fff;
+  }
 `
 
 export default ImageWrapper

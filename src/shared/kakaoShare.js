@@ -1,7 +1,10 @@
 import React from 'react'
+import styled from 'styled-components'
 import kakaoLogo from '../styles/image/kakao-logo.png'
 
-const KakaoShareButton = () => {
+const KakaoShareButton = (props) => {
+  const { size, children } = props
+  const styles = { size: size }
   React.useEffect(() => {
     createKakaoButton()
   }, [])
@@ -54,9 +57,23 @@ const KakaoShareButton = () => {
 
   return (
     <button id="kakao-link-btn" style={{ padding: '0 0 6px' }}>
-      <img src={kakaoLogo} style={{ width: '40px', height: '40px', borderRadius: '20px' }} />
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <KakaoLogoImage src={kakaoLogo} {...styles} />
+        {children}
+      </div>
     </button>
   )
 }
+
+KakaoShareButton.defaultProps = {
+  size: 40,
+}
+
+const KakaoLogoImage = styled.img`
+  --size: ${(props) => props.size}px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: var(--size);
+`
 
 export { KakaoShareButton }
