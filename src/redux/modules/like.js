@@ -44,21 +44,35 @@ const changeLikeDictDB = (dictId) => {
   }
 }
 
-const changeLikeBoardDB = (boardId, result) => {
+// const changeLikeBoardDB = (boardId, result) => {
+//   return function (dispatch, getState, { history }) {
+//     likeApi
+//       .likeBoard(boardId)
+//       .then((response) => {
+//         let like_data = []
+//         for (let i = 0; i < response.data.post_list.length; i++) {
+//           console.log(response)
+//           like_data.push({
+//             post_id: response.data.post_list[i].post_Id,
+//             like_user: response.data.post_list[i].like_user,
+//             like_count: response.data.post_list[i].like_count,
+//           })
+//         }
+//         dispatch(setLikeBoard(like_data))
+//       })
+//       .catch((error) => {
+//         console.log(error)
+//       })
+//   }
+// }
+
+const changeLikeBoardDB = (boardId, liked) => {
   return function (dispatch, getState, { history }) {
-    likeApi
+      likeApi
       .likeBoard(boardId)
       .then((response) => {
-        let like_data = []
-        for (let i = 0; i < response.data.post_list.length; i++) {
-          console.log(response)
-          like_data.push({
-            post_id: response.data.post_list[i].post_Id,
-            like_user: response.data.post_list[i].like_user,
-            like_count: response.data.post_list[i].like_count,
-          })
-        }
-        dispatch(setLikeBoard(like_data))
+       const likeStatus = response.data.result;
+        dispatch(setLikeBoard(likeStatus))
       })
       .catch((error) => {
         console.log(error)
@@ -83,6 +97,7 @@ export default handleActions(
       }),
     [ADD_LIKE_BOARD]: (state, action) =>
       produce(state, (draft) => {
+        console.log("여기가 action", action.payload.result);
         draft.like = action.payload.result
       }),
   },

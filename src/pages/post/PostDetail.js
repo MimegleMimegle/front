@@ -25,7 +25,7 @@ const PostDetail = (props) => {
 
   
   const [post, setPost] = useState([])
-  const [isLike, setLike] = useState(false);
+  const [liked, setLiked] = useState(false);
 
 
   const getOnePostDB = async () => {
@@ -45,12 +45,13 @@ const PostDetail = (props) => {
   }, [])
 
   const likePost = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/board/${boardId}`)
-    setLike(response.data.data.like)//라이크를 달라고 하자아...
-    // dispatch(likeActions.changeLikeBoardDB(props.boardId, token))
-    console.log(response.data.data)//라이크를 달라고 하자...
+    if(!token) {
+      swal("로그인 후 사용해주세요", "", "error")
+      // history.push("/login")
+    }
+    dispatch(likeActions.changeLikeBoardDB(boardId))
   }
-
+  
 
   return (
     <>
@@ -73,24 +74,27 @@ const PostDetail = (props) => {
           <div >{post.content}</div>
           <img classname="contentimg" src={post ? post.thumbNail : null} alt="" />
           
-          <div>
 
-          {isLike? 
+          
+          <ViewLikeComment>
+          {post.isLike ? 
           <IoIosHeart cursor="pointer" onClick={likePost}/>
           :
           <IoIosHeartEmpty
           cursor="pointer"
           onClick={likePost}/>}
+  
 
-          </div>
           <div >{post.likeCnt}개</div>          
           
-
+        
           <AiOutlineEye/><div>{post.views}</div> 
           <FiMessageSquare/><div>{post.commentCnt}</div> 
+        
+          </ViewLikeComment>
         </Container>
 
-        <CommentTest boardId={boardId}/>
+        <CommentTest post={post}/>
     </>
   )
 }
@@ -106,13 +110,9 @@ const UserProfile = styled.img`
   width: 20%;
 `;
 
-const Heart = styled.div`
-
-`;
-const IsLike = styled.div`
+const ViewLikeComment = styled.div`
   display: flex;
-`;
-
+`
 
 export default PostDetail;
 
