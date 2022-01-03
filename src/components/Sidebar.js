@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { history } from '../redux/ConfigureStore'
 import SidebarItem from './SidebarItem'
+import SmileIcon from '../styles/image/smileIcon_Yellow.png'
 import { actionCreators as userActions } from '../redux/modules/user'
 import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
@@ -17,22 +18,30 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const nickname = localStorage.getItem('nickname')
   const isLogin = username && nickname ? true : false
 
-  const moveToMypage = () => {
+  const moveToMypage = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     history.push('/mypage')
     setShowSidebar(false)
   }
 
-  const moveToLogin = () => {
+  const moveToLogin = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     history.push('/login')
     setShowSidebar(false)
   }
 
-  const moveToJoin = () => {
+  const moveToJoin = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     history.push('/join')
     setShowSidebar(false)
   }
 
-  const clickLogOut = () => {
+  const clickLogOut = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     dispatch(userActions.logOutDB())
     setShowSidebar(false)
   }
@@ -75,7 +84,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
               </>
             ) : (
               <>
-                <ProfileImage src={profileImgUrl} onClick={moveToLogin} />
+                <ProfileImage src={SmileIcon} onClick={moveToLogin} />
                 <p style={{ display: 'inline-block', paddingLeft: '8px', cursor: 'pointer', fontSize: '14px' }} onClick={moveToLogin}>
                   로그인이 필요합니다.
                 </p>
@@ -100,8 +109,8 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             <UserMenu onClick={clickLogOut}>로그아웃</UserMenu>
           ) : (
             <>
-              <UserMenu onClick={moveToLogin}>로그인</UserMenu>
-              <UserMenu onClick={moveToJoin}>회원가입</UserMenu>
+              {/* <UserMenu onClick={moveToLogin}>로그인</UserMenu>
+              <UserMenu onClick={moveToJoin}>회원가입</UserMenu> */}
             </>
           )}
         </UserMenuBox>
@@ -162,17 +171,20 @@ const ProfileImage = styled.div`
 
 const UserMenuBox = styled.div`
   width: 100%;
+  height: 100%;
   padding: 20px 16px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: end;
+  justify-content: left;
 `
 
 const UserMenu = styled.button`
-  border: 1px solid #111;
-  border-radius: 20px;
-  padding: 10px 20px;
-  margin: 0 10px;
+  /* border: 1px solid #111;
+  border-radius: 20px; */
+  /* padding: 10px 20px; */
+  color: #878c92;
+  font-weight: 700;
+  font-size: 16px;
 `
 
 export default Sidebar

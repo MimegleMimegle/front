@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-
 import { history } from '../redux/ConfigureStore'
 import useScript from '../util/useScript'
 
@@ -14,13 +13,11 @@ import OneQuiz from '../components/OneQuiz'
 
 const QuizResult = ({ quiz_list }) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
-
+  const currentUrl = window.location.href
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
 
   const [copied, setCopied] = React.useState(false)
   const [showQuiz, setShowQuiz] = React.useState(false)
-
-  const currentUrl = window.location.href
 
   const closeCopied = () => {
     setTimeout(() => {
@@ -50,16 +47,31 @@ const QuizResult = ({ quiz_list }) => {
       <Wrapper>
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <QuizResultBox>
-            <div className="quiz-year-box box-1">결과</div>
-            <div className="quiz-year-box box-2"></div>
+            <div className="quiz-subject box-1">결과</div>
+            <div className="quiz-subject box-2"></div>
             <div style={{ padding: '50px 0 30px' }}>
               <h2>점수 {score}점</h2>
               <span>{answerCnt}/10</span>
               <h2 className="resultDesc">당신은 심각할 정도의 밈 중독입니다.</h2>
             </div>
           </QuizResultBox>
+          <ResultButtonContainer>
+            <div className="resultButtonBox box1">
+              <button className="resultButton" onClick={handleShowQuiz}>
+                정답확인
+              </button>
+            </div>
+            <div className="resultButtonBox box2"></div>
+          </ResultButtonContainer>
           <div style={{ width: '80%', padding: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <button style={{ fontSize: '14px', fontWeight: '700', padding: '10px 0' }}>다른 퀴즈 풀러 가기</button>
+            <button
+              style={{ fontSize: '14px', fontWeight: '700', padding: '10px 0' }}
+              onClick={() => {
+                history.push('/quiz')
+              }}
+            >
+              다른 테스트 하러 가기
+            </button>
             <p style={{ fontSize: '14px', fontWeight: '700', padding: '10px 0' }}>친구에게 공유하기</p>
             <div style={{ width: '100%', padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <FacebookShareButton url={currentUrl}>
@@ -77,16 +89,7 @@ const QuizResult = ({ quiz_list }) => {
               </CopyToClipboard>
             </div>
             {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
-            <p style={{ fontSize: '14px', padding: '15px 0' }}>또는</p>
           </div>
-          <ResultButtonContainer>
-            <div className="resultButtonBox box1">
-              <button className="resultButton" onClick={handleShowQuiz}>
-                정답확인
-              </button>
-            </div>
-            <div className="resultButtonBox box2"></div>
-          </ResultButtonContainer>
           <QuizContainer>
             {showQuiz &&
               quiz_list &&
@@ -104,9 +107,9 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   .share-btn {
-    border: 1px solid rgb(115, 98, 255);
+    border: 1px solid #ffe330;
     border-radius: 20px;
-    background-color: rgb(115, 98, 255);
+    background-color: #ffe330;
     width: 40px;
     height: 40px;
     color: #fff;
@@ -145,7 +148,7 @@ const QuizResultBox = styled.div`
   align-items: center;
   justify-content: center;
 
-  .quiz-year-box {
+  .quiz-subject {
     width: 100px;
     height: 40px;
     position: absolute;
@@ -189,6 +192,7 @@ const QuizContainer = styled.div`
 `
 
 const ResultButtonContainer = styled.div`
+  padding-top: 20px;
   width: 100%;
   height: 60px;
   /* max-height: 200px; */
