@@ -10,7 +10,6 @@ import SearchPage from '../../shared/SearchPage'
 import { boardApi } from '../../shared/api'
 import axios from 'axios'
 
-
 const PostList = (props) => {
   const dispatch = useDispatch()
 
@@ -31,7 +30,7 @@ const PostList = (props) => {
   console.log(totalCount)
 
   const getPostListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/imageboard?page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
+    let response = await axios.get(`http://52.78.155.185/api/board/list/FREEBOARD?page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
     let totalLength = await boardApi.tellMeTotalLength()
     console.log(response)
     console.log(totalLength)
@@ -50,11 +49,11 @@ const PostList = (props) => {
         >
           + 밈 글 등록하기
         </button>
-        
+
         {postList &&
           postList.map((post, index) => {
             return <PostCard post={post} key={post.boardId} />
-        })}
+          })}
         <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
       </Container>
     </>
