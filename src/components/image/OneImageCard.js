@@ -14,7 +14,9 @@ const OneImageCard = ({ image }) => {
   const [hover, setHover] = React.useState(false)
   const [toggleMenu, setToggleMenu] = React.useState(false)
 
-  const clickToggleMenu = () => {
+  const clickToggleMenu = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setToggleMenu(!toggleMenu)
   }
   return (

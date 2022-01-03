@@ -11,12 +11,8 @@ import { IoCloseOutline } from 'react-icons/io5'
 
 const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const dispatch = useDispatch()
-
   // const profile = useSelector((state) => state.user.profile)
   const my = useSelector((state) => state.mypage.myPageData)
-
-  console.log(my)
-
   const username = localStorage.getItem('username')
   const nickname = localStorage.getItem('nickname')
   const isLogin = username && nickname ? true : false
