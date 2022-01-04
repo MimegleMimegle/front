@@ -26,7 +26,7 @@ const DictList = (props) => {
   console.log(totalCount)
 
   const getDictListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
+    let response = await axios.get(`http://54.180.150.230/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
     let totalLength = await dictApi.tellMeTotalLength()
     console.log(response)
     console.log(totalLength)
