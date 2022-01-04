@@ -14,8 +14,8 @@ const OneComment = (props) => {
 
   const dispatch = useDispatch()
 
-  const nickName = window.localStorage.getItem('nickname')
-  const commentId = props.commentId
+  const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
+  const commentId = props.commentWriterId
 
   const [modalEditVisible, setModalEditVisible] = React.useState(false)
   const [modalDeleteVisible, setModalDeleteVisible] = React.useState(false)
@@ -61,7 +61,7 @@ const OneComment = (props) => {
           </div>
           <p>{props.commentContent}</p>
         </div>
-        {nickName === props.commentWriter? 
+        {commentId === username? 
         <VscTrash size="20" onClick={handleOpenModalDelete}삭제/> : null }
       </div>
       {modalEditVisible && (

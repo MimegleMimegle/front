@@ -18,17 +18,15 @@ import CommentTest from '../CommentTest'
 const PostDetail = (props) => {
   const dispatch = useDispatch()
 
-  const token = getCookie('token')
-  const nickName = window.localStorage.getItem('nickname')
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
-  console.log(nickName, username)
+  console.log(username)
 
   const [post, setPost] = useState([])
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
 
   const getOnePostDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/board/${boardId}`)
+    let response = await axios.get(`http://54.180.150.230/api/board/${boardId}`)
     console.log(response)
     setPost(response.data.data)
   }
