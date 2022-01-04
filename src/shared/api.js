@@ -51,7 +51,7 @@ export const boardApi = {
 }
 
 export const dictApi = {
-  getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${(currentPage - 1)}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
   getTodayDict: () => instance.get(`/api/bestDict/dict`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
@@ -77,7 +77,6 @@ export const mainApi = {
 
 /* 추가 */
 export const commentApi = {
-  /* writeComment -> addComment 로 수정 */
   addComment: (boardId, comment) => instance.post(`/api/board/${boardId}/comment`, { content: comment }),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
