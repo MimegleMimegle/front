@@ -10,8 +10,6 @@ const OneDictionaryCard = ({ dict }) => {
           <div className="OneDictionaryCardList DictListTitle">{dict.title}</div>
           <div className="OneDictionaryCardList DictListSummary">{dict.summary}</div>
           <div className="OneDictionaryCardList DictWriteInfo">
-            <div className="OneDictionaryCardList DictListFirstWriter">{dict.firstWriter}</div>
-            <div className="OneDictionaryCardList DictListCreatedAt">{dict.createdAt}</div>
             <div className="OneDictionaryCardList DictListLikeButton">
               <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="40px" fill="#000000">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -19,6 +17,8 @@ const OneDictionaryCard = ({ dict }) => {
               </svg>
             </div>
             <div className="OneDictionaryCardList DictListLikeCount">{dict.likeCount}</div>
+            <div className="OneDictionaryCardList DictListFirstWriter">{dict.firstWriter}</div>
+            <div className="OneDictionaryCardList DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
           </div>
         </div>
       </div>

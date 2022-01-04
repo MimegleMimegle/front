@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 
+import SpinningCircles from '../styles/image/spinning-circles.svg'
+
 const InfinityScroll = ({ children, callNext, paging }) => {
   const spinnerRef = useRef(null)
   const handleObserver = new IntersectionObserver(([{ isIntersecting }]) => {
@@ -24,7 +26,11 @@ const InfinityScroll = ({ children, callNext, paging }) => {
   return (
     <>
       {children}
-      {paging.next && <Spinner ref={spinnerRef}>로딩중!!</Spinner>}
+      {paging.next && (
+        <Spinner ref={spinnerRef}>
+          <img src={SpinningCircles} />
+        </Spinner>
+      )}
     </>
   )
 }
@@ -38,9 +44,7 @@ InfinityScroll.defaultProps = {
 
 const Spinner = styled.div`
   width: 100%;
-  background-color: aliceblue;
   text-align: center;
-  padding: 20px 0 40px;
 `
 
 export default InfinityScroll

@@ -29,6 +29,7 @@ import {
   ImageUpload,
   DictSearch,
 } from './pages'
+import SearchPage from './shared/SearchPage'
 import MobileFrame from './components/MobileFrame'
 import CommentTest from './pages/CommentTest'
 

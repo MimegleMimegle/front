@@ -80,7 +80,7 @@ const MyPageOneImageCard = ({ image }) => {
 
 const Wrapper = styled.div`
   position: relative;
-  max-width: 152.5px;
+  max-width: 180px;
   width: 100%;
   height: 170px;
   padding: 8px;
@@ -113,9 +113,9 @@ const ImageSection = styled.div`
 `
 
 const Image = styled.div`
-  max-width: 118px;
+  max-width: 130px;
   width: 100%;
-  height: 106px;
+  height: 110px;
   border: 1px solid #111;
   /* background-color: salmon; */
   background-image: url('${(props) => props.src}');

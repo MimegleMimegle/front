@@ -9,6 +9,7 @@ import Pagination from 'rc-pagination'
 import SearchPage from '../../shared/SearchPage'
 import { dictApi } from '../../shared/api'
 import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
+import Header from '../../components/Header'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
@@ -26,7 +27,7 @@ const DictList = (props) => {
   console.log(totalCount)
 
   const getDictListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
+    let response = await axios.get(`http://54.180.150.230/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
     let totalLength = await dictApi.tellMeTotalLength()
     console.log(response)
     console.log(totalLength)
@@ -36,6 +37,7 @@ const DictList = (props) => {
 
   return (
     <>
+      <Header type="DictList" location="오픈 밈사전"></Header>
       <div className="DictLayout">
         <SearchPage />
         {/* <div className="NewDictAddButtonSection">

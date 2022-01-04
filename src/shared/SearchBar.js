@@ -11,7 +11,7 @@ function SearchBar({ onAddKeyword }) {
   const dispatch = useDispatch()
 
   const [keyword, setKeyword] = useState('')
-  const [filteredPosts, setFilteredPosts] = React.useState([])
+  const [filteredDict, setFilteredDict] = React.useState([])
   const [notFound, setNotFound] = React.useState(false)
 
   const [pageSize, setPageSize] = useState(10)
@@ -24,7 +24,7 @@ function SearchBar({ onAddKeyword }) {
 
     console.log(response.data.data)
     console.log(searchTotalLength)
-    setFilteredPosts(response.data.data)
+    setFilteredDict(response.data.data)
     setTotalCount(searchTotalLength.data.data)
   }
 
@@ -75,7 +75,7 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   /* border-bottom: 1px solid grey; */
-  background-color: none;
+  background-color: white;
   padding: 20px 60px;
   box-sizing: border-box;
 `

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
+import Header from '../../components/Header'
 
 const DictWrite = (props) => {
   const dispatch = useDispatch()
@@ -55,6 +56,7 @@ const DictWrite = (props) => {
 
   return (
     <>
+      <Header type="DictWrite" location="오픈 밈사전"></Header>
       <div className="DictCardWritePageLayout">
         <div className="DictCardInputSection">
           <div className="DictCardInputTitleContainer">

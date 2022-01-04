@@ -7,15 +7,16 @@ import { actionCreators as postActions } from '../../redux/modules/post'
 import { actionCreators as imageActions } from '../../redux/modules/image'
 import HashTag from '../../components/HashTag'
 import swal from 'sweetalert'
+import Header from '../../components/Header'
 
 const PostEdit = (props) => {
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const history = useHistory()
+  const dispatch = useDispatch()
 
   const username = window.localStorage.getItem('username')
-  const post_list = useSelector((state)=> state.post.list)
+  const post_list = useSelector((state) => state.post.list)
   const post_id = props.match.params.boardId
-  const is_edit= post_id? true: false
+  const is_edit = post_id ? true : false
 
   const _post = is_edit? post_list.find((p)=>p.username === username) : null;
  
@@ -24,7 +25,6 @@ const PostEdit = (props) => {
   const [thumbNail, setThumbNail] = useState(_post.thumbNail)
   const [hashTag, setHashTag] = useState(_post.thumbNail)
   const [hashTagList, setHashTagList] = useState([])
-
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
@@ -84,13 +84,12 @@ const PostEdit = (props) => {
   // console.log(content)
   // console.log(hashTagList)
 
-
   const editPost = () => {
     if (title == '' || content == '') {
       window.alert('게시물을 모두 작성해주세요')
       return
     } else {
-      dispatch(postActions.editPostDB(post_id, hashTagList, title, content, ))
+      dispatch(postActions.editPostDB(post_id, hashTagList, title, content))
     }
   }
 
@@ -107,17 +106,16 @@ const PostEdit = (props) => {
 
   const fileInput = React.useRef('')
 
-
-
   return (
     <>
+      <Header type="PostEdit" location="밈+글 수정하기"></Header>
       <Container>
         <PWHeader>
-          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={_post&&title} onChange={onChangeTitle}/>
+          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={_post && title} onChange={onChangeTitle} />
         </PWHeader>
-          <PWBody>
-          <textarea value={_post&&content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
-          <Preview src={_post&&thumbNail}></Preview>
+        <PWBody>
+          <textarea value={_post && content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
+          <Preview src={_post && thumbNail}></Preview>
           <input type="file" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           <HashDivWrap className="hashWrap">
             <div className="hashWrapOutter"></div>

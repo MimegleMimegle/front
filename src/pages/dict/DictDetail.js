@@ -11,6 +11,7 @@ import 'moment'
 import 'moment/locale/ko'
 import moment from 'moment'
 import { push } from 'connected-react-router'
+import Header from '../../components/Header'
 
 const DictDetail = (props) => {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ const DictDetail = (props) => {
   const [isLike, setIsLike] = React.useState(false)
 
   const getDictListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/dict/${dictId}`)
+    let response = await axios.get(`http://54.180.150.230/api/dict/${dictId}`)
     console.log(response)
     setDict(response.data.data)
   }
@@ -50,6 +51,9 @@ const DictDetail = (props) => {
 
   return (
     <>
+      <Header type="DictDetail" location="오픈 밈사전">
+        돋보기
+      </Header>
       <div className="OneDictCardDetailPageLayout">
         <div className="OneDictCardDetailInfoSection">
           <div className="OneDictCardDetailInfoTitle">
