@@ -48,7 +48,6 @@ export const boardApi = {
   recommendHashTag: () => instance.get('/api/board/hashTag'),
   searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
   totalLength: () => instance.get('api/board/count/FREEBOARD')
-
 }
 
 export const dictApi = {
@@ -94,6 +93,6 @@ export const imageApi = {
   getImageDetail: (boardId) => instance.get(`/api/board/${boardId}`),
   uploadImage: (category, imageData) => instance.post(`/api/board/${category}`, imageData),
   deleteImage: (boardId) => instance.delete(`/api/board/${boardId}`),
-  giveMeTotalLength: (category) => instance.get(`/api/count/board/${category}`),
-  getPopularImageList: (category) => instance.get(`api/board/${category}/best`),
+  giveMeTotalLength: () => instance.get(`/api/board/count/IMAGEBOARD`),
+  getBestImageList: () => instance.get(`api/board/IMAGEBOARD/best`),
 }
