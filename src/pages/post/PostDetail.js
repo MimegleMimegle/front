@@ -6,12 +6,11 @@ import { actionCreators as postActions } from '../../redux/modules/post'
 import { actionCreators as likeActions } from '../../redux/modules/like'
 import swal from 'sweetalert'
 import styled from '@emotion/styled'
-import like from '../../redux/modules/like'
+import { likeApi } from '../../shared/api'
 import { AiOutlineEye } from 'react-icons/ai'
 import { FiMessageSquare } from 'react-icons/fi'
 import { IoCloseOutline } from 'react-icons/io5'
-
-import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io'
+import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { getCookie } from '../../shared/cookie'
 import CommentTest from '../CommentTest'
@@ -25,7 +24,8 @@ const PostDetail = (props) => {
   console.log(nickName, username)
 
   const [post, setPost] = useState([])
-  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0)
+  const [isLiked, setIsLiked] = useState(false)
 
   const getOnePostDB = async () => {
     let response = await axios.get(`http://52.78.155.185/api/board/${boardId}`)
@@ -43,14 +43,33 @@ const PostDetail = (props) => {
     getOnePostDB()
   }, [])
 
-  const likePost = async () => {
-    if(!token) {
-      swal("로그인 후 사용해주세요", "", "error")
-      // history.push("/login")
+  const handleClickLike = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isLiked) {
+      await likeApi
+        .likeBoard(boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(false)
+          setLikeCount(likeCount - 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 취소 문제 발생', error.response)
+        })
+    } else {
+      await likeApi
+        .likeBoard(boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(true)
+          setLikeCount(likeCount + 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 문제 발생', error.response)
+        })
     }
-    dispatch(likeActions.changeLikeBoardDB(boardId))
   }
-
   const [toggleModalChang, setToggleModalChang] = React.useState(false)
 
   const clickToggleModalChang = (e) => {
@@ -62,7 +81,7 @@ const PostDetail = (props) => {
   return (
     <>
       <Container>
-        {/* {nickName === post.writer ? (
+        {/* {username === post.writer ? (
           <>
             <button
               onClick={() => {
@@ -112,16 +131,11 @@ const PostDetail = (props) => {
         </div>  
           
           <ViewLikeComment>
-          <AiOutlineEye /><div className="count">{post.views}</div> 
-          {post.isLike ? 
-          <IoIosHeart cursor="pointer" onClick={likePost}/>
-          :
-          <IoIosHeartEmpty
-          cursor="pointer"
-          onClick={likePost}/>}
-          <div className="count">{post.likeCnt}</div>          
-          <FiMessageSquare/><div className="count">{post.commentCnt}</div> 
-        
+          <AiOutlineEye style={{ fontSize: '22px' }}/><span style={{fontSize: '14px'}}>{post.views}</span> 
+          <button>{isLiked ? <HiHeart style={{ fontSize: '22px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '22px' }} onClick={handleClickLike} />}</button>
+          <span style={{fontSize: '14px'}}>{likeCount}</span>
+          <FiMessageSquare style={{ fontSize: '22px' }}/><span style={{fontSize: '14px'}}>{post.commentCnt? post.commentCnt: 0}</span> 
+    
           </ViewLikeComment>
         </Container>
 
