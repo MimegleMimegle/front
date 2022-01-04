@@ -4,14 +4,18 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { actionCreators as commentActions } from '../redux/modules/comment'
 import { history } from '../redux/ConfigureStore'
+import { BsPersonPlus } from 'react-icons/bs'
+import { VscTrash } from 'react-icons/vsc'
 
 import ModalContainer from './ModalContainer'
 import ModalWrapper from './ModalWrapper'
 
 const OneComment = (props) => {
+
   const dispatch = useDispatch()
 
   const nickName = window.localStorage.getItem('nickname')
+  console.log(nickName)
   const [modalEditVisible, setModalEditVisible] = React.useState(false)
   const [modalDeleteVisible, setModalDeleteVisible] = React.useState(false)
 
@@ -46,13 +50,17 @@ const OneComment = (props) => {
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <p>{props.commentWriter}</p>
-        <p>{props.createdAt}</p>
-        <p>{props.commentContent}</p>
-        {/* <button onClick={handleOpenModalEdit}>댓글 수정</button> */}
+      <div style={{margin: "10px", display: 'flex', alignItems:"center" }}>
+        <img className="commentprofile" src={props.profileImageUrl} alt="" style={{width:"40px", height:"40px",borderRadius:"150px"}}/>
+        <div style={{margin:"6px 20px"}}>
+          <div style={{display: "flex" }}>
+            <p style={{margin:"0 12px 0 0",}}>{props.commentWriter}</p>
+            <p>{props.createdAt}</p>
+          </div>
+          <p>{props.commentContent}</p>
+        </div>
         {nickName === props.commentWriter? 
-        <button onClick={handleOpenModalDelete}>삭제</button> : null }
+        <VscTrash size="20" onClick={handleOpenModalDelete}삭제/> : null }
       </div>
       {modalEditVisible && (
         <ModalWrapper>
@@ -75,6 +83,9 @@ const OneComment = (props) => {
       )} 
     </>
   )
-}
+};
+
+
+
 
 export default OneComment

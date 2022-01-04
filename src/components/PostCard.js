@@ -15,9 +15,10 @@ const PostCard = ({ post }) => {
 
   return (
     <>
+    <FullWrap>
       <Wrap postList={post} onClick={onC}>
         <UserInfo>
-          <img src={post ? post.profileImageUrl : null} alt="" style={{ borderRadius: '160px', width: '15%' }} />
+          <img src={post ? post.profileImageUrl : null} alt="" style={{ borderRadius: '160px', width: '40px', height:'40px'}} />
           <div>
             <p>{post ? post.writer : null}</p>
             <p>{post ? post.createdAt : null}</p>
@@ -26,7 +27,6 @@ const PostCard = ({ post }) => {
         <PostBody>
           <div className="text">
             <h4>{post ? post.title : null}</h4>
-            <p>{post ? post.content : null}</p>
             <HashTagHere>
               {post
                 ? post.hashTags.map((hashTag, index) => {
@@ -34,21 +34,37 @@ const PostCard = ({ post }) => {
                   })
                 : null}
             </HashTagHere>
+            <AiOutlineEye /> {post ? post.views : null} 
+            <AiOutlineHeart />{post ? post.likeCnt : null} 
+            <FiMessageSquare /> {post ? post.commentCnt : null}
           </div>
-          <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
         </PostBody>
-        <AiOutlineEye /> {post ? post.views : null} <AiOutlineHeart />
-        {post ? post.likeCnt : null} <FiMessageSquare /> {post ? post.commentCnt : null}
       </Wrap>
+          {post.thumbNail?
+          <img className="uploadimg" src={post.thumbNail} alt="" /> : null }
+      </FullWrap>
     </>
   )
 }
 
 export default PostCard
 
+const FullWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0.5px solid rgb(200, 200, 200);
+  padding: 10px;
+
+  .uploadimg {
+    width: 70px;
+    height: 70px;
+    margin: 20px 0 0 0;
+  }
+
+`
+
 const Wrap = styled.div`
-  padding: 0 10px;
-  margin: 10px 0px;
+  
 `
 
 const UserInfo = styled.div`
@@ -59,15 +75,11 @@ const PostBody = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  justify-content: space-between;
   cursor: pointer;
 
   .text {
   }
-  .uploadimg {
-    width: 70px;
-    height: 70px;
-  }
+  
 `
 const HashTagHere = styled.div`
   display: flex;
