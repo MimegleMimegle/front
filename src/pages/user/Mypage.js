@@ -235,10 +235,10 @@ const UserActivity = styled.div`
 
 const MyImageList = styled.div`
   width: 100%;
-  padding: 0 20px;
+  padding: 0 16px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 16px;
 `
 
 export default Mypage

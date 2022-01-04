@@ -14,6 +14,7 @@ import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
 import { IoCloseOutline } from 'react-icons/io5'
+import { MdOutlineDelete } from 'react-icons/md'
 
 const ImageDetail = (props) => {
   const boardId = useParams().imageId
@@ -66,6 +67,22 @@ const ImageDetail = (props) => {
     }
   }
 
+  const handleDeleteImage = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    await imageApi
+      .deleteImage(boardId)
+      .then((response) => {
+        console.log(response.data)
+      })
+      .then(() => {
+        history.push('/image')
+      })
+      .catch((error) => {
+        console.log('이미지 삭제 문제 발생', error.response)
+      })
+  }
+
   useEffect(() => {
     imageApi
       .getImageDetail(boardId)
@@ -98,6 +115,7 @@ const ImageDetail = (props) => {
             onClick={() => {
               history.goBack()
             }}
+            style={{ padding: '0' }}
           >
             <IoCloseOutline style={{ fontSize: '24px' }} />
           </button>
@@ -115,8 +133,8 @@ const ImageDetail = (props) => {
               <MdShare style={{ fontSize: '20px' }} />
             </button>
             {imageData && profile && imageData.writer === profile.nickname && (
-              <button onClick={handleThreeDotsToggleMenu}>
-                <BsThreeDotsVertical style={{ fontSize: '20px' }} />
+              <button onClick={handleDeleteImage}>
+                <MdOutlineDelete style={{ fontSize: '20px' }} />
               </button>
             )}
           </div>
@@ -124,12 +142,13 @@ const ImageDetail = (props) => {
         <div style={{ width: '100%', height: '70%', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
           <img src={imageData.thumbNail} style={{ width: '100%', objectFit: 'cover' }} />
         </div>
-        <div style={{ width: '100%', padding: '10px 10px 0', display: 'flex', alignItems: 'center' }}>
-          <button>{isLiked ? <HiHeart style={{ fontSize: '22px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '22px' }} onClick={handleClickLike} />}</button>
+        <div style={{ width: '100%', padding: '5px 10px 0', display: 'flex', alignItems: 'center' }}>
+          <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
           <span style={{ color: '#FFF', fontSize: '14px' }}>{likeCount}</span>
         </div>
         {shareToggleMenu && <ShareMenu handleShareToggleMenu={handleShareToggleMenu} imageUrl={imageData.thumbNail} />}
-        {threeDotsToggleMenu && <ThreeDotsMenu boardId={boardId} handleThreeDotsToggleMenu={handleThreeDotsToggleMenu} />}
+        {/* 토글 메뉴 없이 휴지통 아이콘으로 수정할 건지 확인 필요 */}
+        {/* {threeDotsToggleMenu && <ThreeDotsMenu boardId={boardId} handleThreeDotsToggleMenu={handleThreeDotsToggleMenu} />} */}
       </ImageWrapper>
     </>
   )

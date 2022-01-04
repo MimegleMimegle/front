@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { likeApi } from '../../shared/api'
 import { history } from '../../redux/ConfigureStore'
 
@@ -14,7 +14,7 @@ const OneImageCard = ({ image }) => {
   const [hover, setHover] = useState(false)
   const [toggleMenu, setToggleMenu] = useState(false)
   const [likeCount, setLikeCount] = useState(image.likeCnt)
-  const [isLiked, setIsLiked] = useState(image.like)
+  const [isLiked, setIsLiked] = useState(image.isLike)
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false)
 
   const clickToggleMenu = (e) => {
@@ -72,24 +72,25 @@ const OneImageCard = ({ image }) => {
         }}
       >
         <ImageThumbnail src={image && image.thumbNail}></ImageThumbnail>
-        {hover && (
-          <Overlay>
-            <div style={{ width: '100%', height: '100%', padding: '5px 0 5px 2px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between' }}>
-              <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
-                <button style={{ color: '#FFF', zIndex: '1000' }} onClick={handleBottomSheetVisible}>
-                  <MdShare fontSize="20px" />
-                </button>
-              </div>
-              <div style={{ display: 'flex' }}>
-                <button style={{ color: '#FFF', zIndex: '1000' }}>
-                  {isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}
-                </button>
-                <span style={{ color: '#FFF' }}>{likeCount}</span>
-              </div>
+        {/* {hover && ( */}
+        <Overlay className={`${hover ? 'active' : 'in-active'}`}>
+          <div style={{ width: '100%', height: '100%', padding: '7px 7px 5px 7px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between' }}>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
+              <button style={{ color: '#FFF', zIndex: '1000', padding: '0' }} onClick={handleBottomSheetVisible}>
+                <MdShare fontSize="18px" />
+              </button>
             </div>
-          </Overlay>
-        )}
-        {toggleMenu && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <button style={{ color: '#FFF', zIndex: '1000', padding: '0 3px 0 0' }}>
+                {isLiked ? <HiHeart style={{ fontSize: '18px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '18px' }} onClick={handleClickLike} />}
+              </button>
+              <span style={{ color: '#FFF', fontSize: '9px' }}>{likeCount}</span>
+            </div>
+          </div>
+        </Overlay>
+        {/* )} */}
+        {/* 공유하기 바텀 시트 완성되면 삭제 예정! */}
+        {/* {toggleMenu && (
           <Menu>
             <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
               <button style={{ padding: '0', height: '100%' }} onClick={clickToggleMenu}>
@@ -100,7 +101,7 @@ const OneImageCard = ({ image }) => {
               <button style={{ fontSize: '12px', padding: '0' }}>공유하기</button>
             </div>
           </Menu>
-        )}
+        )} */}
       </ImageBox>
       {bottomSheetVisible && <ShareBottomSheet bottomSheetVisible={bottomSheetVisible} setBottomSheetVisible={setBottomSheetVisible} />}
     </>
@@ -115,6 +116,19 @@ const ImageBox = styled.div`
   height: 100%;
   overflow: hidden;
   cursor: pointer;
+  .active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 100;
+    transition: all 0.3s ease-in-out;
+  }
+  .inactive {
+    display: none;
+  }
 `
 const ImageThumbnail = styled.img`
   width: 100%;
@@ -122,17 +136,7 @@ const ImageThumbnail = styled.img`
   object-fit: cover;
 `
 
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-  transition: all 0.3s ease-in-out;
-`
-
+const Overlay = styled.div``
 const Menu = styled.div`
   position: absolute;
   top: 0;

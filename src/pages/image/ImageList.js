@@ -7,6 +7,7 @@ import InfinityScroll from '../../shared/InfinityScroll'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
 import PopularOneImageCard from '../../components/image/PopularOneImageCard'
+import SpinningCircles from '../../styles/image/spinning-circles.svg'
 
 import { actionCreators as imageActions } from '../../redux/modules/image'
 
@@ -17,7 +18,6 @@ const ImageList = (props) => {
 
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [imageTotalLength, setImageTotalLength] = useState(0)
   const [bestImageList, setBestImageList] = useState([])
 
   const image_data = useSelector((state) => state.image)
@@ -43,21 +43,13 @@ const ImageList = (props) => {
 
   useEffect(() => {
     setLoading(true)
-    setTimeout(() => setLoading(false), 2000)
+    setTimeout(() => setLoading(false), 1000)
     dispatch(imageActions.getImageListDB(0))
 
     imageApi
-      .giveMeTotalLength()
-      .then((response) => {
-        setImageTotalLength(response.data.data)
-      })
-      .catch((error) => {
-        console.log('이미지 총 개수 불러오기 문제 발생', error.response)
-      })
-    imageApi
       .getBestImageList()
       .then((response) => {
-        setBestImageList(response.data.data)
+        setBestImageList(response.data.data.slice(0, 3))
       })
       .catch((error) => {
         console.log('명예의 전당 이미지 불러오기 문제 발생', error.response)
@@ -71,30 +63,41 @@ const ImageList = (props) => {
           <input type="file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
         </div>
         <PopularSection>
-          <div style={{ borderBottom: '1px solid #e5e5e5' }}>
-            <h2 style={{ fontSize: '16px', fontWeight: '700' }}>명예의 전당</h2>
+          <div style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: '5px' }}>
+            <Title>명예의 밈짤</Title>
           </div>
           <Container>
-            <PopularGridLayout>
-              {bestImageList.length > 0 &&
-                bestImageList.map((image) => {
+            {loading ? (
+              <div style={{ width: '100%', height: '294px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src={SpinningCircles} />
+              </div>
+            ) : (
+              <PopularGridLayout>
+                {bestImageList.map((image) => {
                   return <OneImageCard key={image.boardId} image={image} />
                 })}
-            </PopularGridLayout>
+              </PopularGridLayout>
+            )}
           </Container>
         </PopularSection>
         <GeneralSection>
-          <div style={{ borderBottom: '1px solid #e5e5e5', display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
-            <h2 style={{ fontSize: '16px', fontWeight: '700' }}>짤 방앗간</h2>
+          <div style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: '5px' }}>
+            <Title>짤 방앗간</Title>
           </div>
           <Container>
-            <GeneralGridLayout>
-              <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
-                {image_data.image_list.map((image) => {
-                  return <OneImageCard key={image.boardId} image={image} />
-                })}
-              </InfinityScroll>
-            </GeneralGridLayout>
+            <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
+              {loading ? (
+                <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img src={SpinningCircles} />
+                </div>
+              ) : (
+                <GeneralGridLayout>
+                  {image_data.image_list.map((image) => {
+                    return <OneImageCard key={image.boardId} image={image} />
+                  })}
+                </GeneralGridLayout>
+              )}
+            </InfinityScroll>
           </Container>
         </GeneralSection>
       </Wrapper>
@@ -108,27 +111,20 @@ const Wrapper = styled.div`
   flex-direction: column;
 `
 
+const Title = styled.span`
+  font-size: 16px;
+  font-weight: 700;
+  background-image: linear-gradient(transparent 60%, #ffe330 40%);
+`
+
 const PopularSection = styled.div`
   width: 100%;
-  padding: 20px 20px;
+  padding: 16px;
 `
 
 const GeneralSection = styled.div`
   width: 100%;
-  padding: 20px 20px 0;
-  .sort-button {
-    margin: 0 4px;
-    width: 100%;
-    height: 20px;
-    border: 1px solid #585858;
-    border-radius: 10px;
-    font-size: 9px;
-  }
-  .active {
-    transition: all 0.3s ease-in-out;
-    color: #fff;
-    background-color: #585858;
-  }
+  padding: 16px 16px 0;
 `
 
 const Container = styled.div`
@@ -161,7 +157,7 @@ const GeneralGridLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(121px, 121px);
-  gap: 8px;
+  gap: 3px;
 `
 
 export default ImageList
