@@ -6,6 +6,7 @@ import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
 import '../../styles/css/Mypage.css'
 
+import Header from '../../components/Header'
 import EditProfile from '../../components/mypage/EditProfile'
 import PostCard from '../../components/PostCard'
 import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
@@ -60,69 +61,72 @@ const Mypage = (props) => {
   }, [])
 
   return (
-    <Wrapper>
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>
-        <UserProfile>
-          <ProfileImage src={my && my.profileImageUrl} />
-          <div className="profile-info box-1">
-            <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div className="user-nickname">{my && my.nickname}</div>
-              <button onClick={openEditProfile}>
-                <AiOutlineEdit fontSize="20px" />
-              </button>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div className="user-activity-info">
-                <div className="user-activity-info-subject">단어장</div>
-                <div className="user-activity-info-count">{my && my.dictCount}</div>
+    <>
+      <Header type="MyPage" location="마이페이지"></Header>
+      <Wrapper>
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>
+          <UserProfile>
+            <ProfileImage src={my && my.profileImageUrl} />
+            <div className="profile-info box-1">
+              <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="user-nickname">{my && my.nickname}</div>
+                <button onClick={openEditProfile}>
+                  <AiOutlineEdit fontSize="20px" />
+                </button>
               </div>
-              <div className="user-activity-info">
-                <div className="user-activity-info-subject">게시글</div>
-                <div className="user-activity-info-count">{my && my.postCount}</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="user-activity-info">
+                  <div className="user-activity-info-subject">단어장</div>
+                  <div className="user-activity-info-count">{my && my.dictCount}</div>
+                </div>
+                <div className="user-activity-info">
+                  <div className="user-activity-info-subject">게시글</div>
+                  <div className="user-activity-info-count">{my && my.postCount}</div>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="profile-info box-2"></div>
-        </UserProfile>
+            <div className="profile-info box-2"></div>
+          </UserProfile>
 
-        <Filter>
-          <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
-            단어장
-          </button>
-          <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
-            밈글
-          </button>
-          <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
-            짤방
-          </button>
-        </Filter>
-        <UserActivity>
-          {/* Dictionary */}
-          {showDictionary && myMemeDictList !== null
-            ? myMemeDictList.map((dict) => {
-                return <OneDictionaryCard key={dict.dictId} dict={dict} />
-              })
-            : null}
-          {/* Board */}
-          {showBoard && myMemePostList.length > 0
-            ? myMemePostList.map((post) => {
-                return <PostCard key={post.boardId} post={post} />
-              })
-            : null}
-          {/* Photo */}
-          {showImage && (
-            <MyImageList>
-              {myMemeImageList.length > 0
-                ? myMemeImageList.map((image) => {
-                    return <MyPageOneImageCard key={image.boardId} image={image} />
-                  })
-                : null}
-            </MyImageList>
-          )}
-        </UserActivity>
-      </div>
-      {showModal && <EditProfile setShowModal={setShowModal} my={my} />}
-    </Wrapper>
+          <Filter>
+            <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
+              단어장
+            </button>
+            <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
+              밈글
+            </button>
+            <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
+              짤방
+            </button>
+          </Filter>
+          <UserActivity>
+            {/* Dictionary */}
+            {showDictionary && myMemeDictList !== null
+              ? myMemeDictList.map((dict) => {
+                  return <OneDictionaryCard key={dict.dictId} dict={dict} />
+                })
+              : null}
+            {/* Board */}
+            {showBoard && myMemePostList.length > 0
+              ? myMemePostList.map((post) => {
+                  return <PostCard key={post.boardId} post={post} />
+                })
+              : null}
+            {/* Photo */}
+            {showImage && (
+              <MyImageList>
+                {myMemeImageList.length > 0
+                  ? myMemeImageList.map((image) => {
+                      return <MyPageOneImageCard key={image.boardId} image={image} />
+                    })
+                  : null}
+              </MyImageList>
+            )}
+          </UserActivity>
+        </div>
+        {showModal && <EditProfile setShowModal={setShowModal} my={my} />}
+      </Wrapper>
+    </>
   )
 }
 

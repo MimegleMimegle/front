@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import { dictApi } from '../../shared/api'
+import Header from '../../components/Header'
 
 const DictEditHistory = (props) => {
   const dispatch = useDispatch()
@@ -28,6 +29,9 @@ const DictEditHistory = (props) => {
 
   return (
     <>
+      <Header type="DictHistory" location="오픈 밈사전">
+        돋보기
+      </Header>
       <div className="DictHistoryPageLayout">
         <div className="DictHistoryListText">{dictId.title}의 편집기록</div>
         <div className="DictHistoryListSection">

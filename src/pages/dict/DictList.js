@@ -9,6 +9,7 @@ import Pagination from 'rc-pagination'
 import SearchPage from '../../shared/SearchPage'
 import { dictApi } from '../../shared/api'
 import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
+import Header from '../../components/Header'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
@@ -36,6 +37,7 @@ const DictList = (props) => {
 
   return (
     <>
+      <Header type="DictList" location="오픈 밈사전"></Header>
       <div className="DictLayout">
         <SearchPage />
         {/* <div className="NewDictAddButtonSection">

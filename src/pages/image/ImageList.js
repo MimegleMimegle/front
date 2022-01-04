@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { imageApi } from '../../shared/api'
 
+import Header from '../../components/Header'
 import InfinityScroll from '../../shared/InfinityScroll'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
@@ -58,6 +59,9 @@ const ImageList = (props) => {
 
   return (
     <>
+      <Header type="ImageList" location="짤방">
+        Upload
+      </Header>
       <Wrapper>
         <div>
           <input type="file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
