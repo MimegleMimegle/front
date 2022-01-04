@@ -65,7 +65,6 @@ const DictEdit = (props) => {
     swal({
       title: '초기화를 하시면 작성하신 모든 내용이 사라집니다.',
       text: '그래도 초기화 하시겠습니까?',
-      icon: 'warning',
       buttons: true,
       dangerMode: true,
     }).then((allClearKeyword) => {
