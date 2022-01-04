@@ -78,7 +78,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             {isLogin ? (
               <>
                 <ProfileImage src={my ? my.profileImageUrl : null} onClick={moveToMypage} />
-                <p style={{ paddingLeft: '10px', cursor: 'pointer', fontSize: '14px' }} onClick={moveToMypage}>
+                <p style={{ paddingLeft: '10px', cursor: 'pointer', fontSize: '14px', fontWeight: '700' }} onClick={moveToMypage}>
                   {my ? my.nickname : null}
                 </p>
               </>

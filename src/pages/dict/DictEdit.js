@@ -5,6 +5,7 @@ import { history } from '../../redux/ConfigureStore'
 import axios from 'axios'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
+import Header from '../../components/Header'
 
 const DictEdit = (props) => {
   const dispatch = useDispatch()
@@ -82,6 +83,7 @@ const DictEdit = (props) => {
 
   return (
     <>
+      <Header type="DictEdit" location="오픈 밈사전"></Header>
       <div className="DictCardEditPageLayout">
         <div className="DictCardEditInputSection">
           <div className="DictCardEditInputTitleContainer">

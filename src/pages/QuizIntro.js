@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { history } from '../redux/ConfigureStore'
 
+import Header from '../components/Header'
 import ModalWrapper from '../components/ModalWrapper'
 import ModalContainer from '../components/ModalContainer'
 import QuizIntroImage from '../styles/image/quiz_main_image1.gif'
@@ -56,6 +57,7 @@ const QuizIntro = (props) => {
 
   return (
     <>
+      <Header type="QuizIntro" location="밈퀴즈" />
       <Wrapper>
         <ImageSection>
           <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

@@ -4,6 +4,8 @@ import MainPageImageSlide from '../components/MainPageImageSlide'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
 
+import Header from '../components/Header'
+
 import 'swiper/css'
 import 'swiper/css/lazy'
 import 'swiper/css/pagination'
@@ -15,6 +17,7 @@ const Main = (props) => {
 
   return (
     <>
+      <Header />
       <div className="MainPageLayout">
         <Swiper
           slidesPerView={1}
