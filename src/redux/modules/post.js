@@ -17,7 +17,7 @@ const DELETE_POST = 'DELETE_POST'
 const LOADING = 'LOADING'
 
 // /* action creator */
-const getPost = createAction(GET_POST, (post_list) => ({ post_list }))
+const getPost = createAction(GET_POST, (post_list, paging) => ({ post_list, paging }))
 const getOnePost = createAction(GET_ONE_POST, (post, boardId) => ({ post, boardId }))
 const addPost = createAction(ADD_POST, (post) => ({ post }))
 const editPost = createAction(EDIT_POST, (boardId,post) => ({ boardId, post }))
@@ -27,6 +27,7 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 // /* initial state */
 const initialState = {
   list: [],
+  paging: { page: null, size: 10 },
   detail: false,
 }
 
@@ -44,18 +45,27 @@ const initalPost = {
 
 // /* middleware */
 
-const getPostsDB = () => {
+const getPostsDB = (page = null, size = null) => {
   return function (dispatch, getState, { history }) {
     boardApi
       .getPosts()
       .then((res) => {
         const post_list = res.data.data
-        dispatch(getPost(post_list))
+        let result = res.data.data.slice(page, size)
+        let paging = {
+          page: page + result.length + 1,
+          size: size + 10,
+        }
+        if (result.length === 0) {
+          dispatch(loading(false))
+          return
+        }
+        dispatch(getPost(post_list, paging,result))
+
       })
       .catch((err) => {
         console.log('게시판을 불러오기 문제 발생', err.response.data)
         console.log(err.response.status)
-        console.log(err.res.headers)
       })
   }
 }
@@ -92,6 +102,7 @@ const addPostDB = (title, content, uploadFile, hashTag_list) => {
       .then((response) => {
         const post = response.data.data
         dispatch(addPost(post))
+        console.log(post)
       })
       .then(() => {
         history.push('/post')

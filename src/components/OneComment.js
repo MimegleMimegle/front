@@ -4,14 +4,19 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { actionCreators as commentActions } from '../redux/modules/comment'
 import { history } from '../redux/ConfigureStore'
+import { BsPersonPlus } from 'react-icons/bs'
+import { VscTrash } from 'react-icons/vsc'
 
 import ModalContainer from './ModalContainer'
 import ModalWrapper from './ModalWrapper'
 
 const OneComment = (props) => {
+
   const dispatch = useDispatch()
 
   const nickName = window.localStorage.getItem('nickname')
+  const commentId = props.commentId
+
   const [modalEditVisible, setModalEditVisible] = React.useState(false)
   const [modalDeleteVisible, setModalDeleteVisible] = React.useState(false)
 
@@ -40,19 +45,24 @@ const OneComment = (props) => {
 
   /* 삭제는 되는데 리프레쉬해야만 반영됨 -> 삭제할 건지 확인하는 모달 생성 후 확인 버튼 누르면 dispatch & history.push로 댓글 페이지로 돌아가게 하기? */
   const delComment = () => {
-    dispatch(commentActions.delCommentDB(props.commentId))
+    dispatch(commentActions.delCommentDB(commentId))
     setModalDeleteVisible(false)
+    console.log(commentId)
   }
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <p>{props.commentWriter}</p>
-        <p>{props.createdAt}</p>
-        <p>{props.commentContent}</p>
-        {/* <button onClick={handleOpenModalEdit}>댓글 수정</button> */}
+      <div style={{margin: "10px", display: 'flex', alignItems:"center" }}>
+        <img className="commentprofile" src={props.profileImageUrl} alt="" style={{width:"40px", height:"40px",borderRadius:"150px"}}/>
+        <div style={{margin:"6px 20px"}}>
+          <div style={{display: "flex" }}>
+            <p style={{margin:"0 12px 0 0",}}>{props.commentWriter}</p>
+            <p>{props.createdAt}</p>
+          </div>
+          <p>{props.commentContent}</p>
+        </div>
         {nickName === props.commentWriter? 
-        <button onClick={handleOpenModalDelete}>삭제</button> : null }
+        <VscTrash size="20" onClick={handleOpenModalDelete}삭제/> : null }
       </div>
       {modalEditVisible && (
         <ModalWrapper>
@@ -60,7 +70,7 @@ const OneComment = (props) => {
         </ModalWrapper>
       )}
       {modalDeleteVisible && (
-        <ModalWrapper visible={true} maskClosable={false}>
+        <ModalWrapper visible={true} maskClosable={false} >
           <ModalContainer>
             <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <h4>삭제</h4>
@@ -75,6 +85,9 @@ const OneComment = (props) => {
       )} 
     </>
   )
-}
+};
+
+
+
 
 export default OneComment

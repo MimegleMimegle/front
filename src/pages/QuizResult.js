@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -16,8 +16,8 @@ const QuizResult = ({ quiz_list }) => {
   const currentUrl = window.location.href
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
 
-  const [copied, setCopied] = React.useState(false)
-  const [showQuiz, setShowQuiz] = React.useState(false)
+  const [copied, setCopied] = useState(false)
+  const [showQuiz, setShowQuiz] = useState(false)
 
   const closeCopied = () => {
     setTimeout(() => {
@@ -72,7 +72,7 @@ const QuizResult = ({ quiz_list }) => {
             >
               다른 테스트 하러 가기
             </button>
-            <p style={{ fontSize: '14px', fontWeight: '700', padding: '10px 0' }}>친구에게 공유하기</p>
+            <button style={{ fontSize: '14px', fontWeight: '700', padding: '10px 0' }}>친구에게 공유하기</button>
             <div style={{ width: '100%', padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <FacebookShareButton url={currentUrl}>
                 <FacebookIcon size={40} round={true} />
@@ -143,7 +143,7 @@ const QuizResultBox = styled.div`
   width: 100%;
   height: 100%;
   margin: 40px 0 0;
-  border: 1px solid #767676;
+  border: 1px solid #111;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,7 +202,7 @@ const ResultButtonContainer = styled.div`
     width: 135px;
     height: 40px;
     position: absolute;
-    border: 1px solid #767676;
+    border: 1px solid #111;
     border-radius: 20px;
     background-color: #fff;
     .resultButton {

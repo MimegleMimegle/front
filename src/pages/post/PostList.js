@@ -30,10 +30,10 @@ const PostList = (props) => {
   console.log(totalCount)
 
   const getPostListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/board/list/FREEBOARD?page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
+    let response = await axios.get(`http://52.78.155.185/api/board/list/FREEBOARD?page=${(currentPage - 1)}&size=${pageSize}`)
     let totalLength = await boardApi.totalLength()
     console.log(response)
-    console.log(totalLength)
+    console.log(totalLength) 
     setPost(response.data.data)
     setTotalCount(totalLength.data.data)
   }
@@ -50,10 +50,11 @@ const PostList = (props) => {
           + 밈 글 등록하기
         </button>
 
-        {postList &&
-          postList.map((post, index) => {
+        {post &&
+          post.map((post, index) => {
             return <PostCard post={post} key={post.boardId} />
           })}
+
         <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
       </Container>
     </>

@@ -82,9 +82,9 @@ const editCommentDB = (boardId, commentId, newComment) => {
 
 const delCommentDB = (boardId, commentId) => {
   return async function (dispatch, getState, { history }) {
-    if (!boardId || !commentId) {
-      return
-    }
+    // if (!boardId || !commentId) {
+    //   return
+    // }
 
     await commentApi
       .deleteComment(commentId)
@@ -94,7 +94,7 @@ const delCommentDB = (boardId, commentId) => {
       })
       .then(() => {
         // 추후 경로 수정
-        history.push('/comment')
+        history.push(`/post/detail/${boardId}`)
       })
       .catch((err) => {
         console.log('댓글을 삭제하는 데 문제가 발생했습니다.', err.response)
@@ -121,9 +121,9 @@ export default handleActions(
       }),
     [DEL_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        let idx = draft.comment_list[action.payload.boardId].findIndex((c) => c.commentId === action.payload.commentId)
-        draft.comment_list[action.payload.boardId].splice(idx, 1)
-        // draft.comment_list[action.payload.boardId].filter((c) => c.commentId !== action.payload.commentId)
+        // let idx = draft.comment_list[action.payload.boardId].findIndex((c) => c.commentId === action.payload.commentId)
+        // draft.comment_list[action.payload.boardId].splice(idx, 1)
+        draft.comment_list[action.payload.boardId].filter((c) => c.commentId !== action.payload.commentId)
       }),
   },
   initialState

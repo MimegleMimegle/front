@@ -18,7 +18,7 @@ const PostEdit = (props) => {
   const is_edit= post_id? true: false
 
   const _post = is_edit? post_list.find((p)=>p.username === username) : null;
-
+  console.log(_post)
   useEffect(()=> {
     if(!_post){
       console.log('포스트 정보가 없어요!');
@@ -98,27 +98,6 @@ const PostEdit = (props) => {
   console.log(content)
   console.log(hashTagList)
 
-  
-  // const editPost = (boardId) => {
-  //   if (title === '' || content === '') {
-  //     window.alert('제목 혹은 내용을 작성해주세요.')
-  //     return
-  //   }
-  //   const uploadFile = thumbNail ? fileInput.current.files[0] : ''
-
-  //   const editFormData = new FormData()
-
-  //   const postData = [{
-  //     title: title,
-  //     content: content,
-  //   }]
-
-  //   editFormData.append('thumbNail', uploadFile)
-  //   editFormData.append('boardUploadRequestDto', new Blob([JSON.stringify(postData)], { type: 'application/json' }))
-
-  //   history.push(`/post/detail/${boardId}`)
-  //   dispatch(postActions.editPostDB(boardId, {title:title, content:content}, editFormData))
-  // }
 
   const editPost = () => {
     if (title == '' || content == '') {
@@ -135,11 +114,11 @@ const PostEdit = (props) => {
     <>
       <Container>
         <PWHeader>
-          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle}/>
+          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={_post&&title} onChange={onChangeTitle}/>
         </PWHeader>
           <PWBody>
-          <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
-          <Preview src={thumbNail}></Preview>
+          <textarea value={_post&&content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
+          <Preview src={_post&&thumbNail}></Preview>
           <input type="file" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           <HashDivWrap className="hashWrap">
             <div className="hashWrapOutter"></div>

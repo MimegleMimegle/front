@@ -3,10 +3,11 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import ReactQuill from 'react-quill'
-
+import { MdOutlinePhotoSizeSelectActual } from "react-icons/md";
 import { actionCreators as postActions } from '../../redux/modules/post'
 import { actionCreators as imageActions } from '../../redux/modules/image'
 import HashTag from '../../components/HashTag'
+
 
 const PostWrite = (props) => {
   const history = useHistory()
@@ -85,9 +86,7 @@ const PostWrite = (props) => {
     }
 
     const uploadFile = thumbNail ? fileInput.current.files[0] : ''
-    const category = 'FREEBOARD'
-
-    dispatch(postActions.addPostDB(category, title, content, uploadFile, hashTagList))
+    dispatch(postActions.addPostDB(title, content, uploadFile, hashTagList))
   }
 
   return (
@@ -95,12 +94,12 @@ const PostWrite = (props) => {
       <Container>
         <PWHeader>
           <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
-          <hr/>
         </PWHeader>
         <PWBody>
-          <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
+          <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요." ></textarea>
           <Preview src={thumbNail}></Preview>
-          <input type="file" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
+          <MdOutlinePhotoSizeSelectActual size="25"/> 
+          <input type="file"multiple ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile}/> 
           <HashDivWrap className="hashWrap">
             <div className="hashWrapOutter"></div>
             <input className="hashInput" type="text" placeholder="해시태그를 입력해주세요 (#으로 구분, 최대5개)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
@@ -121,14 +120,16 @@ const Container = styled.div`
 `
 
 const PWHeader = styled.div`
-  
+    border-bottom: 0.5px solid lightgray;
+
   .writetitle {
     width: 100%;
     border: none;
+    font-size: 20px;
   }
   
   hr{
-    color: lightgray;
+    color: #E5E5E5;
   }
 
   
@@ -140,9 +141,9 @@ const PWBody = styled.div`
     margin: 0px 15px 10px 15px;
   }
   .writedesc {
-    width: 300px;
+    width: 100%;
     height: 200px;
-    border: 1px solid lightgray;
+    border: none;
     border-radius: 10px;
   }
 `
@@ -174,7 +175,8 @@ const HashDivWrap = styled.div`
   flex-wrap: wrap;
   letter-spacing: -0.6px;
   color: #444241;
-  border-bottom: 1.6px solid #767676;
+  border-top: 0.5px solid lightgray;
+  border-bottom: 1.6px solid black;
   padding: 2px 2px 8px 2px;
 
   .hashWrapOutter {
