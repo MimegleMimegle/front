@@ -8,7 +8,6 @@ const MobileFrame = ({ children }) => {
     <>
       <div className="WebFullFrame">
         <div className="MobileFullFrame">
-          <Header />
           <div className="Container">{children}</div>
         </div>
       </div>
