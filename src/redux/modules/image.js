@@ -24,18 +24,24 @@ const initialState = {
 }
 
 /* middleware */
-const getImageListDB = () => {
+const getImageListDB = (page) => {
   return async function (dispatch, getState, { history }) {
-    const category = 'IMAGEBOARD'
-    const page = 0
-    const size = 12
+    const size = 13
     await imageApi
-      .getImageList(category, page, size)
+      .getImageList(page, size)
       .then((response) => {
-        console.log(response.data)
+        let is_next = null
+        console.log(response.data.data)
+        if (response.data.data.length < 13) {
+          is_next = false
+        } else {
+          response.data.data.pop()
+          is_next = true
+        }
         const image_data = {
-          ...response.data,
-          page: page + 10,
+          image_list: response.data.data,
+          page: page + 1,
+          next: is_next,
         }
         dispatch(getImageList(image_data))
       })
@@ -120,8 +126,9 @@ export default handleActions(
   {
     [GET_IMAGE_LIST]: (state, action) =>
       produce(state, (draft) => {
-        draft.image_list.push(...action.payload.image_data.data)
+        draft.image_list.push(...action.payload.image_data.image_list)
         draft.page = action.payload.image_data.page
+        draft.has_next = action.payload.image_data.next
       }),
     [UPLOAD_IMAGE]: (state, action) =>
       produce(state, (draft) => {

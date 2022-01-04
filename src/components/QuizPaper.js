@@ -160,7 +160,7 @@ const QuizTitle = styled.div`
     line-height: 40px;
     font-size: 18px;
     font-weight: 700;
-    background-color: #faea59;
+    background-color: #ffe330;
   }
 
   .box-2 {
@@ -199,7 +199,7 @@ const QuizBox = styled.div`
 
   .clicked {
     transition: background-color 0.1s ease-in-out;
-    background-color: #faea59;
+    background-color: #ffe330;
   }
 `
 
@@ -221,7 +221,7 @@ const ButtonSection = styled.div`
       font-size: 18px;
       font-weight: 700;
       :disabled {
-        background-color: #ededed;
+        background-color: #e5e5e5;
         cursor: not-allowed;
         pointer-events: none;
       }

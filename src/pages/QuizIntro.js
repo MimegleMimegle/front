@@ -61,10 +61,9 @@ const QuizIntro = (props) => {
           <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </ImageSection>
         <SubjectSection>
-          <div style={{ padding: '20px 0 12px', fontSize: '18px', textAlign: 'center' }}>
-            어느 시대의 밈을
-            <br />
-            테스트하고 싶으신가요?
+          <div style={{ padding: '15px 0 10px', fontSize: '18px', textAlign: 'center' }}>
+            <p>어느 시대의 밈을</p>
+            <p>테스트하고 싶으신가요?</p>
           </div>
           <div>
             <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="y2000" onClick={handleChangeSubjectY2000}>
@@ -82,7 +81,7 @@ const QuizIntro = (props) => {
             </button>
           </div>
         </SubjectSection>
-        <div style={{ width: '100%', height: '16px' }}></div>
+        <div style={{ width: '100%', height: '10px' }}></div>
         <ButtonSection>
           <div className="start-button-box box1">
             <button className="start-button" onClick={handleStartQuiz}>
@@ -133,7 +132,7 @@ const SubjectSection = styled.div`
   }
   .selected {
     transition: background-color 0.3s ease-in-out;
-    background-color: #faea59;
+    background-color: #ffe330;
   }
 `
 

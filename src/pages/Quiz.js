@@ -15,7 +15,7 @@ const Quiz = (props) => {
 
 const Wrapper = styled.div`
   margin-left: 0px;
-  padding: 0 20px;
+  padding: 0 16px;
   width: 100%;
   height: 100%;
   display: flex;
