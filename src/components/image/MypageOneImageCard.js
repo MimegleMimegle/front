@@ -9,9 +9,8 @@ import { HiOutlineHeart } from 'react-icons/hi'
 import { IoCloseOutline } from 'react-icons/io5'
 
 const MyPageOneImageCard = ({ image }) => {
-  const tempImgUrl = 'https://image.idus.com/image/files/92e848f447904facb3fb7fcf5b3cdf6a_1080.jpg'
-
   const boardId = image && image.boardId
+  const createdDate = image && image.createdAt.split('T')[0]
 
   const [toggleMenu, setToggleMenu] = React.useState(false)
 
@@ -57,7 +56,7 @@ const MyPageOneImageCard = ({ image }) => {
             <span style={{ fontSize: '9px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
           </LikeSection>
           <DateSection>
-            <p style={{ fontSize: '9px', textAlign: 'right', paddingTop: '7px' }}>{image && image.createdAt}</p>
+            <p style={{ fontSize: '9px', textAlign: 'right', paddingTop: '7px' }}>{image && createdDate}</p>
           </DateSection>
         </div>
         {toggleMenu && (

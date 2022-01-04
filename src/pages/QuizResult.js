@@ -143,7 +143,7 @@ const QuizResultBox = styled.div`
   width: 100%;
   height: 100%;
   margin: 40px 0 0;
-  border: 1px solid #767676;
+  border: 1px solid #111;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,7 +202,7 @@ const ResultButtonContainer = styled.div`
     width: 135px;
     height: 40px;
     position: absolute;
-    border: 1px solid #767676;
+    border: 1px solid #111;
     border-radius: 20px;
     background-color: #fff;
     .resultButton {

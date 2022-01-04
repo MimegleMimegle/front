@@ -16,12 +16,15 @@ const ImageList = (props) => {
   const fileInput = useRef('')
 
   const [preview, setPreview] = useState(null)
-  const [bestImageList, setBestImageList] = useState([])
+  const [loading, setLoading] = useState(false)
   const [imageTotalLength, setImageTotalLength] = useState(0)
+  const [bestImageList, setBestImageList] = useState([])
 
   const image_data = useSelector((state) => state.image)
-  const image_list = image_data && image_data.image_list
-  const page = image_data && image_data.page
+
+  const getImageList = () => {
+    dispatch(imageActions.getImageListDB(image_data.page))
+  }
 
   const handleChangeFile = (e) => {
     setPreview(e.target.value)
@@ -38,11 +41,11 @@ const ImageList = (props) => {
     }
   }
 
-  /* 무한 스크롤 구현 끝나면 getImageListDB 파라미터에 page 정보 넘겨주기! */
   useEffect(() => {
-    if (image_list.length < 2) {
-      dispatch(imageActions.getImageListDB())
-    }
+    setLoading(true)
+    setTimeout(() => setLoading(false), 2000)
+    dispatch(imageActions.getImageListDB(0))
+
     imageApi
       .giveMeTotalLength()
       .then((response) => {
@@ -59,7 +62,7 @@ const ImageList = (props) => {
       .catch((error) => {
         console.log('명예의 전당 이미지 불러오기 문제 발생', error.response)
       })
-  }, [dispatch])
+  }, [])
 
   return (
     <>
@@ -86,10 +89,11 @@ const ImageList = (props) => {
           </div>
           <Container>
             <GeneralGridLayout>
-              {image_list.length > 0 &&
-                image_list.map((image) => {
+              <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
+                {image_data.image_list.map((image) => {
                   return <OneImageCard key={image.boardId} image={image} />
                 })}
+              </InfinityScroll>
             </GeneralGridLayout>
           </Container>
         </GeneralSection>

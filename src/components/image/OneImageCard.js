@@ -5,7 +5,6 @@ import { history } from '../../redux/ConfigureStore'
 
 import ShareBottomSheet from '../ShareBottomSheet'
 
-import { BsThreeDotsVertical } from 'react-icons/bs'
 import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
@@ -15,7 +14,7 @@ const OneImageCard = ({ image }) => {
   const [hover, setHover] = useState(false)
   const [toggleMenu, setToggleMenu] = useState(false)
   const [likeCount, setLikeCount] = useState(image.likeCnt)
-  const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState(image.like)
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false)
 
   const clickToggleMenu = (e) => {

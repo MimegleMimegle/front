@@ -24,6 +24,7 @@ const ImageDetail = (props) => {
   const [shareToggleMenu, setShareToggleMenu] = useState(false)
   const [threeDotsToggleMenu, setThreeDotsToggleMenu] = useState(false)
   const [profile, setProfile] = useState(null)
+  const [createdAt, setCreatedAt] = useState('')
 
   const handleShareToggleMenu = (e) => {
     e.preventDefault()
@@ -73,6 +74,8 @@ const ImageDetail = (props) => {
         setImageData(image_data)
         setLikeCount(image_data.likeCnt)
         setIsLiked(image_data.isLike)
+        const createdDate = image_data.createdAt.split('T')[0]
+        setCreatedAt(createdDate)
       })
       .catch((error) => {
         console.log('상세 이미지를 불러오는 데 문제가 발생했습니다.', error.response)
@@ -104,7 +107,7 @@ const ImageDetail = (props) => {
             <ProfileImage src={imageData.profileImageUrl} />
             <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'column' }}>
               <p style={{ cursor: 'pointer', fontSize: '14px', color: '#FFF' }}>{imageData.writer}</p>
-              <p style={{ fontSize: '9px', color: '#FFF' }}>{imageData.createdAt}</p>
+              <p style={{ fontSize: '9px', color: '#FFF' }}>{createdAt}</p>
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
