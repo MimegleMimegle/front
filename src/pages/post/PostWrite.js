@@ -85,9 +85,9 @@ const PostWrite = (props) => {
     }
 
     const uploadFile = thumbNail ? fileInput.current.files[0] : ''
-    const categoryName = 'imageboard'
+    const category = 'FREEBOARD'
 
-    dispatch(postActions.addPostDB(categoryName, title, content, uploadFile, hashTagList))
+    dispatch(postActions.addPostDB(category, title, content, uploadFile, hashTagList))
   }
 
   return (

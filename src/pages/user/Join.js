@@ -52,11 +52,11 @@ const Join = () => {
 
   // 닉네임 유효성 검사
   const onChangeNickname = (e) => {
-    const nicknameRegex = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/
+    const nicknameRegex = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/
     const nicknameCurrent = e.target.value
     setNickname(nicknameCurrent)
     if (!nicknameRegex.test(nicknameCurrent)) {
-      setNicknameMessage('영문+한글 조합으로 2~16자리가 맞는지 확인해주세요')
+      setNicknameMessage('영문+한글 조합으로 2~10자리가 맞는지 확인해주세요')
       setIsNickname(false)
     } else {
       setNicknameMessage('올바른 형식입니다')
@@ -166,7 +166,7 @@ const Join = () => {
                 className="JoinInputBox input1"
                 id="NicknameInput_Join"
                 maxLength="16"
-                placeholder="한글,영어 대소문자, 숫자 2~16자"
+                placeholder="한글,영어 대소문자, 숫자 2~10자"
                 text="이름"
                 type="text"
                 value={nickname}

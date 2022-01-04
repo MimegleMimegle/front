@@ -23,7 +23,7 @@ const Main = (props) => {
           lazy={true}
           centeredSlides={true}
           autoplay={{
-            delay: 2500,
+            delay: 3200,
             disableOnInteraction: false,
           }}
           pagination={{

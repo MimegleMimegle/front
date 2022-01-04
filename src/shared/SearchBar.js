@@ -28,12 +28,6 @@ function SearchBar({ onAddKeyword }) {
     setTotalCount(searchTotalLength.data.data)
   }
 
-  const closeNotFountModal = () => {
-    setTimeout(() => {
-      setNotFound(false)
-    }, 2000)
-  }
-
   const handleKeyword = (e) => {
     setKeyword(e.target.value)
   }
