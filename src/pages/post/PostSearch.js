@@ -87,7 +87,6 @@ const PostSearch = (props) => {
                   return <PostCard key={post.boardId} post={post} />
                 })
               : null}
-            <PostCard />
           </div>
         </div>
         {notFound && (

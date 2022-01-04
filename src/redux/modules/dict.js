@@ -130,10 +130,10 @@ const addDictDB = (title, summary, content) => {
   }
 }
 
-const editDictDB = (dictId, summary, content, recentWriter) => {
+const editDictDB = (dictId, summary, content) => {
   return function (dispatch, getState, { history }) {
     dictApi
-      .editDict(dictId, summary, content, recentWriter)
+      .editDict(dictId, summary, content)
       .then((res) => {
         swal('', '단어가 수정되었습니다.', 'success')
         history.push('/dict')
