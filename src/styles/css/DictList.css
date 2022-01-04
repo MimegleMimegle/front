@@ -111,30 +111,34 @@
   font-size: 9px;
   height: fit-content;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  margin: 0 0 0 120px;
 }
 
 .DictListCreatedAt {
   font-size: 9px;
   height: fit-content;
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
+  margin: 0 20px 0 0;
 }
 
 .DictListLikeButton {
   font-size: 8px;
+  width: fit-content;
   height: fit-content;
   display: flex;
-  align-items: flex-end;
-  margin-right: -55px;
-  margin-bottom: 1px;
+  align-items: flex-start;
+  margin: 0px 0px 3px 20px;
 }
 
 .DictListLikeCount {
   font-size: 12px;
+  width: fit-content;
   height: fit-content;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  margin: 0 0 0 -5px;
 }
 
 .rc-pagination {

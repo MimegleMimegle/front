@@ -158,20 +158,33 @@
   flex-direction: row;
   border-top: 0.5px solid rgb(209, 209, 209);
   border-bottom: 0.5px solid rgb(209, 209, 209);
-  padding: 20px;
   margin-top: 10px;
   height: fit-content;
 }
 
+.First {
+  border: none;
+  border-right: 1px solid rgb(209, 209, 209);
+  margin: 0px;
+  padding: 10px;
+}
+
+.Recent {
+  border: none;
+  margin: 0px;
+  padding: 10px;
+}
+
 .OneDictCardDetailInfoFirstWriterProfileImage {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border: none;
   border-radius: 50px;
   background-color: white;
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 5px;
+  align-self: center;
 }
 
 .OneDictCardDetailInfoFirstWriterCreatedAt {
@@ -181,6 +194,7 @@
   height: fit-content;
   word-wrap: break-word;
   word-break: keep-all;
+  align-self: center;
 }
 
 .OneDictCardDetailInfoFirstWriter {
@@ -189,26 +203,27 @@
 }
 
 .OneDictCardDetailInfoCreatedAt {
-  font-size: 14px;
+  font-size: 9px;
   font-weight: 500;
 }
 
 .OneDictCardDetailInfoWriterAndAtLine {
   width: 0.5px;
-  height: 70px;
+  height: 50px;
   border: 0.5px solid rgb(200, 200, 200);
   margin: 0px 10px 0 5px;
 }
 
 .OneDictCardDetailInfoRecentWriterProfileImage {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border: none;
   border-radius: 50px;
   background-color: white;
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 5px;
+  align-self: center;
 }
 
 .OneDictCardDetailInfoRecentWriterModifiedAt {
@@ -218,6 +233,7 @@
   height: fit-content;
   word-wrap: break-word;
   word-break: keep-all;
+  align-self: center;
 }
 
 .OneDictCardDetailInfoRecentWriter {
@@ -226,7 +242,7 @@
 }
 
 .OneDictCardDetailInfoModifiedAt {
-  font-size: 14px;
+  font-size: 9px;
   font-weight: 500;
 }
 
