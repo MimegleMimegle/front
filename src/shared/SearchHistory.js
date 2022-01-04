@@ -44,6 +44,7 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
 
 const HistoryContainer = styled.div`
   padding: 18px;
+  width: 300px;
 `
 const HeaderContainer = styled.div`
   overflow: hidden;
@@ -67,6 +68,7 @@ const RemoveText = styled.span`
 
 const ListContainer = styled.ul`
   margin: 10px 0;
+  border: 1px solid red;
 `
 
 //&는 자기 자신을 나타냄
@@ -81,8 +83,7 @@ const KeywordContainer = styled.li`
 
 const RemoveButton = styled.button`
   float: right;
-  color: #0cde8b;
-  border: 1px solid #0cde8b;
+  color: #a7a7a7;
   padding: 3px 5px;
   border-radius: 15px;
 `

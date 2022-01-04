@@ -44,6 +44,10 @@ const DictDetail = (props) => {
   //   history.push(`/dict/history/${dictId}`)
   // }
 
+  // let createdAt = dict.createdAt.split('T', 1)
+
+  // let modifiedAt = dict.modifiedAt.split('T', 1)
+
   return (
     <>
       <div className="OneDictCardDetailPageLayout">
@@ -79,16 +83,19 @@ const DictDetail = (props) => {
             </div>
           </div>
           <div className="OneDictCardDetailInfoWriterAndAt">
-            <img className="OneDictCardDetailInfoFirstWriterProfileImage" src={dict.firstWriterProfileImage} />
-            <div className="OneDictCardDetailInfoFirstWriterCreatedAt">
-              <div className="OneDictCardDetailInfoFirstWriter">{dict.firstWriter}(최초 작성자)</div>
-              <div className="OneDictCardDetailInfoCreatedAt">{dict.createdAt}</div>
+            <div className="OneDictCardDetailInfoWriterAndAt First">
+              <img className="OneDictCardDetailInfoFirstWriterProfileImage" src={dict.firstWriterProfileImage} />
+              <div className="OneDictCardDetailInfoFirstWriterCreatedAt">
+                <div className="OneDictCardDetailInfoFirstWriter">{dict.firstWriter}</div>
+                <div className="OneDictCardDetailInfoCreatedAt">(최초 작성자) {dict.createdAt}</div>
+              </div>
             </div>
-            <div className="OneDictCardDetailInfoWriterAndAtLine" />
-            <img className="OneDictCardDetailInfoRecentWriterProfileImage" src={dict.recentWriterProfileImage} />
-            <div className="OneDictCardDetailInfoRecentWriterModifiedAt">
-              <div className="OneDictCardDetailInfoRecentWriter">{dict.recentWriter}(최근 작성자)</div>
-              <div className="OneDictCardDetailInfoModifiedAt">{dict.modifiedAt}</div>
+            <div className="OneDictCardDetailInfoWriterAndAt Recent">
+              <img className="OneDictCardDetailInfoRecentWriterProfileImage" src={dict.recentWriterProfileImage} />
+              <div className="OneDictCardDetailInfoRecentWriterModifiedAt">
+                <div className="OneDictCardDetailInfoRecentWriter">{dict.recentWriter}</div>
+                <div className="OneDictCardDetailInfoModifiedAt">(최근 작성자) {dict.modifiedAt}</div>
+              </div>
             </div>
           </div>
           <div className="OneDictCardDetailInfoModifiedGuideText">다른 유저들이 이전에 작성한 내용을 확인하거나 직접 편집 할 수 있어요!</div>
