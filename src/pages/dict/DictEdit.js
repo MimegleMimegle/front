@@ -41,19 +41,24 @@ const DictEdit = (props) => {
   }
   console.log(recentWriter)
   const editDict = () => {
-    if (summary === '' || content === '') {
-      swal('빈칸을 모두 입력해주세요!')
-      return
-    } else {
-      setRecentWriter(newRecentWriter)
-      swal({
-        buttons: {
-          cancel: false,
-          confirm: true,
-        },
-      })
-      dispatch(dictActions.editDictDB(dictId, summary, content, recentWriter))
-    }
+    swal({
+      title: '작성하신 내용을 게시하시겠어요?',
+      buttons: {
+        cancel: true,
+        confirm: true,
+      },
+    }).then((editDict) => {
+      if (editDict) {
+        setRecentWriter(newRecentWriter)
+        dispatch(dictActions.editDictDB(dictId, summary, content, recentWriter))
+        swal('밈 단어 편집이 완료되었습니다.', {
+          icon: 'success',
+        })
+      } else if (summary === '' || content === '') {
+        swal('변경사항이 없습니다.')
+        return
+      }
+    })
   }
 
   const allClearKeyword = () => {
@@ -99,7 +104,7 @@ const DictEdit = (props) => {
         </div>
         <div className="DictCardEditTemporaryOrSubmitButton">
           <div className="DictCardEditTemporaryButton" onClick={allClearKeyword}>
-            <div className="DictCardEditTemporaryButton_1">삭제</div>
+            <div className="DictCardEditTemporaryButton_1">초기화</div>
             <div className="DictCardEditTemporaryButton_2"></div>
           </div>
           <div className="DictCardEditSubmitButton" type="submit" onClick={editDict}>
