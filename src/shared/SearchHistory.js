@@ -7,8 +7,6 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
     return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>
   }
 
-  // const recommendKeyword = dispatch()
-
   return (
     <HistoryContainer>
       <HeaderContainer>
@@ -32,19 +30,14 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
             </KeywordContainer>
           )
         })}
-        {/* <hr />
-        <RecommendKeyWordSection>
-          <RecommendKeyWordTitle>추천 검색어</RecommendKeyWordTitle>
-          <RecommendKeyWordList>ㅈㅂㅈㅇ</RecommendKeyWordList>
-        </RecommendKeyWordSection> */}
       </ListContainer>
     </HistoryContainer>
   )
 }
 
 const HistoryContainer = styled.div`
-  padding: 18px;
-  width: 300px;
+  padding: 0 50px 10px 50px;
+  width: 100%;
 `
 const HeaderContainer = styled.div`
   overflow: hidden;
@@ -68,7 +61,6 @@ const RemoveText = styled.span`
 
 const ListContainer = styled.ul`
   margin: 10px 0;
-  border: 1px solid red;
 `
 
 //&는 자기 자신을 나타냄
