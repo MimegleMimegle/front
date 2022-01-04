@@ -18,7 +18,7 @@ const PostEdit = (props) => {
   const is_edit= post_id? true: false
 
   const _post = is_edit? post_list.find((p)=>p.username === username) : null;
-
+  console.log(_post)
   useEffect(()=> {
     if(!_post){
       console.log('포스트 정보가 없어요!');
@@ -33,7 +33,7 @@ const PostEdit = (props) => {
   const fileInput = React.useRef('')
   
 
-  const [title, setTitle] = useState(_post.title)
+  const [title, setTitle] = useState('')
   const [content, setContent] = useState(_post.content)
   const [thumbNail, setThumbNail] = useState(_post.thumbNail)
   const [hashTag, setHashTag] = useState(_post.thumbNail)
