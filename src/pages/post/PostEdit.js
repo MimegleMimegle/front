@@ -18,19 +18,8 @@ const PostEdit = (props) => {
   const post_id = props.match.params.boardId
   const is_edit = post_id ? true : false
 
-  const _post = is_edit ? post_list.find((p) => p.username === username) : null
-  console.log(_post)
-  useEffect(() => {
-    if (!_post) {
-      console.log('포스트 정보가 없어요!')
-      history.goBack()
-
-      return
-    }
-  }, [])
-
-  const fileInput = React.useRef('')
-
+  const _post = is_edit? post_list.find((p)=>p.username === username) : null;
+ 
   const [title, setTitle] = useState(_post.title)
   const [content, setContent] = useState(_post.content)
   const [thumbNail, setThumbNail] = useState(_post.thumbNail)
@@ -91,9 +80,9 @@ const PostEdit = (props) => {
       }
     }
   }
-  console.log(title)
-  console.log(content)
-  console.log(hashTagList)
+  // console.log(title)
+  // console.log(content)
+  // console.log(hashTagList)
 
   const editPost = () => {
     if (title == '' || content == '') {
@@ -103,6 +92,19 @@ const PostEdit = (props) => {
       dispatch(postActions.editPostDB(post_id, hashTagList, title, content))
     }
   }
+
+  console.log(_post)
+  useEffect(()=> {
+    if(!_post){
+      console.log('포스트 정보가 없어요!');
+      history.goBack();
+
+      return;
+    }
+    }, []); 
+
+
+  const fileInput = React.useRef('')
 
   return (
     <>
