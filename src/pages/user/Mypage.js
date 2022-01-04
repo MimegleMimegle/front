@@ -9,6 +9,7 @@ import '../../styles/css/Mypage.css'
 import EditProfile from '../../components/mypage/EditProfile'
 import PostCard from '../../components/PostCard'
 import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
+import OneDictionaryCard from '../../components/OneDictionaryCard'
 
 import { AiOutlineEdit } from 'react-icons/ai'
 
@@ -24,7 +25,7 @@ const Mypage = (props) => {
   const myMemeDictList = my && my.dict
   const myMemePostList = my && my.postBoards.filter((post) => post.category === 'FREEBOARD')
   const myMemeImageList = my && my.postBoards.filter((post) => post.category === 'IMAGEBOARD')
-  console.log(myMemeImageList)
+  console.log(myMemeDictList)
 
   const openEditProfile = () => {
     setShowModal(true)
@@ -97,7 +98,11 @@ const Mypage = (props) => {
         </Filter>
         <UserActivity>
           {/* Dictionary */}
-          {showDictionary && <div>내가 등록한 단어</div>}
+          {showDictionary && myMemeDictList !== null
+            ? myMemeDictList.map((dict) => {
+                return <OneDictionaryCard key={dict.dictId} dict={dict} />
+              })
+            : null}
           {/* Board */}
           {showBoard && myMemePostList.length > 0
             ? myMemePostList.map((post) => {
@@ -158,7 +163,7 @@ const UserProfile = styled.div`
     }
 
     .user-activity-info {
-      padding: 0 20px;
+      padding: 5px 20px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -167,6 +172,7 @@ const UserProfile = styled.div`
         font-size: 16px;
       }
       .user-activity-info-count {
+        padding-top: 2px;
         font-size: 14px;
       }
     }
@@ -182,7 +188,7 @@ const UserProfile = styled.div`
     left: 60%;
     transform: translateX(-60%);
     top: 7px;
-    background-color: #fff27b;
+    background-color: #ffe330;
   }
 `
 
@@ -207,16 +213,18 @@ const Filter = styled.div`
   padding: 40px 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  border-bottom: 1px solid #c4c4c4;
+  border-bottom: 1px solid #e5e5e5;
 
   .filter-button {
     font-size: 16px;
-    padding: 0;
+    color: #878c92;
+    padding: 0 0 10px;
     border-bottom: 2px solid transparent;
   }
   .filter-button-active {
     transition: all 0.2s ease-in-out;
-    border-bottom: 2px solid #c4c4c4;
+    border-bottom: 2px solid #111;
+    color: #111;
   }
 `
 

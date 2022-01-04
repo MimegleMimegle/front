@@ -48,11 +48,10 @@ export const boardApi = {
   recommendHashTag: () => instance.get('/api/board/hashTag'),
   searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
   totalLength: () => instance.get('api/board/count/FREEBOARD')
-
 }
 
 export const dictApi = {
-  getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  getDictMain: (pageSize, currentPage) => instance.get(`http://52.78.155.185/api/dict?page=${(currentPage - 1)}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
   getTodayDict: () => instance.get(`/api/bestDict/dict`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
@@ -78,7 +77,6 @@ export const mainApi = {
 
 /* 추가 */
 export const commentApi = {
-  /* writeComment -> addComment 로 수정 */
   addComment: (boardId, comment) => instance.post(`/api/board/${boardId}/comment`, { content: comment }),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),
   deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
@@ -94,6 +92,6 @@ export const imageApi = {
   getImageDetail: (boardId) => instance.get(`/api/board/${boardId}`),
   uploadImage: (category, imageData) => instance.post(`/api/board/${category}`, imageData),
   deleteImage: (boardId) => instance.delete(`/api/board/${boardId}`),
-  giveMeTotalLength: (category) => instance.get(`/api/count/board/${category}`),
-  getPopularImageList: (category) => instance.get(`api/board/${category}/best`),
+  giveMeTotalLength: () => instance.get(`/api/board/count/IMAGEBOARD`),
+  getBestImageList: () => instance.get(`api/board/IMAGEBOARD/best`),
 }

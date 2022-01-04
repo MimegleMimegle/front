@@ -30,7 +30,7 @@ const PostList = (props) => {
   console.log(totalCount)
 
   const getPostListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/board/list/FREEBOARD?page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
+    let response = await axios.get(`http://52.78.155.185/api/board/list/FREEBOARD?page=${(currentPage - 1)}&size=${pageSize}`)
     let totalLength = await boardApi.totalLength()
     console.log(response)
     console.log(totalLength) 

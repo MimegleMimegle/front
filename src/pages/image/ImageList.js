@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
+import { imageApi } from '../../shared/api'
 
 import InfinityScroll from '../../shared/InfinityScroll'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
 import PopularOneImageCard from '../../components/image/PopularOneImageCard'
 
-import image, { actionCreators as imageActions } from '../../redux/modules/image'
+import { actionCreators as imageActions } from '../../redux/modules/image'
 
 const ImageList = (props) => {
   const dispatch = useDispatch()
 
-  const fileInput = React.useRef('')
+  const fileInput = useRef('')
 
-  const [preview, setPreview] = React.useState(null)
+  const [preview, setPreview] = useState(null)
+  const [bestImageList, setBestImageList] = useState([])
+  const [imageTotalLength, setImageTotalLength] = useState(0)
 
   const image_data = useSelector((state) => state.image)
   const image_list = image_data && image_data.image_list
@@ -36,10 +39,26 @@ const ImageList = (props) => {
   }
 
   /* 무한 스크롤 구현 끝나면 getImageListDB 파라미터에 page 정보 넘겨주기! */
-  React.useEffect(() => {
+  useEffect(() => {
     if (image_list.length < 2) {
       dispatch(imageActions.getImageListDB())
     }
+    imageApi
+      .giveMeTotalLength()
+      .then((response) => {
+        setImageTotalLength(response.data.data)
+      })
+      .catch((error) => {
+        console.log('이미지 총 개수 불러오기 문제 발생', error.response)
+      })
+    imageApi
+      .getBestImageList()
+      .then((response) => {
+        setBestImageList(response.data.data)
+      })
+      .catch((error) => {
+        console.log('명예의 전당 이미지 불러오기 문제 발생', error.response)
+      })
   }, [dispatch])
 
   return (
@@ -54,9 +73,10 @@ const ImageList = (props) => {
           </div>
           <Container>
             <PopularGridLayout>
-              <PopularOneImageCard />
-              <PopularOneImageCard />
-              <PopularOneImageCard />
+              {bestImageList.length > 0 &&
+                bestImageList.map((image) => {
+                  return <OneImageCard key={image.boardId} image={image} />
+                })}
             </PopularGridLayout>
           </Container>
         </PopularSection>

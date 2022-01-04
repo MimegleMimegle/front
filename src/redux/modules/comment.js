@@ -121,9 +121,9 @@ export default handleActions(
       }),
     [DEL_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        let idx = draft.comment_list[action.payload.boardId].findIndex((c) => c.commentId === action.payload.commentId)
-        draft.comment_list[action.payload.boardId].splice(idx, 1)
-        // draft.comment_list[action.payload.boardId].filter((c) => c.commentId !== action.payload.commentId)
+        // let idx = draft.comment_list[action.payload.boardId].findIndex((c) => c.commentId === action.payload.commentId)
+        // draft.comment_list[action.payload.boardId].splice(idx, 1)
+        draft.comment_list[action.payload.boardId].filter((c) => c.commentId !== action.payload.commentId)
       }),
   },
   initialState

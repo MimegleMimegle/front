@@ -71,7 +71,7 @@ const DictWrite = (props) => {
         </div>
         <div className="DictCardTemporaryOrSubmitButton">
           <div className="DictCardTemporaryButton" onClick={allClearKeyword}>
-            <div className="DictCardTemporaryButton_1">삭제</div>
+            <div className="DictCardTemporaryButton_1">초기화</div>
             <div className="DictCardTemporaryButton_2"></div>
           </div>
           <div className="DictCardSubmitButton" type="submit" onClick={addDict}>
