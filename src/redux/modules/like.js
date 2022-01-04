@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 import { likeApi } from '../../shared/api'
+import swal from 'sweetalert'
 
 const SET_LIKE_DICT = 'SET_LIKE_DICT'
 const ADD_LIKE_DICT = 'ADD_LIKE_DICT'
@@ -37,28 +38,44 @@ const changeLikeDictDB = (dictId) => {
         console.log(like_data)
         // 리덕스 상태 업데이트
         dispatch(setLikeDict(like_data))
+        swal('좋아요를 눌렀습니다', { timer: 2000 })
       })
       .catch((error) => {
         console.log(error)
+        swal('좋아요가 제대로 반영되지 않았어요', { timer: 2000 })
       })
   }
 }
 
-const changeLikeBoardDB = (boardId, result) => {
+// const changeLikeBoardDB = (boardId, result) => {
+//   return function (dispatch, getState, { history }) {
+//     likeApi
+//       .likeBoard(boardId)
+//       .then((response) => {
+//         let like_data = []
+//         for (let i = 0; i < response.data.post_list.length; i++) {
+//           console.log(response)
+//           like_data.push({
+//             post_id: response.data.post_list[i].post_Id,
+//             like_user: response.data.post_list[i].like_user,
+//             like_count: response.data.post_list[i].like_count,
+//           })
+//         }
+//         dispatch(setLikeBoard(like_data))
+//       })
+//       .catch((error) => {
+//         console.log(error)
+//       })
+//   }
+// }
+
+const changeLikeBoardDB = (boardId, liked) => {
   return function (dispatch, getState, { history }) {
-    likeApi
+      likeApi
       .likeBoard(boardId)
       .then((response) => {
-        let like_data = []
-        for (let i = 0; i < response.data.post_list.length; i++) {
-          console.log(response)
-          like_data.push({
-            post_id: response.data.post_list[i].post_Id,
-            like_user: response.data.post_list[i].like_user,
-            like_count: response.data.post_list[i].like_count,
-          })
-        }
-        dispatch(setLikeBoard(like_data))
+       const likeStatus = response.data.result;
+        dispatch(setLikeBoard(likeStatus))
       })
       .catch((error) => {
         console.log(error)
@@ -83,6 +100,7 @@ export default handleActions(
       }),
     [ADD_LIKE_BOARD]: (state, action) =>
       produce(state, (draft) => {
+        console.log("여기가 action", action.payload.result);
         draft.like = action.payload.result
       }),
   },

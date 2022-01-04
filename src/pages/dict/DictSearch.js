@@ -12,15 +12,34 @@ import { dictApi } from '../../shared/api'
 const DictSearch = (props) => {
   const dispatch = useDispatch()
 
+  const keyword = props
+
+  const [result, setResult] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
+  React.useEffect(() => {
+    searchDictDB()
+  }, [currentPage])
+
+  console.log(result)
+  console.log(totalCount)
+
+  const searchDictDB = async () => {
+    let response = await axios.get(`/api/dict/search?q=${keyword}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
+    let totalLength = await dictApi.tellMeTotalLength()
+    console.log(response)
+    console.log(totalLength)
+    setResult(response.data.data)
+    setTotalCount(totalLength.data.data)
+  }
+
   return (
     <>
-      <div className="DictLayout">
+      <div className="DictSearchPageLayout">
         <SearchPage />
-        <div className="DictList"></div>
+        <div className="DictSearchListSection"></div>
         <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
       </div>
     </>

@@ -22,56 +22,90 @@ const DictEdit = (props) => {
   }, [])
 
   const dictId = Number(props.match.params.dictId)
+  const newRecentWriter = window.localStorage.getItem('nickname')
 
   console.log(dict)
   console.log(dictId)
+  console.log(newRecentWriter)
 
   const [summary, setSummary] = React.useState('')
   const [content, setContent] = React.useState('')
+  const [recentWriter, setRecentWriter] = React.useState('')
 
   const onChangeSummary = (e) => {
     setSummary(e.target.value)
   }
 
-  console.log(summary)
-
   const onChangeContent = (e) => {
     setContent(e.target.value)
   }
-
-  console.log(content)
-
+  console.log(recentWriter)
   const editDict = () => {
     if (summary === '' || content === '') {
       swal('빈칸을 모두 입력해주세요!')
       return
+    } else {
+      setRecentWriter(newRecentWriter)
+      swal({
+        buttons: {
+          cancel: false,
+          confirm: true,
+        },
+      })
+      dispatch(dictActions.editDictDB(dictId, summary, content, recentWriter))
     }
-    dispatch(dictActions.editDictDB(dictId, summary, content))
+  }
+
+  const allClearKeyword = () => {
+    swal({
+      title: '초기화를 하시면 작성하신 모든 내용이 사라집니다.',
+      text: '그래도 초기화 하시겠습니까?',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((allClearKeyword) => {
+      if (allClearKeyword) {
+        swal('작성하신 모든 내용이 초기화되었습니다.', {
+          icon: 'success',
+        })
+        setSummary('')
+        setContent('')
+      } else {
+        swal('초기화가 취소되었습니다.')
+      }
+    })
   }
 
   return (
     <>
-      <div className="DictCardEditLayout">
-        <div className="DictCardEditPreviewSection">
-          <div className="DictCardEditPreview">
-            <div className="DictCardEditPreviewTitle">단어 : {dict.title}</div>
-            <div className="DictCardEditPreviewSummary">요약 : {dict.summary}</div>
-            <div className="DictCardEditPreviewContent">설명 : {dict.meaning}</div>
+      <div className="DictCardEditPageLayout">
+        <div className="DictCardEditInputSection">
+          <div className="DictCardEditInputTitleContainer">
+            <div className="DictCardEditInputTitleGuideText">단어</div>
+            <div className="DictCardEditInputTitle">{dict.title}</div>
+          </div>
+          <div className="DictCardEditInputSummaryContainer">
+            <div className="DictCardEditInputSummaryGuideText">한줄설명</div>
+            <textarea className="DictCardEditInputSummary" type="text" cols="40" rows="3" value={summary} onChange={onChangeSummary} placeholder={dict.summary}>
+              {dict.summary}
+            </textarea>
+          </div>
+          <div className="DictCardEditInputContentContainer">
+            <div className="DictCardEditInputContentGuideText">부가설명</div>
+            <textarea className="DictCardEditInputContent" type="text" cols="40" rows="5" value={content} onChange={onChangeContent} placeholder={dict.meaning}>
+              {dict.meaning}
+            </textarea>
           </div>
         </div>
-        <div className="DictCardEditInputSection">
-          <p>한줄 요약</p>
-          <input className="DictCardEditInputSummary" type="text" value={summary} onChange={onChangeSummary} placeholder="한줄 요약을 입력하세요" />
-          <br></br>
-          <p>설명</p>
-          <input className="DictCardEditInputContent" type="text" value={content} onChange={onChangeContent} placeholder="설명을 입력하세요" />
-          <br></br>
-        </div>
-        <div className="DictCardEditSubmitSection">
-          <button className="DictCardEditSubmitButton1" type="submit" onClick={editDict}>
-            단어 수정하기
-          </button>
-          <button className="DictCardEditSubmitButton2"></button>
+        <div className="DictCardEditTemporaryOrSubmitButton">
+          <div className="DictCardEditTemporaryButton" onClick={allClearKeyword}>
+            <div className="DictCardEditTemporaryButton_1">삭제</div>
+            <div className="DictCardEditTemporaryButton_2"></div>
+          </div>
+          <div className="DictCardEditSubmitButton" type="submit" onClick={editDict}>
+            <div className="DictCardEditSubmitButton_1">편집</div>
+            <div className="DictCardEditSubmitButton_2"></div>
+          </div>
         </div>
       </div>
     </>

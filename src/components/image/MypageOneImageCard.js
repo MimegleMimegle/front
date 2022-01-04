@@ -36,7 +36,11 @@ const MyPageOneImageCard = ({ image }) => {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper
+        onClick={() => {
+          history.push(`/image/detail/${image.boardId}`)
+        }}
+      >
         <div className="container">
           <ImageSection>
             <Image src={image && image.thumbNail} />

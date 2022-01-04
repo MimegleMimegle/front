@@ -42,7 +42,7 @@ const ImageDetail = (props) => {
     e.stopPropagation()
     if (isLiked) {
       await likeApi
-        .likePost(boardId)
+        .likeBoard(boardId)
         .then((response) => {
           console.log(response.data)
           setIsLiked(false)
@@ -53,7 +53,7 @@ const ImageDetail = (props) => {
         })
     } else {
       await likeApi
-        .likePost(boardId)
+        .likeBoard(boardId)
         .then((response) => {
           console.log(response.data)
           setIsLiked(true)
