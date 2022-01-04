@@ -1,24 +1,63 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-
+import { likeApi } from '../../shared/api'
 import { history } from '../../redux/ConfigureStore'
 
+import ShareBottomSheet from '../ShareBottomSheet'
+
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
 import { IoCloseOutline } from 'react-icons/io5'
 
 const OneImageCard = ({ image }) => {
-  const tempImgUrl = 'https://image.idus.com/image/files/92e848f447904facb3fb7fcf5b3cdf6a_1080.jpg'
-
-  const [hover, setHover] = React.useState(false)
-  const [toggleMenu, setToggleMenu] = React.useState(false)
+  const [hover, setHover] = useState(false)
+  const [toggleMenu, setToggleMenu] = useState(false)
+  const [likeCount, setLikeCount] = useState(image.likeCnt)
+  const [isLiked, setIsLiked] = useState(false)
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false)
 
   const clickToggleMenu = (e) => {
     e.preventDefault()
     e.stopPropagation()
     setToggleMenu(!toggleMenu)
   }
+
+  const handleBottomSheetVisible = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setBottomSheetVisible(true)
+  }
+
+  const handleClickLike = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isLiked) {
+      await likeApi
+        .likeBoard(image.boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(false)
+          setLikeCount(likeCount - 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 취소 문제 발생', error.response)
+        })
+    } else {
+      await likeApi
+        .likeBoard(image.boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(true)
+          setLikeCount(likeCount + 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 문제 발생', error.response)
+        })
+    }
+  }
+
   return (
     <>
       <ImageBox
@@ -36,13 +75,18 @@ const OneImageCard = ({ image }) => {
         <ImageThumbnail src={image && image.thumbNail}></ImageThumbnail>
         {hover && (
           <Overlay>
-            <div style={{ width: '100%', height: '100%', padding: '5px 0 5px 2px', display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
-              <button style={{ color: '#FFF', zIndex: '1000' }}>
-                <HiOutlineHeart fontSize="20px" />
-              </button>
-              <button style={{ color: '#FFF', zIndex: '1000' }} onClick={clickToggleMenu}>
-                <BsThreeDotsVertical fontSize="20px" />
-              </button>
+            <div style={{ width: '100%', height: '100%', padding: '5px 0 5px 2px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between' }}>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
+                <button style={{ color: '#FFF', zIndex: '1000' }} onClick={handleBottomSheetVisible}>
+                  <MdShare fontSize="20px" />
+                </button>
+              </div>
+              <div style={{ display: 'flex' }}>
+                <button style={{ color: '#FFF', zIndex: '1000' }}>
+                  {isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}
+                </button>
+                <span style={{ color: '#FFF' }}>{likeCount}</span>
+              </div>
             </div>
           </Overlay>
         )}
@@ -59,6 +103,7 @@ const OneImageCard = ({ image }) => {
           </Menu>
         )}
       </ImageBox>
+      {bottomSheetVisible && <ShareBottomSheet bottomSheetVisible={bottomSheetVisible} setBottomSheetVisible={setBottomSheetVisible} />}
     </>
   )
 }
@@ -84,7 +129,7 @@ const Overlay = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
   transition: all 0.3s ease-in-out;
 `

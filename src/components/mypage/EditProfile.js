@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-
 import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
 import ModalWrapper from '../../components/ModalWrapper'
+
+import { IoCloseOutline } from 'react-icons/io5'
+import { MdPhotoCamera } from 'react-icons/md'
 
 const EditProfile = ({ setShowModal, my }) => {
   const dispatch = useDispatch()
@@ -35,7 +37,7 @@ const EditProfile = ({ setShowModal, my }) => {
   }
 
   const handleChangeNickname = (e) => {
-    const nicknameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/
+    const nicknameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/
     const currentNickname = e.target.value
     setNickname(currentNickname)
     if (!nicknameRegExp.test(currentNickname)) {
@@ -68,7 +70,7 @@ const EditProfile = ({ setShowModal, my }) => {
       const uploadFile = fileInput.current.files[0]
       dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
     }
-    if (nickname && isNickname && isNicknameChecked) {
+    if (nickname !== '' && isNickname && isNicknameChecked) {
       dispatch(mypageActions.editNicknameDB(userId, nickname))
     } else {
       window.alert('닉네임을 확인해주세요!')
@@ -85,28 +87,38 @@ const EditProfile = ({ setShowModal, my }) => {
       <ModalWrapper visible={true}>
         <ModalContainer>
           <ModalBody>
-            <div>
-              <ProfileImagePreview src={imageFile ? imageFile : my.profileImageUrl} />
+            <div style={{ width: '100%', padding: '10px 14px 0 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <button
+                onClick={() => {
+                  setShowModal(false)
+                }}
+              >
+                <IoCloseOutline style={{ fontSize: '24px' }} />
+              </button>
+              <button className="submit-button" onClick={_editProfile}>
+                완료
+              </button>
             </div>
-            <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg, image/png" />
-            <div>
-              <input type="text" onChange={handleChangeNickname} />
-              <button onClick={checkNickname}>중복확인</button>
+            <ProfileImagePreview src={imageFile ? imageFile : my.profileImageUrl} />
+            <div className="file">
+              <label for="file" className="upload-label">
+                <MdPhotoCamera style={{ fontSize: '20px', marginTop: '4px' }} />
+              </label>
+              <input type="file" id="file" className="upload-file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg, image/png" />
+            </div>
+            <div style={{ padding: '20px 0 0' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <input type="text" className="input-nickname" onChange={handleChangeNickname} />
+                <button onClick={checkNickname} style={{ marginLeft: '12px', fontSize: '9px', fontWeight: '700', textDecoration: 'underline' }}>
+                  중복확인
+                </button>
+              </div>
+              <div style={{ padding: '10px 0' }}>
+                <p style={{ fontSize: '12px' }}>10자 이하로 입력해주세요.</p>
+                <p style={{ fontSize: '12px', color: '#878C92' }}>(한글, 영어, 대소문자, 숫자 사용 가능)</p>
+              </div>
             </div>
           </ModalBody>
-          <ModalFooter>
-            <button
-              className="btn cancel-btn"
-              onClick={() => {
-                setShowModal(false)
-              }}
-            >
-              취소
-            </button>
-            <button className="btn upload-btn" onClick={_editProfile}>
-              프로필 변경
-            </button>
-          </ModalFooter>
         </ModalContainer>
       </ModalWrapper>
     </>
@@ -114,58 +126,85 @@ const EditProfile = ({ setShowModal, my }) => {
 }
 
 const ModalContainer = styled.div`
-  width: 70%;
-  height: 300px;
+  width: 330px;
+  height: 170px;
+  border: 1px solid #111;
   background-color: #fff;
   /* border-radius: 10px; */
   position: absolute;
-  top: 50%;
+  top: 26%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -26%);
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 
 const ModalBody = styled.div`
+  position: relative;
   width: 100%;
-  height: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .submit-button {
+    font-size: 14px;
+    color: #878c92;
+    transition: color 0.3s ease-in-out;
+    &:hover {
+      color: #00a0ff;
+    }
+  }
+  .file {
+    .upload-label {
+      display: inline-block;
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      top: 15px;
+      left: 60%;
+      transform: translateX(-60%);
+      overflow: hidden;
+      border: 1px solid #111;
+      border-radius: 20px;
+      background-color: #fff;
+      text-align: center;
+      cursor: pointer;
+    }
+    .upload-file {
+      position: absolute;
+      overflow: hidden;
+      padding: 0;
+      margin: -1px;
+      width: 1px;
+      height: 1px;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+  }
+  .input-nickname {
+    border: 1px solid #878c92;
+    transition: all 0.3s ease-in-out;
+    border-radius: 2px;
+    &:focus {
+      border: 1px solid #111;
+    }
+  }
 `
 
 const ProfileImagePreview = styled.div`
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 80px;
   height: 80px;
-  /* border: 1px solid #111; */
+  border: 1px solid #111;
   border-radius: 40px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
   background-color: #fff;
-`
-
-const ModalFooter = styled.div`
-  width: 100%;
-  height: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .btn {
-    height: 100%;
-  }
-
-  .cancel-btn {
-    width: 35%;
-    background-color: #e8e8e8;
-  }
-  .upload-btn {
-    width: 65%;
-    background-color: #faea59;
-  }
 `
 
 export default EditProfile

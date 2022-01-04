@@ -27,6 +27,7 @@ const ModalOverlay = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 9999;
+  transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
 `
 
 const Wrapper = styled.div`
