@@ -14,12 +14,13 @@ import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { getCookie } from '../../shared/cookie'
 import CommentTest from '../CommentTest'
+import { fontSize } from '@mui/system'
+import {IoIosArrowBack} from 'react-icons/io'
 
 const PostDetail = (props) => {
   const dispatch = useDispatch()
 
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
-  console.log(username)
 
   const [post, setPost] = useState([])
   const [likeCount, setLikeCount] = useState(0)
@@ -79,52 +80,43 @@ const PostDetail = (props) => {
   return (
     <>
       <Container>
-        {/* {username === post.writer ? (
-          <>
-            <button
-              onClick={() => {
-                history.push(`/post/edit/${boardId}`)
-              }}
-            >
-              수정
-            </button>
-            <button onClick={del}>삭제</button>{' '}
-          </>
-        ) : null} */}
-
+        <div style={{margin:"0px 10px"}}>
+          <IoIosArrowBack size="20" cursor="pointer"/>
+        </div>
         <Profile>
           <UserInfo>
           <UserProfile src={post.profileImageUrl} alt="" />
           <div>
-            <div>{post.writer}</div>
+            <div >{post.writer}</div>
             <div>{post.createdAt}</div>
           </div>
           </UserInfo>
-          <div  onClick={clickToggleModalChang} ><BsThreeDotsVertical size="25" style ={{margin:"20px", cursor:"pointer"}}/></div>
-          {toggleModalChang && (
-          <ModalChang>
-            <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ padding: '0', height: '100%' }} onClick={clickToggleModalChang}>
-              <IoCloseOutline style={{ fontSize: '18px' }} />
+          {username === post.username ?
+            <div  onClick={clickToggleModalChang} ><BsThreeDotsVertical size="25" style ={{margin:"20px", cursor:"pointer"}}/></div> : null }
+            {toggleModalChang && (
+              <ModalChang>
+                <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+                  <button style={{ padding: '0', height: '100%' }} onClick={clickToggleModalChang}>
+                  <IoCloseOutline style={{ fontSize: '18px' }} />
 
-              </button>
-            </div>
-            <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ fontSize: '12px', padding: '0' }} onClick={() => {
-                history.push(`/post/edit/${boardId}`)
-              }}>수정하기</button>
-            </div>
-            <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button onClick={del} style={{ fontSize: '12px', padding: '0' }}>삭제하기</button>
-            </div>
-          </ModalChang>
-        )}
+                  </button>
+                </div>
+                <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+                  <button style={{ fontSize: '12px', padding: '0' }} onClick={() => {
+                    history.push(`/post/edit/${boardId}`)
+                  }}>수정하기</button>
+                </div>
+                <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+                  <button onClick={del} style={{ fontSize: '12px', padding: '0' }}>삭제하기</button>
+                </div>
+              </ModalChang>
+            )} 
         </Profile>
 
         <div className="content"> 
-          <div >{post.title}</div>
+          <div style ={{fontWeight:"bold", fontSize:"17px"}}>{post.title}</div>
           
-          <div >{post.content}</div>
+          <div style={{}} >{post.content}</div>
           <img classname="contentimg" style={{width:"100%", height:"80%"}}src={post ? post.thumbNail : null} alt="" />
         </div>  
           
@@ -144,13 +136,14 @@ const PostDetail = (props) => {
 
 const Container =styled.div`
   .content {
-    padding: 2px 25px;
+    padding: 2px 30px;
   }
 `
 
 const Profile = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 0 5px;
 `
 
 const UserInfo = styled.div`
@@ -169,6 +162,7 @@ const ViewLikeComment = styled.div`
   display: flex;
   align-items: center;
   margin: 5px 15px;
+  padding: 0 10px;
 
   .count{
     margin: 2px 15px 0 3px;
