@@ -91,9 +91,7 @@ const PostWrite = (props) => {
 
   return (
     <>
-      <Header type="PostWrite" location="밈+글 등록하기">
-        임시저장
-      </Header>
+      <Header type="PostWrite" location="밈+글 등록하기"></Header>
       <Container>
         <PWHeader>
           <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
@@ -143,7 +141,6 @@ const PWBody = styled.div`
     width: 100%;
     height: 200px;
     border: none;
-    border-radius: 10px;
   }
 `
 
