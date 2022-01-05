@@ -19,17 +19,6 @@ const PostEdit = (props) => {
   const is_edit = post_id ? true : false
 
   const _post = is_edit ? post_list.find((p) => p.username === username) : null
-  console.log(_post)
-  useEffect(() => {
-    if (!_post) {
-      console.log('포스트 정보가 없어요!')
-      history.goBack()
-
-      return
-    }
-  }, [])
-
-  const fileInput = React.useRef('')
 
   const [title, setTitle] = useState(_post.title)
   const [content, setContent] = useState(_post.content)
@@ -91,9 +80,9 @@ const PostEdit = (props) => {
       }
     }
   }
-  console.log(title)
-  console.log(content)
-  console.log(hashTagList)
+  // console.log(title)
+  // console.log(content)
+  // console.log(hashTagList)
 
   const editPost = () => {
     if (title == '' || content == '') {
@@ -103,6 +92,18 @@ const PostEdit = (props) => {
       dispatch(postActions.editPostDB(post_id, hashTagList, title, content))
     }
   }
+
+  console.log(_post)
+  useEffect(() => {
+    if (!_post) {
+      console.log('포스트 정보가 없어요!')
+      history.goBack()
+
+      return
+    }
+  }, [])
+
+  const fileInput = React.useRef('')
 
   return (
     <>
@@ -136,7 +137,6 @@ const Container = styled.div`
 
 const PWHeader = styled.div`
   display: flex;
-
   .writectgr {
     width: 100px;
   }
@@ -190,12 +190,10 @@ const HashDivWrap = styled.div`
   color: #444241;
   border-bottom: 1.6px solid #767676;
   padding: 2px 2px 8px 2px;
-
   .hashWrapOutter {
     display: flex;
     flex-wrap: wrap;
   }
-
   .hashWrapInner {
     margin: 5px 5px 0 0;
     height: 24px;
@@ -210,7 +208,6 @@ const HashDivWrap = styled.div`
     line-height: 24px;
     cursor: pointer;
   }
-
   .hashInput {
     width: auto;
     margin: 10px;

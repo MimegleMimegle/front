@@ -1,4 +1,5 @@
 import React from 'react'
+import './App.css'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { history } from './redux/ConfigureStore'
@@ -29,6 +30,7 @@ import {
   ImageUpload,
   DictSearch,
 } from './pages'
+import SearchPage from './shared/SearchPage'
 import MobileFrame from './components/MobileFrame'
 import CommentTest from './pages/CommentTest'
 

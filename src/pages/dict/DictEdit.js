@@ -13,7 +13,7 @@ const DictEdit = (props) => {
   const [dict, setDict] = useState([])
 
   const getDictListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/dict/${dictId}`)
+    let response = await axios.get(`http://54.180.150.230/api/dict/${dictId}`)
     console.log(response)
     setDict(response.data.data)
   }
