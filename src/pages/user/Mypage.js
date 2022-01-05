@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
-
 import '../../styles/css/Mypage.css'
 
 import Header from '../../components/Header'
@@ -26,7 +24,6 @@ const Mypage = (props) => {
   const myMemeDictList = my && my.dict
   const myMemePostList = my && my.postBoards.filter((post) => post.category === 'FREEBOARD')
   const myMemeImageList = my && my.postBoards.filter((post) => post.category === 'IMAGEBOARD')
-  console.log(myMemeDictList)
 
   const openEditProfile = () => {
     setShowModal(true)
@@ -38,17 +35,23 @@ const Mypage = (props) => {
     }
   })
 
-  const handleShowDictionary = () => {
+  const handleShowDictionary = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowDictionary(true)
     setShowBoard(false)
     setShowImage(false)
   }
-  const handleShowBoard = () => {
+  const handleShowBoard = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowDictionary(false)
     setShowBoard(true)
     setShowImage(false)
   }
-  const handleShowPhoto = () => {
+  const handleShowPhoto = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowDictionary(false)
     setShowBoard(false)
     setShowImage(true)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
@@ -16,13 +16,14 @@ const QuizPaper = (props) => {
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
 
-  const [showResult, setShowResult] = React.useState(false)
-  const [currentIndex, setCurrentIndex] = React.useState(0)
-  const [answer, setAnswer] = React.useState('')
-  const [clicked1, setClicked1] = React.useState(false)
-  const [clicked2, setClicked2] = React.useState(false)
-  const [clicked3, setClicked3] = React.useState(false)
-  const [clicked4, setClicked4] = React.useState(false)
+  const [showResult, setShowResult] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [answer, setAnswer] = useState('')
+  const [clicked1, setClicked1] = useState(false)
+  const [clicked2, setClicked2] = useState(false)
+  const [clicked3, setClicked3] = useState(false)
+  const [clicked4, setClicked4] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const clickAnswer1 = (e) => {
     setAnswer(e.target.value)
@@ -82,6 +83,7 @@ const QuizPaper = (props) => {
     <>
       {!showResult ? (
         <Wrapper>
+          <div style={{ fontSize: '14px', fontWeight: '700' }}>{currentIndex + 1}/10</div>
           <QuizTitle>
             <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
             <div className="question-number-box box-2"></div>
@@ -138,7 +140,7 @@ const QuizTitle = styled.div`
   width: 100%;
   height: 164px;
   padding: 42px 36px;
-  margin: 40px 0 0;
+  margin: 30px 0 0;
   border: 1px solid #111;
   display: flex;
   align-items: center;
@@ -154,7 +156,8 @@ const QuizTitle = styled.div`
 
   .box-1 {
     top: -20px;
-    left: 33%;
+    left: 49.5%;
+    transform: translateX(-49.5%);
     z-index: 2;
     text-align: center;
     line-height: 40px;
@@ -165,7 +168,8 @@ const QuizTitle = styled.div`
 
   .box-2 {
     top: -16px;
-    left: 34%;
+    left: 51%;
+    transform: translateX(-51%);
     background-color: #fff;
   }
 
@@ -174,7 +178,7 @@ const QuizTitle = styled.div`
     height: 100%;
     text-align: left;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 22px;
   }
 `
 

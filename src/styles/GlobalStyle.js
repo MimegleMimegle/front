@@ -9,7 +9,7 @@ ${reset}
 
 body {
   /* font-family: ; */
-  background-color: grey;
+  background-color: #e5e5e5;
   color: #111;
   font-size: 15px;
   font-weight: 400;
