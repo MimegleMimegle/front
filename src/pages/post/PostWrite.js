@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import ReactQuill from 'react-quill'
-import { MdOutlinePhotoSizeSelectActual } from "react-icons/md";
+import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { actionCreators as postActions } from '../../redux/modules/post'
 import { actionCreators as imageActions } from '../../redux/modules/image'
 import HashTag from '../../components/HashTag'
-
+import Header from '../../components/Header'
 
 const PostWrite = (props) => {
   const history = useHistory()
@@ -91,15 +91,18 @@ const PostWrite = (props) => {
 
   return (
     <>
+      <Header type="PostWrite" location="밈+글 등록하기">
+        임시저장
+      </Header>
       <Container>
         <PWHeader>
           <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
         </PWHeader>
         <PWBody>
-          <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요." ></textarea>
+          <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
           <Preview src={thumbNail}></Preview>
-          <MdOutlinePhotoSizeSelectActual size="25"/> 
-          <input type="file"multiple ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile}/> 
+          <MdOutlinePhotoSizeSelectActual size="25" />
+          <input type="file" multiple ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           <HashDivWrap className="hashWrap">
             <div className="hashWrapOutter"></div>
             <input className="hashInput" type="text" placeholder="해시태그를 입력해주세요 (#으로 구분, 최대5개)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
@@ -115,24 +118,20 @@ const PostWrite = (props) => {
   )
 }
 
-const Container = styled.div`
-  
-`
+const Container = styled.div``
 
 const PWHeader = styled.div`
-    border-bottom: 0.5px solid lightgray;
+  border-bottom: 0.5px solid lightgray;
 
   .writetitle {
     width: 100%;
     border: none;
     font-size: 20px;
   }
-  
-  hr{
-    color: #E5E5E5;
-  }
 
-  
+  hr {
+    color: #e5e5e5;
+  }
 `
 
 const PWBody = styled.div`

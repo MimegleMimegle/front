@@ -11,6 +11,7 @@ import 'moment'
 import 'moment/locale/ko'
 import moment from 'moment'
 import { push } from 'connected-react-router'
+import Header from '../../components/Header'
 
 const DictDetail = (props) => {
   const dispatch = useDispatch()
@@ -50,6 +51,9 @@ const DictDetail = (props) => {
 
   return (
     <>
+      <Header type="DictDetail" location="오픈 밈사전">
+        돋보기
+      </Header>
       <div className="OneDictCardDetailPageLayout">
         <div className="OneDictCardDetailInfoSection">
           <div className="OneDictCardDetailInfoTitle">

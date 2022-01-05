@@ -51,17 +51,17 @@ const PostSearch = (props) => {
   }
 
   /* 백엔드에 해시태그 부활 요청 */
-  // React.useEffect(() => {
-  //   boardApi
-  //     .recommendHashTag()
-  //     .then((res) => {
-  //       console.log(res.data)
-  //       setHashTagList(res.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
-  //     })
-  // }, [])
+  React.useEffect(() => {
+    boardApi
+      .recommendHashTag()
+      .then((res) => {
+        console.log(res.data.data)
+        setHashTags(res.data.data)
+      })
+      .catch((err) => {
+        console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
+      })
+  }, [])
 
   return (
     <>
@@ -87,7 +87,6 @@ const PostSearch = (props) => {
                   return <PostCard key={post.boardId} post={post} />
                 })
               : null}
-            <PostCard />
           </div>
         </div>
         {notFound && (

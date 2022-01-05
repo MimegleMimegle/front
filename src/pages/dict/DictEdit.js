@@ -5,16 +5,23 @@ import { history } from '../../redux/ConfigureStore'
 import axios from 'axios'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
+import Header from '../../components/Header'
 
 const DictEdit = (props) => {
   const dispatch = useDispatch()
 
   const [dict, setDict] = useState([])
+  const [summary, setSummary] = React.useState('')
+  const [content, setContent] = React.useState('')
+  const [recentWriter, setRecentWriter] = React.useState('')
 
   const getDictListDB = async () => {
     let response = await axios.get(`http://54.180.150.230/api/dict/${dictId}`)
     console.log(response)
-    setDict(response.data.data)
+    const _dict = response.data.data
+    setDict(_dict)
+    setSummary(_dict.summary)
+    setContent(_dict.content)
   }
 
   React.useEffect(() => {
@@ -27,10 +34,6 @@ const DictEdit = (props) => {
   console.log(dict)
   console.log(dictId)
   console.log(newRecentWriter)
-
-  const [summary, setSummary] = React.useState('')
-  const [content, setContent] = React.useState('')
-  const [recentWriter, setRecentWriter] = React.useState('')
 
   const onChangeSummary = (e) => {
     setSummary(e.target.value)
@@ -49,8 +52,7 @@ const DictEdit = (props) => {
       },
     }).then((editDict) => {
       if (editDict) {
-        setRecentWriter(newRecentWriter)
-        dispatch(dictActions.editDictDB(dictId, summary, content, recentWriter))
+        dispatch(dictActions.editDictDB(dictId, summary, content))
         swal('밈 단어 편집이 완료되었습니다.', {
           icon: 'success',
         })
@@ -82,6 +84,7 @@ const DictEdit = (props) => {
 
   return (
     <>
+      <Header type="DictEdit" location="오픈 밈사전"></Header>
       <div className="DictCardEditPageLayout">
         <div className="DictCardEditInputSection">
           <div className="DictCardEditInputTitleContainer">
@@ -96,7 +99,7 @@ const DictEdit = (props) => {
           </div>
           <div className="DictCardEditInputContentContainer">
             <div className="DictCardEditInputContentGuideText">부가설명</div>
-            <textarea className="DictCardEditInputContent" type="text" cols="40" rows="5" value={content} onChange={onChangeContent} placeholder={dict.meaning}>
+            <textarea className="DictCardEditInputContent" type="text" cols="40" rows="5" value={content} onChange={onChangeContent} placeholder={dict.content}>
               {dict.meaning}
             </textarea>
           </div>

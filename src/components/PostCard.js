@@ -15,33 +15,32 @@ const PostCard = ({ post }) => {
 
   return (
     <>
-    <FullWrap>
-      <Wrap postList={post} onClick={onC}>
-        <UserInfo>
-          <img src={post ? post.profileImageUrl : null} alt="" style={{ borderRadius: '160px', width: '40px', height:'40px'}} />
-          <div>
-            <p>{post ? post.writer : null}</p>
-            <p>{post ? post.createdAt : null}</p>
-          </div>
-        </UserInfo>
-        <PostBody>
-          <div className="text">
-            <h4>{post ? post.title : null}</h4>
-            <HashTagHere>
-              {post
-                ? post.hashTags.map((hashTag, index) => {
+      <FullWrap>
+        <Wrap postList={post} onClick={onC}>
+          <UserInfo>
+            <img src={post ? post.profileImageUrl : null} alt="" style={{ borderRadius: '160px', width: '40px', height: '40px' }} />
+            <div>
+              <p>{post ? post.writer : null}</p>
+              <p>{post ? post.createdAt : null}</p>
+            </div>
+          </UserInfo>
+          <PostBody>
+            <div className="text">
+              <h4>{post ? post.title : null}</h4>
+              <HashTagHere>
+                {post.hashTags &&
+                  post.hashTags.map((hashTag, index) => {
                     return <p key={index}>#{hashTag}</p>
-                  })
-                : null}
-            </HashTagHere>
-            <AiOutlineEye /> {post ? post.views : null} 
-            <AiOutlineHeart />{post ? post.likeCnt : null} 
-            <FiMessageSquare /> {post ? post.commentCnt : null}
-          </div>
-        </PostBody>
-      </Wrap>
-          {post.thumbNail?
-          <img className="uploadimg" src={post.thumbNail} alt="" /> : null }
+                  })}
+              </HashTagHere>
+              <AiOutlineEye /> {post ? post.views : null}
+              <AiOutlineHeart />
+              {post ? post.likeCnt : null}
+              <FiMessageSquare /> {post ? post.commentCnt : null}
+            </div>
+          </PostBody>
+        </Wrap>
+        {post.thumbNail ? <img className="uploadimg" src={post && post.thumbNail} alt="" /> : null}
       </FullWrap>
     </>
   )
@@ -60,12 +59,9 @@ const FullWrap = styled.div`
     height: 70px;
     margin: 20px 0 0 0;
   }
-
 `
 
-const Wrap = styled.div`
-  
-`
+const Wrap = styled.div``
 
 const UserInfo = styled.div`
   display: flex;
@@ -79,7 +75,6 @@ const PostBody = styled.div`
 
   .text {
   }
-  
 `
 const HashTagHere = styled.div`
   display: flex;

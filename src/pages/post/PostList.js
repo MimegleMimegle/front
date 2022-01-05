@@ -9,6 +9,7 @@ import Pagination from 'rc-pagination'
 import SearchPage from '../../shared/SearchPage'
 import { boardApi } from '../../shared/api'
 import axios from 'axios'
+import Header from '../../components/Header'
 
 const PostList = (props) => {
   const dispatch = useDispatch()
@@ -26,20 +27,24 @@ const PostList = (props) => {
     dispatch(postActions.getPostsDB())
   }, [currentPage])
 
-  console.log(post)
-  console.log(totalCount)
 
   const getPostListDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/board/list/FREEBOARD?page=${(currentPage - 1)}&size=${pageSize}`)
+    let response = await axios.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${(currentPage - 1)}&size=${pageSize}`)
     let totalLength = await boardApi.totalLength()
     console.log(response)
-    console.log(totalLength) 
+    console.log(totalLength)
     setPost(response.data.data)
     setTotalCount(totalLength.data.data)
   }
 
+  console.log(post)
+  console.log(totalCount)
+
   return (
     <>
+      <Header type="PostList" location="밈+글 커뮤니티">
+        Search
+      </Header>
       <Container>
         <button
           className="pluspost"

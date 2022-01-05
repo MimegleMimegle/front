@@ -8,6 +8,7 @@ import { actionCreators as dictActions } from '../../redux/modules/dict'
 import Pagination from 'rc-pagination'
 import SearchPage from '../../shared/SearchPage'
 import { dictApi } from '../../shared/api'
+import Header from '../../components/Header'
 
 const DictSearch = (props) => {
   const dispatch = useDispatch()
@@ -39,6 +40,9 @@ const DictSearch = (props) => {
 
   return (
     <>
+      <Header type="DictSearchResult" location="오픈 밈사전">
+        돋보기
+      </Header>
       <div className="DictSearchPageLayout">
         <SearchPage />
         <div className="DictSearchListSection">
