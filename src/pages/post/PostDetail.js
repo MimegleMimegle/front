@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import axios from 'axios'
 import { actionCreators as postActions } from '../../redux/modules/post'
-import { actionCreators as likeActions } from '../../redux/modules/like'
 import swal from 'sweetalert'
 import styled from '@emotion/styled'
 import { likeApi } from '../../shared/api'
@@ -12,9 +11,7 @@ import { FiMessageSquare } from 'react-icons/fi'
 import { IoCloseOutline } from 'react-icons/io5'
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { getCookie } from '../../shared/cookie'
 import CommentTest from '../CommentTest'
-import { fontSize } from '@mui/system'
 import {IoIosArrowBack} from 'react-icons/io'
 
 const PostDetail = (props) => {
@@ -77,22 +74,26 @@ const PostDetail = (props) => {
     setToggleModalChang(!toggleModalChang)
   }
 
+  // const hour = post.createdAt.split('T')[1].split(':')
+  
   return (
     <>
-      <Container>
-        <div style={{margin:"0px 10px"}}>
-          <IoIosArrowBack size="20" cursor="pointer"/>
-        </div>
-        <Profile>
-          <UserInfo>
+    <PostWrap>
+      <Goback><IoIosArrowBack size="19px"/></Goback>
+      <Profile>
+        <UserInfo>
           <UserProfile src={post.profileImageUrl} alt="" />
-          <div>
-            <div >{post.writer}</div>
-            <div>{post.createdAt}</div>
+          <div className="userinfo">
+            <Writer >{post.writer}</Writer>
+            <div className="createdate">
+              {/* <CreatedAt>{post.createdAt.split('T')[0]}</CreatedAt> */}
+              
+    
+            </div>
           </div>
-          </UserInfo>
+        </UserInfo>
           {username === post.username ?
-            <div  onClick={clickToggleModalChang} ><BsThreeDotsVertical size="25" style ={{margin:"20px", cursor:"pointer"}}/></div> : null }
+            <div  onClick={clickToggleModalChang} ><BsThreeDotsVertical size="15"/></div> : null }
             {toggleModalChang && (
               <ModalChang>
                 <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
@@ -111,64 +112,133 @@ const PostDetail = (props) => {
                 </div>
               </ModalChang>
             )} 
-        </Profile>
+      </Profile>
 
-        <div className="content"> 
-          <div style ={{fontWeight:"bold", fontSize:"17px"}}>{post.title}</div>
+      <Middle> 
+        <Title>{post.title}</Title>
+        
+        <Content style={{}} >{post.content}</Content>
+        <ContentImg src={post ? post.thumbNail : null} alt="" />
+        <HashTagHere>
+                {post.hashTags &&
+                  post.hashTags.map((hashTag, index) => {
+                    return <p key={index}>#{hashTag}</p>
+                  })}
+        </HashTagHere>
+      </Middle>  
           
-          <div style={{}} >{post.content}</div>
-          <img classname="contentimg" style={{width:"100%", height:"80%"}}src={post ? post.thumbNail : null} alt="" />
-        </div>  
-          
-          <ViewLikeComment>
-          <AiOutlineEye style={{ fontSize: '22px' }}/><span style={{fontSize: '14px'}}>{post.views}</span> 
-          <button>{isLiked ? <HiHeart style={{ fontSize: '22px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '22px' }} onClick={handleClickLike} />}</button>
-          <span style={{fontSize: '14px'}}>{likeCount}</span>
-          <FiMessageSquare style={{ fontSize: '22px' }}/><span style={{fontSize: '14px'}}>{post.commentCnt? post.commentCnt: 0}</span> 
-    
-          </ViewLikeComment>
-        </Container>
+      <ViewLikeComment>
+      <AiOutlineEye style={{ fontSize: '18px' }}/>
+      <Num style={{fontSize: '14px'}}>{post.views}</Num> 
+      <button>{isLiked ? <HiHeart style={{ fontSize: '18px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '18px' }} onClick={handleClickLike} />}</button>
+      <Num style={{fontSize: '14px'}}>{likeCount}</Num>
+      <FiMessageSquare style={{ fontSize: '18px' }}/>
+      <Num style={{fontSize: '14px'}}>{post.commentCnt? post.commentCnt: 0}</Num> 
+      </ViewLikeComment>
+    </PostWrap>
 
         <CommentTest post={post}/>
     </>
   )
 }
 
-const Container =styled.div`
-  .content {
-    padding: 2px 30px;
-  }
+const PostWrap = styled.div`
+
 `
+const Goback = styled.div`
+  margin:0 12px;
+`
+
 
 const Profile = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0 5px;
+  padding: 10px 16px 12px 16px;
+
 `
 
 const UserInfo = styled.div`
   display:flex;
-  padding: 10px;
+  align-items: center;
+  .createdate {
+    display: flex;
+  }
+
 `
 
 const UserProfile = styled.img`
   border-radius: 150px;
-  width: 50px;
-  height:50px;
+  width: 28px;
+  height:28px;
+  border: 1px solid black;
+  margin: 0 8px 0 0;
+`
+const Writer = styled.div`
+  font-family: RixGwangalli;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 13px;
+`
 
+const CreatedAt = styled.div`
+   font-style: normal;
+  font-weight: normal;
+  font-size: 9px;
+  line-height: 11px;
+  margin: 0 3px 0 0 ;
+`;
+
+const Middle = styled.div`
+  padding: 0 30px;
+`
+
+const Title = styled.div`
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+`;
+
+const Content = styled.div`
+font-family: Pretendard;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 12px;
+margin: 8px 0 12px 0;
+
+display: flex;
+align-items: center;
+`;
+
+const ContentImg = styled.img`
+  width:300px;
+`;
+
+const HashTagHere = styled.div`
+  display: flex;
+  fontSize: 12px;
 `
 
 const ViewLikeComment = styled.div`
   display: flex;
   align-items: center;
-  margin: 5px 15px;
-  padding: 0 10px;
-
-  .count{
-    margin: 2px 15px 0 3px;
-
-  }
+  margin: 16px;
 `
+
+const Num = styled.text`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  margin: 0 9.5px 0 5px;
+`;
 
 const ModalChang = styled.div`
   position: absolute;
@@ -181,5 +251,6 @@ const ModalChang = styled.div`
   flex-direction: column;
   align-items: flex-end;
 `
+
 
 export default PostDetail;
