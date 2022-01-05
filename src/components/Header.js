@@ -151,6 +151,7 @@ const NavHeader = styled.nav`
 const Location = styled.h2`
   font-weight: 700;
   font-size: 18px;
+  cursor: default;
 `
 
 export default Header
