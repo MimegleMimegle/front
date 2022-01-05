@@ -113,29 +113,28 @@ const addPostDB = (title, content, uploadFile, hashTag_list) => {
   }
 }
 
-const editPostDB = (boardId, post) => {
+const editPostDB = (boardId,hashTag_List, title, uploadFile, content,) => {
   return async function (dispatch, getState, { history }) {
-    if(!boardId){
-      console.log('게시물의 정보가 없습니다.')
-      return
+    
+    const formData = new FormData()
+    const post = {
+      title: title,
+      content: content,
+      hashTags: hashTag_List,
     }
 
-    const _post_idx = getState().post.list.findIndex(p=> p.boardId===boardId)
-    const _post = getState().post.list[_post_idx];
-    console.log(_post)
+    formData.append('thumbNail', uploadFile)
+    formData.append('boardUploadRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
 
     await boardApi
-    .editPost(boardId, post)
-      .then(() => {
-        dispatch(editPost(boardId,post))
+    .editPost(boardId,formData)
+      .then(function(response){
+        dispatch(editPost(response.data.data))
+        history.push('/post')
       })
       .catch((err) => {
-        console.log('게시글 수정하는데 문제 발생', err.response)
-        console.log(err.response.status)
-      })
-      .then(()=> {
-        swal('', '게시글이 수정되었습니다.', 'success')
-        history.push('/post')
+        console.log('게시글 수정하는데 문제 발생', err.response.data)
+        console.log(boardId, title, uploadFile, content,)
       })
   }
 }

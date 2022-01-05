@@ -1,30 +1,54 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import ReactQuill from 'react-quill'
 import { actionCreators as postActions } from '../../redux/modules/post'
 import { actionCreators as imageActions } from '../../redux/modules/image'
+import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
+
 import HashTag from '../../components/HashTag'
 import swal from 'sweetalert'
 import Header from '../../components/Header'
+import axios from 'axios'
 
 const PostEdit = (props) => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const username = localStorage.getItem('username')
 
-  const username = window.localStorage.getItem('username')
-  const post_list = useSelector((state) => state.post.list)
-  const post_id = props.match.params.boardId
-  const is_edit = post_id ? true : false
-
-  const _post = is_edit ? post_list.find((p) => p.username === username) : null
-
-  const [title, setTitle] = useState(_post.title)
-  const [content, setContent] = useState(_post.content)
-  const [thumbNail, setThumbNail] = useState(_post.thumbNail)
-  const [hashTag, setHashTag] = useState(_post.thumbNail)
+  const [post, setPost] = useState([])
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
+  const [thumbNail, setThumbNail] = useState("")
+  const [hashTag, setHashTag] = useState("")
   const [hashTagList, setHashTagList] = useState([])
+  console.log(post)
+  console.log(title)
+  console.log(content)
+  console.log(thumbNail)
+  console.log(hashTagList)
+
+  const getOnePostDB = async () => {
+    
+    let response = await axios.get(`http://54.180.150.230/api/board/${boardId}`)
+    
+    const _post = response.data.data
+    setPost(response.data.data)
+    setTitle(_post.title)
+    setContent(_post.content)
+    setThumbNail(_post.thumbNail)
+    setHashTag(_post.hashTag)
+    setHashTagList(_post.hashTags)
+
+  }
+
+  const boardId = Number(props.match.params.boardId)
+
+
+  React.useEffect(() => {
+    getOnePostDB()
+  }, [])
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
@@ -80,28 +104,17 @@ const PostEdit = (props) => {
       }
     }
   }
-  // console.log(title)
-  // console.log(content)
-  // console.log(hashTagList)
+
 
   const editPost = () => {
-    if (title == '' || content == '') {
+    if (title ==='' || content === '') {
       window.alert('게시물을 모두 작성해주세요')
       return
-    } else {
-      dispatch(postActions.editPostDB(post_id, hashTagList, title, content))
-    }
+    } 
+    const uploadFile = thumbNail ? fileInput.current.files[0] : ''
+      dispatch(postActions.editPostDB(boardId,hashTagList, title, thumbNail, content))
+    
   }
-
-  console.log(_post)
-  useEffect(() => {
-    if (!_post) {
-      console.log('포스트 정보가 없어요!')
-      history.goBack()
-
-      return
-    }
-  }, [])
 
   const fileInput = React.useRef('')
 
@@ -110,15 +123,16 @@ const PostEdit = (props) => {
       <Header type="PostEdit" location="밈+글 수정하기"></Header>
       <Container>
         <PWHeader>
-          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={_post && title} onChange={onChangeTitle} />
+          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
         </PWHeader>
         <PWBody>
-          <textarea value={_post && content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
-          <Preview src={_post && thumbNail}></Preview>
+          <textarea value={content} onChange={onChangeContent} className="writedesc" placeholder="내용을 입력하세요."></textarea>
+          <Preview src={thumbNail}></Preview>
+          <MdOutlinePhotoSizeSelectActual size="25" />
           <input type="file" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           <HashDivWrap className="hashWrap">
             <div className="hashWrapOutter"></div>
-            <input className="hashInput" type="text" placeholder="해시태그 입력" />
+            <input className="hashInput" type="text" placeholder="해시태그를 입력해주세요 (#으로 구분, 최대5개)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp}/>
           </HashDivWrap>
         </PWBody>
         <PWFooter>
@@ -132,19 +146,18 @@ const PostEdit = (props) => {
 }
 
 const Container = styled.div`
-  margin: 10px 20px;
 `
 
 const PWHeader = styled.div`
-  display: flex;
-  .writectgr {
-    width: 100px;
-  }
+  border-bottom: 0.5px solid lightgray;
   .writetitle {
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
-    /* border-radius: 10px; */
-    width: 200px;
+    width: 100%;
+    border: none;
+    font-size: 20px;
+  }
+
+  hr {
+    color: #e5e5e5;
   }
 `
 
@@ -154,10 +167,9 @@ const PWBody = styled.div`
     margin: 0px 15px 10px 15px;
   }
   .writedesc {
-    width: 300px;
+    width: 100%;
     height: 200px;
-    border: 1px solid lightgray;
-    border-radius: 10px;
+    border: none;
   }
 `
 
