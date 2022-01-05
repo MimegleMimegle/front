@@ -5,8 +5,6 @@ import { useHistory } from 'react-router'
 import ReactQuill from 'react-quill'
 import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { actionCreators as postActions } from '../../redux/modules/post'
-import { actionCreators as imageActions } from '../../redux/modules/image'
-import HashTag from '../../components/HashTag'
 import Header from '../../components/Header'
 
 const PostWrite = (props) => {

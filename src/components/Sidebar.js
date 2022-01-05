@@ -123,8 +123,8 @@ const Wrapper = styled.div`
   top: 0;
   left: -240px;
   z-index: 2000;
-  background-color: #fff;
-  border-right: 1px solid #767676;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-right: 1px solid ${({ theme }) => theme.colors.black};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -149,7 +149,7 @@ const Wrapper = styled.div`
     &:visited,
     &:link,
     &:active {
-      color: #111;
+      color: ${({ theme }) => theme.colors.black};
     }
   }
 `
@@ -157,13 +157,13 @@ const Wrapper = styled.div`
 const ProfileImage = styled.div`
   width: 40px;
   height: 40px;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
   cursor: pointer;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.white};
 `
 
 const UserMenuBox = styled.div`
@@ -176,12 +176,9 @@ const UserMenuBox = styled.div`
 `
 
 const UserMenu = styled.button`
-  /* border: 1px solid #111;
-  border-radius: 20px; */
-  /* padding: 10px 20px; */
-  color: #878c92;
+  color: ${({ theme }) => theme.colors.grey};
   font-weight: 700;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
 `
 
 export default Sidebar
