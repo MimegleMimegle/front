@@ -5,6 +5,7 @@ import Sidebar from './Sidebar'
 import HeaderLogo from './HeaderLogo'
 import HeaderHamburder from './HeaderHamburger'
 import HeaderGoBack from './HeaderGoBack'
+import HeaderClose from './HeaderClose'
 
 const Header = ({ type, children, location }) => {
   const [showSidebar, setShowSidebar] = React.useState(false)
@@ -12,13 +13,13 @@ const Header = ({ type, children, location }) => {
     setShowSidebar(!showSidebar)
   }
 
-  if (type === 'PostEdit' || type === 'QuizIntro' || type === 'DictWrite' || type === 'DictEdit') {
+  if (type === 'DictWrite' || type === 'DictEdit') {
     return (
       <>
         <NavHeader>
           <ul className="nav-list">
             <li>
-              <HeaderGoBack type={type} />
+              <HeaderClose />
             </li>
             <li className="nav-item-middle">
               <Location>{location}</Location>
@@ -32,7 +33,7 @@ const Header = ({ type, children, location }) => {
     )
   }
 
-  if (type === 'PostWrite' || type === 'DictSearchResult' || type === 'DictHistory' || type === 'DictDetail') {
+  if (type === 'PostWrite' || type === 'DictSearchResult' || type === 'DictHistory' || type === 'DictDetail' || type === 'QuizIntro' || type === 'PostEdit') {
     return (
       <>
         <NavHeader>
@@ -52,28 +53,7 @@ const Header = ({ type, children, location }) => {
     )
   }
 
-  if (type === 'MyPage' || type === 'DictList' || type === 'QuizResult') {
-    return (
-      <>
-        <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderHamburder handleSidebar={handleSidebar} />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right"></div>
-            </li>
-          </ul>
-        </NavHeader>
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      </>
-    )
-  }
-
-  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch') {
+  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch' || type === 'MyPage' || type === 'DictList' || type === 'QuizResult') {
     return (
       <>
         <NavHeader>

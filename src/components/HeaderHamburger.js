@@ -5,7 +5,7 @@ import { ReactComponent as HamburgerIcon } from '../styles/icons/햄버거버튼
 const HeaderHamburder = ({ handleSidebar }) => {
   return (
     <>
-      <button style={{ padding: '5px 10px 0' }} onClick={handleSidebar}>
+      <button style={{ padding: '5px 8px 0' }} onClick={handleSidebar}>
         <HamburgerIcon />
       </button>
     </>
