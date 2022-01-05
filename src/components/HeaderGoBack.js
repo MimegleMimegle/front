@@ -1,19 +1,19 @@
 import React from 'react'
 import { history } from '../redux/ConfigureStore'
 
-import { MdArrowBackIosNew } from 'react-icons/md'
-import { MdOutlineClose } from 'react-icons/md'
+import { ReactComponent as ArrowBackIcon } from '../styles/icons/arrow_back_ios_black_24dp.svg'
+import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 
 const HeaderGoBack = ({ type }) => {
   return (
     <>
       <button
-        style={{ padding: '5px 10px 0', fontSize: '20px' }}
+        style={{ padding: '5px 10px 0' }}
         onClick={() => {
           history.goBack()
         }}
       >
-        {type === 'PostEdit' ? <MdArrowBackIosNew /> : <MdOutlineClose />}
+        {type === 'PostEdit' || type === 'QuizIntro' ? <ArrowBackIcon /> : <CloseIcon />}
       </button>
     </>
   )

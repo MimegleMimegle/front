@@ -79,14 +79,13 @@ const QuizResult = ({ quiz_list }) => {
                 </div>
                 <div className="circle-button btn-2"></div>
               </CircleButtonBox>
-              <button
-                style={{ width: '100%', fontSize: '14px', fontWeight: '700', padding: '10px 0' }}
+              <TextButton
                 onClick={() => {
                   history.push('/quiz')
                 }}
               >
                 다른 테스트 하러 가기
-              </button>
+              </TextButton>
             </div>
             <div style={{ width: '100%', margin: '5px 0' }}>
               <CircleButtonBox>
@@ -95,7 +94,7 @@ const QuizResult = ({ quiz_list }) => {
                 </div>
                 <div className="circle-button btn-2"></div>
               </CircleButtonBox>
-              <button style={{ width: '100%', fontSize: '14px', fontWeight: '700', padding: '10px 0' }}>친구에게 공유하기</button>
+              <TextButton>친구에게 공유하기</TextButton>
             </div>
             <div style={{ width: '100%', padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <FacebookShareButton url={currentUrl}>
@@ -139,23 +138,23 @@ const Wrapper = styled.div`
     display: none;
   }
   .share-btn {
-    border: 1px solid #ffe330;
+    border: 1px solid ${({ theme }) => theme.colors.yellow};
     border-radius: 20px;
-    background-color: #ffe330;
+    background-color: ${({ theme }) => theme.colors.yellow};
     width: 40px;
     height: 40px;
-    color: #fff;
-    font-size: 11px;
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSizes.base};
     font-weight: 700;
     margin: 0 0 6px;
   }
   .link-copied {
-    background-color: #000000;
+    background-color: ${({ theme }) => theme.colors.black};
     background-color: rgba(0, 0, 0, 0.8);
     box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
     border-radius: 5px;
-    color: #ffffff;
-    font-size: 12px;
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSizes.base};
     margin-bottom: 10px;
     top: 50%;
     left: 50%;
@@ -175,7 +174,7 @@ const QuizResultBox = styled.div`
   width: 100%;
   height: 100%;
   margin: 40px 0 0;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -184,9 +183,9 @@ const QuizResultBox = styled.div`
     width: 100px;
     height: 40px;
     position: absolute;
-    border: 1px solid #111;
-    background-color: #fff;
-    font-size: 18px;
+    border: 1px solid ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
     font-weight: 700;
   }
 
@@ -197,15 +196,15 @@ const QuizResultBox = styled.div`
     z-index: 2;
     text-align: center;
     line-height: 40px;
-    font-size: 16px;
-    background-color: #ffe330;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    background-color: ${({ theme }) => theme.colors.yellow};
   }
 
   .box-2 {
     top: -16px;
     left: 51%;
     transform: translateX(-51%);
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
   }
 
   .resultDesc {
@@ -234,14 +233,14 @@ const ResultButtonContainer = styled.div`
     width: 135px;
     height: 40px;
     position: absolute;
-    border: 1px solid #111;
+    border: 1px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
     .resultButton {
       padding: 0;
       width: 135px;
       height: 40px;
-      font-size: 18px;
+      font-size: ${({ theme }) => theme.fontSizes.xxl};
       font-weight: 700;
     }
   }
@@ -249,7 +248,7 @@ const ResultButtonContainer = styled.div`
   .box1 {
     left: 49.5%;
     transform: translateX(-49.5%);
-    background-color: #00a0ff;
+    background-color: ${({ theme }) => theme.colors.blue};
     z-index: 2;
     transition-duration: 0.5s;
     &:active {
@@ -263,8 +262,15 @@ const ResultButtonContainer = styled.div`
     left: 51%;
     transform: translateX(-51%);
     margin-top: 4px;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
   }
+`
+
+const TextButton = styled.button`
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-weight: 700;
+  padding: 10px 0;
 `
 
 const CircleButtonBox = styled.div`
@@ -275,12 +281,12 @@ const CircleButtonBox = styled.div`
     position: absolute;
     width: 36px;
     height: 36px;
-    border: 1px solid #111;
+    border: 1px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
   }
   .btn-1 {
     left: 24px;
-    background-color: #ff8e00;
+    background-color: ${({ theme }) => theme.colors.orange};
     display: flex;
     align-items: center;
     justify-content: center;

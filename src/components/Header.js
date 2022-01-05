@@ -12,7 +12,7 @@ const Header = ({ type, children, location }) => {
     setShowSidebar(!showSidebar)
   }
 
-  if (type === 'PostEdit' || type === 'DictWrite' || type === 'DictEdit') {
+  if (type === 'PostEdit' || type === 'QuizIntro' || type === 'DictWrite' || type === 'DictEdit') {
     return (
       <>
         <NavHeader>
@@ -90,18 +90,6 @@ const Header = ({ type, children, location }) => {
           </ul>
         </NavHeader>
         <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      </>
-    )
-  }
-
-  if (type === 'QuizIntro') {
-    return (
-      <>
-        <NavHeader>
-          <div className="nav-item-middle">
-            <Location>{location}</Location>
-          </div>
-        </NavHeader>
       </>
     )
   }

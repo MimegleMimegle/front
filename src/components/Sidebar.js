@@ -1,22 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-
 import { history } from '../redux/ConfigureStore'
-import SidebarItem from './SidebarItem'
-import SmileIcon from '../styles/image/smileIcon_Yellow.png'
 import { actionCreators as userActions } from '../redux/modules/user'
 import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
-import { IoCloseOutline } from 'react-icons/io5'
+import SidebarItem from './SidebarItem'
+
+import SmileIcon from '../styles/image/smileIcon_Yellow.png'
+import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 
 const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const dispatch = useDispatch()
-  // const profile = useSelector((state) => state.user.profile)
   const my = useSelector((state) => state.mypage.myPageData)
   const username = localStorage.getItem('username')
   const nickname = localStorage.getItem('nickname')
   const isLogin = username && nickname ? true : false
+
+  const menu_list = [
+    { name: '메인', path: '/' },
+    { name: '밈퀴즈', path: '/quiz' },
+    { name: '밈+글 커뮤니티', path: '/post' },
+    { name: '오픈 밈사전', path: '/dict' },
+    { name: '짤방앗간', path: '/image' },
+  ]
+
+  console.log(my)
 
   const moveToMypage = (e) => {
     e.preventDefault()
@@ -52,23 +61,11 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
     }
   })
 
-  const menu_list = [
-    { name: '메인', path: '/' },
-    { name: '밈퀴즈', path: '/quiz' },
-    { name: '밈+글 커뮤니티', path: '/post' },
-    { name: '오픈 밈사전', path: '/dict' },
-    { name: '짤방앗간', path: '/image' },
-  ]
-
   React.useEffect(() => {
-    // if (my == null) {
-    dispatch(mypageActions.getUserInfoDB())
-    // }
+    if (my == null) {
+      dispatch(mypageActions.getUserInfoDB())
+    }
   }, [])
-
-  // React.useEffect(() => {
-  //   dispatch(userActions.getProfileInfoDB())
-  // }, [setShowSidebar])
 
   return (
     <>
@@ -97,7 +94,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             }}
             style={{ height: '100%', padding: '0', textAlign: 'right' }}
           >
-            <IoCloseOutline style={{ fontSize: '30px', paddingTop: '4px' }} />
+            <CloseIcon style={{ paddingTop: '2px' }} />
           </button>
         </div>
 

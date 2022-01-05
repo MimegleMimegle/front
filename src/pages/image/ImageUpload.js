@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import { useDispatch } from 'react-redux'
 import { actionCreators as imageActions } from '../../redux/modules/image'
@@ -28,9 +29,7 @@ const ImageUpload = ({ preview, fileInput }) => {
           >
             <IoCloseOutline style={{ fontSize: '24px', color: '#FFF' }} />
           </button>
-          <button style={{ color: '#FFF', fontSize: '16px', fontWeight: '700' }} onClick={handleUploadImage}>
-            등록
-          </button>
+          <UploadButton onClick={handleUploadImage}>등록</UploadButton>
         </div>
         <div style={{ width: '100%', height: '80%', display: 'flex', alignItems: 'center' }}>
           <img src={preview} style={{ width: '100%', maxHeight: '100%', objectFit: 'cover' }} />
@@ -39,5 +38,11 @@ const ImageUpload = ({ preview, fileInput }) => {
     </>
   )
 }
+
+const UploadButton = styled.button`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: 700;
+`
 
 export default ImageUpload

@@ -6,21 +6,21 @@ ${reset}
 
 @font-face {
   font-family: 'Pretendard-Bold';
-  src: url('./styles/fonts/Pretendard-Bold.woff');
+  src: url('./styles/fonts/Pretendard-Bold.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Pretendard-Medium';
-  src: url('./styles/fonts/Pretendard-Medium.woff');
+  src: url('./styles/fonts/Pretendard-Medium.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Pretendard Light';
-  src: url('./styles/fonts/Pretendard-Light.woff');
+  src: url('./styles/fonts/Pretendard-Light.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
@@ -47,7 +47,7 @@ html, body, div, span, applet, object, iframe,
 
 body {
   background-color: #e5e5e5;
-  color: #111;
+  color: #000000;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.6;

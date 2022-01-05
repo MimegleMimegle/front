@@ -7,9 +7,7 @@ import { userApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
 import ImageWrapper from '../../components/image/ImageWrapper'
 import ShareMenu from '../../components/image/ShareMenu'
-import ThreeDotsMenu from '../../components/image/ThreeDotsMenu'
 
-import { BsThreeDotsVertical } from 'react-icons/bs'
 import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
@@ -23,7 +21,6 @@ const ImageDetail = (props) => {
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
   const [shareToggleMenu, setShareToggleMenu] = useState(false)
-  const [threeDotsToggleMenu, setThreeDotsToggleMenu] = useState(false)
   const [profile, setProfile] = useState(null)
   const [createdAt, setCreatedAt] = useState('')
 
@@ -31,12 +28,6 @@ const ImageDetail = (props) => {
     e.preventDefault()
     e.stopPropagation()
     setShareToggleMenu(!shareToggleMenu)
-  }
-
-  const handleThreeDotsToggleMenu = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setThreeDotsToggleMenu(!threeDotsToggleMenu)
   }
 
   const handleClickLike = async (e) => {
@@ -124,8 +115,8 @@ const ImageDetail = (props) => {
           <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
             <ProfileImage src={imageData.profileImageUrl} />
             <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'column' }}>
-              <p style={{ cursor: 'pointer', fontSize: '14px', color: '#FFF' }}>{imageData.writer}</p>
-              <p style={{ fontSize: '9px', color: '#FFF' }}>{createdAt}</p>
+              <ImageWriter>{imageData.writer}</ImageWriter>
+              <ImageCreatedAt>{createdAt}</ImageCreatedAt>
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -134,7 +125,7 @@ const ImageDetail = (props) => {
             </button>
             {imageData && profile && imageData.writer === profile.nickname && (
               <button onClick={handleDeleteImage}>
-                <MdOutlineDelete style={{ fontSize: '20px' }} />
+                <MdOutlineDelete style={{ fontSize: '22px' }} />
               </button>
             )}
           </div>
@@ -144,11 +135,9 @@ const ImageDetail = (props) => {
         </div>
         <div style={{ width: '100%', padding: '5px 10px 0', display: 'flex', alignItems: 'center' }}>
           <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
-          <span style={{ color: '#FFF', fontSize: '14px' }}>{likeCount}</span>
+          <ImageLikeCount>{likeCount}</ImageLikeCount>
         </div>
         {shareToggleMenu && <ShareMenu handleShareToggleMenu={handleShareToggleMenu} imageUrl={imageData.thumbNail} />}
-        {/* 토글 메뉴 없이 휴지통 아이콘으로 수정할 건지 확인 필요 */}
-        {/* {threeDotsToggleMenu && <ThreeDotsMenu boardId={boardId} handleThreeDotsToggleMenu={handleThreeDotsToggleMenu} />} */}
       </ImageWrapper>
     </>
   )
@@ -157,13 +146,27 @@ const ImageDetail = (props) => {
 const ProfileImage = styled.div`
   width: 40px;
   height: 40px;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
   cursor: pointer;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.white};
+`
+
+const ImageWriter = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
+`
+const ImageCreatedAt = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  color: ${({ theme }) => theme.colors.white};
+`
+const ImageLikeCount = styled.span`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.white};
 `
 
 export default ImageDetail
