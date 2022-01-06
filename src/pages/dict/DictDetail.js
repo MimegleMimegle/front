@@ -21,10 +21,11 @@ const DictDetail = (props) => {
   const [show, setShow] = useState(false)
 
   const [dict, setDict] = useState([])
-  const [isLike, setIsLike] = React.useState(false)
+  const [isLike, setIsLike] = useState(false)
+  const [likeCount, setLikeCount] = useState('')
 
   const getDictListDB = async () => {
-    let response = await axios.get(`http://54.180.150.230/api/dict/${dictId}`)
+    let response = await likeActions.likeDict()
     console.log(response)
     setDict(response.data.data)
   }
@@ -39,10 +40,17 @@ const DictDetail = (props) => {
   console.log(dictId)
 
   const likeDict = async () => {
-    await dispatch(likeActions.changeLikeDictDB(dictId))
-    setIsLike()
+    // await dispatch(likeActions.changeLikeDictDB(dictId))
+    let response = await axios.get(`http://54.180.150.230/api/dict/${dictId}/like`)
 
-    // console.log(response.data.data.like)
+    console.log(response)
+    if (isLike === false) {
+      setIsLike(true)
+      setLikeCount(+1)
+    } else if (isLike === true) {
+      setIsLike(true)
+      setLikeCount(-1)
+    }
   }
 
   const showSearchBar = () => {
