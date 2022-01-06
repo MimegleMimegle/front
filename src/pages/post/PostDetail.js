@@ -6,6 +6,7 @@ import { actionCreators as postActions } from '../../redux/modules/post'
 import swal from 'sweetalert'
 import styled from 'styled-components'
 import { likeApi } from '../../shared/api'
+import { boardApi } from '../../shared/api'
 
 import CommentTest from '../CommentTest'
 import Header from '../../components/Header'
@@ -30,11 +31,16 @@ const PostDetail = (props) => {
   const [toggleModalChang, setToggleModalChang] = useState(false)
 
   const getOnePostDB = async () => {
-    let response = await axios.get(`http://54.180.150.230/api/board/${boardId}`)
-    console.log(response)
-    setPost(response.data.data)
-    setIsLiked(response.data.data.isLike)
-    setLikeCount(response.data.data.likeCnt)
+    await boardApi
+      .getOnePost(boardId)
+      .then((response) => {
+        setPost(response.data.data)
+        setIsLiked(response.data.data.isLike)
+        setLikeCount(response.data.data.likeCnt)
+      })
+      .catch((error) => {
+        console.log('게시글 상세 정보 불러오기 문제 발생', error.response)
+      })
   }
 
   const del = () => {
@@ -88,7 +94,7 @@ const PostDetail = (props) => {
             <UserProfile src={post.profileImageUrl} alt="" />
             <div className="userinfo">
               <Writer>{post.writer}</Writer>
-              <div className="createdate">{/* <CreatedAt>{post.createdAt.split('T')[0]}</CreatedAt> */}</div>
+              <div className="createdate">{post && post.createdAt.split('T')[0]}</div>
             </div>
           </UserInfo>
           {username === post.username ? (
@@ -182,7 +188,7 @@ const UserInfo = styled.div`
   display: flex;
   align-items: center;
   .createdate {
-    display: flex;
+    font-size: ${({ theme }) => theme.fontSizes.small};
   }
 `
 
