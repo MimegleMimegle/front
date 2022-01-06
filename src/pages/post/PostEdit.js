@@ -116,7 +116,6 @@ const PostEdit = (props) => {
     
   }
 
-
   const fileInput = React.useRef('')
 
   return (
@@ -151,7 +150,6 @@ const Container = styled.div`
 
 const PWHeader = styled.div`
   border-bottom: 0.5px solid lightgray;
-
   .writetitle {
     width: 100%;
     border: none;
@@ -204,12 +202,10 @@ const HashDivWrap = styled.div`
   color: #444241;
   border-bottom: 1.6px solid #767676;
   padding: 2px 2px 8px 2px;
-
   .hashWrapOutter {
     display: flex;
     flex-wrap: wrap;
   }
-
   .hashWrapInner {
     margin: 5px 5px 0 0;
     height: 24px;
@@ -224,7 +220,6 @@ const HashDivWrap = styled.div`
     line-height: 24px;
     cursor: pointer;
   }
-
   .hashInput {
     width: auto;
     margin: 10px;
