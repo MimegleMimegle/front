@@ -98,9 +98,7 @@ const PostSearch = (props) => {
               ? filteredPosts.map((post) => {
                   return <PostCard key={post.boardId} post={post} />
                 })
-              : null}
-            {filteredPosts.length === 0 ?
-            <HistoryContainer>관련 검색 결과가 없습니다.</HistoryContainer> : null}  
+              : <HistoryContainer>관련 검색 결과가 없습니다.</HistoryContainer>}            
           </div>
         </div>
         
