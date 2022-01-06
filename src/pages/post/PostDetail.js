@@ -23,10 +23,13 @@ const PostDetail = (props) => {
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
 
+  console.log(isLiked)
   const getOnePostDB = async () => {
     let response = await axios.get(`http://54.180.150.230/api/board/${boardId}`)
     console.log(response)
     setPost(response.data.data)
+    setIsLiked(response.data.data.isLike)
+    setLikeCount(response.data.data.likeCnt)
   }
 
   const del = () => {
@@ -129,11 +132,11 @@ const PostDetail = (props) => {
           
       <ViewLikeComment>
       <AiOutlineEye style={{ fontSize: '18px' }}/>
-      <Num style={{fontSize: '14px'}}>{post.views}</Num> 
+      <span style={{fontSize: '12px',padding: "0 4.5px 0 5px"}} >{post.views}</span> 
       <button>{isLiked ? <HiHeart style={{ fontSize: '18px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '18px' }} onClick={handleClickLike} />}</button>
-      <Num style={{fontSize: '14px'}}>{likeCount}</Num>
+      <span style={{fontSize: '12px',padding: "0 9.5px 0 0"}}>{likeCount}</span>
       <FiMessageSquare style={{ fontSize: '18px' }}/>
-      <Num style={{fontSize: '14px'}}>{post.commentCnt? post.commentCnt: 0}</Num> 
+      <Num >{post.commentCnt? post.commentCnt: 0}</Num> 
       </ViewLikeComment>
     </PostWrap>
 
@@ -234,10 +237,12 @@ const Num = styled.text`
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 14px;
+  line-height: 12px;
   display: flex;
   align-items: center;
   margin: 0 9.5px 0 5px;
+  display: flex;
+  align-items: center;
 `;
 
 const ModalChang = styled.div`
