@@ -81,9 +81,15 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
     setIsNicknameChecked(false)
   }
 
+  window.addEventListener('keyup', (e) => {
+    if (showModal && e.key === 'Escape') {
+      setShowModal(false)
+    }
+  })
+
   return (
     <>
-      <Backdrop open={showModal} onClick={() => setShowModal(false)} sx={{ zIndex: '10000' }}>
+      <Backdrop open={showModal} sx={{ zIndex: '10000' }}>
         <ModalContainer>
           <ModalBody>
             <div style={{ width: '100%', padding: '10px 14px 0 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

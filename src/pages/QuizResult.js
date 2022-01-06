@@ -64,7 +64,7 @@ const QuizResult = ({ quiz_list }) => {
             </div>
             <div className="resultButtonBox box2"></div>
           </ResultButtonContainer>
-          <div style={{ width: '80%', padding: '20px 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '80%', padding: '12px 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: '100%', margin: '5px 0' }}>
               <CircleButtonBox>
                 <div
@@ -103,7 +103,7 @@ const QuizResult = ({ quiz_list }) => {
               })}
           </QuizContainer>
         </div>
-        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} handleShareVisible={handleShareVisible} />}
+        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />}
       </Wrapper>
     </>
   )
@@ -169,6 +169,7 @@ const QuizResultBox = styled.div`
 `
 
 const QuizContainer = styled.div`
+  padding: 0 0 16px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -223,7 +224,7 @@ const TextButton = styled.button`
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes.lg};
   font-weight: 700;
-  padding: 10px 0;
+  padding: 12px 0;
 `
 
 const CircleButtonBox = styled.div`
