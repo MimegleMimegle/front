@@ -4,8 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { actionCreators as commentActions } from '../redux/modules/comment'
 import { history } from '../redux/ConfigureStore'
 
-import ModalContainer from './ModalContainer'
-import ModalWrapper from './ModalWrapper'
+import ConfirmModal from '../components/modal/ConfirmModal'
 import { ReactComponent as DustBinIcon } from '../styles/icons/delete_black_18dp.svg'
 
 const OneComment = (props) => {
@@ -13,31 +12,22 @@ const OneComment = (props) => {
 
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
   const commentWriterId = props.commentWriterId
+  const boardId = props.boardId
   const commentId = props.commentId
   const createdAt = props.createdAt.split('T')[0] + ' ' + props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]
 
-  console.log(commentId)
+  const [showModal, setShowModal] = React.useState(false)
 
-  const [modalDeleteVisible, setModalDeleteVisible] = React.useState(false)
-
-  const handleOpenModalDelete = (e) => {
-    setModalDeleteVisible(true)
+  const handleShowModal = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowModal(!showModal)
   }
-  const handleCloseModalDelete = (e) => {
-    setModalDeleteVisible(false)
-  }
-
-  window.addEventListener('keyup', (e) => {
-    if (modalDeleteVisible && e.key === 'Escape') {
-      setModalDeleteVisible(false)
-    }
-  })
 
   /* 삭제는 되는데 리프레쉬해야만 반영됨 -> 삭제할 건지 확인하는 모달 생성 후 확인 버튼 누르면 dispatch & history.push로 댓글 페이지로 돌아가게 하기? */
-  const delComment = (commentId) => {
-    dispatch(commentActions.delCommentDB(commentId))
-    setModalDeleteVisible(false)
-    console.log(commentId)
+  const delComment = () => {
+    dispatch(commentActions.delCommentDB(boardId, commentId))
+    setShowModal(false)
   }
 
   return (
@@ -54,24 +44,15 @@ const OneComment = (props) => {
           </div>
         </div>
         {commentWriterId === username ? (
-          <button style={{ height: '100%' }} onClick={handleOpenModalDelete}>
+          <button style={{ height: '100%' }} onClick={handleShowModal}>
             <DustBinIcon />
           </button>
         ) : null}
       </Wrap>
-      {modalDeleteVisible && (
-        <ModalWrapper visible={true} maskClosable={false}>
-          <ModalContainer>
-            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <h4>삭제</h4>
-              <p style={{ padding: '10px 0 20px' }}>댓글을 삭제하시겠습니까?</p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-                <button onClick={handleCloseModalDelete}>취소</button>
-                <button onClick={delComment}>삭제</button>
-              </div>
-            </div>
-          </ModalContainer>
-        </ModalWrapper>
+      {showModal && (
+        <ConfirmModal question="댓글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+          <DeleteButton onClick={delComment}>삭제</DeleteButton>
+        </ConfirmModal>
       )}
     </>
   )
@@ -100,5 +81,9 @@ const CreatedAt = styled.div`
 `
 const Content = styled.div`
   font-size: 12px;
+`
+const DeleteButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 export default OneComment
