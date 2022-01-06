@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -20,6 +20,7 @@ const QuizResult = ({ quiz_list }) => {
 
   const [copied, setCopied] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [resultText, setResultText] = useState({ sub: '', main: '' })
 
   const closeCopied = () => {
     setTimeout(() => {
@@ -42,6 +43,16 @@ const QuizResult = ({ quiz_list }) => {
       }).length
     : null
 
+  useEffect(() => {
+    if (answerCnt >= 0 && answerCnt < 4) {
+      setResultText({ sub: '아주 작은 기적...', main: '"밈기적."' })
+    } else if (answerCnt >= 4 && answerCnt < 8) {
+      setResultText({ sub: `${answerCnt}개나 맞춘 나,`, main: '제법 "밈잘알"이에요.' })
+    } else {
+      setResultText({ sub: '치료가 필요할 정도로 심각한', main: '"밈 중독"입니다.' })
+    }
+  }, [])
+
   const score = quiz_list ? (100 / quiz_list.length) * answerCnt : null
 
   return (
@@ -54,8 +65,8 @@ const QuizResult = ({ quiz_list }) => {
             <div className="quiz-subject box-2"></div>
             <div style={{ padding: '50px 0 30px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontSize: '16px', fontWeight: '700' }}>{answerCnt}/10</span>
-              <h2 style={{ fontSize: '14px', padding: '10px 0 0' }}>치료가 필요할 정도로 심각한</h2>
-              <h2 className="resultDesc">'밈 중독'입니다.</h2>
+              <h2 style={{ fontSize: '14px', padding: '10px 0 0' }}>{resultText.sub}</h2>
+              <h2 className="resultDesc">{resultText.main}</h2>
             </div>
           </QuizResultBox>
           <ResultButtonContainer>
