@@ -28,11 +28,7 @@ const PostEdit = (props) => {
   const [hashTag, setHashTag] = useState('')
   const [hashTagList, setHashTagList] = useState([])
 
-  console.log(boardId)
-  console.log(post)
-  console.log(title)
-  console.log(content)
-  console.log(thumbNail)
+  console.log(hashTag)
   console.log(hashTagList)
 
   const getOnePostDB = async () => {
@@ -77,7 +73,17 @@ const PostEdit = (props) => {
       const $hashWrapInner = document.createElement('div')
       $hashWrapInner.className = 'hashWrapInner'
 
-      /* 태그를 클릭 이벤트 관련 로직 */
+      const $originHashWrapOutter = document.querySelector('.originHashWrapOutter')
+      const $originHashWrapInner = document.querySelector('.originHashWrapInner')
+
+      /* 기존 태그 클릭 이벤트 관련 로직 */
+      $originHashWrapInner.addEventListener('click', () => {
+        $originHashWrapOutter?.removeChild($originHashWrapInner)
+        console.log($originHashWrapInner.innerHTML)
+        setHashTagList(hashTagList.filter((hashTag) => hashTag))
+      })
+
+      /* 새로운 태그 클릭 이벤트 관련 로직 */
       $hashWrapInner.addEventListener('click', () => {
         $hashWrapOutter?.removeChild($hashWrapInner)
         console.log($hashWrapInner.innerHTML)
@@ -111,8 +117,6 @@ const PostEdit = (props) => {
       }
     }
   }
-
-  console.log(fileInput.current.files)
 
   const editPost = () => {
     if (title === '' || content === '') {
@@ -155,9 +159,22 @@ const PostEdit = (props) => {
               </label>
               <input type="file" id="file" className="upload-input" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
             </UploadSection>
-            <HashDivWrap className="hashWrap">
+            <HashTagInfo>
+              <div>기존에 등록한 해시태그는 수정이 어렵습니다.</div>
+            </HashTagInfo>
+            <HashDivWrap className="hashWrap originHashWrap">
+              {post.hashTags !== undefined &&
+                post.hashTags.map((hashTag, idx) => {
+                  return (
+                    <div className="originHashWrapOutter" key={`hashTag-id-${idx}`}>
+                      <div className="originHashWrapInner">#{hashTag}</div>
+                    </div>
+                  )
+                })}
+            </HashDivWrap>
+            <HashDivWrap className="hashWrap newHashWrap">
               <div className="hashWrapOutter"></div>
-              <input className="hashInput" type="text" placeholder="해시태그를 입력해주세요 (최대5개, 해시태그는 클릭 시 지워집니다.)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
+              <input className="hashInput" type="text" placeholder="해시태그를 추가해주세요 (기존에 작성한 해시태그 포함 최대 5개)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
             </HashDivWrap>
           </PWBody>
           <PWFooter>
@@ -197,6 +214,13 @@ const PWHeader = styled.div`
   }
 `
 
+const HashTagInfo = styled.div`
+  color: ${({ theme }) => theme.colors.grey};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  padding: 16px 16px 0;
+  letter-spacing: -0.5px;
+`
+
 const PWBody = styled.div`
   display: flex;
   flex-direction: column;
@@ -218,6 +242,56 @@ const PWBody = styled.div`
       color: ${({ theme }) => theme.colors.grey};
     }
   }
+  .hashWrap {
+    color: ${({ theme }) => theme.colors.black};
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    display: flex;
+    flex-wrap: wrap;
+    letter-spacing: -0.5px;
+
+    .hashWrapOutter,
+    .originHashWrapOutter {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px 0;
+    }
+
+    .hashWrapInner,
+    .originHashWrapInner {
+      padding: 5px 7px 5px 0;
+      height: 24px;
+      color: ${({ theme }) => theme.colors.black};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: ${({ theme }) => theme.fontSizes.base};
+      line-height: 24px;
+      cursor: pointer;
+    }
+
+    .hashInput {
+      width: 100%;
+      padding: 0;
+      font-size: ${({ theme }) => theme.fontSizes.base};
+      display: inline-flex;
+      outline: none;
+      cursor: text;
+      line-height: 2rem;
+      min-width: 100%;
+      border: none;
+      &::placeholder {
+        font-size: ${({ theme }) => theme.fontSizes.base};
+      }
+    }
+  }
+  .originHashWrap {
+    padding: 0 16px 10px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.line};
+  }
+  .newHashWrap {
+    padding: 10px 16px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.black};
+  }
 `
 
 const Preview = styled.div`
@@ -237,6 +311,7 @@ const Preview = styled.div`
 const UploadSection = styled.div`
   width: 100%;
   padding: 16px 16px 6px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.line};
   .upload-label {
     height: 100%;
     cursor: pointer;
@@ -253,49 +328,7 @@ const UploadSection = styled.div`
   }
 `
 
-const HashDivWrap = styled.div`
-  color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  padding: 10px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  letter-spacing: -0.5px;
-  border-top: 1px solid ${({ theme }) => theme.colors.line};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.black};
-
-  .hashWrapOutter {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px 0;
-  }
-
-  .hashWrapInner {
-    padding: 5px 7px 5px 0;
-    height: 24px;
-    color: ${({ theme }) => theme.colors.black};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    line-height: 24px;
-    cursor: pointer;
-  }
-
-  .hashInput {
-    width: 100%;
-    padding: 0;
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    display: inline-flex;
-    outline: none;
-    cursor: text;
-    line-height: 2rem;
-    min-width: 100%;
-    border: none;
-    &::placeholder {
-      font-size: ${({ theme }) => theme.fontSizes.base};
-    }
-  }
-`
+const HashDivWrap = styled.div``
 
 const PWFooter = styled.div`
   position: relative;
