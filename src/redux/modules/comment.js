@@ -82,9 +82,9 @@ const editCommentDB = (boardId, commentId, newComment) => {
 
 const delCommentDB = (boardId, commentId) => {
   return async function (dispatch, getState, { history }) {
-    // if (!boardId || !commentId) {
-    //   return
-    // }
+    if (!boardId || !commentId) {
+      return
+    }
 
     await commentApi
       .deleteComment(commentId)
