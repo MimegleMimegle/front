@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { history } from '../redux/ConfigureStore'
-
 import Header from '../components/Header'
 import ModalWrapper from '../components/ModalWrapper'
 import ModalContainer from '../components/ModalContainer'
-import QuizIntroImage from '../styles/image/quiz_main_image1.gif'
+import QuizIntroImage from '../styles/image/quiz_main_image2.gif'
 
 const QuizIntro = (props) => {
   const [showModal, setShowModal] = React.useState(false)
@@ -61,22 +60,22 @@ const QuizIntro = (props) => {
         </ImageSection>
         <SubjectSection>
           <div className="subject-question">
-            <p>어느 시대의 밈을</p>
+            <p>어느 레벨 밈을</p>
             <p>테스트하고 싶으신가요?</p>
           </div>
           <div>
             <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="y2000" onClick={handleChangeSubjectY2000}>
-              2000
+              Lv. 밈기적
             </button>
           </div>
           <div>
             <button className={`subject-button ${y2010 ? 'selected' : ''}`} value="y2010" onClick={handleChangeSubjectY2010}>
-              2010
+              Lv. 밈잘알
             </button>
           </div>
           <div>
             <button className={`subject-button ${y2020 ? 'selected' : ''}`} value="y2020" onClick={handleChangeSubjectY2020}>
-              2020
+              Lv. 밈중독
             </button>
           </div>
         </SubjectSection>

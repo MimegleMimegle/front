@@ -25,7 +25,9 @@ const Mypage = (props) => {
   const myMemePostList = my && my.postBoards.filter((post) => post.category === 'FREEBOARD')
   const myMemeImageList = my && my.postBoards.filter((post) => post.category === 'IMAGEBOARD')
 
-  const openEditProfile = () => {
+  const handleEditProfile = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowModal(true)
   }
 
@@ -73,7 +75,7 @@ const Mypage = (props) => {
             <div className="profile-info box-1">
               <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className="user-nickname">{my && my.nickname}</div>
-                <button onClick={openEditProfile}>
+                <button onClick={handleEditProfile}>
                   <AiOutlineEdit fontSize="22px" />
                 </button>
               </div>
@@ -127,7 +129,7 @@ const Mypage = (props) => {
             )}
           </UserActivity>
         </div>
-        {showModal && <EditProfile setShowModal={setShowModal} my={my} />}
+        {showModal && <EditProfile showModal={showModal} setShowModal={setShowModal} my={my} />}
       </Wrapper>
     </>
   )

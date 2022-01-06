@@ -56,7 +56,7 @@ const KakaoShareButton = (props) => {
   }
 
   return (
-    <button id="kakao-link-btn" style={{ padding: '0 0 6px' }}>
+    <button id="kakao-link-btn" style={{ padding: '0 0 8px' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <KakaoLogoImage src={kakaoLogo} {...styles} />
         {children}
@@ -66,7 +66,7 @@ const KakaoShareButton = (props) => {
 }
 
 KakaoShareButton.defaultProps = {
-  size: 40,
+  size: 52,
 }
 
 const KakaoLogoImage = styled.img`

@@ -4,12 +4,11 @@ import { useDispatch } from 'react-redux'
 import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
-import ModalWrapper from '../../components/ModalWrapper'
-
+import Backdrop from '@mui/material/Backdrop'
 import { IoCloseOutline } from 'react-icons/io5'
 import { MdPhotoCamera } from 'react-icons/md'
 
-const EditProfile = ({ setShowModal, my }) => {
+const EditProfile = ({ showModal, setShowModal, my }) => {
   const dispatch = useDispatch()
 
   const userId = localStorage.getItem('id')
@@ -84,7 +83,7 @@ const EditProfile = ({ setShowModal, my }) => {
 
   return (
     <>
-      <ModalWrapper visible={true}>
+      <Backdrop open={showModal} onClick={() => setShowModal(false)} sx={{ zIndex: '10000' }}>
         <ModalContainer>
           <ModalBody>
             <div style={{ width: '100%', padding: '10px 14px 0 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -101,7 +100,7 @@ const EditProfile = ({ setShowModal, my }) => {
             </div>
             <ProfileImagePreview src={imageFile ? imageFile : my.profileImageUrl} />
             <div className="file">
-              <label for="file" className="upload-label">
+              <label htmlFor="file" className="upload-label">
                 <MdPhotoCamera style={{ fontSize: '20px', marginTop: '4px' }} />
               </label>
               <input type="file" id="file" className="upload-file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg, image/png" />
@@ -120,7 +119,7 @@ const EditProfile = ({ setShowModal, my }) => {
             </div>
           </ModalBody>
         </ModalContainer>
-      </ModalWrapper>
+      </Backdrop>
     </>
   )
 }
