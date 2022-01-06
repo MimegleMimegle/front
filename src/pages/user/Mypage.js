@@ -25,7 +25,9 @@ const Mypage = (props) => {
   const myMemePostList = my && my.postBoards.filter((post) => post.category === 'FREEBOARD')
   const myMemeImageList = my && my.postBoards.filter((post) => post.category === 'IMAGEBOARD')
 
-  const openEditProfile = () => {
+  const handleEditProfile = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowModal(true)
   }
 
@@ -73,8 +75,8 @@ const Mypage = (props) => {
             <div className="profile-info box-1">
               <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className="user-nickname">{my && my.nickname}</div>
-                <button onClick={openEditProfile}>
-                  <AiOutlineEdit fontSize="20px" />
+                <button onClick={handleEditProfile}>
+                  <AiOutlineEdit fontSize="22px" />
                 </button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -127,7 +129,7 @@ const Mypage = (props) => {
             )}
           </UserActivity>
         </div>
-        {showModal && <EditProfile setShowModal={setShowModal} my={my} />}
+        {showModal && <EditProfile showModal={showModal} setShowModal={setShowModal} my={my} />}
       </Wrapper>
     </>
   )
@@ -160,12 +162,12 @@ const UserProfile = styled.div`
     width: 90%;
     max-height: 150px;
     height: 100%;
-    border: 1px solid #111;
+    border: 1px solid ${({ theme }) => theme.colors.black};
     position: absolute;
 
     .user-nickname {
       padding: 0 5px;
-      font-size: 16px;
+      font-size: ${({ theme }) => theme.fontSizes.xl};
       font-weight: 700;
     }
 
@@ -176,26 +178,26 @@ const UserProfile = styled.div`
       align-items: center;
       justify-content: center;
       .user-activity-info-subject {
-        font-size: 16px;
+        font-size: ${({ theme }) => theme.fontSizes.xl};
       }
       .user-activity-info-count {
         padding-top: 2px;
-        font-size: 14px;
+        font-size: ${({ theme }) => theme.fontSizes.lg};
       }
     }
   }
   .box-1 {
     top: 0;
-    left: 40%;
-    transform: translateX(-40%);
-    background-color: #fff;
+    left: 41%;
+    transform: translateX(-41%);
+    background-color: ${({ theme }) => theme.colors.white};
     z-index: 500;
   }
   .box-2 {
     left: 60%;
     transform: translateX(-60%);
     top: 7px;
-    background-color: #ffe330;
+    background-color: ${({ theme }) => theme.colors.yellow};
   }
 `
 
@@ -203,13 +205,13 @@ const ProfileImage = styled.div`
   position: absolute;
   width: 80px;
   height: 80px;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 40px;
   top: -40px;
   left: 49%;
   transform: translateX(-49%);
   z-index: 999;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.white};
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
@@ -220,18 +222,18 @@ const Filter = styled.div`
   padding: 40px 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.line};
 
   .filter-button {
-    font-size: 16px;
-    color: #878c92;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    color: ${({ theme }) => theme.colors.grey};
     padding: 0 0 10px;
     border-bottom: 2px solid transparent;
   }
   .filter-button-active {
     transition: all 0.2s ease-in-out;
-    border-bottom: 2px solid #111;
-    color: #111;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.black};
   }
 `
 

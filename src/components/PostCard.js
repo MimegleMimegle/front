@@ -13,34 +13,41 @@ const PostCard = ({ post }) => {
     history.push(`/post/detail/${post.boardId}`)
   }
 
+  const hour = post.createdAt.split('T')[1].split('.')[0]
+
   return (
     <>
       <FullWrap>
         <Wrap postList={post} onClick={onC}>
           <UserInfo>
-            <img src={post ? post.profileImageUrl : null} alt="" style={{ borderRadius: '160px', width: '40px', height: '40px' }} />
-            <div>
-              <p>{post ? post.writer : null}</p>
-              <p>{post ? post.createdAt : null}</p>
-            </div>
+              <UserImg src={post ? post.profileImageUrl : null} alt=""/>
+              <div className="userinfo">
+                <Writer>{post ? post.writer : null}</Writer>
+                <div className="createdate">
+                  <CreatedAt>{post ? post.createdAt.split('T')[0]: null}</CreatedAt>
+                  <CreatedAt>{post? hour.split(':')[0] + ':' + hour.split(':')[1]  : null}</CreatedAt>
+                </div>
+              </div>
           </UserInfo>
-          <PostBody>
-            <div className="text">
-              <h4>{post ? post.title : null}</h4>
+          <Content>
+              <Title>{post ? post.title : null}</Title>
               <HashTagHere>
                 {post.hashTags &&
                   post.hashTags.map((hashTag, index) => {
                     return <p key={index}>#{hashTag}</p>
                   })}
               </HashTagHere>
-              <AiOutlineEye /> {post ? post.views : null}
-              <AiOutlineHeart />
-              {post ? post.likeCnt : null}
-              <FiMessageSquare /> {post ? post.commentCnt : null}
-            </div>
-          </PostBody>
+          </Content>
+          <Icon>        
+              <AiOutlineEye size="18" color="#878C92"/> 
+              <Number >{post ? post.views : null}</Number>
+              <AiOutlineHeart color="#878C92" size="18"/>
+              <Number>{post ? post.likeCnt : null}</Number>
+              <FiMessageSquare size="19" color="#878C92"/> 
+              <Number>{post ? post.commentCnt : null}</Number>
+          </Icon>
         </Wrap>
-        {post.thumbNail ? <img className="uploadimg" src={post && post.thumbNail} alt="" /> : null}
+        {post.thumbNail ? <ThumbNail className="uploadimg" src={post && post.thumbNail} alt="" /> : null}
       </FullWrap>
     </>
   )
@@ -49,33 +56,97 @@ const PostCard = ({ post }) => {
 export default PostCard
 
 const FullWrap = styled.div`
+  height:133px;
+  padding: 16px 16px 16px 16px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 0.5px solid rgb(200, 200, 200);
-  padding: 10px;
+  border-bottom: 1px solid #E5E5E5;
 
-  .uploadimg {
-    width: 70px;
-    height: 70px;
-    margin: 20px 0 0 0;
-  }
+`;
+
+const Wrap = styled.div`
+  cursor: pointer;  
+
 `
-
-const Wrap = styled.div``
 
 const UserInfo = styled.div`
   display: flex;
-`
-
-const PostBody = styled.div`
-  width: 100%;
-  height: auto;
-  display: flex;
-  cursor: pointer;
-
-  .text {
+  height:30px;
+  .createdate {
+    display: flex;
   }
+`;
+
+const UserImg = styled.img`
+margin: 0 8px 0 0;
+width: 28px;
+height: 28px;
+border: 1px solid #000000;
+box-sizing: border-box;
+border-radius: 150px;
+`;                                                       
+const Writer = styled.text`
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 13px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 4px 0;
+
+`;
+
+const CreatedAt = styled.div`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 9px;
+  line-height: 11px;
+  margin: 0 3px 0 0 ;
+`;
+
+
+const Content = styled.div`
+  margin: 10px 0 0 0;
+  cursor: pointer;
+  hight: 30px;
+  width:250px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+
 `
+const Title = styled.div`
+  font-weight: bold; 
+  font-size: 12px;
+  line-height: 20px;
+  
+
+`
+
 const HashTagHere = styled.div`
   display: flex;
+  fontSize: 12px;
+`
+
+const Icon = styled.div`
+display:flex;
+padding: 8px 0;
+`
+
+const Number = styled.text`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  margin: 0 9.5px 0 5px;
+`;
+
+const ThumbNail = styled.img`
+  width: 60px;
+  height: 60px;
+  margin: 27px 0 0 0;
 `

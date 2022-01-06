@@ -5,6 +5,7 @@ import Sidebar from './Sidebar'
 import HeaderLogo from './HeaderLogo'
 import HeaderHamburder from './HeaderHamburger'
 import HeaderGoBack from './HeaderGoBack'
+import HeaderClose from './HeaderClose'
 
 const Header = ({ type, children, location }) => {
   const [showSidebar, setShowSidebar] = React.useState(false)
@@ -12,13 +13,13 @@ const Header = ({ type, children, location }) => {
     setShowSidebar(!showSidebar)
   }
 
-  if (type === 'PostEdit' || type === 'DictWrite' || type === 'DictEdit') {
+  if (type === 'DictWrite' || type === 'DictEdit') {
     return (
       <>
         <NavHeader>
           <ul className="nav-list">
             <li>
-              <HeaderGoBack type={type} />
+              <HeaderClose />
             </li>
             <li className="nav-item-middle">
               <Location>{location}</Location>
@@ -32,7 +33,7 @@ const Header = ({ type, children, location }) => {
     )
   }
 
-  if (type === 'PostWrite' || type === 'DictSearchResult' || type === 'DictHistory' || type === 'DictDetail') {
+  if (type === 'PostWrite' || type === 'DictSearchResult' || type === 'DictHistory' || type === 'DictDetail' || type === 'QuizIntro' || type === 'PostEdit') {
     return (
       <>
         <NavHeader>
@@ -52,28 +53,7 @@ const Header = ({ type, children, location }) => {
     )
   }
 
-  if (type === 'MyPage' || type === 'QuizResult') {
-    return (
-      <>
-        <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderHamburder handleSidebar={handleSidebar} />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right"></div>
-            </li>
-          </ul>
-        </NavHeader>
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      </>
-    )
-  }
-
-  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch' || type === 'DictList') {
+  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch' || type === 'MyPage' || type === 'DictList' || type === 'QuizResult') {
     return (
       <>
         <NavHeader>
@@ -90,18 +70,6 @@ const Header = ({ type, children, location }) => {
           </ul>
         </NavHeader>
         <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      </>
-    )
-  }
-
-  if (type === 'QuizIntro') {
-    return (
-      <>
-        <NavHeader>
-          <div className="nav-item-middle">
-            <Location>{location}</Location>
-          </div>
-        </NavHeader>
       </>
     )
   }
@@ -133,8 +101,8 @@ const NavHeader = styled.nav`
   transform: translateX(-50%);
   width: 100%;
   height: 74px;
-  background-color: #fff;
-  border-bottom: 1px solid #111;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.black};
   /* padding: 10px 0 12px; */
   z-index: 1000;
   .nav-list {
@@ -164,7 +132,7 @@ const NavHeader = styled.nav`
 
 const Location = styled.h2`
   font-weight: 700;
-  font-size: 18px;
+  font-size: ${({ theme }) => theme.fontSizes.xxl};
   cursor: default;
 `
 
