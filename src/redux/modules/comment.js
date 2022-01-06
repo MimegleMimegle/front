@@ -12,7 +12,6 @@ const DEL_COMMENT = 'DEL_COMMENT'
 
 /* action creator */
 
-const getComments = createAction(GET_COMMENTS, (boardId, comment_list) => ({ boardId, comment_list }))
 const addComment = createAction(ADD_COMMNET, (boardId, content) => ({ boardId, content }))
 const editComment = createAction(EDIT_COMMENT, (boardId, commentId, newComment) => ({ boardId, commentId, newComment }))
 const delComment = createAction(DEL_COMMENT, (boardId, commentId) => ({ boardId, commentId }))
@@ -25,24 +24,6 @@ const initialState = {
 
 /* middleware */
 
-const getCommentsDB = (boardId) => {
-  return async function (dispatch, getState, { history }) {
-    if (!boardId) {
-      return
-    }
-
-    await commentApi
-      .getComments(boardId)
-      .then((res) => {
-        const comment_list = res.data.data
-        dispatch(getComments(boardId, comment_list))
-      })
-      .catch((err) => {
-        console.log('댓글 목록을 불러오는 데 문제가 발생했습니다.', err.response)
-      })
-  }
-}
-
 const addCommentDB = (boardId, comment) => {
   return async function (dispatch, getState, { history }) {
     if (!boardId) {
@@ -52,9 +33,7 @@ const addCommentDB = (boardId, comment) => {
     await commentApi
       .addComment(boardId, comment)
       .then((res) => {
-        /* response로 작성한 comment의 commentId 받을 수 있는지 백 확인 필요 */
-        const content = res.data.data
-        dispatch(addComment(boardId, content))
+        window.location.reload()
       })
       .catch((err) => {
         console.log('댓글을 작성하는 데 문제가 발생했습니다.', err.response)
@@ -91,10 +70,7 @@ const delCommentDB = (boardId, commentId) => {
       .then((res) => {
         console.log(res)
         dispatch(delComment(boardId, commentId))
-      })
-      .then(() => {
-        // 추후 경로 수정
-        history.push(`/post/detail/${boardId}`)
+        window.location.reload()
       })
       .catch((err) => {
         console.log('댓글을 삭제하는 데 문제가 발생했습니다.', err.response)
@@ -123,7 +99,6 @@ export default handleActions(
       produce(state, (draft) => {
         // let idx = draft.comment_list[action.payload.boardId].findIndex((c) => c.commentId === action.payload.commentId)
         // draft.comment_list[action.payload.boardId].splice(idx, 1)
-        draft.comment_list[action.payload.boardId].filter((c) => c.commentId !== action.payload.commentId)
       }),
   },
   initialState
@@ -132,8 +107,6 @@ export default handleActions(
 /* export */
 
 const actionCreators = {
-  getComments,
-  getCommentsDB,
   addComment,
   addCommentDB,
   editComment,

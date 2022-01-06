@@ -8,7 +8,7 @@ import { ReactComponent as LinkCopyIcon } from '../styles/icons/링크복사_24d
 import { KakaoShareButton } from '../shared/kakaoShare'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
 
-const ShareBottomSheet = ({ shareVisible, handleShareVisible }) => {
+const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
 
   const currentUrl = window.location.href
@@ -26,9 +26,15 @@ const ShareBottomSheet = ({ shareVisible, handleShareVisible }) => {
     closeCopied()
   }
 
+  window.addEventListener('keyup', (e) => {
+    if (shareVisible && e.key === 'Escape') {
+      setShareVisible(!shareVisible)
+    }
+  })
+
   return (
     <>
-      <Backdrop open={shareVisible} onClick={handleShareVisible} sx={{ zIndex: '10000' }}>
+      <Backdrop open={shareVisible} sx={{ zIndex: '10000' }}>
         <Container className={`${shareVisible ? 'open' : 'close'}`}>
           <div className="share share-header">공유하기</div>
           <ShareBody>
@@ -64,7 +70,7 @@ const ShareBottomSheet = ({ shareVisible, handleShareVisible }) => {
             </div>
           </ShareBody>
           <div className="share share-footer">
-            <button className="share-footer__close-button" onClick={handleShareVisible}>
+            <button className="share-footer__close-button" onClick={() => setShareVisible(!shareVisible)}>
               닫기
             </button>
           </div>
@@ -112,12 +118,12 @@ const Container = styled.div`
     justify-content: center;
   }
   .share-header {
-    font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-size: ${({ theme }) => theme.fontSizes.base};
     cursor: default;
   }
   .share-footer {
     .share-footer__close-button {
-      font-size: ${({ theme }) => theme.fontSizes.lg};
+      font-size: ${({ theme }) => theme.fontSizes.base};
     }
   }
   .link-copied {
