@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useRef, TextareaHTMLAttributes } from 'react'
+import React, { useState, useEffect, useRef, useCallback, TextareaHTMLAttributes } from 'react'
 import '../../styles/css/DictWrite.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
 import Header from '../../components/Header'
+import { debounce } from 'lodash'
+import axios from 'axios'
+import { dictApi } from '../../shared/api'
 
 const DictWrite = (props) => {
   const dispatch = useDispatch()
@@ -17,7 +20,11 @@ const DictWrite = (props) => {
     setTitle(e.target.value)
   }
 
-  const onChangeSummary = (e) => {
+  console.log(title)
+  console.log(summary)
+  console.log(content)
+
+  const onChangeSummary = async (e) => {
     setSummary(e.target.value)
   }
 
@@ -33,26 +40,31 @@ const DictWrite = (props) => {
     dispatch(dictActions.addDictDB(title, summary, content), [])
   }
 
-  const allClearKeyword = () => {
-    swal({
-      title: '초기화를 하시면 작성하신 모든 내용이 사라집니다.',
-      text: '그래도 초기화 하시겠습니까?',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-    }).then((allClearKeyword) => {
-      if (allClearKeyword) {
-        swal('작성하신 모든 내용이 초기화되었습니다.', {
-          icon: 'success',
-        })
-        setTitle('')
-        setSummary('')
-        setContent('')
-      } else {
-        swal('초기화가 취소되었습니다.')
-      }
-    })
+  const doubleCheckDict = async () => {
+    const dictName = title
+    dispatch(dictActions.doubleCheckDictDB(dictName), [])
   }
+
+  // const allClearKeyword = () => {
+  //   swal({
+  //     title: '초기화를 하시면 작성하신 모든 내용이 사라집니다.',
+  //     text: '그래도 초기화 하시겠습니까?',
+  //     icon: 'warning',
+  //     buttons: true,
+  //     dangerMode: true,
+  //   }).then((allClearKeyword) => {
+  //     if (allClearKeyword) {
+  //       swal('작성하신 모든 내용이 초기화되었습니다.', {
+  //         icon: 'success',
+  //       })
+  //       setTitle('')
+  //       setSummary('')
+  //       setContent('')
+  //     } else {
+  //       swal('초기화가 취소되었습니다.')
+  //     }
+  //   })
+  // }
 
   return (
     <>
@@ -61,6 +73,14 @@ const DictWrite = (props) => {
         <div className="DictCardInputSection">
           <div className="DictCardInputTitleContainer">
             <div className="DictCardInputTitleGuideText">단어</div> <input className="DictCardInputTitle" type="text" value={title} onChange={onChangeTitle} placeholder="등록할 단어를 입력해주세요" />
+            <div
+              className="DictCardInputTitleDoubleCheck"
+              onClick={() => {
+                doubleCheckDict()
+              }}
+            >
+              중복확인
+            </div>
           </div>
           <div className="DictCardInputSummaryContainer">
             <div className="DictCardInputSummaryGuideText">한줄설명</div>
@@ -72,10 +92,10 @@ const DictWrite = (props) => {
           </div>
         </div>
         <div className="DictCardTemporaryOrSubmitButton">
-          <div className="DictCardTemporaryButton" onClick={allClearKeyword}>
+          {/* <div className="DictCardTemporaryButton" onClick={allClearKeyword}>
             <div className="DictCardTemporaryButton_1">초기화</div>
             <div className="DictCardTemporaryButton_2"></div>
-          </div>
+          </div> */}
           <div className="DictCardSubmitButton" type="submit" onClick={addDict}>
             <div className="DictCardSubmitButton_1">저장</div>
             <div className="DictCardSubmitButton_2"></div>

@@ -20,11 +20,11 @@ const Header = ({ type, children, location }) => {
             <li>
               <HeaderGoBack type={type} />
             </li>
-            <li style={{ width: '100px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <li className="nav-item-middle">
               <Location>{location}</Location>
             </li>
             <li>
-              <div style={{ width: '40px', height: '100%' }}></div>
+              <div className="nav-item-right"></div>
             </li>
           </ul>
         </NavHeader>
@@ -40,11 +40,11 @@ const Header = ({ type, children, location }) => {
             <li>
               <HeaderGoBack />
             </li>
-            <li style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <li className="nav-item-middle">
               <Location>{location}</Location>
             </li>
             <li>
-              <div>{children}</div>
+              <div className="nav-item-right">{children}</div>
             </li>
           </ul>
         </NavHeader>
@@ -52,7 +52,7 @@ const Header = ({ type, children, location }) => {
     )
   }
 
-  if (type === 'MyPage' || type === 'DictList') {
+  if (type === 'MyPage' || type === 'QuizResult') {
     return (
       <>
         <NavHeader>
@@ -60,11 +60,11 @@ const Header = ({ type, children, location }) => {
             <li>
               <HeaderHamburder handleSidebar={handleSidebar} />
             </li>
-            <li style={{ width: '100px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <li className="nav-item-middle">
               <Location>{location}</Location>
             </li>
             <li>
-              <div style={{ width: '40px', height: '100%' }}></div>
+              <div className="nav-item-right"></div>
             </li>
           </ul>
         </NavHeader>
@@ -73,7 +73,7 @@ const Header = ({ type, children, location }) => {
     )
   }
 
-  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch') {
+  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch' || type === 'DictList') {
     return (
       <>
         <NavHeader>
@@ -81,11 +81,11 @@ const Header = ({ type, children, location }) => {
             <li>
               <HeaderHamburder handleSidebar={handleSidebar} />
             </li>
-            <li style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <li className="nav-item-middle">
               <Location>{location}</Location>
             </li>
             <li>
-              <div>{children}</div>
+              <div className="nav-item-right">{children}</div>
             </li>
           </ul>
         </NavHeader>
@@ -98,7 +98,7 @@ const Header = ({ type, children, location }) => {
     return (
       <>
         <NavHeader>
-          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="nav-item-middle">
             <Location>{location}</Location>
           </div>
         </NavHeader>
@@ -113,11 +113,11 @@ const Header = ({ type, children, location }) => {
           <li>
             <HeaderHamburder handleSidebar={handleSidebar} />
           </li>
-          <li style={{ width: '100px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <li className="nav-item-middle">
             <HeaderLogo />
           </li>
           <li>
-            <div style={{ width: '40px', height: '100%' }}></div>
+            <div className="nav-item-right"></div>
           </li>
         </ul>
       </NavHeader>
@@ -146,11 +146,26 @@ const NavHeader = styled.nav`
     align-items: center;
     justify-content: space-between;
   }
+  .nav-item-middle {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-item-right {
+    width: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `
 
 const Location = styled.h2`
   font-weight: 700;
   font-size: 18px;
+  cursor: default;
 `
 
 export default Header

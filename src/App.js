@@ -1,4 +1,5 @@
 import React from 'react'
+import './App.css'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { history } from './redux/ConfigureStore'
@@ -61,9 +62,6 @@ function App() {
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/detail/:imageId" exact component={ImageDetail} />
             <Route path="/image/upload" exact component={ImageUpload} />
-            {/* 댓글 서버 연결 확인 후 삭제 예정 */}
-            {/* <Route path="/comment" exact component={CommentTest} /> */}
-            {/* <Route path={'*'} component={NotFound} /> */}
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>

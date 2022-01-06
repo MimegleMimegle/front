@@ -21,7 +21,7 @@ const DictEdit = (props) => {
     const _dict = response.data.data
     setDict(_dict)
     setSummary(_dict.summary)
-    setContent(_dict.content)
+    setContent(_dict.meaning)
   }
 
   React.useEffect(() => {
@@ -105,10 +105,10 @@ const DictEdit = (props) => {
           </div>
         </div>
         <div className="DictCardEditTemporaryOrSubmitButton">
-          <div className="DictCardEditTemporaryButton" onClick={allClearKeyword}>
+          {/* <div className="DictCardEditTemporaryButton" onClick={allClearKeyword}>
             <div className="DictCardEditTemporaryButton_1">초기화</div>
             <div className="DictCardEditTemporaryButton_2"></div>
-          </div>
+          </div> */}
           <div className="DictCardEditSubmitButton" type="submit" onClick={editDict}>
             <div className="DictCardEditSubmitButton_1">편집</div>
             <div className="DictCardEditSubmitButton_2"></div>

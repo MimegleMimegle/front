@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { imageApi } from '../../shared/api'
+import { actionCreators as imageActions } from '../../redux/modules/image'
 
 import Header from '../../components/Header'
 import InfinityScroll from '../../shared/InfinityScroll'
@@ -10,7 +11,7 @@ import OneImageCard from '../../components/image/OneImageCard'
 import PopularOneImageCard from '../../components/image/PopularOneImageCard'
 import SpinningCircles from '../../styles/image/spinning-circles.svg'
 
-import { actionCreators as imageActions } from '../../redux/modules/image'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 const ImageList = (props) => {
   const dispatch = useDispatch()
@@ -60,12 +61,14 @@ const ImageList = (props) => {
   return (
     <>
       <Header type="ImageList" location="짤방">
-        Upload
+        <FileUploader>
+          <label for="file" className="upload-label">
+            <AiOutlinePlus style={{ fontSize: '22px' }} />
+          </label>
+          <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+        </FileUploader>
       </Header>
       <Wrapper>
-        <div>
-          <input type="file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
-        </div>
         <PopularSection>
           <div style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: '5px' }}>
             <Title>명예의 밈짤</Title>
@@ -109,6 +112,25 @@ const ImageList = (props) => {
     </>
   )
 }
+
+const FileUploader = styled.div`
+  .upload-label {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .upload-file {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    margin: -1px;
+    width: 1px;
+    height: 1px;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+`
 
 const Wrapper = styled.div`
   display: flex;
