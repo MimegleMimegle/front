@@ -24,6 +24,7 @@ const PostDetail = (props) => {
   const [isLiked, setIsLiked] = useState(false)
 
   console.log(isLiked)
+  
   const getOnePostDB = async () => {
     let response = await axios.get(`http://54.180.150.230/api/board/${boardId}`)
     console.log(response)

@@ -32,14 +32,16 @@ HashTag.defaultProps = {
 }
 
 const HashTagButton = styled.button`
-  display: inline-block;
+  display: flex;
+  align-items: center;  
   font-size: 14px;
-  /* background-color: #fff8b6; */
-  border: 1px solid #111;
-  margin: 0px 10px 10px 0px;
+  margin: 12px 0px 12px 48px;
   padding: 0 10px;
-  border-radius: 20px;
-  line-height: 27px;
+  line-height: 16.8px;  
+  /* background-color: #fff8b6; */
+  /* display: inline-block; */
+  /* border-radius: 20px; */
+  /* border: 1px solid #111; */
 `
 
 export default HashTag
