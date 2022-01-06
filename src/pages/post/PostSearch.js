@@ -11,19 +11,22 @@ import ModalContainer from '../../components/ModalContainer'
 
 /* icons */
 import { GoSearch } from 'react-icons/go'
+import axios from 'axios'
 
 /********* 검색된 게시글 정보가 없을 때 보여줄 화면!! 모달이든 뭐든 띄워야함! *********/
 
 const PostSearch = (props) => {
-  const hashTag_list = ['스불재', '국그릇핑크퐁', '꾸꾸꾸', '700', '쭈빠삐무네뇨']
-
+  
   const [hashTags, setHashTags] = React.useState([])
   const [search, setSearch] = React.useState('')
   const [filteredPosts, setFilteredPosts] = React.useState([])
   const [notFound, setNotFound] = React.useState(false)
-  console.log(hashTags)
-  console.log(filteredPosts)
+  const hashTag_list = hashTags.hashTags
 
+  console.log(hashTags.hashTags)
+  console.log(hashTag_list)
+  console.log(filteredPosts)
+  
   const handleSearch = (e) => {
     setSearch(e.target.value)
   }
@@ -76,7 +79,7 @@ const PostSearch = (props) => {
           <div>
             {/* DB에서 불러온 HashTags list map */}
             <p style={{ fontSize: '9px', padding: '0 0 5px' }}>추천 해시태그</p>
-            {hashTag_list.map((hashtag, index) => {
+            {hashTag_list&&hashTag_list.map((hashtag, index) => {
               return <HashTag key={index} hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} closeNotFountModal={closeNotFountModal} />
             })}
           </div>
