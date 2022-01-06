@@ -82,7 +82,7 @@ const Main = (props) => {
           <text className="MainPageTagName">오늘의 밈</text>
           <div className="MainPageTagList">
             {todayMemes.map((todayMemes) => (
-              <div className="MainPageTag" key={todayMemes.id}>
+              <div className="MainPageTag" key={todayMemes.id} onClick={() => history.push(`/dict/detail/${todayMemes.dictId}`)}>
                 {todayMemes.dictName}
               </div>
             ))}
@@ -105,7 +105,7 @@ const Main = (props) => {
         <div className="MainPagePopularBoardSection">
           <div className="MainPagePopularBoardText">핫 밈글</div>
           {popularBoards.map((popularBoards) => (
-            <div className="MainPagePopularBoardList" key={popularBoards.id}>
+            <div className="MainPagePopularBoardList" key={popularBoards.id} onClick={() => history.push(`/post/detail/${popularBoards.boardId}`)}>
               <div className="MainPagePopularBoardImage">{popularBoards.thumbNail}</div>
               <div className="MainPagePopularBoardInfo">
                 <div className="MainPagePopularBoardTitle">{popularBoards.title}</div>
