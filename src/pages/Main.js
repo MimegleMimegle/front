@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { mainApi } from '../shared/api'
 
 import MainPageImageSlide from '../components/MainPageImageSlide'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -14,6 +15,28 @@ import '../styles/css/Main.css'
 
 const Main = (props) => {
   SwiperCore.use([Lazy, Autoplay, Keyboard, Pagination])
+
+  const [popularBoards, setPopularBoards] = useState([])
+  const [popularImages, setPopularImages] = useState([])
+  const [todayMemes, setTodayMemes] = useState([])
+
+  const searchDictDB = async () => {
+    let response = await mainApi.mainPage()
+
+    console.log(response)
+    setPopularBoards(response.data.data.popularBoards)
+    setPopularImages(response.data.data.popularImages)
+    setTodayMemes(response.data.data.todayMemes)
+
+    console.log(popularBoards)
+    console.log(popularImages)
+    console.log(todayMemes)
+    console.log(todayMemes[1].dictName)
+  }
+
+  React.useEffect(() => {
+    searchDictDB()
+  }, [])
 
   return (
     <>
@@ -56,13 +79,9 @@ const Main = (props) => {
         <div className="MainPageTagSection">
           <text className="MainPageTagName">오늘의 단어</text>
           <div className="MainPageTagList">
-            <div className="MainPageTag">700</div>
-            <div className="MainPageTag">다꾸</div>
-            <div className="MainPageTag">뽀시래기</div>
-            <div className="MainPageTag">광공</div>
-            <div className="MainPageTag">알잘딱깔센</div>
-            <div className="MainPageTag">ㅈㅂㅈㅇ</div>
-            <div className="MainPageTag">비상이다</div>
+            {todayMemes.map((dictId) => (
+              <div className="MainPageTag">{todayMemes[0].dictName}</div>
+            ))}
           </div>
           <text className="MainPageTagMoreButton1">More</text>
         </div>

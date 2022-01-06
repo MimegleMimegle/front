@@ -7,12 +7,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { dictApi } from '../shared/api'
 
-function SearchBar({ onAddKeyword }) {
+function SearchBar({ onAddKeyword }, props) {
   const dispatch = useDispatch()
 
   const [keyword, setKeyword] = useState('')
-  const [filteredDict, setFilteredDict] = React.useState([])
-  const [notFound, setNotFound] = React.useState(false)
 
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
@@ -24,7 +22,7 @@ function SearchBar({ onAddKeyword }) {
 
     console.log(response.data.data)
     console.log(searchTotalLength)
-    setFilteredDict(response.data.data)
+    setKeyword(response.data.data)
     setTotalCount(searchTotalLength.data.data)
   }
 
@@ -57,7 +55,7 @@ function SearchBar({ onAddKeyword }) {
 
   return (
     <Container>
-      <InputContainer>
+      <InputContainer id="SearchBar">
         <Input placeholder="🔍 검색어를 입력해주세요" active={hasKeyword} value={keyword} onChange={handleKeyword} onKeyDown={handleEnter} />
         {keyword && <RemoveIcon onClick={handleClearKeyword} />}
       </InputContainer>
@@ -76,7 +74,7 @@ const Container = styled.div`
   width: 100%;
   /* border-bottom: 1px solid grey; */
   background-color: white;
-  padding: 20px 60px;
+  padding: 0px 0px;
   box-sizing: border-box;
 `
 
@@ -102,19 +100,19 @@ const InputContainer = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  background-color: rgba(196, 196, 196, 0.4);
+  background-color: rgba(229, 229, 229, 1);
   font-weight: 500;
   font-size: 14px;
   box-sizing: border-box;
-  border: 1px solid gray;
-  border-radius: 30px;
-  padding-left: 20px;
-
+  border: none;
+  border-bottom: 1px solid black;
+  /* border-radius: 30px; */
+  padding: 15px 0 15px 20px;
   ${({ active }) =>
     active &&
     `
     padding-right: 30px; 
-  `}
+  `};
 `
 
 export default SearchBar
