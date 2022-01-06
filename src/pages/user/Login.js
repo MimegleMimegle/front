@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import history from '../../redux/ConfigureStore'
+import { history } from '../../redux/ConfigureStore'
 import '../../styles/css/Login.css'
 import styled from 'styled-components'
+import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import KaKaoLogin from 'react-kakao-login'
 import kakaotalk from '../../styles/image/kakaotalk.svg'
@@ -11,6 +12,7 @@ import googleColor from '../../styles/image/google_color.svg'
 
 const Login = (props) => {
   const dispatch = useDispatch()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -21,26 +23,26 @@ const Login = (props) => {
   const [isPassword, setIsPassword] = useState('false')
 
   const onChangeUsername = (e) => {
-    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+    const emailRegex = /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/
     const usernameCurrent = e.target.value
     setUsername(usernameCurrent)
 
     if (!emailRegex.test(usernameCurrent)) {
-      setUsernameMessage('이메일 형식을 확인해주세요')
+      setUsernameMessage('영문+숫자 3~16자')
       setIsUsername(false)
     } else {
-      setUsernameMessage('올바른 이메일 형식입니다')
+      setUsernameMessage('올바른 형식입니다')
       setIsUsername(true)
     }
   }
 
   const onChangePassword = (e) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/
     const passwordCurrent = e.target.value
     setPassword(passwordCurrent)
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요')
+      setPasswordMessage('숫자+영문+특수문자 조합으로 6~16자')
       setIsPassword(false)
     } else {
       setPasswordMessage('올바른 비밀번호입니다')
@@ -50,49 +52,54 @@ const Login = (props) => {
 
   const login = () => {
     if (username === '' || password === '') {
-      window.alert('아이디, 비밀번호를 입력해주세요!')
+      swal('아이디, 비밀번호를 입력해주세요!')
       return
     }
     dispatch(userActions.logInDB(username, password))
+    swal(`${username}님 만반잘부!`, { timer: 3000 })
   }
-
   return (
     <>
       <div className="LoginLayout">
-        <text className="LoginText">로그인</text>
-        <input className="IdInputBox" placeholder="아이디를 입력해주세요" type="email" typeName="email" onChange={onChangeUsername} value={username} />
-        {username.length > 0 && <Span className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</Span>}
-        <input className="PwdInputBox" placeholder="비밀번호를 입력해주세요" type="password" typeName="password" onChange={onChangePassword} value={password} />
-        {password.length > 0 && <Span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</Span>}
-        <button
-          className="LoginButton"
-          type="submit"
-          disabled={!(isUsername && isPassword)}
-          onClick={login}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              console.log('Enter')
-            }
-          }}
-        >
-          로그인 하기
-        </button>
-        <text
-          type="button"
-          className="JoinNewUser"
-          onClick={() => {
-            history.push('/join')
-          }}
-        >
-          아직 회원이 아니신가요?
-        </text>
-        <text className="FindUserPwd">비밀번호를 잊어버리셨나요?</text>
-        <div className="SocialLoginHR">SNS 계정으로 로그인하기</div>
+        <div className="MultiInputBoxLayout_login">
+          <div className="LoginOrJoinButtons_login">
+            <div className="JoinButton_login" onClick={() => history.push('/join')}>
+              회원가입
+            </div>
+            <div className="LoginButton_login">로그인</div>
+          </div>
+          <div className="LoginOrJoinInputs_login">
+            <label className="IdInputLabel" for="IdInput">
+              아이디
+            </label>
+            <input className="IdInputBox" id="IdInput" placeholder="영어, 숫자 3~16자" type="email" typeName="email" onChange={onChangeUsername} value={username} />
+            {username.length > 0 && <SpanUsername className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</SpanUsername>}
+            <label className="PwdInputLabel" for="PwdInput">
+              비밀번호
+            </label>
+            <input className="PwdInputBox" id="PwdInput" placeholder="영어 대소문자, 숫자, 특수문자 6~16자" type="password" typeName="password" onChange={onChangePassword} value={password} />
+            {password.length > 0 && <SpanPassword className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</SpanPassword>}
+            <div
+              className="MemegleButton_LoginSubmit"
+              type="submit"
+              disabled={!(isUsername && isPassword)}
+              onClick={login}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  console.log('Enter')
+                }
+              }}
+            >
+              <div className="MemegleButton_LoginSubmit Login1">로그인</div>
+              <div className="MemegleButton_LoginSubmit Login2"></div>
+            </div>
+          </div>
+        </div>
+        <div className="SocialLoginHR">또는</div>
         <div className="SocialLoginBtns">
-          <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=17fb08cb376f564b3375667a799fda1f&redirect_uri=http://localhost:3000/oauth">
+          <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
             <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
           </a>
-
           <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
           <img className="NaverLoginBtn" size="5" src={naver}></img>
         </div>
@@ -101,9 +108,16 @@ const Login = (props) => {
   )
 }
 
-const Span = styled.span`
+const SpanUsername = styled.span`
   font-size: 12px;
   color: #ffa07a;
+  margin-top: -10px;
+`
+
+const SpanPassword = styled.span`
+  font-size: 12px;
+  color: #ffa07a;
+  margin-top: -15px;
 `
 
 export default Login

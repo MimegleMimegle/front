@@ -1,5 +1,5 @@
 .MainPageLayout {
-  max-width: 350px;
+  max-width: 100%;
   max-height: 500px;
   margin: 30px 0 0 0;
   overflow-x: hidden;
@@ -44,26 +44,187 @@
 }
 
 .swiper {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: none;
+  margin-right: none;
 }
 
 .MainPageTagSection {
+  width: 100%;
   margin: 30px 0 0 0;
   display: flex;
   flex-direction: row;
-  justify-content: stretch;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-self: center;
+}
+
+.MainPageTagName {
+  display: flex;
+  justify-self: flex-start;
+  margin: 30px 0 10px 20px;
+  font-size: 18px;
+  font-weight: 500;
+  width: fit-content;
+  background-image: linear-gradient(transparent 60%, yellow 40%);
+}
+
+.MainPageTagList {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .MainPageTag {
-  border: none;
-  border-radius: 10px;
-  background-color: lightblue;
+  border: 1px solid black;
+  border-radius: 75px;
+  background-color: white;
   width: fit-content;
-  height: min-content;
-  padding: 5px 10px 5px 10px;
-  color: white;
-  font-size: 16px;
+  height: fit-content;
+  padding: 5px 15px 5px 15px;
+  color: black;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 5px 0 5px 10px;
+}
+
+.MainPageTagMoreButton_1 {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.MainPageTagMoreButton_1:hover {
+  cursor: pointer;
+}
+
+.MainPageTagMoreButton1 {
+  display: flex;
+  font-size: 17px;
   font-weight: 500;
-  margin: 5px;
+  margin-right: 55px;
+  position: absolute;
+}
+
+.MainPageTopPostSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.MainPageTopPostText {
+  display: flex;
+  justify-self: flex-start;
+  margin: 30px 0 10px 20px;
+  font-size: 18px;
+  font-weight: 500;
+  width: fit-content;
+  background-image: linear-gradient(transparent 60%, yellow 40%);
+}
+
+.MainPageTopPostList {
+  display: flex;
+  border: 1px solid black;
+  width: 100px;
+  height: 120px;
+  justify-content: center;
+  align-items: center;
+}
+
+.MainPageTagMoreButton_2 {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+.MainPageTagMoreButton_2:hover {
+  cursor: pointer;
+}
+
+.MainPageTagMoreButton2 {
+  display: flex;
+  font-size: 17px;
+  font-weight: 500;
+  margin-right: 55px;
+  position: absolute;
+}
+
+.MainPagePopularBoardSection {
+  width: 100%;
+  margin: 30px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.MainPagePopularBoardText {
+  display: flex;
+  justify-self: flex-start;
+  margin: 30px 0 10px 20px;
+  font-size: 18px;
+  font-weight: 500;
+  width: fit-content;
+  background-image: linear-gradient(transparent 60%, yellow 40%);
+}
+
+.MainPagePopularBoardList {
+  width: 328px;
+  height: 120px;
+  margin: 0 0 16px 17px;
+  display: flex;
+  border: 1px solid black;
+}
+
+.MainPagePopularBoardImage {
+  width: 120px;
+  height: 100%;
+  background-color: white;
+  border-right: 1px solid black;
+}
+
+.MainPagePopularBoardInfo {
+  display: flex;
+  flex-direction: column;
+  width: 208px;
+  height: 100%;
+  padding: 15px;
+}
+
+.MainPagePopularBoardTitle {
+  width: 80%;
+  height: 50px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.MainPagePopularBoardWriter {
+  width: 80%;
+  height: fit-content;
+  display: flex;
+  align-items: flex-end;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.MainPageTagMoreButton_3 {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+.MainPageTagMoreButton_3:hover {
+  cursor: pointer;
+}
+
+.MainPageTagMoreButton3 {
+  display: flex;
+  font-size: 17px;
+  font-weight: 500;
+  margin-right: 55px;
+  position: absolute;
 }

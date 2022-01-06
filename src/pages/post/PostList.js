@@ -1,64 +1,110 @@
-import React from 'react'
-import { useHistory, useParams, } from 'react-router'
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { history } from '../../redux/ConfigureStore'
 import styled from 'styled-components'
-import PostlistSlider from '../../components/PostlistSlide';
 import PostCard from '../../components/PostCard'
-import { MdPostAdd } from "react-icons/md";
+import { MdPostAdd } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
+import post, { actionCreators as postActions } from '../../redux/modules/post'
+import Pagination from 'rc-pagination'
+import SearchPage from '../../shared/SearchPage'
+import { boardApi } from '../../shared/api'
+import axios from 'axios'
+import Header from '../../components/Header'
+
+import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 
 const PostList = (props) => {
+  const dispatch = useDispatch()
+
+  const [post, setPost] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [totalCount, setTotalCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const postList = useSelector((state) => state.post.list) // state는 리덕스 스토어의 전체 데이터
+  console.log(postList)
+
+  useEffect(() => {
+    getPostListDB()
+    // dispatch(postActions.getPostsDB())
+  }, [currentPage])
+
+  const getPostListDB = async () => {
+    let response = await axios.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${currentPage - 1}&size=${pageSize}`)
+    let totalLength = await boardApi.totalLength()
+    console.log(response)
+    console.log(totalLength)
+    setPost(response.data.data)
+    setTotalCount(totalLength.data.data)
+  }
+
+  console.log(post)
+  console.log(totalCount)
 
   return (
     <>
-    <PostHeader>
-        {/* 전체공지는 맨위에 고정시켜놓고 항목을 없애는건 어떨까 헤더처럼 위치 고정
-          즐겨찾기는 마이페이지에 옮기는게 어떨까
-          인기글의 기준은 무엇인가 좋아요인가 조회수인가 */}
-        <button>전체글</button>
-        <button>인기글</button>
-        <button>즐겨찾기</button>
-        <button>전체공지</button>
-      </PostHeader>
-      
-      <PostlistSlider/>
-      <PostCard  />
-      <Link to="/post/write">
-      <IconBorder><MdPostAdd size="30px"/></IconBorder>
-      </Link>
+      <Header type="PostList" location="밈+글 커뮤니티">
+        <button style={{ padding: '5px 8px 0' }} onClick={() => history.push('/post/search')}>
+          <SearchIcon />
+        </button>
+      </Header>
+      <Container>
+        <Empty>
+          <Addbtn
+            onClick={() => {
+              history.push('/post/write')
+            }}
+          >
+            밈+글 등록
+          </Addbtn>
+          <AddbtnShadow />
+        </Empty>
+
+        {post &&
+          post.map((post, index) => {
+            return <PostCard post={post} key={post.boardId} />
+          })}
+
+        <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+      </Container>
     </>
   )
 }
 
 export default PostList
 
-const Container = styled.div`
-`;
+const Container = styled.div``
 
-const PostHeader = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin: 10px 0;
- 
- span {
-   padding: 5px;
-   margin: 10px;
-   font-size: 15px;
- }
+const Empty = styled.div`
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+`
 
-`;
-
-const IconBorder = styled.div`
-  width:50px;
-  height:50px;
+const Addbtn = styled.div`
+  width: 280px;
+  height: 40px;
+  background-color: rgba(0, 160, 255, 1);
   border: 1px solid black;
- padding: 10px;
- border-radius:40px;
- position: absolute;
- right: 10px;
- bottom:100px;
- cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-itmes: center;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 2;
+  margin: 20px 42px 20px 38px;
+  padding: 12px 105px 13px 106px;
+`
 
- &:hover {
-   background-color: lightgray;
- }
-`;
+const AddbtnShadow = styled.div`
+  width: 280px;
+  height: 40px;
+  top: 4px;
+  right: 42px;
+  background-color: white;
+  border: 1px solid black;
+  position: absolute;
+
+  /* z-index: -1; */
+  z-index: -1;
+`

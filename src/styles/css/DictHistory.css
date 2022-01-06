@@ -1,0 +1,104 @@
+.DictHistoryPageLayout {
+  width: 100%;
+  /* border: 3px solid cornflowerblue; */
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.DictHistoryPageLayout::-webkit-scrollbar {
+  display: none;
+}
+
+.DictHistoryListText {
+  margin-top: 20px;
+  margin-left: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  width: fit-content;
+  /* background-image: linear-gradient(transparent 60%, yellow 40%); */
+}
+
+.DictHistoryListSection {
+  /* border-top: 0.5px solid rgb(200, 200, 200);
+  border-bottom: 0.5px solid rgb(200, 200, 200); */
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.DictHistoryList {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-top: 0.5px solid rgb(200, 200, 200);
+  border-bottom: 0.5px solid rgb(200, 200, 200);
+}
+
+.DictWriterInfo {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  border: none;
+  margin: 0px;
+}
+
+.DictWriterProfileImage {
+  width: 35px;
+  height: 35px;
+  border: none;
+  margin: -5px 0 0 0;
+}
+
+.DictWriter {
+  font-size: 12px;
+  font-weight: 400;
+  border: none;
+  margin: 0px;
+}
+
+.DictHistoryCreatedAt {
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  align-items: flex-end;
+  border: none;
+  margin: 0px;
+}
+
+.DictHistoryFirstWriterInfo {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  border: none;
+  margin: 0px;
+}
+
+.DictFirstWriterProfileImage {
+  width: 35px;
+  height: 35px;
+  border: none;
+  margin: -5px 0 0 0;
+}
+
+.DictHistoryFirstWriter {
+  font-size: 12px;
+  font-weight: 400;
+  border: none;
+  margin: 0px;
+}
+
+.DictHistoryFirstCreatedAt {
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  align-items: flex-end;
+  border: none;
+  margin: 0px;
+}

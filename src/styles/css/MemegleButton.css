@@ -1,0 +1,32 @@
+.MemegleButton {
+  position: absolute;
+}
+
+.Box1 {
+  border: 1px solid black;
+  border-radius: 0 0 0 0;
+  top: 90px;
+  left: -55px;
+  background-color: white;
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2;
+}
+
+.Box2 {
+  border: 1px solid black;
+  border-radius: 0 0 0 0;
+  top: 97px;
+  left: -48px;
+  background-color: #faea59;
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  font-weight: 500;
+}

@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 import { quizApi } from '../../shared/api'
+import swal from 'sweetalert'
 
 /* action type */
 const GET_QUIZ_LIST = 'GET_QUIZ_LIST'
@@ -17,12 +18,15 @@ const initialState = {
 }
 
 /* middleware */
-const getQuizListDB = () => {
+const getQuizListDB = (category) => {
   return async function (dispatch, getState, { history }) {
     await quizApi
-      .getQuizList()
+      .getQuizList(category)
       .then((res) => {
-        dispatch(getQuizList(res.data))
+        const quiz_list = res.data.data
+        console.log(res.data)
+        console.log(quiz_list)
+        dispatch(getQuizList(quiz_list))
       })
       .catch((err) => {
         console.log('퀴즈 데이터를 불러오는 데 문제가 발생했습니다.', err.response)

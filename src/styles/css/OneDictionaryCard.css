@@ -1,0 +1,34 @@
+.OneDictionaryCard {
+  position: absolute;
+}
+
+.Card1 {
+  border: 1px solid black;
+  border-radius: 0 0 0 0;
+  margin: 10px;
+  top: 0px;
+  left: 0px;
+  background-color: white;
+  width: 8rem;
+  height: 4rem;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2;
+}
+
+.Card2 {
+  border: 1px solid black;
+  border-radius: 0 0 0 0;
+  margin: 10px;
+  top: 7px;
+  left: 7px;
+  background-color: #faea59;
+  width: 8rem;
+  height: 4rem;
+  font-size: 15px;
+  font-weight: 500;
+}

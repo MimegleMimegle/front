@@ -1,35 +1,39 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+
+//style
 import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.min.css'
-import SwiperCore, { Autoplay, Navigation, Pagination, } from 'swiper'
+import 'swiper/components/pagination/pagination.min.css'
+import 'swiper/components/scrollbar/scrollbar.min.css'
 
-const PostlistSlider = (props) => {
-    
-    return (
-        <Wrap>
-            <Swiper 
-                style={{height:'376px'}} 
-                spaceBetween={10} 
-                slidesPerView={4} 
-                loop={false}
-                pagination={{ clickable: true }}
-                onSlideChange={() => console.log('slide change')} > 
-            <SwiperSlide>고민상담</SwiperSlide> 
-            <SwiperSlide>잡담방</SwiperSlide> 
-            <SwiperSlide>10대방</SwiperSlide>
-            <SwiperSlide>20대방</SwiperSlide> 
-            <SwiperSlide>30대방</SwiperSlide> 
-            <SwiperSlide>40대방</SwiperSlide> 
-            <SwiperSlide>50대방</SwiperSlide> 
-            </Swiper>
-        </Wrap>  
-    ); 
-}; 
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y])
 
-export default PostlistSlider;
+const PostListSlide = () => {
+  return (
+    <React.Fragment>
+      <div style={{ height: '70px', display: 'flex' }}>
+        <Swiper
+          className="swiper-container"
+          style={{}}
+          spaceBetween={10}
+          slidesPerView={3}
+          navigation
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log('slide change')}
+        >
+          <SwiperSlide style={{ display: 'flex', alignItems: 'center' }}> 잡담방 </SwiperSlide>
+          <SwiperSlide style={{ display: 'flex', alignItems: 'center' }}> 공감방 </SwiperSlide>
+          <SwiperSlide style={{ display: 'flex', alignItems: 'center' }}> 고민상담방 </SwiperSlide>
+          <SwiperSlide style={{ display: 'flex', alignItems: 'center' }}> 꿀템공유방 </SwiperSlide>
+          <SwiperSlide style={{ display: 'flex', alignItems: 'center' }}> 고민상담방 </SwiperSlide>
+        </Swiper>
+      </div>
+    </React.Fragment>
+  )
+}
 
-const Wrap = `
-
-`;
+export default PostListSlide
