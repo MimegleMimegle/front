@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/css/DictDetail.css'
 import { useDispatch, useSelector } from 'react-redux'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { history } from '../../redux/ConfigureStore'
 import axios from 'axios'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
@@ -52,13 +53,20 @@ const DictDetail = (props) => {
     }
   }
 
-  // const pushDictHistory = (dictId) => (e) => {
-  //   history.push(`/dict/history/${dictId}`)
-  // }
+  const currentUrl = window.location.href
 
-  // let createdAt = dict.createdAt.split('T', 1)
+  const [copyLink, setCopyLink] = useState(false)
 
-  // let modifiedAt = dict.modifiedAt.split('T', 1)
+  const closeCopied = () => {
+    setTimeout(() => {
+      setCopyLink(false)
+    }, 2000)
+  }
+
+  const handleCopy = () => {
+    setCopyLink(true)
+    closeCopied()
+  }
 
   return (
     <>
@@ -101,12 +109,12 @@ const DictDetail = (props) => {
               </svg>
             </div>
             <div className="OneDictCardDetailInfoLikeCnt">{dict.likeCount}</div>
-            <div className="OneDictCardDetailInfoCopyLinkButton">
+            <CopyToClipboard className="OneDictCardDetailInfoCopyLinkButton" onCopy={handleCopy} text={currentUrl}>
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
                 <path d="M0 0h24v24H0V0z" fill="none" />
                 <path d="M17 7h-4v2h4c1.65 0 3 1.35 3 3s-1.35 3-3 3h-4v2h4c2.76 0 5-2.24 5-5s-2.24-5-5-5zm-6 8H7c-1.65 0-3-1.35-3-3s1.35-3 3-3h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-2zm-3-4h8v2H8z" />
               </svg>
-            </div>
+            </CopyToClipboard>
           </div>
           <div className="OneDictCardDetailInfoWriterAndAt">
             <div className="OneDictCardDetailInfoWriterAndAt First">

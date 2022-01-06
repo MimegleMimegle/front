@@ -8,10 +8,9 @@ import styled from 'styled-components'
 import { likeApi } from '../../shared/api'
 import { boardApi } from '../../shared/api'
 
+import ConfirmModal from '../../components/modal/ConfirmModal'
 import CommentTest from '../CommentTest'
 import Header from '../../components/Header'
-
-import YellowIcon from '../../styles/image/smileIcon_Yellow.png'
 import { ReactComponent as ViewIcon } from '../../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
 import { ReactComponent as FullHeartIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
@@ -29,6 +28,14 @@ const PostDetail = (props) => {
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
   const [toggleModalChang, setToggleModalChang] = useState(false)
+  const [createdAt, setCreatedAt] = useState('')
+  const [showModal, setShowModal] = React.useState(false)
+
+  const handleShowModal = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowModal(!showModal)
+  }
 
   const getOnePostDB = async () => {
     await boardApi
@@ -37,13 +44,14 @@ const PostDetail = (props) => {
         setPost(response.data.data)
         setIsLiked(response.data.data.isLike)
         setLikeCount(response.data.data.likeCnt)
+        setCreatedAt(response.data.data.createdAt.split('T')[0])
       })
       .catch((error) => {
         console.log('게시글 상세 정보 불러오기 문제 발생', error.response)
       })
   }
 
-  const del = () => {
+  const handleDeletePost = () => {
     dispatch(postActions.delPostDB(boardId))
   }
 
@@ -94,7 +102,7 @@ const PostDetail = (props) => {
             <UserProfile src={post.profileImageUrl} alt="" />
             <div className="userinfo">
               <Writer>{post.writer}</Writer>
-              <div className="createdate">{post && post.createdAt.split('T')[0]}</div>
+              <div className="createdate">{post && createdAt}</div>
             </div>
           </UserInfo>
           {username === post.username ? (
@@ -120,7 +128,7 @@ const PostDetail = (props) => {
                 </button>
               </div>
               <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-                <button onClick={del} style={{ fontSize: '12px', padding: '0' }}>
+                <button onClick={handleShowModal} style={{ fontSize: '12px', padding: '0' }}>
                   삭제하기
                 </button>
               </div>
@@ -170,6 +178,11 @@ const PostDetail = (props) => {
       </PostWrap>
 
       <CommentTest post={post} />
+      {showModal && (
+        <ConfirmModal question="밈글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+          <DeleteButton onClick={handleDeletePost}>삭제</DeleteButton>
+        </ConfirmModal>
+      )}
     </>
   )
 }
@@ -275,6 +288,11 @@ const ModalChang = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+`
+
+const DeleteButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default PostDetail

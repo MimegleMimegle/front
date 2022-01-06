@@ -80,7 +80,7 @@ const OneImageCard = ({ image }) => {
           </div>
         </Overlay>
       </ImageBox>
-      {shareVisible && <ShareBottomSheet shareVisible={shareVisible} handleShareVisible={handleShareVisible} />}
+      {shareVisible && <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />}
     </>
   )
 }

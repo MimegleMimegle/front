@@ -8,7 +8,7 @@ import Header from '../../components/Header'
 import InfinityScroll from '../../shared/InfinityScroll'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
-import SpinningCircles from '../../styles/image/spinning-circles.svg'
+import CircularProgress from '@mui/material/CircularProgress'
 import { AiOutlinePlus } from 'react-icons/ai'
 
 const ImageList = (props) => {
@@ -43,7 +43,7 @@ const ImageList = (props) => {
 
   useEffect(() => {
     setLoading(true)
-    setTimeout(() => setLoading(false), 1000)
+    setTimeout(() => setLoading(false), 700)
     dispatch(imageActions.getImageListDB(0))
 
     imageApi
@@ -74,17 +74,11 @@ const ImageList = (props) => {
                 <Title>명예의 밈짤</Title>
               </div>
               <Container>
-                {loading ? (
-                  <div style={{ width: '100%', height: '294px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <img src={SpinningCircles} />
-                  </div>
-                ) : (
-                  <PopularGridLayout>
-                    {bestImageList.map((image) => {
-                      return <OneImageCard key={image.boardId} image={image} />
-                    })}
-                  </PopularGridLayout>
-                )}
+                <PopularGridLayout>
+                  {bestImageList.map((image) => {
+                    return <OneImageCard key={image.boardId} image={image} />
+                  })}
+                </PopularGridLayout>
               </Container>
             </PopularSection>
             <GeneralSection>
@@ -104,7 +98,7 @@ const ImageList = (props) => {
           </>
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src={SpinningCircles} />
+            <CircularProgress color="inherit" />
           </div>
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
@@ -135,12 +129,14 @@ const FileUploader = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `
 
 const Title = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.xl};
   font-weight: 700;
-  background-image: linear-gradient(transparent 60%, #ffe330 40%);
+  line-height: normal;
+  background-image: linear-gradient(transparent 50%, #ffe330 50%);
 `
 
 const PopularSection = styled.div`
