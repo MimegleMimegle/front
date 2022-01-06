@@ -64,6 +64,7 @@ export const dictApi = {
   /* 추가 */
   tellMeTotalLength: () => instance.get('/api/count/dict'),
   tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
+  dobleCheckDict: (dictName) => instance.post('/api/check/dict', { dictName: dictName }),
 }
 
 export const quizApi = {

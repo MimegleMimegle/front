@@ -11,6 +11,8 @@ import { boardApi } from '../../shared/api'
 import axios from 'axios'
 import Header from '../../components/Header'
 
+import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+
 const PostList = (props) => {
   const dispatch = useDispatch()
 
@@ -42,19 +44,20 @@ const PostList = (props) => {
   return (
     <>
       <Header type="PostList" location="밈+글 커뮤니티">
-      <svg onClick ={()=> {
-        history.push('/post/search')
-      }}style={{margin: "10px 20px 0 0"}} cursor="pointer" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <button style={{ padding: '5px 8px 0' }} onClick={() => history.push('/post/search')}>
+          <SearchIcon />
+        </button>
       </Header>
       <Container>
         <Empty>
-        <Addbtn
-          onClick={() => {
-            history.push('/post/write')
-          }}>
-           밈+글 등록       
-        </Addbtn>
-        <AddbtnShadow/>
+          <Addbtn
+            onClick={() => {
+              history.push('/post/write')
+            }}
+          >
+            밈+글 등록
+          </Addbtn>
+          <AddbtnShadow />
         </Empty>
 
         {post &&
@@ -73,9 +76,8 @@ export default PostList
 const Container = styled.div``
 
 const Empty = styled.div`
-border-bottom: 1px solid #E5E5E5;
-position: relative;
-
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
 `
 
 const Addbtn = styled.div`
@@ -90,20 +92,19 @@ const Addbtn = styled.div`
   font-weight: bold;
   cursor: pointer;
   z-index: 2;
-  margin: 20px 42px 20px  38px;
-  padding: 12px 105px 13px 106px
-  
-`;
+  margin: 20px 42px 20px 38px;
+  padding: 12px 105px 13px 106px;
+`
 
 const AddbtnShadow = styled.div`
   width: 280px;
   height: 40px;
-  top:4px;
-  right:42px;
+  top: 4px;
+  right: 42px;
   background-color: white;
   border: 1px solid black;
   position: absolute;
 
   /* z-index: -1; */
   z-index: -1;
-`;
+`

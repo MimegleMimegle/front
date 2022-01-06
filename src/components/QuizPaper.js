@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
 
+import Header from './Header'
 import QuizResult from '../pages/QuizResult'
 import SpinningCircles from '../styles/image/spinning-circles.svg'
 
@@ -81,10 +82,11 @@ const QuizPaper = (props) => {
 
   return (
     <>
+      <Header type="QuizPaper" location={`${currentIndex + 1}/10`} low noBorder></Header>
       {!showResult ? (
         !loading ? (
           <Wrapper>
-            <div style={{ fontSize: '14px', fontWeight: '700' }}>{currentIndex + 1}/10</div>
+            {/* <div style={{ fontSize: '14px', fontWeight: '700' }}>{currentIndex + 1}/10</div> */}
             <QuizTitle>
               <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
               <div className="question-number-box box-2"></div>
