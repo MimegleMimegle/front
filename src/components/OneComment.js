@@ -5,17 +5,21 @@ import { useSelector, useDispatch } from 'react-redux'
 import { actionCreators as commentActions } from '../redux/modules/comment'
 import { history } from '../redux/ConfigureStore'
 import { BsPersonPlus } from 'react-icons/bs'
-import { VscTrash } from 'react-icons/vsc'
+import { BiTrashAlt } from 'react-icons/bi'
 
 import ModalContainer from './ModalContainer'
 import ModalWrapper from './ModalWrapper'
+import { fontSize } from '@mui/system'
 
 const OneComment = (props) => {
 
   const dispatch = useDispatch()
 
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
-  const commentId = props.commentWriterId
+  const commentWriterId = props.commentWriterId
+  const commentId = props.commentId
+
+  console.log(commentId)
 
   const [modalEditVisible, setModalEditVisible] = React.useState(false)
   const [modalDeleteVisible, setModalDeleteVisible] = React.useState(false)
@@ -44,26 +48,34 @@ const OneComment = (props) => {
   })
 
   /* 삭제는 되는데 리프레쉬해야만 반영됨 -> 삭제할 건지 확인하는 모달 생성 후 확인 버튼 누르면 dispatch & history.push로 댓글 페이지로 돌아가게 하기? */
-  const delComment = () => {
+  const delComment = (commentId) => {
     dispatch(commentActions.delCommentDB(commentId))
     setModalDeleteVisible(false)
     console.log(commentId)
   }
 
-  return (
+  return ( 
     <>
-      <div style={{margin: "10px", display: 'flex', alignItems:"center" }}>
-        <img className="commentprofile" src={props.profileImageUrl} alt="" style={{width:"40px", height:"40px",borderRadius:"150px"}}/>
-        <div style={{margin:"6px 20px"}}>
-          <div style={{display: "flex" }}>
-            <p style={{margin:"0 12px 0 0",}}>{props.commentWriter}</p>
-            <p>{props.createdAt}</p>
+      <Wrap>
+        <div style={{display:"flex"}}>
+          <Commentprofile src={props.profileImageUrl} alt="" />
+          <div style={{margin:"15px 0"}}>
+            <div style={{display: "flex" }}>
+              <UserName>{props.commentWriter}</UserName>
+              <CreatedAt>{props.createdAt.split('T')[0]}</CreatedAt>
+              <CreatedAt>{props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]}</CreatedAt>
+            </div>
+            <Content>{props.commentContent}</Content>
           </div>
-          <p>{props.commentContent}</p>
         </div>
-        {commentId === username? 
-        <VscTrash size="20" onClick={handleOpenModalDelete}삭제/> : null }
-      </div>
+        {commentWriterId === username? 
+        <div style={{margin:"0 4px 0 0"}} onClick={handleOpenModalDelete}>
+        <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" fill="#000000">
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+          <path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/>
+        </svg>
+        </div> : null}
+      </Wrap>
       {modalEditVisible && (
         <ModalWrapper>
           <ModalContainer></ModalContainer>
@@ -87,7 +99,45 @@ const OneComment = (props) => {
   )
 };
 
+const Wrap = styled.div`
+  margin:10px;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+`;
 
+const Commentprofile = styled.img`
+  width:20px;
+  height:20px;
+  border-radius:150px;
+  margin:12.5px 16px;
+  border: 1px solid black;
+`;
 
+const UserName = styled.div`
+  font-family: RixGwangalli;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 9px;
+  line-height: 10px;
+`;
 
+const CreatedAt = styled.div`
+  margin:0 2px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 9px;
+  line-height: 11px;
+`
+const Content = styled.div`
+  font-family: Pretendard;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 14px;
+display: flex;
+align-items: center;
+margin:4px 0 0 0;
+`;
 export default OneComment
