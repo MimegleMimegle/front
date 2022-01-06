@@ -83,6 +83,7 @@ const logOutDB = () => {
     deleteCookie('token')
     localStorage.removeItem('username')
     localStorage.removeItem('nickname')
+    localStorage.removeItem('id')
     dispatch(logOut())
 
     history.replace('/')

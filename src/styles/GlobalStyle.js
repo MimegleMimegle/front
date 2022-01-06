@@ -17,6 +17,7 @@ html, body, div, span, applet, object, iframe,
     figure, figcaption, footer, header, hgroup, 
     menu, nav, output, ruby, section, summary,
     time, mark, audio, video, input, button {
+      font-family: 'Pretendard-Light';
     }
 
 *, *::before, *::after {
@@ -24,6 +25,7 @@ html, body, div, span, applet, object, iframe,
 }
 
 body {
+  font-family: 'Pretendard-Light';
   background-color: #e5e5e5;
   color: #000000;
   font-size: 15px;
