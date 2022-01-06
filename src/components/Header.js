@@ -52,7 +52,7 @@ const Header = ({ type, children, location }) => {
     )
   }
 
-  if (type === 'MyPage' || type === 'DictList' || type === 'QuizResult') {
+  if (type === 'MyPage' || type === 'QuizResult') {
     return (
       <>
         <NavHeader>
@@ -73,7 +73,7 @@ const Header = ({ type, children, location }) => {
     )
   }
 
-  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch') {
+  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch' || type === 'DictList') {
     return (
       <>
         <NavHeader>

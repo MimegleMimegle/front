@@ -1,6 +1,6 @@
 .DictSearchPageLayout {
   width: 100%;
-  border: 3px solid cornflowerblue;
+  /* border: 3px solid cornflowerblue; */
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;

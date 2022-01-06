@@ -20,6 +20,7 @@ const ROLLBACK_ONE_DICT = 'ROLLBACK_ONE_DICT'
 const LOADING = 'LOADING'
 const TELL_ME_TOTAL_LENGTH = 'TELL_ME_TOTAL_LENGTH'
 const SEARCH_DICT = 'SEARCH_DICT'
+const DOUBLE_CHECK_DICT = 'DOUBLE_CHECK_DICT'
 
 /* action creator */
 const getDictMain = createAction(GET_DICT_MAIN, (dict_list, paging) => ({ dict_list, paging }))
@@ -37,6 +38,7 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 //추가
 const tellMeTotalLength = createAction(TELL_ME_TOTAL_LENGTH)
 const searchDict = createAction(SEARCH_DICT, (query, paging) => ({ query, paging }))
+const doubleCheckDict = createAction(DOUBLE_CHECK_DICT, (dictName) => ({ dictName }))
 
 /* initial state */
 const initialState = {
@@ -214,6 +216,34 @@ const getDictHistoryDB = (dictId) => {
   }
 }
 
+const doubleCheckDictDB = (dictName) => {
+  return function (dispatch, getState, { history }) {
+    dictApi
+      .dobleCheckDict(dictName)
+      .then((res) => {
+        console.log(res.data.data.result)
+        if (res.data.data.result === true) {
+          swal({
+            title: '등록되지 않은 단어입니다.',
+            text: '최초 등록자가 되어보세요!',
+            icon: 'success',
+          })
+        } else if (res.data.data.result === false) {
+          swal('이미 등록된 단어입니다.', {
+            icon: 'warning',
+          })
+        }
+      })
+      .catch((err) => {
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
+        }
+      })
+  }
+}
+
 /* reducer */
 export default handleActions(
   {
@@ -314,6 +344,7 @@ const actionCreators = {
   searchDict,
   searchDictDB,
   getDictHistoryDB,
+  doubleCheckDictDB,
 }
 
 export { actionCreators }
