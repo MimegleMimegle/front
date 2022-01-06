@@ -24,12 +24,11 @@ const PostList = (props) => {
 
   useEffect(() => {
     getPostListDB()
-    dispatch(postActions.getPostsDB())
+    // dispatch(postActions.getPostsDB())
   }, [currentPage])
 
-
   const getPostListDB = async () => {
-    let response = await axios.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${(currentPage - 1)}&size=${pageSize}`)
+    let response = await axios.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${currentPage - 1}&size=${pageSize}`)
     let totalLength = await boardApi.totalLength()
     console.log(response)
     console.log(totalLength)
@@ -71,8 +70,7 @@ const PostList = (props) => {
 
 export default PostList
 
-const Container = styled.div`
-`;
+const Container = styled.div``
 
 const Empty = styled.div`
 border-bottom: 1px solid #E5E5E5;

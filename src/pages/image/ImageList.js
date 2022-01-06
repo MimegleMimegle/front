@@ -8,7 +8,6 @@ import Header from '../../components/Header'
 import InfinityScroll from '../../shared/InfinityScroll'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
-import PopularOneImageCard from '../../components/image/PopularOneImageCard'
 import SpinningCircles from '../../styles/image/spinning-circles.svg'
 
 import { AiOutlinePlus } from 'react-icons/ai'
@@ -62,7 +61,7 @@ const ImageList = (props) => {
     <>
       <Header type="ImageList" location="짤방">
         <FileUploader>
-          <label for="file" className="upload-label">
+          <label htmlFor="file" className="upload-label">
             <AiOutlinePlus style={{ fontSize: '22px' }} />
           </label>
           <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
@@ -138,7 +137,7 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.span`
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
   font-weight: 700;
   background-image: linear-gradient(transparent 60%, #ffe330 40%);
 `

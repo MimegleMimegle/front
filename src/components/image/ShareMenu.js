@@ -81,8 +81,8 @@ const ShareToggleMenu = styled.div`
   right: 15px;
   width: 80px;
   height: 220px;
-  border: 1px solid #c4c4c4;
-  background-color: #fff;
+  border: 1px solid ${({ theme }) => theme.colors.line};
+  background-color: ${({ theme }) => theme.colors.white};
   transition: all 0.3s ease-in-out;
   z-index: 400;
   display: flex;
@@ -93,24 +93,24 @@ const ShareToggleMenu = styled.div`
 const EachMenu = styled.div`
   width: 100%;
   padding: 8px 5px 0;
-  border-top: 1px solid #c4c4c4;
+  border-top: 1px solid ${({ theme }) => theme.colors.line};
   .each-menu_shareBox {
     display: flex;
     align-items: center;
   }
   .each-menu_shareBox_shareText {
-    font-size: 9px;
+    font-size: ${({ theme }) => theme.fontSizes.small};
     padding-left: 5px;
   }
 `
 
 const AlertCopied = styled.div`
-  background-color: #000000;
+  background-color: ${({ theme }) => theme.colors.black};
   background-color: rgba(0, 0, 0, 0.8);
   box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
   border-radius: 5px;
-  color: #ffffff;
-  font-size: 12px;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fontSizes.base};
   margin-bottom: 10px;
   top: 50%;
   left: 50%;
@@ -125,12 +125,12 @@ const AlertCopied = styled.div`
 `
 
 const CopyUrlButton = styled.button`
-  border: 1px solid #ffe330;
+  border: 1px solid ${({ theme }) => theme.colors.line};
   border-radius: 20px;
-  background-color: #ffe330;
+  background-color: ${({ theme }) => theme.colors.yellow};
   width: 20px;
   height: 20px;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.white};
   font-size: 6px;
   font-weight: 700;
   padding: 0;

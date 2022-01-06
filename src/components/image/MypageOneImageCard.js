@@ -1,24 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
 
-import { BsThreeDotsVertical } from 'react-icons/bs'
-import { HiOutlineHeart } from 'react-icons/hi'
-import { IoCloseOutline } from 'react-icons/io5'
+import { ReactComponent as DeleteIcon } from '../../styles/icons/delete_black_18dp.svg'
+import { ReactComponent as EmptyHeart } from '../../styles/icons/좋아요 비활성_18dp.svg'
 
 const MyPageOneImageCard = ({ image }) => {
   const boardId = image && image.boardId
   const createdDate = image && image.createdAt.split('T')[0]
 
-  const [toggleMenu, setToggleMenu] = React.useState(false)
-
-  const handleToggleMenu = () => {
-    setToggleMenu(!toggleMenu)
-  }
-
-  const handleDeleteImage = async () => {
+  const handleDeleteImage = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     await imageApi
       .deleteImage(boardId)
       .then((response) => {
@@ -33,10 +27,14 @@ const MyPageOneImageCard = ({ image }) => {
       })
   }
 
+  // 이미지 삭제 시 확인하는 알럿!!
+
   return (
     <>
       <Wrapper
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
           history.push(`/image/detail/${image.boardId}`)
         }}
       >
@@ -44,14 +42,14 @@ const MyPageOneImageCard = ({ image }) => {
           <ImageSection>
             <Image src={image && image.thumbNail} />
             <div>
-              <button style={{ padding: '0' }} onClick={handleToggleMenu}>
-                <BsThreeDotsVertical style={{ fontSize: '18px' }} />
+              <button style={{ padding: '0' }} onClick={handleDeleteImage}>
+                <DeleteIcon />
               </button>
             </div>
           </ImageSection>
           <LikeSection>
             <button style={{ padding: '0 0 0 2px' }}>
-              <HiOutlineHeart style={{ fontSize: '16px' }} />
+              <EmptyHeart />
             </button>
             <span style={{ fontSize: '9px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
           </LikeSection>
@@ -59,20 +57,6 @@ const MyPageOneImageCard = ({ image }) => {
             <p style={{ fontSize: '9px', textAlign: 'right', paddingTop: '7px' }}>{image && createdDate}</p>
           </DateSection>
         </div>
-        {toggleMenu && (
-          <Menu>
-            <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ padding: '0', height: '100%' }} onClick={handleToggleMenu}>
-                <IoCloseOutline style={{ fontSize: '18px' }} />
-              </button>
-            </div>
-            <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ fontSize: '12px', padding: '0' }} onClick={handleDeleteImage}>
-                삭제하기
-              </button>
-            </div>
-          </Menu>
-        )}
       </Wrapper>
     </>
   )
@@ -84,28 +68,13 @@ const Wrapper = styled.div`
   width: 100%;
   height: 170px;
   padding: 8px;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   .container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
   }
-`
-
-const Menu = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80px;
-  height: 70px;
-  border: 1px solid #c4c4c4;
-  background-color: #fff;
-  transition: all 0.3s ease-in-out;
-  z-index: 400;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 `
 
 const ImageSection = styled.div`
@@ -116,8 +85,7 @@ const Image = styled.div`
   max-width: 130px;
   width: 100%;
   height: 110px;
-  border: 1px solid #111;
-  /* background-color: salmon; */
+  border: 1px solid ${({ theme }) => theme.colors.black};
   background-image: url('${(props) => props.src}');
   background-size: cover;
   background-position: center;
