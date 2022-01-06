@@ -128,8 +128,8 @@ const EditProfile = ({ setShowModal, my }) => {
 const ModalContainer = styled.div`
   width: 340px;
   height: 170px;
-  border: 1px solid #111;
-  background-color: #fff;
+  border: 1px solid ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.white};
   /* border-radius: 10px; */
   position: absolute;
   top: 26%;
@@ -148,11 +148,11 @@ const ModalBody = styled.div`
   align-items: center;
   justify-content: center;
   .submit-button {
-    font-size: 14px;
-    color: #878c92;
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    color: ${({ theme }) => theme.colors.grey};
     transition: color 0.3s ease-in-out;
     &:hover {
-      color: #00a0ff;
+      color: ${({ theme }) => theme.colors.blue};
     }
   }
   .file {
@@ -165,9 +165,9 @@ const ModalBody = styled.div`
       left: 60%;
       transform: translateX(-60%);
       overflow: hidden;
-      border: 1px solid #111;
+      border: 1px solid ${({ theme }) => theme.colors.black};
       border-radius: 20px;
-      background-color: #fff;
+      background-color: ${({ theme }) => theme.colors.white};
       text-align: center;
       cursor: pointer;
     }
@@ -183,11 +183,11 @@ const ModalBody = styled.div`
     }
   }
   .input-nickname {
-    border: 1px solid #878c92;
+    border: 1px solid ${({ theme }) => theme.colors.grey};
     transition: all 0.3s ease-in-out;
     border-radius: 2px;
     &:focus {
-      border: 1px solid #111;
+      border: 1px solid ${({ theme }) => theme.colors.black};
     }
   }
 `
@@ -199,12 +199,12 @@ const ProfileImagePreview = styled.div`
   transform: translateX(-50%);
   width: 80px;
   height: 80px;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 40px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.white}; ;
 `
 
 export default EditProfile

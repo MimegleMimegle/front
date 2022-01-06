@@ -40,7 +40,7 @@ export const boardApi = {
   getPosts: (pageSize, currentPage) => instance.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
   writePost: (post) => instance.post('/api/board/FREEBOARD', post),
-  editPost: (boardId, title, content, subject) => instance.put(`/api/board/${boardId}`, { title: title, content: content,}),
+  editPost: (boardId, content) => instance.put(`/api/board/${boardId}`, content),
   deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
   selectPost: () => instance.get('/api/board?q=query'),
   // 추가
@@ -51,7 +51,7 @@ export const boardApi = {
 }
 
 export const dictApi = {
-  getDictMain: (pageSize, currentPage) => instance.get(`http://54.180.150.230/api/dict?page=${(currentPage - 1)}&size=${pageSize}`),
+  getDictMain: (pageSize, currentPage) => instance.get(`http://54.180.150.230/api/dict?page=${currentPage - 1}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
   getTodayDict: () => instance.get(`/api/bestDict/dict`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),

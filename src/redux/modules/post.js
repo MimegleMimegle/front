@@ -20,7 +20,7 @@ const LOADING = 'LOADING'
 const getPost = createAction(GET_POST, (post_list, paging) => ({ post_list, paging }))
 const getOnePost = createAction(GET_ONE_POST, (post, boardId) => ({ post, boardId }))
 const addPost = createAction(ADD_POST, (post) => ({ post }))
-const editPost = createAction(EDIT_POST, (boardId,post) => ({ boardId, post }))
+const editPost = createAction(EDIT_POST, (boardId, _post) => ({ boardId, _post }))
 const deletePost = createAction(DELETE_POST, (boardId, post) => ({ boardId, post }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
@@ -60,8 +60,7 @@ const getPostsDB = (page = null, size = null) => {
           dispatch(loading(false))
           return
         }
-        dispatch(getPost(post_list, paging,result))
-
+        dispatch(getPost(post_list, paging, result))
       })
       .catch((err) => {
         console.log('게시판을 불러오기 문제 발생', err.response.data)
@@ -113,9 +112,8 @@ const addPostDB = (title, content, uploadFile, hashTag_list) => {
   }
 }
 
-const editPostDB = (boardId,hashTag_List, title, uploadFile, content,) => {
+const editPostDB = (boardId, hashTag_List, title, uploadFile, content) => {
   return async function (dispatch, getState, { history }) {
-    
     const formData = new FormData()
     const post = {
       title: title,
@@ -124,17 +122,19 @@ const editPostDB = (boardId,hashTag_List, title, uploadFile, content,) => {
     }
 
     formData.append('thumbNail', uploadFile)
-    formData.append('boardUploadRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
+    formData.append('boardUpdateRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
 
     await boardApi
-    .editPost(boardId,formData)
-      .then(function(response){
-        dispatch(editPost(response.data.data))
+      .editPost(boardId, formData)
+      .then((response) => {
+        console.log(response.data)
+        const _post = { ...post, thumbNail: uploadFile }
+        dispatch(editPost(boardId, _post))
+
         history.push('/post')
       })
       .catch((err) => {
-        console.log('게시글 수정하는데 문제 발생', err.response.data)
-        console.log(boardId, title, uploadFile, content,)
+        console.log('게시글 수정하는데 문제 발생', err.response)
       })
   }
 }
@@ -145,7 +145,7 @@ const delPostDB = (boardId) => {
       .deletePost(boardId)
       .then((res) => {
         console.log(res.data)
-        dispatch(deletePost(boardId));
+        dispatch(deletePost(boardId))
         history.push('/post')
       })
 
@@ -188,7 +188,7 @@ export default handleActions(
 
         draft.list[index] = {
           ...draft.list[index],
-          ...action.payload.post,
+          ...action.payload._post,
         }
       }),
     // [EDIT_POST] : (state, action) => produce(state, (draft) => {

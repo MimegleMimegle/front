@@ -4,27 +4,6 @@ import reset from 'styled-reset'
 const GlobalStyle = createGlobalStyle`
 ${reset}
 
-@font-face {
-  font-family: 'Pretendard-Bold';
-  src: url('./styles/fonts/Pretendard-Bold.woff');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Pretendard-Medium';
-  src: url('./styles/fonts/Pretendard-Medium.woff');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Pretendard Light';
-  src: url('./styles/fonts/Pretendard-Light.woff');
-  font-weight: 400;
-  font-style: normal;
-}
-
 html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
     a, abbr, acronym, address, big, cite, code,
@@ -38,7 +17,7 @@ html, body, div, span, applet, object, iframe,
     figure, figcaption, footer, header, hgroup, 
     menu, nav, output, ruby, section, summary,
     time, mark, audio, video, input, button {
-      font-family: 'Pretendard Light';
+      font-family: 'Pretendard-Light';
     }
 
 *, *::before, *::after {
@@ -46,8 +25,9 @@ html, body, div, span, applet, object, iframe,
 }
 
 body {
+  font-family: 'Pretendard-Light';
   background-color: #e5e5e5;
-  color: #111;
+  color: #000000;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.6;

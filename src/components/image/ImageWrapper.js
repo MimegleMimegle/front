@@ -17,10 +17,10 @@ const Wrapper = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: #111;
+  background-color: ${({ theme }) => theme.colors.black};
   z-index: 3000;
   svg {
-    color: #fff;
+    color: ${({ theme }) => theme.colors.white};
   }
 `
 
