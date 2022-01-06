@@ -281,6 +281,7 @@ const PWBody = styled.div`
       border: none;
       &::placeholder {
         font-size: ${({ theme }) => theme.fontSizes.base};
+        color: ${({ theme }) => theme.colors.grey};
       }
     }
   }

@@ -8,19 +8,17 @@ import ShareBottomSheet from '../ShareBottomSheet'
 import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
-import { IoCloseOutline } from 'react-icons/io5'
 
 const OneImageCard = ({ image }) => {
   const [hover, setHover] = useState(false)
-  const [toggleMenu, setToggleMenu] = useState(false)
   const [likeCount, setLikeCount] = useState(image.likeCnt)
   const [isLiked, setIsLiked] = useState(image.isLike)
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false)
+  const [shareVisible, setShareVisible] = useState(false)
 
-  const handleBottomSheetVisible = (e) => {
+  const handleShareVisible = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    setBottomSheetVisible(true)
+    setShareVisible(!shareVisible)
   }
 
   const handleClickLike = async (e) => {
@@ -69,7 +67,7 @@ const OneImageCard = ({ image }) => {
         <Overlay className={`${hover ? 'active' : 'in-active'}`}>
           <div style={{ width: '100%', height: '100%', padding: '7px 7px 5px 7px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between' }}>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
-              <button className="share-button" onClick={handleBottomSheetVisible}>
+              <button className="share-button" onClick={handleShareVisible}>
                 <MdShare fontSize="18px" />
               </button>
             </div>
@@ -82,7 +80,7 @@ const OneImageCard = ({ image }) => {
           </div>
         </Overlay>
       </ImageBox>
-      {bottomSheetVisible && <ShareBottomSheet bottomSheetVisible={bottomSheetVisible} setBottomSheetVisible={setBottomSheetVisible} />}
+      {shareVisible && <ShareBottomSheet shareVisible={shareVisible} handleShareVisible={handleShareVisible} />}
     </>
   )
 }

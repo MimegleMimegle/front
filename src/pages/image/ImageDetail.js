@@ -6,7 +6,7 @@ import { imageApi } from '../../shared/api'
 import { userApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
 import ImageWrapper from '../../components/image/ImageWrapper'
-import ShareMenu from '../../components/image/ShareMenu'
+import ShareBottomSheet from '../../components/ShareBottomSheet'
 
 import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
@@ -20,14 +20,14 @@ const ImageDetail = (props) => {
   const [imageData, setImageData] = useState('')
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
-  const [shareToggleMenu, setShareToggleMenu] = useState(false)
   const [profile, setProfile] = useState(null)
   const [createdAt, setCreatedAt] = useState('')
+  const [shareVisible, setShareVisible] = useState(false)
 
-  const handleShareToggleMenu = (e) => {
+  const handleShareVisible = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    setShareToggleMenu(!shareToggleMenu)
+    setShareVisible(!shareVisible)
   }
 
   const handleClickLike = async (e) => {
@@ -120,7 +120,7 @@ const ImageDetail = (props) => {
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button onClick={handleShareToggleMenu}>
+            <button onClick={handleShareVisible}>
               <MdShare style={{ fontSize: '20px' }} />
             </button>
             {imageData && profile && imageData.writer === profile.nickname && (
@@ -137,7 +137,7 @@ const ImageDetail = (props) => {
           <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
           <ImageLikeCount>{likeCount}</ImageLikeCount>
         </div>
-        {shareToggleMenu && <ShareMenu handleShareToggleMenu={handleShareToggleMenu} imageUrl={imageData.thumbNail} />}
+        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} handleShareVisible={handleShareVisible} />}
       </ImageWrapper>
     </>
   )

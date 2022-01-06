@@ -1,36 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { history } from '../redux/ConfigureStore'
-import useScript from '../util/useScript'
 
-import { KakaoShareButton } from '../shared/kakaoShare'
-import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
-
+import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
 import Header from '../components/Header'
 import { ReactComponent as GoBack } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLink } from '../styles/icons/링크복사_24dp.svg'
 
 const QuizResult = ({ quiz_list }) => {
-  useScript('https://developers.kakao.com/sdk/js/kakao.js')
-  const currentUrl = window.location.href
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
 
-  const [copied, setCopied] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
   const [resultText, setResultText] = useState({ sub: '', main: '' })
+  const [shareVisible, setShareVisible] = useState(false)
 
-  const closeCopied = () => {
-    setTimeout(() => {
-      setCopied(false)
-    }, 2000)
-  }
-
-  const onCopy = () => {
-    setCopied(true)
-    closeCopied()
+  const handleShareVisible = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShareVisible(!shareVisible)
   }
 
   const handleShowQuiz = () => {
@@ -52,8 +41,6 @@ const QuizResult = ({ quiz_list }) => {
       setResultText({ sub: '치료가 필요할 정도로 심각한', main: '"밈 중독"입니다.' })
     }
   }, [])
-
-  const score = quiz_list ? (100 / quiz_list.length) * answerCnt : null
 
   return (
     <>
@@ -100,29 +87,13 @@ const QuizResult = ({ quiz_list }) => {
             </div>
             <div style={{ width: '100%', margin: '5px 0' }}>
               <CircleButtonBox>
-                <div className="circle-button btn-1">
+                <div className="circle-button btn-1" onClick={handleShareVisible}>
                   <CopyLink />
                 </div>
                 <div className="circle-button btn-2"></div>
               </CircleButtonBox>
-              <TextButton>친구에게 공유하기</TextButton>
+              <TextButton onClick={handleShareVisible}>친구에게 공유하기</TextButton>
             </div>
-            <div style={{ width: '100%', padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <FacebookShareButton url={currentUrl}>
-                <FacebookIcon size={40} round={true} />
-              </FacebookShareButton>
-              <TwitterShareButton url={currentUrl}>
-                <TwitterIcon size={40} round={true} />
-              </TwitterShareButton>
-              <KakaoShareButton />
-              <LineShareButton url={currentUrl}>
-                <LineIcon size={40} round={true} />
-              </LineShareButton>
-              <CopyToClipboard onCopy={onCopy} text={currentUrl}>
-                <button className="share-btn">URL</button>
-              </CopyToClipboard>
-            </div>
-            {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
           </div>
           <QuizContainer>
             {showQuiz &&
@@ -132,6 +103,7 @@ const QuizResult = ({ quiz_list }) => {
               })}
           </QuizContainer>
         </div>
+        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} handleShareVisible={handleShareVisible} />}
       </Wrapper>
     </>
   )
@@ -147,36 +119,6 @@ const Wrapper = styled.div`
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
-  }
-  .share-btn {
-    border: 1px solid ${({ theme }) => theme.colors.yellow};
-    border-radius: 20px;
-    background-color: ${({ theme }) => theme.colors.yellow};
-    width: 40px;
-    height: 40px;
-    color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    font-weight: 700;
-    margin: 0 0 6px;
-  }
-  .link-copied {
-    background-color: ${({ theme }) => theme.colors.black};
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
-    border-radius: 5px;
-    color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    margin-bottom: 10px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 7px 12px;
-    position: absolute;
-    width: auto;
-    min-width: 50px;
-    max-width: 300px;
-    word-wrap: break-word;
-    z-index: 9999;
   }
 `
 
