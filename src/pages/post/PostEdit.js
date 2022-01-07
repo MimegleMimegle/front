@@ -2,15 +2,11 @@ import React, { useEffect, useRef, useState, createRef } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import ReactQuill from 'react-quill'
 import { actionCreators as postActions } from '../../redux/modules/post'
-import { actionCreators as imageActions } from '../../redux/modules/image'
 import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
+import { boardApi } from '../../shared/api'
 
-import HashTag from '../../components/HashTag'
-import swal from 'sweetalert'
 import Header from '../../components/Header'
-import axios from 'axios'
 
 const PostEdit = (props) => {
   const history = useHistory()
@@ -28,19 +24,23 @@ const PostEdit = (props) => {
   const [hashTag, setHashTag] = useState('')
   const [hashTagList, setHashTagList] = useState([])
 
-  console.log(hashTag)
   console.log(hashTagList)
 
   const getOnePostDB = async () => {
-    let response = await axios.get(`http://54.180.150.230/api/board/${boardId}`)
-
-    const _post = response.data.data
-    setPost(response.data.data)
-    setTitle(_post.title)
-    setContent(_post.content)
-    setThumbNail(_post.thumbNail)
-    setHashTag(_post.hashTag)
-    setHashTagList(_post.hashTags)
+    await boardApi
+      .getOnePost(boardId)
+      .then((response) => {
+        console.log(response.data)
+        const _post = response.data.data
+        setPost(response.data.data)
+        setTitle(_post.title)
+        setContent(_post.content)
+        setThumbNail(_post.thumbNail)
+        setHashTagList(_post.hashTags)
+      })
+      .catch((error) => {
+        console.log('게시글 상세 조회 문제 발생', error.response)
+      })
   }
 
   React.useEffect(() => {
@@ -163,14 +163,14 @@ const PostEdit = (props) => {
               <div>기존에 등록한 해시태그는 수정이 어렵습니다.</div>
             </HashTagInfo>
             <HashDivWrap className="hashWrap originHashWrap">
-              {/* {post.hashTags !== undefined &&
+              {post.hashTags !== undefined &&
                 post.hashTags.map((hashTag, idx) => {
                   return (
                     <div className="originHashWrapOutter" key={`hashTag-id-${idx}`}>
                       <div className="originHashWrapInner">#{hashTag}</div>
                     </div>
                   )
-                })} */}
+                })}
             </HashDivWrap>
             <HashDivWrap className="hashWrap newHashWrap">
               <div className="hashWrapOutter"></div>

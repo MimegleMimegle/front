@@ -12,7 +12,9 @@ const QuizPaper = (props) => {
   const category = useParams().category
   const dispatch = useDispatch()
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
+  const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
   console.log(quiz_list)
+  console.log(user_answer_list)
 
   const [showResult, setShowResult] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -133,7 +135,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  justify-content: center;
+  /* justify-content: center; */
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 360px;
