@@ -3,12 +3,21 @@ import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
 
+import ConfirmModal from '../modal/ConfirmModal'
 import { ReactComponent as DeleteIcon } from '../../styles/icons/delete_black_18dp.svg'
 import { ReactComponent as EmptyHeart } from '../../styles/icons/좋아요 비활성_18dp.svg'
 
 const MyPageOneImageCard = ({ image }) => {
   const boardId = image && image.boardId
   const createdDate = image && image.createdAt.split('T')[0]
+
+  const [showModal, setShowModal] = React.useState(false)
+
+  const handleShowModal = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowModal(!showModal)
+  }
 
   const handleDeleteImage = async (e) => {
     e.preventDefault()
@@ -20,7 +29,6 @@ const MyPageOneImageCard = ({ image }) => {
       })
       .then(() => {
         window.location.reload()
-        // history.go('/mypage')
       })
       .catch((error) => {
         console.log('이미지 삭제 문제 발생', error.response)
@@ -42,7 +50,7 @@ const MyPageOneImageCard = ({ image }) => {
           <ImageSection>
             <Image src={image && image.thumbNail} />
             <div>
-              <button style={{ padding: '0' }} onClick={handleDeleteImage}>
+              <button style={{ padding: '0 0 0 5px' }} onClick={handleShowModal}>
                 <DeleteIcon />
               </button>
             </div>
@@ -58,6 +66,11 @@ const MyPageOneImageCard = ({ image }) => {
           </DateSection>
         </div>
       </Wrapper>
+      {showModal && (
+        <ConfirmModal question="이 밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+          <DeleteButton onClick={handleDeleteImage}>삭제</DeleteButton>
+        </ConfirmModal>
+      )}
     </>
   )
 }
@@ -67,7 +80,7 @@ const Wrapper = styled.div`
   max-width: 180px;
   width: 100%;
   height: 170px;
-  padding: 8px;
+  padding: 8px 5px 8px 8px;
   border: 1px solid ${({ theme }) => theme.colors.black};
   .container {
     width: 100%;
@@ -99,6 +112,11 @@ const LikeSection = styled.div`
 
 const DateSection = styled.div`
   height: 100%;
+`
+
+const DeleteButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default MyPageOneImageCard

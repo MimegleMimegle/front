@@ -6,7 +6,7 @@ import { actionCreators as userActions } from '../redux/modules/user'
 import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
 import SidebarItem from './SidebarItem'
-
+import ConfirmModal from './modal/ConfirmModal'
 import SmileIcon from '../styles/image/smileIcon_Yellow.png'
 import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 
@@ -17,6 +17,14 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const nickname = localStorage.getItem('nickname')
   const isLogin = username && nickname ? true : false
 
+  const [showModal, setShowModal] = React.useState(false)
+
+  const handleShowModal = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowModal(!showModal)
+  }
+
   const menu_list = [
     { name: '메인', path: '/' },
     { name: '밈퀴즈', path: '/quiz' },
@@ -24,8 +32,6 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
     { name: '오픈 밈사전', path: '/dict' },
     { name: '짤방앗간', path: '/image' },
   ]
-
-  console.log(my)
 
   const moveToMypage = (e) => {
     e.preventDefault()
@@ -41,18 +47,12 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
     setShowSidebar(false)
   }
 
-  const moveToJoin = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    history.push('/join')
-    setShowSidebar(false)
-  }
-
-  const clickLogOut = (e) => {
+  const handleClickLogOut = (e) => {
     e.preventDefault()
     e.stopPropagation()
     dispatch(userActions.logOutDB())
     setShowSidebar(false)
+    setShowModal(false)
   }
 
   window.addEventListener('keyup', (e) => {
@@ -101,17 +101,13 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
         {menu_list.map((menu, index) => {
           return <SidebarItem key={index} menu={menu} setShowSidebar={setShowSidebar} />
         })}
-        <UserMenuBox>
-          {isLogin ? (
-            <UserMenu onClick={clickLogOut}>로그아웃</UserMenu>
-          ) : (
-            <>
-              {/* <UserMenu onClick={moveToLogin}>로그인</UserMenu>
-              <UserMenu onClick={moveToJoin}>회원가입</UserMenu> */}
-            </>
-          )}
-        </UserMenuBox>
+        <UserMenuBox>{isLogin ? <UserMenu onClick={handleShowModal}>로그아웃</UserMenu> : null}</UserMenuBox>
       </Wrapper>
+      {showModal && (
+        <ConfirmModal question="로그아웃 하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+          <LogOutButton onClick={handleClickLogOut}>로그아웃</LogOutButton>
+        </ConfirmModal>
+      )}
     </>
   )
 }
@@ -140,18 +136,6 @@ const Wrapper = styled.div`
     -webkit-transform: translateX(240px);
     transform: translateX(240px);
   }
-
-  .menu-item {
-    text-decoration: none;
-    cursor: pointer;
-    padding: 5px 0;
-
-    &:visited,
-    &:link,
-    &:active {
-      color: ${({ theme }) => theme.colors.black};
-    }
-  }
 `
 
 const ProfileImage = styled.div`
@@ -179,6 +163,15 @@ const UserMenu = styled.button`
   color: ${({ theme }) => theme.colors.grey};
   font-weight: 700;
   font-size: ${({ theme }) => theme.fontSizes.xl};
+  transition: color 0.3s ease-in-out;
+  &:hover {
+    color: ${({ theme }) => theme.colors.blue};
+  }
+`
+
+const LogOutButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default Sidebar

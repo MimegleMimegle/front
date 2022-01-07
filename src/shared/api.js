@@ -84,8 +84,8 @@ export const commentApi = {
 }
 
 export const likeApi = {
-  likeBoard: (boardId) => instance.post(`/api/board/${boardId}/like`),
-  likeDict: (dictId) => instance.post(`/api/dict/${dictId}/like`),
+  likeBoard: (boardId) => instance.get(`/api/board/${boardId}/like`),
+  likeDict: (dictId) => instance.get(`/api/dict/${dictId}/like`),
 }
 
 export const imageApi = {

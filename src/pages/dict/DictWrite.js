@@ -8,6 +8,8 @@ import Header from '../../components/Header'
 import { debounce } from 'lodash'
 import axios from 'axios'
 import { dictApi } from '../../shared/api'
+import ConfirmModal from '../../components/modal/ConfirmModal'
+import DoubleCheckModal from '../../components/modal/DoubleCheckModal'
 
 const DictWrite = (props) => {
   const dispatch = useDispatch()
@@ -15,6 +17,15 @@ const DictWrite = (props) => {
   const [title, setTitle] = React.useState('')
   const [summary, setSummary] = React.useState('')
   const [content, setContent] = React.useState('')
+  const [showModal, setShowModal] = React.useState(false)
+  const [doubleCheck, setDoubleCheck] = React.useState(null)
+  console.log(doubleCheck)
+
+  const handleShowModal = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowModal(!showModal)
+  }
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
@@ -38,11 +49,34 @@ const DictWrite = (props) => {
       return
     }
     dispatch(dictActions.addDictDB(title, summary, content), [])
+    setShowModal(false)
   }
 
   const doubleCheckDict = async () => {
     const dictName = title
-    dispatch(dictActions.doubleCheckDictDB(dictName), [])
+    // dispatch(dictActions.doubleCheckDictDB(dictName), [])
+    dictApi
+      .dobleCheckDict(dictName)
+      .then((res) => {
+        console.log(res.data.data.result)
+        if (res.data.data.result === true) {
+          setDoubleCheck(true)
+        } else if (res.data.data.result === false) {
+          setDoubleCheck(false)
+        }
+      })
+      .catch((err) => {
+        if (err.res) {
+          console.log(err.res.data)
+          console.log(err.res.status)
+          console.log(err.res.headers)
+        }
+      })
+  }
+
+  const handleMoveDictList = () => {
+    history.push('/image')
+    setDoubleCheck(null)
   }
 
   // const allClearKeyword = () => {
@@ -96,12 +130,30 @@ const DictWrite = (props) => {
             <div className="DictCardTemporaryButton_1">초기화</div>
             <div className="DictCardTemporaryButton_2"></div>
           </div> */}
-          <div className="DictCardSubmitButton" type="submit" onClick={addDict}>
+          <div className="DictCardSubmitButton" type="submit" onClick={handleShowModal}>
             <div className="DictCardSubmitButton_1">저장</div>
             <div className="DictCardSubmitButton_2"></div>
           </div>
         </div>
       </div>
+      {doubleCheck === null ? null : doubleCheck ? (
+        <DoubleCheckModal title="등록되지 않은 단어입니다." question="최초 등록자가 되어보세요!" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+          <button className="DictWriteMoveButton" onClick={() => setDoubleCheck(null)}>
+            이동
+          </button>
+        </DoubleCheckModal>
+      ) : (
+        <DoubleCheckModal title="이미 등록된 단어입니다." question="검색 화면으로 이동하시겠어요?" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+          <button className="DictListMoveButton" onClick={handleMoveDictList}>
+            이동
+          </button>
+        </DoubleCheckModal>
+      )}
+      {showModal && (
+        <ConfirmModal question="작성하신 밈단어를 게시하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+          <button onClick={addDict}>게시</button>
+        </ConfirmModal>
+      )}
     </>
   )
 }

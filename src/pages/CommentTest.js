@@ -24,7 +24,6 @@ const CommentTest = ({ post }) => {
   const addComment = () => {
     dispatch(commentActions.addCommentDB(boardId, comment))
     setComment('')
-    window.location.reload()
   }
 
   React.useEffect(() => {
