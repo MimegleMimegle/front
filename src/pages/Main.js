@@ -106,7 +106,7 @@ const Main = (props) => {
           <div className="MainPagePopularBoardText">핫 밈글</div>
           {popularBoards.map((popularBoards) => (
             <div className="MainPagePopularBoardList" key={popularBoards.id} onClick={() => history.push(`/post/detail/${popularBoards.boardId}`)}>
-              <div className="MainPagePopularBoardImage">{popularBoards.thumbNail}</div>
+              <img className="MainPagePopularBoardImage" src={popularBoards.thumbNail}></img>
               <div className="MainPagePopularBoardInfo">
                 <div className="MainPagePopularBoardTitle">{popularBoards.title}</div>
                 <div className="MainPagePopularBoardWriter">{popularBoards.writer}</div>

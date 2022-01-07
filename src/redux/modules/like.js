@@ -24,12 +24,11 @@ const changeLikeDictDB = (dictId, likeCount, like) => {
     likeApi
       .likeDict(dictId)
       .then((response) => {
-        // dispatch(setLikeDict(dictId, likeCount, like))
-        swal('좋아요를 눌렀습니다', { timer: 2000 })
+        const likeStatus = response.data.result
+        dispatch(setLikeBoard(likeStatus))
       })
       .catch((error) => {
         console.log(error)
-        swal('좋아요가 제대로 반영되지 않았어요', { timer: 2000 })
       })
   }
 }
