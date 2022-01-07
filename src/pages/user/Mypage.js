@@ -168,6 +168,8 @@ const UserProfile = styled.div`
     .user-nickname {
       padding: 0 5px;
       font-size: ${({ theme }) => theme.fontSizes.xl};
+      font-family: 'Pretendard Variable';
+      font-style: normal;
       font-weight: 700;
     }
 
@@ -179,6 +181,9 @@ const UserProfile = styled.div`
       justify-content: center;
       .user-activity-info-subject {
         font-size: ${({ theme }) => theme.fontSizes.xl};
+        font-family: 'YdestreetL';
+        font-style: normal;
+        font-weight: normal;
       }
       .user-activity-info-count {
         padding-top: 2px;

@@ -62,7 +62,7 @@ const MyPageOneImageCard = ({ image }) => {
             <span style={{ fontSize: '9px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
           </LikeSection>
           <DateSection>
-            <p style={{ fontSize: '9px', textAlign: 'right', paddingTop: '7px' }}>{image && createdDate}</p>
+            <p className="createdDate">{image && createdDate}</p>
           </DateSection>
         </div>
       </Wrapper>
@@ -112,6 +112,12 @@ const LikeSection = styled.div`
 
 const DateSection = styled.div`
   height: 100%;
+  .createdDate {
+    font-size: ${({ theme }) => theme.fontSizes.small};
+    color: ${({ theme }) => theme.colors.grey};
+    text-align: right;
+    padding: 7px 0 0 0;
+  }
 `
 
 const DeleteButton = styled.button`
