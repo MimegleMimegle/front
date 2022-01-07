@@ -143,7 +143,7 @@ const Wrapper = styled.div`
 const ProfileImage = styled.div`
   width: 40px;
   height: 40px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 1px solid ${({ theme }) => theme.colors.line};
   border-radius: 20px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
