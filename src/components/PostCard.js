@@ -72,6 +72,8 @@ const FullWrap = styled.div`
 
 const Wrap = styled.div`
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 `
 
 const UserInfo = styled.div`
@@ -120,6 +122,8 @@ const Content = styled.div`
   font-weight: normal;
   font-size: 12px;
   line-height: 20px;
+  display: flex;
+  flex-direction: column;
 `
 const Title = styled.div`
   font-family: 'Pretendard Variable';
