@@ -66,7 +66,7 @@ const ImgInput = styled.div`
     height: 20px;
     border-radius: 150px;
     margin: 0 16px 0 0;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 1px solid #E5E5E5;
   }
   .writebox {
     border: none;

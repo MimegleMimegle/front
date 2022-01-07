@@ -83,7 +83,7 @@ const QuizPaper = (props) => {
 
   return (
     <>
-      <Header type="QuizPaper" location={`${currentIndex + 1}/10`} low noBorder></Header>
+      <Header type="QuizPaper" location={`${currentIndex + 1}/10`} noBorder></Header>
       {!showResult ? (
         !loading ? (
           <Wrapper>
@@ -193,6 +193,9 @@ const QuizTitle = styled.div`
     text-align: left;
     font-size: ${({ theme }) => theme.fontSizes.lg};
     line-height: 22px;
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-weight: 500;
   }
 `
 
