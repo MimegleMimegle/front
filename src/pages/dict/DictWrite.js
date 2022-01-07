@@ -75,7 +75,7 @@ const DictWrite = (props) => {
   }
 
   const handleMoveDictList = () => {
-    history.push('/image')
+    history.push('/dict')
     setDoubleCheck(null)
   }
 
@@ -136,14 +136,16 @@ const DictWrite = (props) => {
           </div>
         </div>
       </div>
-      {doubleCheck === null ? null : doubleCheck ? (
+      {doubleCheck === null && null}
+      {doubleCheck === true && (
         <DoubleCheckModal title="등록되지 않은 단어입니다." question="최초 등록자가 되어보세요!" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
           <button className="DictWriteMoveButton" onClick={() => setDoubleCheck(null)}>
-            이동
+            확인
           </button>
         </DoubleCheckModal>
-      ) : (
-        <DoubleCheckModal title="이미 등록된 단어입니다." question="검색 화면으로 이동하시겠어요?" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+      )}
+      {doubleCheck === false && (
+        <DoubleCheckModal type="exist" title="이미 등록된 단어입니다." question="검색 화면으로 이동하시겠어요?" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
           <button className="DictListMoveButton" onClick={handleMoveDictList}>
             이동
           </button>

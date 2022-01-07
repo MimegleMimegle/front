@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
+import DoubleCheckModal from '../modal/DoubleCheckModal'
 import Backdrop from '@mui/material/Backdrop'
 import { IoCloseOutline } from 'react-icons/io5'
 import { MdPhotoCamera } from 'react-icons/md'
@@ -13,10 +14,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
 
   const userId = localStorage.getItem('id')
 
-  const [imageFile, setImageFile] = React.useState(null)
-  const [nickname, setNickname] = React.useState('')
-  const [isNickname, setIsNickname] = React.useState(false)
-  const [isNicknameChecked, setIsNicknameChecked] = React.useState(false)
+  const [imageFile, setImageFile] = useState(null)
+  const [nickname, setNickname] = useState('')
+  const [isNickname, setIsNickname] = useState(false)
+  const [isNicknameChecked, setIsNicknameChecked] = useState(false)
+  const [doubleCheck, setDoubleCheck] = useState(null)
+
+  console.log(doubleCheck)
 
   const fileInput = React.useRef('')
 
@@ -52,10 +56,10 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       .then((response) => {
         console.log(response.data)
         if (response.data.result === true) {
-          window.alert('사용 가능한 닉네임입니다.')
+          setDoubleCheck(true)
           setIsNicknameChecked(true)
-        } else {
-          window.alert('사용 중인 닉네임입니다.')
+        } else if (response.data.result === false) {
+          setDoubleCheck(false)
           setIsNicknameChecked(false)
         }
       })
@@ -126,6 +130,17 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
           </ModalBody>
         </ModalContainer>
       </Backdrop>
+      {doubleCheck === null && null}
+      {doubleCheck === true && (
+        <DoubleCheckModal title="사용 가능한 닉네임입니다." question="등록하러 가볼까요?" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+          <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
+        </DoubleCheckModal>
+      )}
+      {doubleCheck === false && (
+        <DoubleCheckModal type="exist-onlyConfirm" title="이미 등록된 닉네임입니다." question="다른 닉네임으로 시도해 보세요!" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+          <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
+        </DoubleCheckModal>
+      )}
     </>
   )
 }
@@ -210,6 +225,11 @@ const ProfileImagePreview = styled.div`
   background-image: url('${(props) => props.src}');
   background-position: center;
   background-color: ${({ theme }) => theme.colors.white}; ;
+`
+
+const ConfirmButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default EditProfile

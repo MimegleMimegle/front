@@ -7,29 +7,62 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
     if (doubleCheck && e.key === 'Escape') {
       setDoubleCheck(null)
     }
+    if (!doubleCheck && e.key === 'Escape') {
+      setDoubleCheck(null)
+    }
   })
 
-  if (type === '')
+  if (type === 'exist-onlyConfirm') {
     return (
-      <>
-        <Backdrop open={doubleCheck} sx={{ zIndex: 10000 }}>
-          <Container>
-            <div>
-              <div className="title-box">{title}</div>
-              <div className="question-box">{question}</div>
-            </div>
-            <div className="confirm-box">
-              <div>
-                <button className="cancel-button" onClick={() => setDoubleCheck(null)}>
-                  취소
-                </button>
-              </div>
-              <div className="confirm-button">{children}</div>
-            </div>
-          </Container>
-        </Backdrop>
-      </>
+      <Backdrop open={!doubleCheck} sx={{ zIndex: 10000 }}>
+        <Container>
+          <div>
+            <div className="title-box">{title}</div>
+            <div className="question-box">{question}</div>
+          </div>
+          <div className="confirm-box">
+            <div className="confirm-button">{children}</div>
+          </div>
+        </Container>
+      </Backdrop>
     )
+  }
+
+  if (type === 'exist') {
+    return (
+      <Backdrop open={!doubleCheck} sx={{ zIndex: 10000 }}>
+        <Container>
+          <div>
+            <div className="title-box">{title}</div>
+            <div className="question-box">{question}</div>
+          </div>
+          <div className="confirm-box">
+            <div>
+              <button className="cancel-button" onClick={() => setDoubleCheck(null)}>
+                취소
+              </button>
+            </div>
+            <div className="confirm-button">{children}</div>
+          </div>
+        </Container>
+      </Backdrop>
+    )
+  }
+  return (
+    <>
+      <Backdrop open={doubleCheck} sx={{ zIndex: 10000 }}>
+        <Container>
+          <div>
+            <div className="title-box">{title}</div>
+            <div className="question-box">{question}</div>
+          </div>
+          <div className="confirm-box">
+            <div className="confirm-button">{children}</div>
+          </div>
+        </Container>
+      </Backdrop>
+    </>
+  )
 }
 
 const Container = styled.div`

@@ -110,6 +110,21 @@ const Header = ({ type, children, location, low, noBorder }) => {
     )
   }
 
+  if (type === 'Join' || type === 'Login') {
+    return (
+      <>
+        <NavHeader {...styles}>
+          <ul className="nav-list">
+            <li className="nav-item-middle">
+              <HeaderLogo />
+            </li>
+          </ul>
+        </NavHeader>
+        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      </>
+    )
+  }
+
   return (
     <>
       <NavHeader>
@@ -146,7 +161,6 @@ const NavHeader = styled.nav`
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
   }
