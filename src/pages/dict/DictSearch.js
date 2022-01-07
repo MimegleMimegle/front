@@ -67,6 +67,7 @@ const DictSearch = (props) => {
         <div className="DictSearchListSection">
           <div className="DictSearchNoResult">검색결과가 없습니다</div>
         </div>
+        <div className="DictSearchNoResultAddDictGuideText">새로운 단어를 직접 추가해주세요!</div>
         {totalCount !== 0 ? (
           ''
         ) : (

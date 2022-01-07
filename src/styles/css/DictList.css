@@ -1,3 +1,24 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetL.otf') format('truetype'), url('../fonts/YdestreetL.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Pretendard-Bold.woff') format('woff'), url('../fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
 .DictLayout {
   width: 100%;
   /* border: 3px solid cornflowerblue; */
@@ -35,11 +56,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
-  font-weight: 700;
   margin: 15px 0 30px 0;
 
   z-index: 2;
+
+  font-size: 14px;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
 }
 .NewDictAddButton_1:hover {
   cursor: pointer;
@@ -64,11 +88,14 @@
 
 .TodayDictListText {
   margin-left: 10px;
-  font-size: 18px;
-  font-weight: 700;
   width: fit-content;
   line-height: normal;
   background-image: linear-gradient(transparent 60%, #ffe330 40%);
+
+  font-size: 18px;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
 }
 
 .TodayDictListHr {
@@ -90,10 +117,13 @@
   display: flex;
   align-self: flex-start;
   margin: 0 0 10px 10px;
-  font-size: 18px;
-  font-weight: 700;
   line-height: normal;
   background-image: linear-gradient(transparent 60%, #ffe330 40%);
+
+  font-size: 18px;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
 }
 
 .DictList {
@@ -117,11 +147,14 @@
 }
 
 .DictListTitle {
-  font-size: 18px;
-  font-weight: bold;
   margin-left: 30px;
   margin-top: 10px;
   color: rgba(1, 109, 173, 1);
+
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .DictListSummary {
@@ -160,7 +193,7 @@
   height: fit-content;
   display: flex;
   align-items: flex-start;
-  margin: 0px 0px 3px 20px;
+  margin: 0px 0px 0px 20px;
 }
 
 .DictListLikeCount {

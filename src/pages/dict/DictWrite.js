@@ -122,7 +122,7 @@ const DictWrite = (props) => {
           </div>
           <div className="DictCardInputContentContainer">
             <div className="DictCardInputContentGuideText">부가설명</div>
-            <textarea className="DictCardInputContent" type="text" cols="40" rows="5" value={content} onChange={onChangeContent} placeholder="추가적인 설명이나 예시를 작성해 주세요" />
+            <textarea className="DictCardInputContent" type="text" cols="40" rows="10" value={content} onChange={onChangeContent} placeholder="추가적인 설명이나 예시를 작성해 주세요" />
           </div>
         </div>
         <div className="DictCardTemporaryOrSubmitButton">
@@ -131,7 +131,7 @@ const DictWrite = (props) => {
             <div className="DictCardTemporaryButton_2"></div>
           </div> */}
           <div className="DictCardSubmitButton" type="submit" onClick={handleShowModal}>
-            <div className="DictCardSubmitButton_1">저장</div>
+            <div className="DictCardSubmitButton_1">등록</div>
             <div className="DictCardSubmitButton_2"></div>
           </div>
         </div>
