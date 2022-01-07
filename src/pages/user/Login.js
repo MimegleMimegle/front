@@ -89,12 +89,21 @@ const Login = (props) => {
             <label className="IdInputLabel" for="IdInput">
               아이디
             </label>
-            <input className="IdInputBox" id="IdInput" placeholder="영어, 숫자 3~16자" type="email" typeName="email" onChange={onChangeUsername} value={username} />
+            <input className="IdInputBox" id="IdInput" placeholder="영어, 숫자 3~16자" maxLength="16" type="email" typeName="email" onChange={onChangeUsername} value={username} />
             {username.length > 0 && <SpanUsername className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</SpanUsername>}
             <label className="PwdInputLabel" for="PwdInput">
               비밀번호
             </label>
-            <input className="PwdInputBox" id="PwdInput" placeholder="영어 대소문자, 숫자, 특수문자 6~16자" type="password" typeName="password" onChange={onChangePassword} value={password} />
+            <input
+              className="PwdInputBox"
+              id="PwdInput"
+              placeholder="영어 대소문자, 숫자, 특수문자 6~16자"
+              maxLength="16"
+              type="password"
+              typeName="password"
+              onChange={onChangePassword}
+              value={password}
+            />
             {password.length > 0 && <SpanPassword className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</SpanPassword>}
             <div
               className="MemegleButton_LoginSubmit"
@@ -135,7 +144,8 @@ const Login = (props) => {
 const SpanUsername = styled.span`
   font-size: 12px;
   color: #ffa07a;
-  margin-top: -10px;
+  margin-top: -5px;
+  margin-bottom: -5px;
 `
 
 const SpanPassword = styled.span`

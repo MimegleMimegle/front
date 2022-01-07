@@ -214,8 +214,8 @@ const UserProfile = styled.img`
 `
 const Writer = styled.div`
   font-size: 12px;
-  line-height:16p;
-  font-family:'YdestreetL';
+  line-height: 16p;
+  font-family: 'YdestreetL';
   font-style: normal;
   font-weight: normal;
 `
@@ -236,7 +236,7 @@ const Title = styled.div`
 
 const Content = styled.div`
   font-size: 12px;
-  line-height:12px;
+  line-height: 12px;
 `
 
 const ImageBox = styled.div`
