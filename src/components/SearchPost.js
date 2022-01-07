@@ -39,7 +39,7 @@ const SearchPost = (props) => {
         console.log(response.data)
         setFilteredPosts(response.data.data)
         history.push({
-        pathname:'/post/search',
+        pathname:'/post/search/',
         search:search,
         filteredPosts:filteredPosts,
         })
