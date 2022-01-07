@@ -15,7 +15,6 @@ import Header from '../../components/Header'
 import { GoSearch } from 'react-icons/go'
 import { IoClose } from 'react-icons/io5'
 
-
 const PostSearch = (props) => {
   const history = useHistory()
 
@@ -69,20 +68,23 @@ const PostSearch = (props) => {
         console.log(res.data.data)
         setHashTags(res.data.data.hashTags)
         setSearch(props.match.params.search)
+
       })
       .catch((err) => {
         console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
       })
 
-  boardApi
-    .searchPost(search)
-    .then((response) => {
-      console.log(response.data)
-      setFilteredPosts(response.data.data)
-    })
-    .catch((err) => {
-      console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
-    })
+    
+
+    // boardApi
+    //   .searchPost(search)
+    //   .then((response) => {
+    //     console.log(response.data)
+    //     setFilteredPosts(response.data.data)
+    //   })
+    //   .catch((err) => {
+    //     console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
+    //   })
   }, [])
  
 
