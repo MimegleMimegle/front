@@ -79,6 +79,18 @@ const DictEditHistory = (props) => {
             <div className="DictHistoryList DictHistoryFirstCreatedAt">등록일 : {isDict.firstCreatedAt}</div>
           </div>
         </div>
+        <div className="DictHistoryModifiedDictGuideTextAndButton">
+          <div className="DictHistoryModifiedDictGuideText">직접 단어의 뜻을 업데이트 할 수 있어요!</div>
+          <div
+            className="DictHistoryModifiedButton"
+            onClick={() => {
+              history.push(`/dict/edit/${dictId}`)
+            }}
+          >
+            <div className="DictHistoryModifiedButton_1">편집하기</div>
+            <div className="DictHistoryModifiedButton_2"></div>
+          </div>
+        </div>
       </div>
     </>
   )

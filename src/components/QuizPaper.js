@@ -58,18 +58,19 @@ const QuizPaper = (props) => {
     setClicked4(true)
   }
 
-  const submitAnswer = () => {
-    setClicked1(false)
-    setClicked2(false)
-    setClicked3(false)
-    setClicked4(false)
+  const submitAnswer = (e) => {
     // 추후 quiz_list ? currentIndex === quiz_list.length -1 로 조건문 변경
     if (currentIndex === 9) {
+      dispatch(quizActions.addAnswer(answer))
       setShowResult(true)
     } else {
       dispatch(quizActions.addAnswer(answer))
       setCurrentIndex(currentIndex + 1)
     }
+    setClicked1(false)
+    setClicked2(false)
+    setClicked3(false)
+    setClicked4(false)
   }
 
   React.useEffect(() => {

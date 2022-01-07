@@ -14,6 +14,7 @@ const OneImageCard = ({ image }) => {
   const [likeCount, setLikeCount] = useState(image.likeCnt)
   const [isLiked, setIsLiked] = useState(image.isLike)
   const [shareVisible, setShareVisible] = useState(false)
+  const [thumbNail, setThumbNail] = useState(image ? image.thumbNail : '')
 
   const handleShareVisible = (e) => {
     e.preventDefault()
@@ -80,7 +81,7 @@ const OneImageCard = ({ image }) => {
           </div>
         </Overlay>
       </ImageBox>
-      {shareVisible && <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />}
+      {shareVisible && <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} />}
     </>
   )
 }

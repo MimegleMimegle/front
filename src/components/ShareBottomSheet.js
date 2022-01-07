@@ -8,7 +8,7 @@ import { ReactComponent as LinkCopyIcon } from '../styles/icons/링크복사_24d
 import { KakaoShareButton } from '../shared/kakaoShare'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
 
-const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
+const ShareBottomSheet = ({ shareVisible, setShareVisible, type, thumbNail }) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
 
   const currentUrl = window.location.href
@@ -31,6 +31,55 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
       setShareVisible(!shareVisible)
     }
   })
+
+  if (type === 'image') {
+    return (
+      <Backdrop open={shareVisible} sx={{ zIndex: '10000' }}>
+        <Container className={`${shareVisible ? 'open' : 'close'}`}>
+          <div className="share share-header">공유하기</div>
+          <ShareBody>
+            <div className="each-share-container">
+              <CopyToClipboard onCopy={onCopy} text={thumbNail}>
+                <button className="link-copy-button">
+                  <LinkCopyIcon />
+                </button>
+              </CopyToClipboard>
+              <p className="each-share-container__text">링크복사</p>
+            </div>
+            <div className="each-share-container">
+              <KakaoShareButton />
+              <p className="each-share-container__text">카카오톡</p>
+            </div>
+            <div className="each-share-container">
+              <FacebookShareButton url={thumbNail}>
+                <FacebookIcon size={52} round={true} />
+              </FacebookShareButton>
+              <p className="each-share-container__text">페이스북</p>
+            </div>
+            <div className="each-share-container">
+              <TwitterShareButton url={thumbNail}>
+                <TwitterIcon size={52} round={true} />
+              </TwitterShareButton>
+              <p className="each-share-container__text">트위터</p>
+            </div>
+
+            <div className="each-share-container">
+              <LineShareButton url={thumbNail}>
+                <LineIcon size={52} round={true} />
+              </LineShareButton>
+              <p className="each-share-container__text">라인</p>
+            </div>
+          </ShareBody>
+          <div className="share share-footer">
+            <button className="share-footer__close-button" onClick={() => setShareVisible(!shareVisible)}>
+              닫기
+            </button>
+          </div>
+          {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
+        </Container>
+      </Backdrop>
+    )
+  }
 
   return (
     <>

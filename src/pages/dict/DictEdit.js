@@ -99,7 +99,7 @@ const DictEdit = (props) => {
           </div>
           <div className="DictCardEditInputContentContainer">
             <div className="DictCardEditInputContentGuideText">부가설명</div>
-            <textarea className="DictCardEditInputContent" type="text" cols="40" rows="5" value={content} onChange={onChangeContent} placeholder={dict.content}>
+            <textarea className="DictCardEditInputContent" type="text" cols="40" rows="10" value={content} onChange={onChangeContent} placeholder={dict.content}>
               {dict.meaning}
             </textarea>
           </div>

@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetL.otf') format('truetype'), url('../fonts/YdestreetL.ttf') format('truetype');
+}
+
 .TodayDictCard {
   position: relative;
   width: 100%;
@@ -31,7 +45,7 @@
   border-radius: 0 0 0 0;
   top: 16px;
   left: 16px;
-  /* background-color: #ffe330; */
+  background-color: #ffe330;
   width: 150px;
   height: 150px;
   position: absolute;
@@ -40,12 +54,15 @@
 }
 
 .TodayDictCard_Title {
-  font-size: 16px;
-  font-weight: 700;
   word-break: keep-all;
   width: fit-content;
   height: fit-content;
   margin: -30px 0 0 0;
+
+  font-size: 16px;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
 }
 
 .TodayDictCard_Summary {

@@ -78,7 +78,7 @@ const SearchPost = (props) => {
           </div>
           <div>
             {/* DB에서 불러온 HashTags list map */}
-            <p style={{ fontSize: '14px', margin: '10px 0 3px 48px'}}>추천 해시태그</p>
+            <RecommendHashTag style={{ fontSize: '14px', margin: '10px 0 3px 48px'}}>추천 해시태그</RecommendHashTag>
             {hashTags&&hashTags.map((hashtag, index) => {
               return <HashTag key={index} hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} />
             })}
@@ -96,5 +96,14 @@ const Wrapper = styled.div`
   border-bottom: 1px solid black;
   background: white;
 `
+
+const RecommendHashTag = styled.div`
+  margin: 10px 0 3px 48px;
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+`;
 
 export default SearchPost;

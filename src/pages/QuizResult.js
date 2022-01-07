@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { history } from '../redux/ConfigureStore'
+import { actionCreators as quizActions } from '../redux/modules/quiz'
 
 import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
@@ -9,7 +10,8 @@ import Header from '../components/Header'
 import { ReactComponent as GoBack } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLink } from '../styles/icons/링크복사_24dp.svg'
 
-const QuizResult = ({ quiz_list }) => {
+const QuizResult = ({ quiz_list, userAnswerList, setUserAnswerList }) => {
+  const dispatch = useDispatch()
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
 
   const [showQuiz, setShowQuiz] = useState(false)
@@ -21,9 +23,15 @@ const QuizResult = ({ quiz_list }) => {
     e.stopPropagation()
     setShareVisible(!shareVisible)
   }
+  console.log(userAnswerList)
 
   const handleShowQuiz = () => {
     setShowQuiz(!showQuiz)
+  }
+
+  const handleInitUserAnswer = () => {
+    history.push('/quiz')
+    dispatch(quizActions.initAnswer())
   }
 
   const answerCnt = quiz_list
@@ -77,13 +85,7 @@ const QuizResult = ({ quiz_list }) => {
                 </div>
                 <div className="circle-button btn-2"></div>
               </CircleButtonBox>
-              <TextButton
-                onClick={() => {
-                  history.push('/quiz')
-                }}
-              >
-                다른 테스트 하러 가기
-              </TextButton>
+              <TextButton onClick={handleInitUserAnswer}>다른 테스트 하러 가기</TextButton>
             </div>
             <div style={{ width: '100%', margin: '5px 0' }}>
               <CircleButtonBox>
