@@ -114,7 +114,7 @@ const ImageDetail = (props) => {
         <div style={{ width: '100%', padding: '0 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <button
             onClick={() => {
-              history.goBack()
+              history.replace('/image')
             }}
             style={{ padding: '0' }}
           >
@@ -147,7 +147,7 @@ const ImageDetail = (props) => {
           <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
           <ImageLikeCount>{likeCount}</ImageLikeCount>
         </div>
-        {shareVisible && <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} />}
+        {shareVisible && <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />}
       </ImageWrapper>
       {showModal && (
         <ConfirmModal question="밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>

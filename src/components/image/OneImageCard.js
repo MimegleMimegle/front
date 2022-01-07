@@ -10,6 +10,8 @@ import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
 
 const OneImageCard = ({ image }) => {
+  const boardId = image.boardId
+
   const [hover, setHover] = useState(false)
   const [likeCount, setLikeCount] = useState(image.likeCnt)
   const [isLiked, setIsLiked] = useState(image.isLike)
@@ -81,7 +83,7 @@ const OneImageCard = ({ image }) => {
           </div>
         </Overlay>
       </ImageBox>
-      {shareVisible && <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} />}
+      {shareVisible && <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />}
     </>
   )
 }
