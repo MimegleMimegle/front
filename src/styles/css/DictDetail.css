@@ -124,8 +124,8 @@
 
 .OneDictCardDetailInfoLike {
   font-size: 20px;
-  font-weight: bold;
-  margin: 0px 0 0 0;
+  font-weight: 400;
+  margin: 2px 0 0 0;
   display: flex;
   align-self: center;
 }
