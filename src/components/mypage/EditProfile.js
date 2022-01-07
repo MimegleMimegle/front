@@ -11,7 +11,6 @@ import { MdPhotoCamera } from 'react-icons/md'
 
 const EditProfile = ({ showModal, setShowModal, my }) => {
   const dispatch = useDispatch()
-
   const userId = localStorage.getItem('id')
 
   const [imageFile, setImageFile] = useState(null)
@@ -19,8 +18,6 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   const [isNickname, setIsNickname] = useState(false)
   const [isNicknameChecked, setIsNicknameChecked] = useState(false)
   const [doubleCheck, setDoubleCheck] = useState(null)
-
-  console.log(doubleCheck)
 
   const fileInput = React.useRef('')
 
@@ -54,7 +51,6 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
     await userApi
       .checkNickname(nickname)
       .then((response) => {
-        console.log(response.data)
         if (response.data.result === true) {
           setDoubleCheck(true)
           setIsNicknameChecked(true)
