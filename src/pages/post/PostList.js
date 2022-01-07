@@ -105,26 +105,24 @@ const Addbtn = styled.div`
   border: 1px solid black;
   display: flex;
   justify-content: center;
-  align-itmes: center;
+  align-items: center;
   font-size: 14px;
   font-family: 'YdestreetB';
   font-style: normal;
   font-weight: bold;
   cursor: pointer;
   z-index: 2;
-  margin: 20px 42px 20px 38px;
-  padding: 11px 0px;
+  margin: 15px 28px 15px 42px;
+  /* padding: 11px 0px; */
 `
 
 const AddbtnShadow = styled.div`
   width: 280px;
   height: 40px;
-  top: 4px;
-  right: 38px;
+  top: 5px;
+  right: 22px;
   background-color: white;
   border: 1px solid black;
   position: absolute;
-
-  /* z-index: -1; */
   z-index: -1;
 `
