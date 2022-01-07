@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import SmileIcon from '../styles/image/smileIcon_Yellow.png'
 import kakaoLogo from '../styles/image/kakao-logo.png'
 
-const KakaoShareButton = (props) => {
-  const { size, children } = props
+const KakaoImageShareButton = (props) => {
+  const { size, children, thumbNail, boardId } = props
   const styles = { size: size }
   React.useEffect(() => {
     createKakaoButton()
@@ -13,7 +12,8 @@ const KakaoShareButton = (props) => {
   const createKakaoButton = () => {
     if (window.Kakao) {
       const kakao = window.Kakao
-      const quizIntroUrl = 'http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/quiz'
+
+      const imageDetailUrl = `http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/image/detail/${boardId}`
 
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
@@ -25,11 +25,11 @@ const KakaoShareButton = (props) => {
         objectType: 'feed',
         content: {
           title: '밈글밈글 MemegleMemegle',
-          description: '#밈글밈글 #밈퀴즈 #신조어 #퀴즈',
-          imageUrl: 'https://avatars.githubusercontent.com/u/96426012?s=200&v=4', // process.env.FETCH_URL + '/logo.png' 절대경로여야함
+          description: '#밈글밈글 #밈짤 #짤방',
+          imageUrl: thumbNail, // process.env.FETCH_URL + '/logo.png' 절대경로여야함
           link: {
-            mobileWebUrl: quizIntroUrl,
-            webUrl: quizIntroUrl,
+            mobileWebUrl: thumbNail,
+            webUrl: thumbNail,
           },
         },
         social: {
@@ -40,15 +40,15 @@ const KakaoShareButton = (props) => {
           {
             title: '웹으로 보기',
             link: {
-              mobileWebUrl: quizIntroUrl,
-              webUrl: quizIntroUrl,
+              mobileWebUrl: imageDetailUrl,
+              webUrl: imageDetailUrl,
             },
           },
           {
             title: '앱으로 보기',
             link: {
-              mobileWebUrl: quizIntroUrl,
-              webUrl: quizIntroUrl,
+              mobileWebUrl: imageDetailUrl,
+              webUrl: imageDetailUrl,
             },
           },
         ],
@@ -66,7 +66,7 @@ const KakaoShareButton = (props) => {
   )
 }
 
-KakaoShareButton.defaultProps = {
+KakaoImageShareButton.defaultProps = {
   size: 52,
 }
 
@@ -77,4 +77,4 @@ const KakaoLogoImage = styled.img`
   border-radius: var(--size);
 `
 
-export { KakaoShareButton }
+export { KakaoImageShareButton }

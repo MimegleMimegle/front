@@ -6,12 +6,14 @@ import useScript from '../util/useScript'
 import Backdrop from '@mui/material/Backdrop'
 import { ReactComponent as LinkCopyIcon } from '../styles/icons/링크복사_24dp.svg'
 import { KakaoShareButton } from '../shared/kakaoShare'
+import { KakaoImageShareButton } from '../shared/kakaoImageShare'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
+import { boardApi } from '../shared/api'
 
-const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
+const ShareBottomSheet = ({ shareVisible, setShareVisible, type, thumbNail, boardId }) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
 
-  const currentUrl = window.location.href
+  const quizIntroUrl = 'http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/quiz'
 
   const [copied, setCopied] = useState(false)
 
@@ -32,6 +34,55 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
     }
   })
 
+  if (type === 'image') {
+    return (
+      <Backdrop open={shareVisible} sx={{ zIndex: '10000' }}>
+        <Container className={`${shareVisible ? 'open' : 'close'}`}>
+          <div className="share share-header">공유하기</div>
+          <ShareBody>
+            <div className="each-share-container">
+              <CopyToClipboard onCopy={onCopy} text={thumbNail}>
+                <button className="link-copy-button">
+                  <LinkCopyIcon />
+                </button>
+              </CopyToClipboard>
+              <p className="each-share-container__text">링크복사</p>
+            </div>
+            <div className="each-share-container">
+              <KakaoImageShareButton thumbNail={thumbNail} boardId={boardId} />
+              <p className="each-share-container__text">카카오톡</p>
+            </div>
+            <div className="each-share-container">
+              <FacebookShareButton url={thumbNail}>
+                <FacebookIcon size={52} round={true} />
+              </FacebookShareButton>
+              <p className="each-share-container__text">페이스북</p>
+            </div>
+            <div className="each-share-container">
+              <TwitterShareButton url={thumbNail}>
+                <TwitterIcon size={52} round={true} />
+              </TwitterShareButton>
+              <p className="each-share-container__text">트위터</p>
+            </div>
+
+            <div className="each-share-container">
+              <LineShareButton url={thumbNail}>
+                <LineIcon size={52} round={true} />
+              </LineShareButton>
+              <p className="each-share-container__text">라인</p>
+            </div>
+          </ShareBody>
+          <div className="share share-footer">
+            <button className="share-footer__close-button" onClick={() => setShareVisible(!shareVisible)}>
+              닫기
+            </button>
+          </div>
+          {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
+        </Container>
+      </Backdrop>
+    )
+  }
+
   return (
     <>
       <Backdrop open={shareVisible} sx={{ zIndex: '10000' }}>
@@ -39,7 +90,7 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
           <div className="share share-header">공유하기</div>
           <ShareBody>
             <div className="each-share-container">
-              <CopyToClipboard onCopy={onCopy} text={currentUrl}>
+              <CopyToClipboard onCopy={onCopy} text={quizIntroUrl}>
                 <button className="link-copy-button">
                   <LinkCopyIcon />
                 </button>
@@ -51,20 +102,20 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
               <p className="each-share-container__text">카카오톡</p>
             </div>
             <div className="each-share-container">
-              <FacebookShareButton url={currentUrl}>
+              <FacebookShareButton url={quizIntroUrl}>
                 <FacebookIcon size={52} round={true} />
               </FacebookShareButton>
               <p className="each-share-container__text">페이스북</p>
             </div>
             <div className="each-share-container">
-              <TwitterShareButton url={currentUrl}>
+              <TwitterShareButton url={quizIntroUrl}>
                 <TwitterIcon size={52} round={true} />
               </TwitterShareButton>
               <p className="each-share-container__text">트위터</p>
             </div>
 
             <div className="each-share-container">
-              <LineShareButton url={currentUrl}>
+              <LineShareButton url={quizIntroUrl}>
                 <LineIcon size={52} round={true} />
               </LineShareButton>
               <p className="each-share-container__text">라인</p>

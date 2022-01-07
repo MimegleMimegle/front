@@ -45,7 +45,7 @@
   border-radius: 0 0 0 0;
   top: 16px;
   left: 16px;
-  /* background-color: #ffe330; */
+  background-color: #ffe330;
   width: 150px;
   height: 150px;
   position: absolute;
@@ -57,7 +57,7 @@
   word-break: keep-all;
   width: fit-content;
   height: fit-content;
-  margin: -30px 0 0 0;
+  margin: -25px 0 0 0;
 
   font-size: 16px;
   font-family: 'YdestreetB';

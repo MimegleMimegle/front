@@ -15,7 +15,6 @@ import Header from '../../components/Header'
 import { GoSearch } from 'react-icons/go'
 import { IoClose } from 'react-icons/io5'
 
-/********* 검색된 게시글 정보가 없을 때 보여줄 화면!! 모달이든 뭐든 띄워야함! *********/
 
 const PostSearch = (props) => {
   const history = useHistory()
@@ -26,11 +25,8 @@ const PostSearch = (props) => {
   const [notFound, setNotFound] = React.useState(false)
   const [show, setShow] = React.useState(false)
 
-  console.log(hashTags)
-  console.log(filteredPosts)
+  const searchprops = props.match.params.search
   console.log(search)
-  console.log(props)
-  console.log(props.location.search)
 
   const searchClick = () => {
     show ? setShow(false) : setShow(true)
@@ -72,10 +68,21 @@ const PostSearch = (props) => {
       .then((res) => {
         console.log(res.data.data)
         setHashTags(res.data.data.hashTags)
+        setSearch(props.match.params.search)
       })
       .catch((err) => {
         console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
       })
+
+  boardApi
+    .searchPost(search)
+    .then((response) => {
+      console.log(response.data)
+      setFilteredPosts(response.data.data)
+    })
+    .catch((err) => {
+      console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
+    })
   }, [])
  
 
