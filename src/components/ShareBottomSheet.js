@@ -39,6 +39,18 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
           <div className="share share-header">공유하기</div>
           <ShareBody>
             <div className="each-share-container">
+              <CopyToClipboard onCopy={onCopy} text={currentUrl}>
+                <button className="link-copy-button">
+                  <LinkCopyIcon />
+                </button>
+              </CopyToClipboard>
+              <p className="each-share-container__text">링크복사</p>
+            </div>
+            <div className="each-share-container">
+              <KakaoShareButton />
+              <p className="each-share-container__text">카카오톡</p>
+            </div>
+            <div className="each-share-container">
               <FacebookShareButton url={currentUrl}>
                 <FacebookIcon size={52} round={true} />
               </FacebookShareButton>
@@ -50,23 +62,12 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible }) => {
               </TwitterShareButton>
               <p className="each-share-container__text">트위터</p>
             </div>
-            <div className="each-share-container">
-              <KakaoShareButton />
-              <p className="each-share-container__text">카카오톡</p>
-            </div>
+
             <div className="each-share-container">
               <LineShareButton url={currentUrl}>
                 <LineIcon size={52} round={true} />
               </LineShareButton>
               <p className="each-share-container__text">라인</p>
-            </div>
-            <div className="each-share-container">
-              <CopyToClipboard onCopy={onCopy} text={currentUrl}>
-                <button className="link-copy-button">
-                  <LinkCopyIcon />
-                </button>
-              </CopyToClipboard>
-              <p className="each-share-container__text">링크복사</p>
             </div>
           </ShareBody>
           <div className="share share-footer">
