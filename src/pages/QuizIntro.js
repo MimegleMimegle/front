@@ -1,12 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
+import { actionCreators as quizActions } from '../redux/modules/quiz'
+
 import Header from '../components/Header'
 import ModalWrapper from '../components/ModalWrapper'
 import ModalContainer from '../components/ModalContainer'
 import QuizIntroImage from '../styles/image/quiz_main_image2.gif'
 
 const QuizIntro = (props) => {
+  const dispatch = useDispatch()
+
   const [showModal, setShowModal] = React.useState(false)
   const [subject, setSubject] = React.useState('')
   const [y2000, setY2000] = React.useState(false)
@@ -47,7 +52,7 @@ const QuizIntro = (props) => {
       return
     } else {
       history.push(`/quiz/${subject}`)
-      // window.location.reload()
+      dispatch(quizActions.initAnswer())
     }
   }
 

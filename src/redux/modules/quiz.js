@@ -1,15 +1,16 @@
 import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 import { quizApi } from '../../shared/api'
-import swal from 'sweetalert'
 
 /* action type */
 const GET_QUIZ_LIST = 'GET_QUIZ_LIST'
 const ADD_ANSWER = 'ADD_ANSWER'
+const INIT_ANSWER = 'INIT_ANSWER'
 
 /* action creator */
 const getQuizList = createAction(GET_QUIZ_LIST, (quiz_list) => ({ quiz_list }))
 const addAnswer = createAction(ADD_ANSWER, (user_answer) => ({ user_answer }))
+const initAnswer = createAction(INIT_ANSWER, () => ({}))
 
 /* initial state */
 const initialState = {
@@ -46,6 +47,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user_answer_list.push(action.payload.user_answer)
       }),
+    [INIT_ANSWER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user_answer_list = []
+      }),
   },
   initialState
 )
@@ -56,6 +61,7 @@ const actionCreators = {
   getQuizList,
   getQuizListDB,
   addAnswer,
+  initAnswer,
 }
 
 export { actionCreators }
