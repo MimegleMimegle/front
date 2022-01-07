@@ -37,11 +37,8 @@ const HashTagButton = styled.button`
   font-size: 14px;
   margin: 12px 0px 12px 48px;
   padding: 0 10px;
-  line-height: 16.8px;  
-  /* background-color: #fff8b6; */
-  /* display: inline-block; */
-  /* border-radius: 20px; */
-  /* border: 1px solid #111; */
+  line-height: 17px;  
+
 `
 
 export default HashTag

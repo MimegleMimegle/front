@@ -5,6 +5,7 @@ import { FiMessageSquare } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import HashTag from './HashTag'
+import '../index.css'
 
 const PostCard = ({ post }) => {
   const history = useHistory()
@@ -34,7 +35,7 @@ const PostCard = ({ post }) => {
             <HashTagHere>
               {post.hashTags &&
                 post.hashTags.map((hashTag, index) => {
-                  return <p key={index}>#{hashTag}</p>
+                  return <pre key={index}> #{hashTag}</pre>
                 })}
             </HashTagHere>
           </Content>
@@ -70,6 +71,7 @@ const Wrap = styled.div`
 const UserInfo = styled.div`
   display: flex;
   height: 30px;
+  margin: 0 0 0 3px;
   .createdate {
     display: flex;
   }
@@ -84,18 +86,20 @@ const UserImg = styled.img`
   border-radius: 150px;
 `
 const Writer = styled.text`
+  font-family: 'YdestreetL';
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 13px;
+  line-height: 16px;
   display: flex;
   align-items: center;
   margin: 0 0 4px 0;
 `
 
 const CreatedAt = styled.div`
+  font-family: 'Pretendard Variable';
   font-style: normal;
-  font-weight: normal;
+  font-weight: 300;
   font-size: 9px;
   line-height: 11px;
   margin: 0 3px 0 0;
@@ -110,16 +114,26 @@ const Content = styled.div`
   font-weight: normal;
   font-size: 12px;
   line-height: 20px;
+
 `
 const Title = styled.div`
-  font-weight: bold;
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: normal;
   font-size: 12px;
   line-height: 20px;
+  margin: 0 0 0 3px;
+
 `
 
 const HashTagHere = styled.div`
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: normal;
   display: flex;
-  fontsize: 12px;
+  font-size: 12px;
+  line-height: 20px;
+
 `
 
 const Icon = styled.div`
@@ -128,8 +142,6 @@ const Icon = styled.div`
 `
 
 const Number = styled.p`
-  font-style: normal;
-  font-weight: normal;
   font-size: 12px;
   line-height: 14px;
   display: flex;
