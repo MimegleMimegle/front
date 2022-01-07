@@ -169,6 +169,7 @@ const actionCreators = {
   getProfileInfo,
   getProfileInfoDB,
   setLogin,
+  SetLogin,
 }
 
 export { actionCreators }

@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Pretendard-Bold.woff') format('woff'), url('../fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
 .DictSearchPageLayout {
   width: 100%;
   /* border: 3px solid cornflowerblue; */
@@ -21,9 +35,12 @@
 }
 
 .DictSearchResultText {
-  font-size: 18px;
-  font-weight: 700;
   padding: 15px;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 16px;
+  font-weight: normal;
 }
 
 .DictSearchList {
@@ -97,6 +114,20 @@
   flex-direction: column;
   justify-content: space-evenly;
   padding: 15px;
+
+  font-size: 14px;
+}
+
+.DictSearchNoResultAddDictGuideText {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 14px;
+  font-weight: normal;
 }
 
 .DictSearchNoResult_AddDictButtonSection {
@@ -105,7 +136,7 @@
   align-items: center;
   justify-content: space-evenly;
   margin: 0 0 0 0;
-  padding: 10px 30px 20px 30px;
+  padding: 0px 30px 20px 30px;
 }
 
 .DictSearchNoResult_AddDictButton {
@@ -124,8 +155,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: normal;
 
   z-index: 2;
 }

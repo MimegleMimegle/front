@@ -1,3 +1,31 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetL.otf') format('truetype'), url('../fonts/YdestreetL.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/Pretendard-Medium.woff') format('woff'), url('../fonts/Pretendard-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Pretendard-Bold.woff') format('woff'), url('../fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
 .DictCardEditPageLayout {
   width: 100%;
   height: fit-content;
@@ -36,11 +64,14 @@
 .DictCardEditInputTitleGuideText {
   width: 60px;
   height: 25px;
-  font-size: 14px;
-  font-weight: 700;
   display: flex;
   align-self: flex-start;
   padding-top: 3px;
+
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .DictCardEditInputTitle {
@@ -71,11 +102,14 @@
 .DictCardEditInputSummaryGuideText {
   width: 60px;
   height: 25px;
-  font-size: 14px;
-  font-weight: 700;
   display: flex;
   align-self: flex-start;
   padding-top: 5px;
+
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .DictCardEditInputSummary {
@@ -107,11 +141,14 @@
 .DictCardEditInputContentGuideText {
   width: 60px;
   height: 25px;
-  font-size: 14px;
-  font-weight: 700;
   display: flex;
   align-self: flex-start;
   padding-top: 5px;
+
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .DictCardEditInputContent {
@@ -190,8 +227,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12px;
-  font-weight: 700;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 16px;
+  font-weight: normal;
 
   z-index: 2;
 }

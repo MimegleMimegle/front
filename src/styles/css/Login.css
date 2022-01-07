@@ -11,7 +11,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  margin: 10px 0 0 0;
+  padding: 10px 16px 0;
   overflow-x: hidden;
   overflow-y: hidden;
   -ms-overflow-style: none;
@@ -23,8 +23,8 @@
 
 .MultiInputBoxLayout_login {
   border: 1px solid black;
-  width: 328px;
-  height: 265px;
+  width: 100%;
+  height: 240px;
 }
 
 .LoginOrJoinButtons_login {
@@ -47,6 +47,7 @@
   align-items: center;
   padding: 10px;
   background-color: #ffe330;
+  cursor: pointer;
 }
 
 .JoinButton_login {
@@ -60,6 +61,7 @@
   align-items: center;
   padding: 10px;
   background-color: none;
+  cursor: pointer;
 }
 
 .LoginOrJoinInputs_login {
@@ -68,21 +70,21 @@
   align-items: center;
   width: 100%;
   height: 280px;
+  padding: 0 30px;
 }
 
 .IdInputLabel {
   font-size: 14px;
   display: flex;
   align-self: flex-start;
-  margin-left: 35px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .IdInputBox {
   border: 0.5px solid black;
-  width: 267px;
+  width: 100%;
   height: 36px;
-  margin: 0px 0 10px 0;
+  margin: 0px 0 5px 0;
   padding-left: 10px;
 }
 
@@ -90,13 +92,12 @@
   font-size: 14px;
   display: flex;
   align-self: flex-start;
-  margin-left: 35px;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .PwdInputBox {
   border: 0.5px solid black;
-  width: 267px;
+  width: 100%;
   height: 36px;
   margin: 0px 0 15px 0;
   padding-left: 10px;
@@ -111,7 +112,7 @@
 .Login1 {
   border: 1px solid black;
   border-radius: 0 0 0 0;
-  top: 200px;
+  top: 175px;
   left: -50px;
   background-color: #00a0ff;
   width: 100px;
@@ -128,7 +129,7 @@
   border: 1px solid black;
   border-radius: 0 0 0 0;
   background-color: white;
-  top: 204px;
+  top: 179px;
   left: -46px;
   width: 100px;
   height: 40px;

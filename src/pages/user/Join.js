@@ -9,6 +9,8 @@ import kakaotalk from '../../styles/image/kakaotalk.svg'
 import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
 import styled from 'styled-components'
+import DoubleCheckModal from '../../components/modal/DoubleCheckModal'
+import Header from '../../components/Header'
 
 const Join = () => {
   const dispatch = useDispatch()
@@ -34,6 +36,8 @@ const Join = () => {
   // 아이디 & 닉네임 중복확인
   const [isUsernameChecked, setIsUsernameChecked] = useState(false)
   const [isNicknameChecked, setIsNicknameChecked] = useState(false)
+  const [doubleCheck, setDoubleCheck] = useState(null)
+  console.log(doubleCheck)
 
   // 유저네임 유효성 검사
   const onChangeUsername = (e) => {
@@ -99,10 +103,12 @@ const Join = () => {
       .then((response) => {
         console.log(response.data)
         if (response.data.result === true) {
-          swal('사용 가능한 아이디입니다.')
+          // swal('사용 가능한 아이디입니다.')
+          setDoubleCheck(true)
           setIsUsernameChecked(true)
         } else {
-          swal('사용 중인 아이디입니다.')
+          // swal('사용 중인 아이디입니다.')
+          setDoubleCheck(false)
           setIsUsernameChecked(false)
         }
       })
@@ -117,10 +123,12 @@ const Join = () => {
       .then((response) => {
         console.log(response.data)
         if (response.data.result === true) {
-          swal('사용 가능한 닉네임입니다.')
+          // swal('사용 가능한 닉네임입니다.')
+          setDoubleCheck(true)
           setIsNicknameChecked(true)
         } else {
-          swal('사용 중인 닉네임입니다.')
+          // swal('사용 중인 닉네임입니다.')
+          setDoubleCheck(false)
           setIsNicknameChecked(false)
         }
       })
@@ -139,6 +147,7 @@ const Join = () => {
 
   return (
     <>
+      <Header type="Join" noBorder></Header>
       <div className="JoinPageLayout">
         <div className="MultiInputBoxLayout_join">
           <div className="LoginOrJoinButtons_join">
@@ -232,6 +241,17 @@ const Join = () => {
           </div>
         </div>
       </div>
+      {doubleCheck === null && null}
+      {doubleCheck === true && (
+        <DoubleCheckModal title="사용 가능합니다." doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+          <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
+        </DoubleCheckModal>
+      )}
+      {doubleCheck === false && (
+        <DoubleCheckModal type="exist-onlyConfirm" title="사용 중입니다." doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+          <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
+        </DoubleCheckModal>
+      )}
     </>
   )
 }
@@ -262,6 +282,11 @@ const SpanPasswordCheck = styled.span`
   font-size: 12px;
   margin-bottom: -15px;
   color: #ffa07a;
+`
+
+const ConfirmButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default Join

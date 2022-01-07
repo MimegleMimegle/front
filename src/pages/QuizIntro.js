@@ -64,7 +64,7 @@ const QuizIntro = (props) => {
             <p>테스트하고 싶으신가요?</p>
           </div>
           <div>
-            <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="y2000" onClick={handleChangeSubjectY2000}>
+            <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="IMAGE" onClick={handleChangeSubjectY2000}>
               Lv. 밈기적
             </button>
           </div>

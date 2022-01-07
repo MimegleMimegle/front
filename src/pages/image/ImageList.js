@@ -133,10 +133,10 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.span`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: ${({ theme }) => theme.fontSizes.xxl};
   font-weight: 700;
   line-height: normal;
-  background-image: linear-gradient(transparent 50%, #ffe330 50%);
+  background-image: linear-gradient(transparent 60%, #ffe330 40%);
 `
 
 const PopularSection = styled.div`
