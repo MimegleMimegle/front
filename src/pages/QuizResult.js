@@ -10,9 +10,14 @@ import Header from '../components/Header'
 import { ReactComponent as GoBack } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLink } from '../styles/icons/링크복사_24dp.svg'
 
-const QuizResult = ({ quiz_list, userAnswerList, setUserAnswerList }) => {
+const QuizResult = ({ quiz_list }) => {
   const dispatch = useDispatch()
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
+  const answerCnt = quiz_list
+    ? quiz_list.filter((quiz, i) => {
+        return quiz.solution === user_answer_list[i]
+      }).length
+    : null
 
   const [showQuiz, setShowQuiz] = useState(false)
   const [resultText, setResultText] = useState({ sub: '', main: '' })
@@ -23,22 +28,19 @@ const QuizResult = ({ quiz_list, userAnswerList, setUserAnswerList }) => {
     e.stopPropagation()
     setShareVisible(!shareVisible)
   }
-  console.log(userAnswerList)
 
-  const handleShowQuiz = () => {
+  const handleShowQuiz = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowQuiz(!showQuiz)
   }
 
-  const handleInitUserAnswer = () => {
+  const handleMoveQuizIntro = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     history.push('/quiz')
     dispatch(quizActions.initAnswer())
   }
-
-  const answerCnt = quiz_list
-    ? quiz_list.filter((quiz, i) => {
-        return quiz.solution === user_answer_list[i]
-      }).length
-    : null
 
   useEffect(() => {
     if (answerCnt >= 0 && answerCnt < 4) {
@@ -85,7 +87,7 @@ const QuizResult = ({ quiz_list, userAnswerList, setUserAnswerList }) => {
                 </div>
                 <div className="circle-button btn-2"></div>
               </CircleButtonBox>
-              <TextButton onClick={handleInitUserAnswer}>다른 테스트 하러 가기</TextButton>
+              <TextButton onClick={handleMoveQuizIntro}>다른 테스트 하러 가기</TextButton>
             </div>
             <div style={{ width: '100%', margin: '5px 0' }}>
               <CircleButtonBox>
