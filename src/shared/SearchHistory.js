@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 function History({ keywords, onRemoveKeyword, onClearKeywords }) {
   console.log('keyword', keywords)
+
   if (keywords.length === 0) {
     return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>
   }
