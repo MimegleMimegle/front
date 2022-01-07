@@ -75,9 +75,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             {isLogin ? (
               <>
                 <ProfileImage src={my ? my.profileImageUrl : null} onClick={moveToMypage} />
-                <p style={{ paddingLeft: '10px', cursor: 'pointer', fontSize: '14px', fontWeight: '700' }} onClick={moveToMypage}>
-                  {my ? my.nickname : null}
-                </p>
+                <UserNickname onClick={moveToMypage}>{my ? my.nickname : null}</UserNickname>
               </>
             ) : (
               <>
@@ -150,6 +148,15 @@ const ProfileImage = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
 `
 
+const UserNickname = styled.p`
+  padding: 0 0 0 10px;
+  cursor: pointer;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+`
+
 const UserMenuBox = styled.div`
   width: 100%;
   height: 100%;
@@ -161,8 +168,10 @@ const UserMenuBox = styled.div`
 
 const UserMenu = styled.button`
   color: ${({ theme }) => theme.colors.grey};
-  font-weight: 700;
   font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
   transition: color 0.3s ease-in-out;
   &:hover {
     color: ${({ theme }) => theme.colors.blue};

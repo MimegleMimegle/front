@@ -24,7 +24,9 @@ const MenuItem = styled.button`
   padding: 20px 16px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.black};
   text-align: left;
-  font-weight: 700;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
   font-size: ${({ theme }) => theme.fontSizes.xl};
 `
 

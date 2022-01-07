@@ -134,8 +134,10 @@ const Wrapper = styled.div`
 
 const Title = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.xxl};
-  font-weight: 700;
   line-height: normal;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
   background-image: linear-gradient(transparent 60%, #ffe330 40%);
 `
 
