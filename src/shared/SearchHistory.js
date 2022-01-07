@@ -36,7 +36,7 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
 }
 
 const HistoryContainer = styled.div`
-  padding: 0 50px 10px 50px;
+  padding: 10px 20px 10px 20px;
   width: 100%;
 `
 const HeaderContainer = styled.div`

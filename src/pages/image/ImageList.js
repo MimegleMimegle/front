@@ -8,9 +8,7 @@ import Header from '../../components/Header'
 import InfinityScroll from '../../shared/InfinityScroll'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
-import PopularOneImageCard from '../../components/image/PopularOneImageCard'
 import SpinningCircles from '../../styles/image/spinning-circles.svg'
-
 import { AiOutlinePlus } from 'react-icons/ai'
 
 const ImageList = (props) => {
@@ -62,53 +60,55 @@ const ImageList = (props) => {
     <>
       <Header type="ImageList" location="짤방">
         <FileUploader>
-          <label for="file" className="upload-label">
+          <label htmlFor="file" className="upload-label">
             <AiOutlinePlus style={{ fontSize: '22px' }} />
           </label>
           <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
         </FileUploader>
       </Header>
       <Wrapper>
-        <PopularSection>
-          <div style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: '5px' }}>
-            <Title>명예의 밈짤</Title>
-          </div>
-          <Container>
-            {loading ? (
-              <div style={{ width: '100%', height: '294px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src={SpinningCircles} />
+        {!loading ? (
+          <>
+            <PopularSection>
+              <div style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: '5px' }}>
+                <Title>명예의 밈짤</Title>
               </div>
-            ) : (
-              <PopularGridLayout>
-                {bestImageList.map((image) => {
-                  return <OneImageCard key={image.boardId} image={image} />
-                })}
-              </PopularGridLayout>
-            )}
-          </Container>
-        </PopularSection>
-        <GeneralSection>
-          <div style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: '5px' }}>
-            <Title>짤 방앗간</Title>
+              <Container>
+                {loading ? (
+                  <div style={{ width: '100%', height: '294px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <img src={SpinningCircles} />
+                  </div>
+                ) : (
+                  <PopularGridLayout>
+                    {bestImageList.map((image) => {
+                      return <OneImageCard key={image.boardId} image={image} />
+                    })}
+                  </PopularGridLayout>
+                )}
+              </Container>
+            </PopularSection>
+            <GeneralSection>
+              <div style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: '5px' }}>
+                <Title>짤 방앗간</Title>
+              </div>
+              <Container>
+                <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
+                  <GeneralGridLayout>
+                    {image_data.image_list.map((image) => {
+                      return <OneImageCard key={image.boardId} image={image} />
+                    })}
+                  </GeneralGridLayout>
+                </InfinityScroll>
+              </Container>
+            </GeneralSection>
+          </>
+        ) : (
+          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img src={SpinningCircles} />
           </div>
-          <Container>
-            <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
-              {loading ? (
-                <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src={SpinningCircles} />
-                </div>
-              ) : (
-                <GeneralGridLayout>
-                  {image_data.image_list.map((image) => {
-                    return <OneImageCard key={image.boardId} image={image} />
-                  })}
-                </GeneralGridLayout>
-              )}
-            </InfinityScroll>
-          </Container>
-        </GeneralSection>
+        )}
+        {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
       </Wrapper>
-      {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
     </>
   )
 }
@@ -138,7 +138,7 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.span`
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
   font-weight: 700;
   background-image: linear-gradient(transparent 60%, #ffe330 40%);
 `

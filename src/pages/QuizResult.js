@@ -1,35 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { history } from '../redux/ConfigureStore'
-import useScript from '../util/useScript'
 
-import { KakaoShareButton } from '../shared/kakaoShare'
-import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
-
+import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
 import Header from '../components/Header'
 import { ReactComponent as GoBack } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLink } from '../styles/icons/링크복사_24dp.svg'
 
 const QuizResult = ({ quiz_list }) => {
-  useScript('https://developers.kakao.com/sdk/js/kakao.js')
-  const currentUrl = window.location.href
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
 
-  const [copied, setCopied] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [resultText, setResultText] = useState({ sub: '', main: '' })
+  const [shareVisible, setShareVisible] = useState(false)
 
-  const closeCopied = () => {
-    setTimeout(() => {
-      setCopied(false)
-    }, 2000)
-  }
-
-  const onCopy = () => {
-    setCopied(true)
-    closeCopied()
+  const handleShareVisible = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShareVisible(!shareVisible)
   }
 
   const handleShowQuiz = () => {
@@ -42,7 +32,15 @@ const QuizResult = ({ quiz_list }) => {
       }).length
     : null
 
-  const score = quiz_list ? (100 / quiz_list.length) * answerCnt : null
+  useEffect(() => {
+    if (answerCnt >= 0 && answerCnt < 4) {
+      setResultText({ sub: '아주 작은 기적...', main: '"밈기적."' })
+    } else if (answerCnt >= 4 && answerCnt < 8) {
+      setResultText({ sub: `${answerCnt}개나 맞춘 나,`, main: '제법 "밈잘알"이에요.' })
+    } else {
+      setResultText({ sub: '치료가 필요할 정도로 심각한', main: '"밈 중독"입니다.' })
+    }
+  }, [])
 
   return (
     <>
@@ -54,8 +52,8 @@ const QuizResult = ({ quiz_list }) => {
             <div className="quiz-subject box-2"></div>
             <div style={{ padding: '50px 0 30px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontSize: '16px', fontWeight: '700' }}>{answerCnt}/10</span>
-              <h2 style={{ fontSize: '14px', padding: '10px 0 0' }}>치료가 필요할 정도로 심각한</h2>
-              <h2 className="resultDesc">'밈 중독'입니다.</h2>
+              <h2 style={{ fontSize: '14px', padding: '10px 0 0' }}>{resultText.sub}</h2>
+              <h2 className="resultDesc">{resultText.main}</h2>
             </div>
           </QuizResultBox>
           <ResultButtonContainer>
@@ -79,40 +77,23 @@ const QuizResult = ({ quiz_list }) => {
                 </div>
                 <div className="circle-button btn-2"></div>
               </CircleButtonBox>
-              <button
-                style={{ width: '100%', fontSize: '14px', fontWeight: '700', padding: '10px 0' }}
+              <TextButton
                 onClick={() => {
                   history.push('/quiz')
                 }}
               >
                 다른 테스트 하러 가기
-              </button>
+              </TextButton>
             </div>
             <div style={{ width: '100%', margin: '5px 0' }}>
               <CircleButtonBox>
-                <div className="circle-button btn-1">
+                <div className="circle-button btn-1" onClick={handleShareVisible}>
                   <CopyLink />
                 </div>
                 <div className="circle-button btn-2"></div>
               </CircleButtonBox>
-              <button style={{ width: '100%', fontSize: '14px', fontWeight: '700', padding: '10px 0' }}>친구에게 공유하기</button>
+              <TextButton onClick={handleShareVisible}>친구에게 공유하기</TextButton>
             </div>
-            <div style={{ width: '100%', padding: '10px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <FacebookShareButton url={currentUrl}>
-                <FacebookIcon size={40} round={true} />
-              </FacebookShareButton>
-              <TwitterShareButton url={currentUrl}>
-                <TwitterIcon size={40} round={true} />
-              </TwitterShareButton>
-              <KakaoShareButton />
-              <LineShareButton url={currentUrl}>
-                <LineIcon size={40} round={true} />
-              </LineShareButton>
-              <CopyToClipboard onCopy={onCopy} text={currentUrl}>
-                <button className="share-btn">URL</button>
-              </CopyToClipboard>
-            </div>
-            {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
           </div>
           <QuizContainer>
             {showQuiz &&
@@ -122,6 +103,7 @@ const QuizResult = ({ quiz_list }) => {
               })}
           </QuizContainer>
         </div>
+        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} handleShareVisible={handleShareVisible} />}
       </Wrapper>
     </>
   )
@@ -138,36 +120,6 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  .share-btn {
-    border: 1px solid #ffe330;
-    border-radius: 20px;
-    background-color: #ffe330;
-    width: 40px;
-    height: 40px;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    margin: 0 0 6px;
-  }
-  .link-copied {
-    background-color: #000000;
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 12px;
-    margin-bottom: 10px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 7px 12px;
-    position: absolute;
-    width: auto;
-    min-width: 50px;
-    max-width: 300px;
-    word-wrap: break-word;
-    z-index: 9999;
-  }
 `
 
 const QuizResultBox = styled.div`
@@ -175,7 +127,7 @@ const QuizResultBox = styled.div`
   width: 100%;
   height: 100%;
   margin: 40px 0 0;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -184,9 +136,9 @@ const QuizResultBox = styled.div`
     width: 100px;
     height: 40px;
     position: absolute;
-    border: 1px solid #111;
-    background-color: #fff;
-    font-size: 18px;
+    border: 1px solid ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
     font-weight: 700;
   }
 
@@ -197,15 +149,15 @@ const QuizResultBox = styled.div`
     z-index: 2;
     text-align: center;
     line-height: 40px;
-    font-size: 16px;
-    background-color: #ffe330;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    background-color: ${({ theme }) => theme.colors.yellow};
   }
 
   .box-2 {
     top: -16px;
     left: 51%;
     transform: translateX(-51%);
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
   }
 
   .resultDesc {
@@ -234,14 +186,14 @@ const ResultButtonContainer = styled.div`
     width: 135px;
     height: 40px;
     position: absolute;
-    border: 1px solid #111;
+    border: 1px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
     .resultButton {
       padding: 0;
       width: 135px;
       height: 40px;
-      font-size: 18px;
+      font-size: ${({ theme }) => theme.fontSizes.xxl};
       font-weight: 700;
     }
   }
@@ -249,7 +201,7 @@ const ResultButtonContainer = styled.div`
   .box1 {
     left: 49.5%;
     transform: translateX(-49.5%);
-    background-color: #00a0ff;
+    background-color: ${({ theme }) => theme.colors.blue};
     z-index: 2;
     transition-duration: 0.5s;
     &:active {
@@ -263,8 +215,15 @@ const ResultButtonContainer = styled.div`
     left: 51%;
     transform: translateX(-51%);
     margin-top: 4px;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
   }
+`
+
+const TextButton = styled.button`
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-weight: 700;
+  padding: 10px 0;
 `
 
 const CircleButtonBox = styled.div`
@@ -275,12 +234,12 @@ const CircleButtonBox = styled.div`
     position: absolute;
     width: 36px;
     height: 36px;
-    border: 1px solid #111;
+    border: 1px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
   }
   .btn-1 {
     left: 24px;
-    background-color: #ff8e00;
+    background-color: ${({ theme }) => theme.colors.orange};
     display: flex;
     align-items: center;
     justify-content: center;

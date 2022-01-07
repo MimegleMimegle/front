@@ -1,12 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import { history } from '../redux/ConfigureStore'
-
 import Header from '../components/Header'
 import ModalWrapper from '../components/ModalWrapper'
 import ModalContainer from '../components/ModalContainer'
-import QuizIntroImage from '../styles/image/quiz_main_image1.gif'
+import QuizIntroImage from '../styles/image/quiz_main_image2.gif'
 
 const QuizIntro = (props) => {
   const [showModal, setShowModal] = React.useState(false)
@@ -46,14 +44,12 @@ const QuizIntro = (props) => {
     if (subject === '') {
       setShowModal(true)
       closeModal()
+      return
     } else {
       history.push(`/quiz/${subject}`)
-      window.location.reload()
+      // window.location.reload()
     }
   }
-
-  console.log(showModal)
-  console.log(subject)
 
   return (
     <>
@@ -63,23 +59,23 @@ const QuizIntro = (props) => {
           <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </ImageSection>
         <SubjectSection>
-          <div style={{ padding: '15px 0 10px', fontSize: '18px', textAlign: 'center' }}>
-            <p>어느 시대의 밈을</p>
+          <div className="subject-question">
+            <p>어느 레벨 밈을</p>
             <p>테스트하고 싶으신가요?</p>
           </div>
           <div>
             <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="y2000" onClick={handleChangeSubjectY2000}>
-              2000
+              Lv. 밈기적
             </button>
           </div>
           <div>
             <button className={`subject-button ${y2010 ? 'selected' : ''}`} value="y2010" onClick={handleChangeSubjectY2010}>
-              2010
+              Lv. 밈잘알
             </button>
           </div>
           <div>
             <button className={`subject-button ${y2020 ? 'selected' : ''}`} value="y2020" onClick={handleChangeSubjectY2020}>
-              2020
+              Lv. 밈중독
             </button>
           </div>
         </SubjectSection>
@@ -123,18 +119,23 @@ const SubjectSection = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .subject-question {
+    padding: 15px 0 10px;
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+    text-align: center;
+  }
   .subject-button {
     width: 240px;
     height: 48px;
     padding: 15px 24px;
     margin: 8px auto;
-    border: 1px solid #111;
+    border: 1px solid ${({ theme }) => theme.colors.black};
     text-align: left;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
   }
   .selected {
     transition: background-color 0.3s ease-in-out;
-    background-color: #ffe330;
+    background-color: ${({ theme }) => theme.colors.yellow};
   }
 `
 
@@ -145,15 +146,15 @@ const ButtonSection = styled.div`
     width: 107px;
     height: 40px;
     position: absolute;
-    border: 1px solid #111;
+    border: 1px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
-    background-color: #00a0ff;
+    background-color: ${({ theme }) => theme.colors.blue};
     .start-button {
       width: 100%;
       height: 100%;
       padding: 0;
       border-radius: 20px;
-      font-size: 18px;
+      font-size: ${({ theme }) => theme.fontSizes.xxl};
       font-weight: 700;
     }
   }
@@ -173,7 +174,7 @@ const ButtonSection = styled.div`
     top: 12px;
     left: 51%;
     transform: translateX(-51%);
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
   }
 `
 

@@ -8,25 +8,17 @@ import ShareBottomSheet from '../ShareBottomSheet'
 import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
-import { IoCloseOutline } from 'react-icons/io5'
 
 const OneImageCard = ({ image }) => {
   const [hover, setHover] = useState(false)
-  const [toggleMenu, setToggleMenu] = useState(false)
   const [likeCount, setLikeCount] = useState(image.likeCnt)
   const [isLiked, setIsLiked] = useState(image.isLike)
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false)
+  const [shareVisible, setShareVisible] = useState(false)
 
-  const clickToggleMenu = (e) => {
+  const handleShareVisible = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    setToggleMenu(!toggleMenu)
-  }
-
-  const handleBottomSheetVisible = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setBottomSheetVisible(true)
+    setShareVisible(!shareVisible)
   }
 
   const handleClickLike = async (e) => {
@@ -65,7 +57,6 @@ const OneImageCard = ({ image }) => {
         }}
         onMouseLeave={() => {
           setHover(false)
-          setToggleMenu(false)
         }}
         onClick={() => {
           history.push(`/image/detail/${image && image.boardId}`)
@@ -76,34 +67,20 @@ const OneImageCard = ({ image }) => {
         <Overlay className={`${hover ? 'active' : 'in-active'}`}>
           <div style={{ width: '100%', height: '100%', padding: '7px 7px 5px 7px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between' }}>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
-              <button style={{ color: '#FFF', zIndex: '1000', padding: '0' }} onClick={handleBottomSheetVisible}>
+              <button className="share-button" onClick={handleShareVisible}>
                 <MdShare fontSize="18px" />
               </button>
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button style={{ color: '#FFF', zIndex: '1000', padding: '0 3px 0 0' }}>
+              <button className="like-button">
                 {isLiked ? <HiHeart style={{ fontSize: '18px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '18px' }} onClick={handleClickLike} />}
               </button>
-              <span style={{ color: '#FFF', fontSize: '9px' }}>{likeCount}</span>
+              <span className="like-count">{likeCount}</span>
             </div>
           </div>
         </Overlay>
-        {/* )} */}
-        {/* 공유하기 바텀 시트 완성되면 삭제 예정! */}
-        {/* {toggleMenu && (
-          <Menu>
-            <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ padding: '0', height: '100%' }} onClick={clickToggleMenu}>
-                <IoCloseOutline style={{ fontSize: '18px' }} />
-              </button>
-            </div>
-            <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-              <button style={{ fontSize: '12px', padding: '0' }}>공유하기</button>
-            </div>
-          </Menu>
-        )} */}
       </ImageBox>
-      {bottomSheetVisible && <ShareBottomSheet bottomSheetVisible={bottomSheetVisible} setBottomSheetVisible={setBottomSheetVisible} />}
+      {shareVisible && <ShareBottomSheet shareVisible={shareVisible} handleShareVisible={handleShareVisible} />}
     </>
   )
 }
@@ -136,20 +113,21 @@ const ImageThumbnail = styled.img`
   object-fit: cover;
 `
 
-const Overlay = styled.div``
-const Menu = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 60px;
-  height: 60px;
-  border: 1px solid #c4c4c4;
-  background-color: #fff;
-  transition: all 0.3s ease-in-out;
-  z-index: 400;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+const Overlay = styled.div`
+  .share-button {
+    color: ${({ theme }) => theme.colors.white};
+    z-index: 1000;
+    padding: 0;
+  }
+  .like-button {
+    color: ${({ theme }) => theme.colors.white};
+    z-index: 1000;
+    padding: 0 3px 0 0;
+  }
+  .like-count {
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSizes.small};
+  }
 `
 
 export default OneImageCard

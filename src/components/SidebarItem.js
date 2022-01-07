@@ -22,10 +22,10 @@ const SidebarItem = ({ menu, isActive, setShowSidebar }) => {
 const MenuItem = styled.button`
   width: 100%;
   padding: 20px 16px;
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.black};
   text-align: left;
   font-weight: 700;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
 `
 
 export default SidebarItem

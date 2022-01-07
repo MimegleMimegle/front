@@ -4,12 +4,11 @@ import { useDispatch } from 'react-redux'
 import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
-import ModalWrapper from '../../components/ModalWrapper'
-
+import Backdrop from '@mui/material/Backdrop'
 import { IoCloseOutline } from 'react-icons/io5'
 import { MdPhotoCamera } from 'react-icons/md'
 
-const EditProfile = ({ setShowModal, my }) => {
+const EditProfile = ({ showModal, setShowModal, my }) => {
   const dispatch = useDispatch()
 
   const userId = localStorage.getItem('id')
@@ -84,7 +83,7 @@ const EditProfile = ({ setShowModal, my }) => {
 
   return (
     <>
-      <ModalWrapper visible={true}>
+      <Backdrop open={showModal} onClick={() => setShowModal(false)} sx={{ zIndex: '10000' }}>
         <ModalContainer>
           <ModalBody>
             <div style={{ width: '100%', padding: '10px 14px 0 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -101,7 +100,7 @@ const EditProfile = ({ setShowModal, my }) => {
             </div>
             <ProfileImagePreview src={imageFile ? imageFile : my.profileImageUrl} />
             <div className="file">
-              <label for="file" className="upload-label">
+              <label htmlFor="file" className="upload-label">
                 <MdPhotoCamera style={{ fontSize: '20px', marginTop: '4px' }} />
               </label>
               <input type="file" id="file" className="upload-file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg, image/png" />
@@ -120,7 +119,7 @@ const EditProfile = ({ setShowModal, my }) => {
             </div>
           </ModalBody>
         </ModalContainer>
-      </ModalWrapper>
+      </Backdrop>
     </>
   )
 }
@@ -128,8 +127,8 @@ const EditProfile = ({ setShowModal, my }) => {
 const ModalContainer = styled.div`
   width: 340px;
   height: 170px;
-  border: 1px solid #111;
-  background-color: #fff;
+  border: 1px solid ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.white};
   /* border-radius: 10px; */
   position: absolute;
   top: 26%;
@@ -148,11 +147,11 @@ const ModalBody = styled.div`
   align-items: center;
   justify-content: center;
   .submit-button {
-    font-size: 14px;
-    color: #878c92;
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    color: ${({ theme }) => theme.colors.grey};
     transition: color 0.3s ease-in-out;
     &:hover {
-      color: #00a0ff;
+      color: ${({ theme }) => theme.colors.blue};
     }
   }
   .file {
@@ -165,9 +164,9 @@ const ModalBody = styled.div`
       left: 60%;
       transform: translateX(-60%);
       overflow: hidden;
-      border: 1px solid #111;
+      border: 1px solid ${({ theme }) => theme.colors.black};
       border-radius: 20px;
-      background-color: #fff;
+      background-color: ${({ theme }) => theme.colors.white};
       text-align: center;
       cursor: pointer;
     }
@@ -183,11 +182,11 @@ const ModalBody = styled.div`
     }
   }
   .input-nickname {
-    border: 1px solid #878c92;
+    border: 1px solid ${({ theme }) => theme.colors.grey};
     transition: all 0.3s ease-in-out;
     border-radius: 2px;
     &:focus {
-      border: 1px solid #111;
+      border: 1px solid ${({ theme }) => theme.colors.black};
     }
   }
 `
@@ -199,12 +198,12 @@ const ProfileImagePreview = styled.div`
   transform: translateX(-50%);
   width: 80px;
   height: 80px;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 40px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.white}; ;
 `
 
 export default EditProfile

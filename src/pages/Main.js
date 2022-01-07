@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { mainApi } from '../shared/api'
+import { history } from '../redux/ConfigureStore'
 
 import MainPageImageSlide from '../components/MainPageImageSlide'
+import PopularBoardCardSwiper from '../components/PopularBoardCardSwiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
 
@@ -14,6 +17,28 @@ import '../styles/css/Main.css'
 
 const Main = (props) => {
   SwiperCore.use([Lazy, Autoplay, Keyboard, Pagination])
+
+  const [popularBoards, setPopularBoards] = useState([])
+  const [popularImages, setPopularImages] = useState([])
+  const [todayMemes, setTodayMemes] = useState([])
+
+  const searchDictDB = async () => {
+    let response = await mainApi.mainPage()
+
+    console.log(response)
+    setPopularBoards(response.data.data.popularBoards)
+    setPopularImages(response.data.data.popularImages)
+    setTodayMemes(response.data.data.todayMemes)
+
+    console.log(popularBoards)
+    console.log(popularImages)
+    console.log(todayMemes)
+    console.log(todayMemes[1].dictName)
+  }
+
+  React.useEffect(() => {
+    searchDictDB()
+  }, [])
 
   return (
     <>
@@ -54,37 +79,47 @@ const Main = (props) => {
           </SwiperSlide>
         </Swiper>
         <div className="MainPageTagSection">
-          <text className="MainPageTagName">오늘의 단어</text>
+          <text className="MainPageTagName">오늘의 밈</text>
           <div className="MainPageTagList">
-            <div className="MainPageTag">700</div>
-            <div className="MainPageTag">다꾸</div>
-            <div className="MainPageTag">뽀시래기</div>
-            <div className="MainPageTag">광공</div>
-            <div className="MainPageTag">알잘딱깔센</div>
-            <div className="MainPageTag">ㅈㅂㅈㅇ</div>
-            <div className="MainPageTag">비상이다</div>
+            {todayMemes.map((todayMemes) => (
+              <div className="MainPageTag" key={todayMemes.id}>
+                {todayMemes.dictName}
+              </div>
+            ))}
           </div>
-          <text className="MainPageTagMoreButton1">More</text>
+          <div className="MainPageTagMoreButton_1" onClick={() => history.push('/dict')}>
+            <text className="MainPageTagMoreButton1">More</text>
+            <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+            </svg>
+          </div>
         </div>
         <text className="MainPageTopPostText">명예의 밈글</text>
-        <div className="MainPageTopPostSection">
-          <div className="MainPageTopPostList">
-            <div className="MainPageTopPost">
-              <text className="MainPageTopPostContent">밈 이미지</text>
+        <PopularBoardCardSwiper />
+        <div className="MainPageTagMoreButton_2" onClick={() => history.push('/image')}>
+          <text className="MainPageTagMoreButton2">More</text>
+          <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+          </svg>
+        </div>
+        <div className="MainPagePopularBoardSection">
+          <div className="MainPagePopularBoardText">핫 밈글</div>
+          {popularBoards.map((popularBoards) => (
+            <div className="MainPagePopularBoardList" key={popularBoards.id}>
+              <div className="MainPagePopularBoardImage">{popularBoards.thumbNail}</div>
+              <div className="MainPagePopularBoardInfo">
+                <div className="MainPagePopularBoardTitle">{popularBoards.title}</div>
+                <div className="MainPagePopularBoardWriter">{popularBoards.writer}</div>
+              </div>
             </div>
-          </div>
-          <div className="MainPageTopPostList">
-            <div className="MainPageTopPost">
-              <text className="MainPageTopPostContent">밈 이미지</text>
-            </div>
-          </div>
-          <div className="MainPageTopPostList">
-            <div className="MainPageTopPost">
-              <text className="MainPageTopPostContent">밈 이미지</text>
-            </div>
+          ))}
+          <div className="MainPageTagMoreButton_3" onClick={() => history.push('/post')}>
+            <text className="MainPageTagMoreButton3">More</text>
+            <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+            </svg>
           </div>
         </div>
-        <text className="MainPageTagMoreButton2">More</text>
       </div>
     </>
   )

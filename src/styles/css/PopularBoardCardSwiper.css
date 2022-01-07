@@ -1,61 +1,43 @@
-.TodayDictCard {
+.PopularBoardCard {
   position: relative;
   width: 100%;
-  height: 180px;
+  height: 300px;
 }
-.TodayDictCard:hover {
+.PopularBoardCard:hover {
   cursor: pointer;
 }
 
-.TodayDictCard_1 {
+.PopularBoardCard_1 {
   border: 1px solid black;
   border-radius: 0 0 0 0;
   top: 0px;
   left: 0px;
   background-color: white;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  padding: 10px 15px;
+  width: 180px;
+  height: 240px;
   margin: 10px;
   position: absolute;
+  object-fit: cover;
 
   z-index: 2;
 }
 
-.TodayDictCard_2 {
+.PopularBoardCard_2 {
   border: 1px solid black;
   border-radius: 0 0 0 0;
   top: 16px;
   left: 16px;
-  /* background-color: #ffe330; */
-  width: 150px;
-  height: 150px;
+  background-color: #ffe330;
+  width: 180px;
+  height: 240px;
   position: absolute;
 
   z-index: 1;
 }
 
-.TodayDictCard_Title {
-  font-size: 16px;
-  font-weight: 700;
-  word-break: keep-all;
+.PopularBoardCard_Image {
   width: fit-content;
   height: fit-content;
-  margin: -30px 0 0 0;
-}
-
-.TodayDictCard_Summary {
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
-  word-break: keep-all;
-  width: 100%;
-  height: fit-content;
-  margin: -20px 0 0 0;
 }
 
 .swiper {

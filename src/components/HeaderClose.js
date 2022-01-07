@@ -1,10 +1,9 @@
 import React from 'react'
 import { history } from '../redux/ConfigureStore'
 
-import { ReactComponent as ArrowBackIcon } from '../styles/icons/arrow_back_ios_black_24dp.svg'
 import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 
-const HeaderGoBack = (props) => {
+const HeaderClose = (props) => {
   return (
     <>
       <button
@@ -13,10 +12,10 @@ const HeaderGoBack = (props) => {
           history.goBack()
         }}
       >
-        <ArrowBackIcon />
+        <CloseIcon />
       </button>
     </>
   )
 }
 
-export default HeaderGoBack
+export default HeaderClose

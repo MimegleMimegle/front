@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { history } from '../redux/ConfigureStore'
-import axios from 'axios'
-import { dictApi } from '../shared/api'
-import { actionCreators as dictActions } from '../redux/modules/dict'
+import { mainApi } from '../shared/api'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css'
@@ -13,40 +11,39 @@ import 'swiper/css/scrollbar'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
-import '../styles/css/TodayDictCardSwiper.css'
+import '../styles/css/PopularBoardCardSwiper.css'
 
 import SwiperCore, { FreeMode, Pagination, Navigation, Scrollbar } from 'swiper'
 
-const TodayDictCardSwiper = (props) => {
+const PopularBoardCardSwiper = (props) => {
   SwiperCore.use([FreeMode, Pagination, Navigation, Scrollbar])
 
   const dispatch = useDispatch()
 
-  const [todayDict, setTodayDict] = useState([])
-  const backColor = ['#ffe330', '#ff8e00', '#00a0ff']
+  const [popularImages, setPopularImages] = useState([])
 
-  React.useEffect(() => {
-    getTodayDictList()
-  }, [])
+  const searchDictDB = async () => {
+    let response = await mainApi.mainPage()
 
-  const getTodayDictList = async () => {
-    let response = await dictApi.getTodayDict()
-    setTodayDict(response.data.data)
     console.log(response)
+    setPopularImages(response.data.data.popularImages)
+
+    console.log(popularImages)
   }
 
-  console.log(todayDict)
-  console.log(backColor)
+  React.useEffect(() => {
+    searchDictDB()
+  }, [])
 
   return (
     <>
       <Swiper
         slidesPerView={2}
-        spaceBetween={20}
+        spaceBetween={50}
         keyboard={{
           enabled: true,
         }}
-        centeredSlides={true}
+        // centeredSlides={true}
         slidesPerGroupSkip={0}
         grabCursor={true}
         breakpoints={{
@@ -60,20 +57,17 @@ const TodayDictCardSwiper = (props) => {
           delay: 5000,
           disableOnInteraction: false,
         }}
-        freeMode={true}
+        freeMode={false}
         loop={true}
         className="mySwiper"
       >
-        {todayDict.map((todayDict) => (
+        {popularImages.map((popularImages) => (
           <SwiperSlide>
-            <div className="TodayDictCard" onClick={() => history.push(`/dict/detail/${todayDict.dictId}`)}>
-              <div className="TodayDictCard_1" key={todayDict.id}>
-                <div className="TodayDictCard_Title">{todayDict.title}</div>
-                <div className="TodayDictCard_Summary">{todayDict.summary}</div>
+            <div className="PopularBoardCard" onClick={() => history.push()}>
+              <div className="PopularBoardCard_1" key={popularImages.id}>
+                <img className="PopularBoardCard_Image" src={popularImages.imageUrl}></img>
               </div>
-              {backColor.map((s) => (
-                <div className="TodayDictCard_2" style={{ backgroundColor: backColor }}></div>
-              ))}
+              <div className="PopularBoardCard_2"></div>
             </div>
           </SwiperSlide>
         ))}
@@ -82,4 +76,4 @@ const TodayDictCardSwiper = (props) => {
   )
 }
 
-export default TodayDictCardSwiper
+export default PopularBoardCardSwiper
