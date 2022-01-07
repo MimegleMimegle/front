@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { boardApi } from '../../shared/api'
 import { useHistory } from 'react-router'
 
-
 /* components & elements */
 import HashTag from '../../components/HashTag'
 import PostCard from '../../components/PostCard'
@@ -14,12 +13,12 @@ import Header from '../../components/Header'
 
 /* icons */
 import { GoSearch } from 'react-icons/go'
-import {IoClose} from 'react-icons/io5'
+import { IoClose } from 'react-icons/io5'
 
 /********* 검색된 게시글 정보가 없을 때 보여줄 화면!! 모달이든 뭐든 띄워야함! *********/
 
 const PostSearch = (props) => {
-  const history = useHistory();
+  const history = useHistory()
 
   const [hashTags, setHashTags] = React.useState([])
   const [search, setSearch] = React.useState('')
@@ -33,10 +32,10 @@ const PostSearch = (props) => {
   console.log(props)
   console.log(props.location.search)
 
-  const searchClick = ()=> {
-    show? setShow(false):setShow(true)
+  const searchClick = () => {
+    show ? setShow(false) : setShow(true)
   }
-  
+
   const handleSearch = (e) => {
     setSearch(e.target.value)
     setShow(true)
@@ -76,7 +75,7 @@ const PostSearch = (props) => {
       })
       .catch((err) => {
         console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
-      })    
+      })
   }, [])
  
 
@@ -90,7 +89,7 @@ const PostSearch = (props) => {
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
         </svg>
         </div>
-      <IoClose/>
+        <IoClose />
       </Header>
       <Wrapper>
           <div style={{ width: '100%', height:'50px', backgroundColor: '#e8e8e8', display: 'flex', alignItems: 'center',borderBottom:'1px solid black' }} >
@@ -119,8 +118,6 @@ const PostSearch = (props) => {
               :<ResultNone>검색 결과가 없습니다.</ResultNone>
             }            
         </div>
-      
-        
         {notFound && (
           <ModalWrapper visible={true}>
             <ModalContainer>검색결과에 오류가 생겼습니다</ModalContainer>
