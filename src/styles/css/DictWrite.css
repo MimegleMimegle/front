@@ -228,6 +228,12 @@
   z-index: -1;
 }
 
+.DictWriteMoveButton,
+.DictListMoveButton {
+  font-size: 14px;
+  color: #00a0ff;
+}
+
 /* sweet alret */
 .swal-overlay {
   background-color: rgba(0, 0, 0, 0.6);
