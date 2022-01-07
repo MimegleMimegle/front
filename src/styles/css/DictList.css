@@ -202,7 +202,7 @@
   height: fit-content;
   display: flex;
   align-items: flex-start;
-  margin: 0 0 0 -5px;
+  margin: 0 0 0 5px;
 }
 
 .rc-pagination {
