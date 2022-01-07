@@ -155,19 +155,19 @@ const PostDetail = (props) => {
         <ViewLikeComment>
           <div className="icon-box">
             <button className="icon-box__button no-pointer">
-              <ViewIcon fill="#878C92" />
+              <ViewIcon />
             </button>
             <span className="icon-box__text">{post.views}</span>
           </div>
           <div className="icon-box">
             <button className="icon-box__button" onClick={handleClickLike}>
-              {isLiked ? <FullHeartIcon fill="#878C92" /> : <EmptyHeartIcon fill="#878C92" />}
+              {isLiked ? <FullHeartIcon /> : <EmptyHeartIcon />}
             </button>
             <span className="icon-box__text">{likeCount}</span>
           </div>
           <div className="icon-box">
             <button className="icon-box__button no-pointer">
-              <CommentIcon fill="#878C92" />
+              <CommentIcon />
             </button>
             <span className="icon-box__text">{post.commentCnt ? post.commentCnt : 0}</span>
           </div>
@@ -207,7 +207,7 @@ const UserProfile = styled.img`
   border-radius: 150px;
   width: 28px;
   height: 28px;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #e5e5e5;
   margin: 0 8px 0 0;
 `
 const Writer = styled.div`
