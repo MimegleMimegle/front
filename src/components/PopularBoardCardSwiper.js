@@ -63,8 +63,8 @@ const PopularBoardCardSwiper = (props) => {
       >
         {popularImages.map((popularImages) => (
           <SwiperSlide>
-            <div className="PopularBoardCard" onClick={() => history.push(`/image/detail/${popularImages.boardId}`)}>
-              <div className="PopularBoardCard_1" key={popularImages.id}>
+            <div className="PopularBoardCard">
+              <div className="PopularBoardCard_1" key={popularImages.id} onClick={() => history.push(`/image/detail/${popularImages.boardId}`)}>
                 <img className="PopularBoardCard_Image" src={popularImages.imageUrl}></img>
               </div>
               <div className="PopularBoardCard_2"></div>
