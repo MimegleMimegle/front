@@ -89,7 +89,7 @@ const Container = styled.div`
 const SearchPostDiv = styled.div`
   position: absolute;
   z-index:5
-`;
+`
 
 const Wrap =styled.div`
   position: absolute;

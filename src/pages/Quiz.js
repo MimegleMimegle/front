@@ -18,9 +18,6 @@ const Wrapper = styled.div`
   width: 100%;
   max-height: 620px;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;

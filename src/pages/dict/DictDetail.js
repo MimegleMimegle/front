@@ -28,6 +28,9 @@ const DictDetail = (props) => {
   const [like, setLike] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
 
+  const [createdAt, setCreatedAt] = useState('')
+  const [modifiedAt, setModifiedAt] = useState('')
+
   const getDictDetailDB = async () => {
     await dictApi
       .getDictDetail(dictId)
@@ -35,6 +38,8 @@ const DictDetail = (props) => {
         setDict(response.data.data)
         setLike(response.data.data.isLike)
         setLikeCount(response.data.data.likeCnt)
+        setCreatedAt(response.data.data.createdAt.split('T')[0])
+        setModifiedAt(response.data.data.modifiedAt.split('T')[0])
       })
       .catch((error) => {
         console.log('밈 사전 상세 정보 불러오기 실패', error.response)
@@ -152,14 +157,14 @@ const DictDetail = (props) => {
               <img className="OneDictCardDetailInfoFirstWriterProfileImage" src={dict.firstWriterProfileImage} />
               <div className="OneDictCardDetailInfoFirstWriterCreatedAt">
                 <div className="OneDictCardDetailInfoFirstWriter">{dict.firstWriter}</div>
-                <div className="OneDictCardDetailInfoCreatedAt">(최초 작성자) {dict.createdAt}</div>
+                <div className="OneDictCardDetailInfoCreatedAt">(최초 작성자) {createdAt}</div>
               </div>
             </div>
             <div className="OneDictCardDetailInfoWriterAndAt Recent">
               <img className="OneDictCardDetailInfoRecentWriterProfileImage" src={dict.recentWriterProfileImage} />
               <div className="OneDictCardDetailInfoRecentWriterModifiedAt">
                 <div className="OneDictCardDetailInfoRecentWriter">{dict.recentWriter}</div>
-                <div className="OneDictCardDetailInfoModifiedAt">(최근 작성자) {dict.modifiedAt}</div>
+                <div className="OneDictCardDetailInfoModifiedAt">(최근 작성자) {modifiedAt}</div>
               </div>
             </div>
           </div>

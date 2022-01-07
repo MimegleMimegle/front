@@ -15,6 +15,7 @@ const DictEditHistory = (props) => {
   const dictId = Number(props.match.params.dictId)
   const [isDict, setIsDict] = useState([])
   const [dictHistory, setDictHistory] = useState([])
+  const [firstCreatedAt, setFirstCreatedAt] = useState('')
 
   console.log(dictId)
 
@@ -31,6 +32,7 @@ const DictEditHistory = (props) => {
     console.log(response)
     setIsDict(response.data.data)
     setDictHistory(response.data.data.history)
+    setFirstCreatedAt(response.data.data.firstCreatedAt.split('T')[0])
   }
 
   const showSearchBar = () => {
@@ -40,8 +42,6 @@ const DictEditHistory = (props) => {
       setShow(false)
     }
   }
-
-  // const DictHistoryFirstWriteCreatedAT = isDict.firstCreatedAt.split('T', 1)
 
   return (
     <>
@@ -76,7 +76,7 @@ const DictEditHistory = (props) => {
               <img className="DictHistoryList DictFirstWriterProfileImage" src={isDict.firstWriterProfileImage} />
               <div className="DictHistoryList DictHistoryFirstWriter">{isDict.firstWriter} 님의 단어 등록</div>
             </div>
-            <div className="DictHistoryList DictHistoryFirstCreatedAt">등록일 : {isDict.firstCreatedAt}</div>
+            <div className="DictHistoryList DictHistoryFirstCreatedAt">등록일 : {firstCreatedAt}</div>
           </div>
         </div>
         <div className="DictHistoryModifiedDictGuideTextAndButton">
