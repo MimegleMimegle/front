@@ -6,12 +6,12 @@ import { MdPostAdd } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import post, { actionCreators as postActions } from '../../redux/modules/post'
 import Pagination from 'rc-pagination'
-import SearchPage from '../../shared/SearchPage'
 import { boardApi } from '../../shared/api'
 import axios from 'axios'
 import Header from '../../components/Header'
-
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import SearchPost from '../../components/SearchPost'
+
 
 const PostList = (props) => {
   const dispatch = useDispatch()
@@ -20,6 +20,7 @@ const PostList = (props) => {
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
+  const [show, setShow] = useState(false)
 
   const postList = useSelector((state) => state.post.list) // state는 리덕스 스토어의 전체 데이터
   console.log(postList)
@@ -38,17 +39,22 @@ const PostList = (props) => {
     setTotalCount(totalLength.data.data)
   }
 
-  console.log(post)
-  console.log(totalCount)
+  const searchClick = ()=> {
+    show? setShow(false):setShow(true)
+  }
+
+  console.log(show)
 
   return (
     <>
       <Header type="PostList" location="밈+글 커뮤니티">
-        <button style={{ padding: '5px 8px 0' }} onClick={() => history.push('/post/search')}>
+        <button style={{ padding: '5px 8px 0' }} onClick={searchClick}>
           <SearchIcon />
         </button>
       </Header>
       <Container>
+      <SearchPostDiv>  {show && <SearchPost/>} </SearchPostDiv>
+        <Wrap>
         <Empty>
           <Addbtn
             onClick={() => {
@@ -66,6 +72,7 @@ const PostList = (props) => {
           })}
 
         <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+        </Wrap>
       </Container>
     </>
   )
@@ -73,7 +80,20 @@ const PostList = (props) => {
 
 export default PostList
 
-const Container = styled.div``
+const Container = styled.div`
+  position:relative;
+  
+`;
+
+const SearchPostDiv = styled.div`
+  position: absolute;
+  z-index:5
+`;
+
+const Wrap =styled.div`
+  position: absolute;
+  
+`
 
 const Empty = styled.div`
   border-bottom: 1px solid #e5e5e5;

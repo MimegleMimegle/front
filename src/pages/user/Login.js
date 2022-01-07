@@ -9,6 +9,8 @@ import KaKaoLogin from 'react-kakao-login'
 import kakaotalk from '../../styles/image/kakaotalk.svg'
 import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
+import AlertModal from '../../components/modal/AlertModal'
+import Header from '../../components/Header'
 
 const Login = (props) => {
   const dispatch = useDispatch()
@@ -21,6 +23,19 @@ const Login = (props) => {
 
   const [isUsername, setIsUsername] = useState('false')
   const [isPassword, setIsPassword] = useState('false')
+
+  const [showModal, setShowModal] = useState(false)
+
+  const handleCloseModal = () => {
+    setTimeout(() => {
+      setShowModal(false)
+    }, 3000)
+  }
+
+  const handleShowModal = () => {
+    setShowModal(true)
+    handleCloseModal()
+  }
 
   const onChangeUsername = (e) => {
     const emailRegex = /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/
@@ -56,10 +71,12 @@ const Login = (props) => {
       return
     }
     dispatch(userActions.logInDB(username, password))
-    swal(`${username}님 만반잘부!`, { timer: 3000 })
+    // swal(`${username}님 만반잘부!`, { timer: 3000 })
+    handleShowModal()
   }
   return (
     <>
+      <Header type="Login" noBorder></Header>
       <div className="LoginLayout">
         <div className="MultiInputBoxLayout_login">
           <div className="LoginOrJoinButtons_login">
@@ -104,6 +121,13 @@ const Login = (props) => {
           <img className="NaverLoginBtn" size="5" src={naver}></img>
         </div>
       </div>
+      {showModal && (
+        <AlertModal showModal={showModal}>
+          <WelcomeMessage>
+            <span className="username">{username}</span>님 만반잘부!
+          </WelcomeMessage>
+        </AlertModal>
+      )}
     </>
   )
 }
@@ -118,6 +142,14 @@ const SpanPassword = styled.span`
   font-size: 12px;
   color: #ffa07a;
   margin-top: -15px;
+`
+
+const WelcomeMessage = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  .username {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    color: ${({ theme }) => theme.colors.blue};
+  }
 `
 
 export default Login
