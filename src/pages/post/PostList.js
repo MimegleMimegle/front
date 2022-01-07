@@ -49,7 +49,7 @@ const PostList = (props) => {
     <>
       <Header type="PostList" location="밈+글 커뮤니티">
         <button style={{ padding: '5px 8px 0' }} onClick={searchClick}>
-          <SearchIcon/>
+          <SearchIcon />
         </button>
       </Header>
       <Container>
@@ -91,11 +91,14 @@ const SearchPostDiv = styled.div`
 
 const Wrap = styled.div`
   position: absolute;
+  width: 100%;
 `
 
 const Empty = styled.div`
   border-bottom: 1px solid #e5e5e5;
   position: relative;
+  display: flex;
+  justify-content: center;
 `
 
 const Addbtn = styled.div`
@@ -112,15 +115,15 @@ const Addbtn = styled.div`
   font-weight: bold;
   cursor: pointer;
   z-index: 2;
-  margin: 15px 27px 15px 43px;
+  margin: 15px 0 30px 0;
   /* padding: 11px 0px; */
 `
 
 const AddbtnShadow = styled.div`
   width: 280px;
   height: 40px;
-  top: 5px;
-  right: 22px;
+  top: 19px;
+  left: 51px;
   background-color: white;
   border: 1px solid black;
   position: absolute;
