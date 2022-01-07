@@ -41,15 +41,15 @@ const PostCard = ({ post }) => {
           </Content>
           <Icon>
             <IconBox>
-              <ViewIcon fill="#878C92" />
+              <ViewIcon />
               <Number>{post ? post.views : null}</Number>
             </IconBox>
             <IconBox>
-              <EmptyHeartIcon fill="#878C92" />
+              <EmptyHeartIcon />
               <Number>{post ? post.likeCnt : null}</Number>
             </IconBox>
             <IconBox>
-              <CommentIcon fill="#878C92" />
+              <CommentIcon />
               <Number>{post ? post.commentCnt : null}</Number>
             </IconBox>
           </Icon>
