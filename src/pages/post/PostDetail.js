@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
-import axios from 'axios'
 import { actionCreators as postActions } from '../../redux/modules/post'
 import swal from 'sweetalert'
 import styled from 'styled-components'
 import { likeApi } from '../../shared/api'
 import { boardApi } from '../../shared/api'
-
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import CommentTest from '../CommentTest'
 import Header from '../../components/Header'
@@ -17,6 +15,7 @@ import { ReactComponent as FullHeartIcon } from '../../styles/icons/좋아요 �
 import { ReactComponent as CommentIcon } from '../../styles/icons/댓글_18dp.svg'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import '../../index.css'
 
 const PostDetail = (props) => {
   const dispatch = useDispatch()
@@ -147,9 +146,9 @@ const PostDetail = (props) => {
             {post.hashTags &&
               post.hashTags.map((hashTag, index) => {
                 return (
-                  <p className="one-hashtag" key={index}>
+                  <pre className="one-hashtag" key={index}>
                     #{hashTag}
-                  </p>
+                  </pre>
                 )
               })}
           </HashTagHere>
@@ -201,7 +200,8 @@ const UserInfo = styled.div`
   display: flex;
   align-items: center;
   .createdate {
-    font-size: ${({ theme }) => theme.fontSizes.small};
+    font-size: 9px;
+    line-height: 11px;
   }
 `
 
@@ -214,6 +214,10 @@ const UserProfile = styled.img`
 `
 const Writer = styled.div`
   font-size: 12px;
+  line-height:16p;
+  font-family:'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
 `
 
 const Middle = styled.div`
@@ -223,14 +227,16 @@ const Middle = styled.div`
 `
 
 const Title = styled.div`
-  font-family: 'Pretendard-Medium';
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 12px;
   padding: 0 0 8px;
 `
 
 const Content = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  height: 100%;
+  font-size: 12px;
+  line-height:12px;
 `
 
 const ImageBox = styled.div`
