@@ -101,7 +101,7 @@ const PostSearch = (props) => {
         {show &&
         <div style={{borderBottom:'1px solid black'}}>
             {/* DB에서 불러온 HashTags list map */}
-            <p style={{ fontSize: '14px', margin: '10px 0 3px 48px'}}>추천 해시태그</p>
+            <RecommendHashTag>추천 해시태그</RecommendHashTag>
             {hashTags&&hashTags.map((hashtag, index) => {
               return <HashTag key={index} hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} closeNotFountModal={closeNotFountModal} />
             })}
@@ -131,28 +131,36 @@ const PostSearch = (props) => {
 const Wrapper = styled.div`
   margin: 0 0 5px 0;
 `
+const RecommendHashTag = styled.div`
+  margin: 10px 0 3px 48px;
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+`;
 
 const HistoryContainer = styled.div`
   padding: 15px 0 12px 16px;
   width: 100%;
   border-bottom:1px solid #E5E5E5;
-  font-family: Yde street;
   font-style: normal;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 16px;
   line-height: 21px;
   display: flex;
   align-items: center;
-  `;
+  font-family: 'YdestreetB';
+`;
 
-  const ResultNone = styled.div`
-    padding:16px;
-    border-bottom: 1px solid #E5E5E5;
-    font-family: Pretendard;
+const ResultNone = styled.div`
+  padding:16px;
+  border-bottom: 1px solid #E5E5E5;
+  font-family: Pretendard;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 14px;
-  `
+`
 
-  export default PostSearch;
+export default PostSearch;

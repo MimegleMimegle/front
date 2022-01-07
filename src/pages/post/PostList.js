@@ -11,6 +11,7 @@ import axios from 'axios'
 import Header from '../../components/Header'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import SearchPost from '../../components/SearchPost'
+import '../../index.css'
 
 
 const PostList = (props) => {
@@ -109,11 +110,13 @@ const Addbtn = styled.div`
   justify-content: center;
   align-itmes: center;
   font-size: 14px;
+  font-family: 'YdestreetB';
+  font-style: normal;
   font-weight: bold;
   cursor: pointer;
   z-index: 2;
   margin: 20px 42px 20px 38px;
-  padding: 12px 105px 13px 106px;
+  padding: 11px 0px;
 `
 
 const AddbtnShadow = styled.div`
