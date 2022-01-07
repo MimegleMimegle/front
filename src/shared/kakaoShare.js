@@ -13,6 +13,7 @@ const KakaoShareButton = (props) => {
   const createKakaoButton = () => {
     if (window.Kakao) {
       const kakao = window.Kakao
+      const quizIntroUrl = 'http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/quiz'
 
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
@@ -23,12 +24,12 @@ const KakaoShareButton = (props) => {
         container: '#kakao-link-btn',
         objectType: 'feed',
         content: {
-          title: '신조어 퀴즈',
-          description: '#밈글밈글 #신조어 #퀴즈',
-          imageUrl: SmileIcon, // process.env.FETCH_URL + '/logo.png' 절대경로여야함
+          title: '밈글밈글 MemegleMemegle',
+          description: '#밈글밈글 #밈퀴즈 #신조어 #퀴즈',
+          imageUrl: 'https://avatars.githubusercontent.com/u/96426012?s=200&v=4', // process.env.FETCH_URL + '/logo.png' 절대경로여야함
           link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
+            mobileWebUrl: quizIntroUrl,
+            webUrl: quizIntroUrl,
           },
         },
         social: {
@@ -39,15 +40,15 @@ const KakaoShareButton = (props) => {
           {
             title: '웹으로 보기',
             link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
+              mobileWebUrl: quizIntroUrl,
+              webUrl: quizIntroUrl,
             },
           },
           {
             title: '앱으로 보기',
             link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
+              mobileWebUrl: quizIntroUrl,
+              webUrl: quizIntroUrl,
             },
           },
         ],
