@@ -11,7 +11,6 @@ import { MdPhotoCamera } from 'react-icons/md'
 
 const EditProfile = ({ showModal, setShowModal, my }) => {
   const dispatch = useDispatch()
-
   const userId = localStorage.getItem('id')
 
   const [imageFile, setImageFile] = useState(null)
@@ -19,8 +18,6 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   const [isNickname, setIsNickname] = useState(false)
   const [isNicknameChecked, setIsNicknameChecked] = useState(false)
   const [doubleCheck, setDoubleCheck] = useState(null)
-
-  console.log(doubleCheck)
 
   const fileInput = React.useRef('')
 
@@ -54,7 +51,6 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
     await userApi
       .checkNickname(nickname)
       .then((response) => {
-        console.log(response.data)
         if (response.data.result === true) {
           setDoubleCheck(true)
           setIsNicknameChecked(true)
@@ -68,6 +64,10 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       })
   }
 
+  // case 1. 닉네임만 수정한 경우
+  // case 2. 프로필 이미지만 수정한 경우
+  // case 3. 둘 다 수정한 경우
+
   const _editProfile = async () => {
     if (imageFile) {
       const uploadFile = fileInput.current.files[0]
@@ -75,8 +75,6 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
     }
     if (nickname !== '' && isNickname && isNicknameChecked) {
       dispatch(mypageActions.editNicknameDB(userId, nickname))
-    } else {
-      window.alert('닉네임을 확인해주세요!')
     }
     setShowModal(false)
     setImageFile(null)
