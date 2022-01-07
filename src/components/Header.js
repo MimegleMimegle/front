@@ -7,10 +7,46 @@ import HeaderHamburder from './HeaderHamburger'
 import HeaderGoBack from './HeaderGoBack'
 import HeaderClose from './HeaderClose'
 
-const Header = ({ type, children, location }) => {
+const Header = ({ type, children, location, low, noBorder }) => {
   const [showSidebar, setShowSidebar] = React.useState(false)
   const handleSidebar = () => {
     setShowSidebar(!showSidebar)
+  }
+
+  const styles = { low: low, noBorder: noBorder }
+
+  if (type === 'QuizPaper') {
+    return (
+      <>
+        <NavHeader {...styles}>
+          <ul className="nav-list">
+            <li>
+              <div style={{ fontSize: '14px', fontWeight: '700', textAlign: 'center' }}>{location}</div>
+            </li>
+          </ul>
+        </NavHeader>
+      </>
+    )
+  }
+
+  if (type === 'PostDetail') {
+    return (
+      <>
+        <NavHeader {...styles}>
+          <ul className="nav-list">
+            <li>
+              <HeaderGoBack />
+            </li>
+            <li className="nav-item-middle">
+              <Location>{location}</Location>
+            </li>
+            <li>
+              <div className="nav-item-right"></div>
+            </li>
+          </ul>
+        </NavHeader>
+      </>
+    )
   }
 
   if (type === 'DictWrite' || type === 'DictEdit') {
@@ -100,9 +136,9 @@ const NavHeader = styled.nav`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 74px;
+  height: ${(props) => (props.low ? '50px' : '74px')};
   background-color: ${({ theme }) => theme.colors.white};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.black};
+  border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid black')};
   /* padding: 10px 0 12px; */
   z-index: 1000;
   .nav-list {
