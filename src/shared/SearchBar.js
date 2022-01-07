@@ -22,7 +22,6 @@ function SearchBar({ onAddKeyword }, props) {
 
     console.log(response.data.data)
     console.log(searchTotalLength)
-    setKeyword(response.data.data)
     setTotalCount(searchTotalLength.data.data)
   }
 

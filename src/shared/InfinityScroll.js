@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
-
-import SpinningCircles from '../styles/image/spinning-circles.svg'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const InfinityScroll = ({ children, callNext, paging }) => {
   const spinnerRef = useRef(null)
@@ -28,7 +26,7 @@ const InfinityScroll = ({ children, callNext, paging }) => {
       {children}
       {paging.next && (
         <Spinner ref={spinnerRef}>
-          <img src={SpinningCircles} />
+          <CircularProgress color="inherit" />
         </Spinner>
       )}
     </>

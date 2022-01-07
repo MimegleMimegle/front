@@ -79,7 +79,7 @@ const Main = (props) => {
           </SwiperSlide>
         </Swiper>
         <div className="MainPageTagSection">
-          <text className="MainPageTagName">오늘의 밈</text>
+          <div className="MainPageTagName">오늘의 밈</div>
           <div className="MainPageTagList">
             {todayMemes.map((todayMemes) => (
               <div className="MainPageTag" key={todayMemes.id} onClick={() => history.push(`/dict/detail/${todayMemes.dictId}`)}>
@@ -88,16 +88,16 @@ const Main = (props) => {
             ))}
           </div>
           <div className="MainPageTagMoreButton_1" onClick={() => history.push('/dict')}>
-            <text className="MainPageTagMoreButton1">More</text>
+            <div className="MainPageTagMoreButton1">More</div>
             <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
             </svg>
           </div>
         </div>
-        <text className="MainPageTopPostText">명예의 밈글</text>
+        <div className="MainPageTopPostText">명예의 밈글</div>
         <PopularBoardCardSwiper />
         <div className="MainPageTagMoreButton_2" onClick={() => history.push('/image')}>
-          <text className="MainPageTagMoreButton2">More</text>
+          <div className="MainPageTagMoreButton2">More</div>
           <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
           </svg>
@@ -114,7 +114,7 @@ const Main = (props) => {
             </div>
           ))}
           <div className="MainPageTagMoreButton_3" onClick={() => history.push('/post')}>
-            <text className="MainPageTagMoreButton3">More</text>
+            <div className="MainPageTagMoreButton3">More</div>
             <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
             </svg>

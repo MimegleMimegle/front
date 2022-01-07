@@ -5,9 +5,10 @@ import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
 import { userApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
+
+import ConfirmModal from '../../components/modal/ConfirmModal'
 import ImageWrapper from '../../components/image/ImageWrapper'
 import ShareBottomSheet from '../../components/ShareBottomSheet'
-
 import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
@@ -23,6 +24,13 @@ const ImageDetail = (props) => {
   const [profile, setProfile] = useState(null)
   const [createdAt, setCreatedAt] = useState('')
   const [shareVisible, setShareVisible] = useState(false)
+  const [showModal, setShowModal] = React.useState(false)
+
+  const handleShowModal = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowModal(!showModal)
+  }
 
   const handleShareVisible = (e) => {
     e.preventDefault()
@@ -67,7 +75,7 @@ const ImageDetail = (props) => {
         console.log(response.data)
       })
       .then(() => {
-        history.push('/image')
+        window.location.replace('/image')
       })
       .catch((error) => {
         console.log('이미지 삭제 문제 발생', error.response)
@@ -124,7 +132,7 @@ const ImageDetail = (props) => {
               <MdShare style={{ fontSize: '20px' }} />
             </button>
             {imageData && profile && imageData.writer === profile.nickname && (
-              <button onClick={handleDeleteImage}>
+              <button onClick={handleShowModal}>
                 <MdOutlineDelete style={{ fontSize: '22px' }} />
               </button>
             )}
@@ -137,8 +145,13 @@ const ImageDetail = (props) => {
           <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
           <ImageLikeCount>{likeCount}</ImageLikeCount>
         </div>
-        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} handleShareVisible={handleShareVisible} />}
+        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />}
       </ImageWrapper>
+      {showModal && (
+        <ConfirmModal question="밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+          <DeleteButton onClick={handleDeleteImage}>삭제</DeleteButton>
+        </ConfirmModal>
+      )}
     </>
   )
 }
@@ -167,6 +180,11 @@ const ImageCreatedAt = styled.p`
 const ImageLikeCount = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.white};
+`
+
+const DeleteButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default ImageDetail

@@ -1,7 +1,7 @@
 .MainPageLayout {
   max-width: 100%;
-  max-height: 500px;
-  margin: 30px 0 0 0;
+  max-height: 560px;
+  margin: 0px 0 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -50,7 +50,7 @@
 
 .MainPageTagSection {
   width: 100%;
-  margin: 30px 0 0 0;
+  /* margin: 30px 0 0 0; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -63,29 +63,37 @@
   justify-self: flex-start;
   margin: 30px 0 10px 20px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   width: fit-content;
-  background-image: linear-gradient(transparent 60%, yellow 40%);
+  line-height: normal;
+  background-image: linear-gradient(transparent 50%, #ffe330 50%);
 }
 
 .MainPageTagList {
-  width: 95%;
+  /* width: 95%; */
+  /* margin-left: 10px; */
+  padding: 12px 16px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
 .MainPageTag {
+  /* border: none; */
   border: 1px solid black;
   border-radius: 75px;
+  /* background-color: lightblue; */
   background-color: white;
   width: fit-content;
   height: fit-content;
-  padding: 5px 15px 5px 15px;
+  /* padding: 5px 15px 5px 15px; */
+  padding: 6px 12px;
   color: black;
+  /* font-size: 16px; */
   font-size: 14px;
-  font-weight: 400;
-  margin: 5px 0 5px 10px;
+  /* font-weight: bold; */
+  /* margin: 5px 0 5px 10px; */
+  margin: 0 12px 10px 0;
 }
 
 .MainPageTagMoreButton_1 {
@@ -93,6 +101,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin-top: 10px;
   margin-right: 20px;
 }
 .MainPageTagMoreButton_1:hover {
@@ -119,9 +128,10 @@
   justify-self: flex-start;
   margin: 30px 0 10px 20px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   width: fit-content;
-  background-image: linear-gradient(transparent 60%, yellow 40%);
+  line-height: normal;
+  background-image: linear-gradient(transparent 50%, #ffe330 50%);
 }
 
 .MainPageTopPostList {
@@ -154,7 +164,7 @@
 
 .MainPagePopularBoardSection {
   width: 100%;
-  margin: 30px 0 0 0;
+  /* margin: 30px 0 0 0; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -163,11 +173,12 @@
 .MainPagePopularBoardText {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 10px 20px;
+  margin: 30px 0 20px 20px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   width: fit-content;
-  background-image: linear-gradient(transparent 60%, yellow 40%);
+  line-height: normal;
+  background-image: linear-gradient(transparent 50%, #ffe330 50%);
 }
 
 .MainPagePopularBoardList {
@@ -216,6 +227,8 @@
   display: flex;
   justify-content: flex-end;
   padding-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
 .MainPageTagMoreButton_3:hover {
   cursor: pointer;
