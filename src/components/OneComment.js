@@ -68,7 +68,7 @@ const Commentprofile = styled.img`
   width: 20px;
   height: 20px;
   border-radius: 150px;
-  border: 1px solid black;
+  border: 1px solid #E5E5E5;
 `
 
 const UserName = styled.div`
