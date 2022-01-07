@@ -118,7 +118,16 @@ const DictWrite = (props) => {
           </div>
           <div className="DictCardInputSummaryContainer">
             <div className="DictCardInputSummaryGuideText">한줄설명</div>
-            <textarea className="DictCardInputSummary" type="text" cols="40" rows="3" value={summary} onChange={onChangeSummary} placeholder="단어의 뜻을 25자 이내로 요약하여 입력해주세요" />
+            <textarea
+              className="DictCardInputSummary"
+              type="text"
+              cols="40"
+              rows="3"
+              maxlength="25"
+              value={summary}
+              onChange={onChangeSummary}
+              placeholder="단어의 뜻을 25자 이내로 요약하여 입력해주세요"
+            />
           </div>
           <div className="DictCardInputContentContainer">
             <div className="DictCardInputContentGuideText">부가설명</div>

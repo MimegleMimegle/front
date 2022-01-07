@@ -61,7 +61,7 @@ const TodayDictCardSwiper = (props) => {
           disableOnInteraction: false,
         }}
         freeMode={true}
-        loop={true}
+        loop={false}
         className="mySwiper"
       >
         {todayDict.map((todayDict) => (

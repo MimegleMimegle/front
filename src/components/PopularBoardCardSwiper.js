@@ -58,7 +58,7 @@ const PopularBoardCardSwiper = (props) => {
           disableOnInteraction: false,
         }}
         freeMode={false}
-        loop={true}
+        loop={false}
         className="mySwiper"
       >
         {popularImages.map((popularImages) => (
