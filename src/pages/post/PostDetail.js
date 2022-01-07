@@ -208,7 +208,7 @@ const UserProfile = styled.img`
   border-radius: 150px;
   width: 28px;
   height: 28px;
-  border: 1px solid black;
+  border: 1px solid #E5E5E5;
   margin: 0 8px 0 0;
 `
 const Writer = styled.div`
