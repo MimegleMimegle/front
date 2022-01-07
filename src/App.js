@@ -53,7 +53,7 @@ function App() {
             <Route path="/post/detail/:boardId" exact component={PostDetail} />
             <Route path="/post/write" exact component={Auth(PostWrite, true)} />
             <Route path="/post/edit/:boardId" exact component={Auth(PostEdit, true)} />
-            <Route path="/post/search/:query" exact component={PostSearch} />
+            <Route path="/post/search/:search" exact component={PostSearch} />
             <Route path="/dict" exact component={DictList} />
             <Route path="/dict/write" exact component={Auth(DictWrite, true)} />
             <Route path="/dict/edit/:dictId" exact component={Auth(DictEdit, true)} />
