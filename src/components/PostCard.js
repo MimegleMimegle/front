@@ -81,7 +81,7 @@ const UserImg = styled.img`
   margin: 0 8px 0 0;
   width: 28px;
   height: 28px;
-  border: 1px solid #000000;
+  border: 1px solid #E5E5E5;
   box-sizing: border-box;
   border-radius: 150px;
 `
