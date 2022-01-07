@@ -1,7 +1,7 @@
 .MainPageLayout {
   max-width: 100%;
-  max-height: 500px;
-  /* margin: 30px 0 0 0; */
+  max-height: 560px;
+  margin: 0px 0 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -101,6 +101,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin-top: 10px;
   margin-right: 20px;
 }
 .MainPageTagMoreButton_1:hover {
@@ -172,7 +173,7 @@
 .MainPagePopularBoardText {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 10px 20px;
+  margin: 30px 0 20px 20px;
   font-size: 18px;
   font-weight: 700;
   width: fit-content;
@@ -226,6 +227,8 @@
   display: flex;
   justify-content: flex-end;
   padding-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
 .MainPageTagMoreButton_3:hover {
   cursor: pointer;
