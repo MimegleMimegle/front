@@ -124,6 +124,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: top;
   z-index: 2000;
+  visibility: hidden;
+  opacity: 0;
 
   -webkit-transform: translateX(0);
   transform: translateX(0);
@@ -131,6 +133,8 @@ const Wrapper = styled.div`
   transition: all 0.3s ease;
 
   &.open {
+    opacity: 1;
+    visibility: visible;
     -webkit-transform: translateX(240px);
     transform: translateX(240px);
   }
