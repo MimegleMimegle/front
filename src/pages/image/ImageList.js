@@ -42,8 +42,9 @@ const ImageList = (props) => {
   }
 
   useEffect(() => {
+    dispatch(imageActions.initImageList())
     setLoading(true)
-    setTimeout(() => setLoading(false), 700)
+    setTimeout(() => setLoading(false), 600)
     dispatch(imageActions.getImageListDB(0))
 
     imageApi

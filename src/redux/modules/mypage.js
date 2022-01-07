@@ -57,9 +57,7 @@ const editProfileImageDB = (userId, uploadFile) => {
         },
       })
       .then((response) => {
-        console.log(response.data)
-        const newProfileImageUrl = response.data
-        console.log(newProfileImageUrl)
+        const newProfileImageUrl = response.data.data.profileImageUrl
         dispatch(editProfileImage(newProfileImageUrl))
       })
       .catch((error) => {
