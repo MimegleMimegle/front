@@ -94,7 +94,7 @@ const PostDetail = (props) => {
             <UserProfile src={post.profileImageUrl} alt="" />
             <div className="userinfo">
               <Writer>{post.writer}</Writer>
-              <div className="createdate">{post && post.createdAt.split('T')[0]}</div>
+              {/* <div className="createdate">{post && post.createdAt.split('T')[0]}</div> */}
             </div>
           </UserInfo>
           {username === post.username ? (
