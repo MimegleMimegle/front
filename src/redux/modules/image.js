@@ -8,6 +8,7 @@ const GET_IMAGE_DETAIL = 'GET_IMAGE_DETAIL'
 const UPLOAD_IMAGE = 'UPLOAD_IMAGE'
 const DELETE_IMAGE = 'DELETE_IMAGE'
 const LOADING = 'LOADING'
+const INIT_IMAGE_LIST = 'INIT_IMAGE_LIST'
 
 /* action creator */
 const getImageList = createAction(GET_IMAGE_LIST, (image_data) => ({ image_data }))
@@ -15,6 +16,7 @@ const getImageDetail = createAction(GET_IMAGE_DETAIL, (image) => ({ image }))
 const uploadImage = createAction(UPLOAD_IMAGE, (image) => ({ image }))
 const deleteImage = createAction(DELETE_IMAGE, (boardId) => ({ boardId }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
+const initImageList = createAction(INIT_IMAGE_LIST, () => ({}))
 
 /* initial state */
 const initialState = {
@@ -138,6 +140,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.image_list = action.payload
       }),
+    [INIT_IMAGE_LIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.image_list = []
+      }),
   },
   initialState
 )
@@ -151,6 +157,7 @@ const actionCreators = {
   uploadImageDB,
   deleteImage,
   deleteImageDB,
+  initImageList,
 }
 
 export { actionCreators }

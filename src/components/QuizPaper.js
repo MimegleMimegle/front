@@ -7,6 +7,7 @@ import { actionCreators as quizActions } from '../redux/modules/quiz'
 import Header from './Header'
 import QuizResult from '../pages/QuizResult'
 import SpinningCircles from '../styles/image/spinning-circles.svg'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const QuizPaper = (props) => {
   const category = useParams().category
@@ -119,7 +120,9 @@ const QuizPaper = (props) => {
             </ButtonSection>
           </Wrapper>
         ) : (
-          <img src={SpinningCircles} />
+          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <CircularProgress color="inherit" />
+          </div>
         )
       ) : (
         <QuizResult quiz_list={quiz_list} />
