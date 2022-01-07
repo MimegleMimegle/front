@@ -28,7 +28,6 @@ const PostDetail = (props) => {
   const [toggleModalChang, setToggleModalChang] = useState(false)
   const [createdAt, setCreatedAt] = useState('')
   const [showModal, setShowModal] = React.useState(false)
-
   const handleShowModal = (e) => {
     e.preventDefault()
     e.stopPropagation()

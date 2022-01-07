@@ -10,8 +10,6 @@ import HashTag from './HashTag'
 import { GoSearch } from 'react-icons/go'
 import {IoClose} from 'react-icons/io5'
 
-
-
 /********* 검색된 게시글 정보가 없을 때 보여줄 화면!! 모달이든 뭐든 띄워야함! *********/
 
 const SearchPost = (props) => {
@@ -27,8 +25,12 @@ const SearchPost = (props) => {
   
   const handleSearch = (e) => {
     setSearch(e.target.value)
+    console.log(e.target.value)
   }
+  
+  console.log(props)
 
+  
   console.log(search)
   console.log(filteredPosts)
 
@@ -37,12 +39,13 @@ const SearchPost = (props) => {
       .searchPost(search)
       .then((response) => {
         console.log(response.data)
-        setFilteredPosts(response.data.data)
+        const filter_list=response.data.data
+        setFilteredPosts(filter_list)
         history.push({
-        pathname:'/post/search/',
-        search:search,
-        filteredPosts:filteredPosts,
+        pathname:`/post/search/${search}`,
+        filter_list:filter_list
         })
+
         
       })
       .catch((error) => {
@@ -62,10 +65,7 @@ const SearchPost = (props) => {
         console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
       })
   }, [])
-//   ()=>history.push({
-//     pathname:'/post/search',
-//     search:search,
-//     })
+
   return (
     <>
       <Wrapper>

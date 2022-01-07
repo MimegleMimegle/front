@@ -36,8 +36,8 @@ const DictDetail = (props) => {
       .getDictDetail(dictId)
       .then((response) => {
         setDict(response.data.data)
-        setLike(response.data.data.isLike)
-        setLikeCount(response.data.data.likeCnt)
+        setLike(response.data.data.like)
+        setLikeCount(response.data.data.likeCount)
         setCreatedAt(response.data.data.createdAt.split('T')[0])
         setModifiedAt(response.data.data.modifiedAt.split('T')[0])
       })
@@ -46,14 +46,7 @@ const DictDetail = (props) => {
       })
   }
 
-  React.useEffect(() => {
-    getDictDetailDB()
-  }, [])
-
   const dictId = Number(props.match.params.dictId)
-
-  console.log(dict)
-  console.log(dictId)
 
   const showSearchBar = () => {
     if (show === false) {
@@ -70,9 +63,9 @@ const DictDetail = (props) => {
       await likeApi
         .likeDict(dictId)
         .then((response) => {
-          console.log(response.data)
           setLike(false)
           setLikeCount(likeCount - 1)
+          dispatch(getDictDetailDB(like, likeCount))
         })
         .catch((error) => {
           console.log('밈 사전 좋아요 취소 실패', error.response)
@@ -81,9 +74,9 @@ const DictDetail = (props) => {
       await likeApi
         .likeDict(dictId)
         .then((response) => {
-          console.log(response.data)
           setLike(true)
           setLikeCount(likeCount + 1)
+          dispatch(getDictDetailDB(like, likeCount))
         })
         .catch((error) => {
           console.log('밈 사전 좋아요 문제 발생', error.response)
@@ -106,6 +99,10 @@ const DictDetail = (props) => {
     closeCopied()
     swal('링크가 복사되었습니다.', { timer: 1500 })
   }
+
+  React.useEffect(() => {
+    getDictDetailDB()
+  }, [])
 
   return (
     <>

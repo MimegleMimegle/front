@@ -9,8 +9,8 @@ const ADD_LIKE_DICT = 'ADD_LIKE_DICT'
 const SET_LIKE_BOARD = 'SET_LIKE_BOARD'
 const ADD_LIKE_BOARD = 'ADD_LIKE_BOARD'
 
-const setLikeDict = createAction(SET_LIKE_DICT, (dictId, likeCount, like) => ({ dictId, likeCount, like }))
-const addLikeDict = createAction(ADD_LIKE_DICT, (dictId, likeCount, like) => ({ dictId, likeCount, like }))
+const setLikeDict = createAction(SET_LIKE_DICT, (dictId, result = false) => ({ dictId, result }))
+const addLikeDict = createAction(ADD_LIKE_DICT, (dictId, result = true) => ({ dictId, result }))
 
 const setLikeBoard = createAction(SET_LIKE_BOARD, (boardId, result = false) => ({ boardId, result }))
 const addLikeBoard = createAction(ADD_LIKE_BOARD, (boardId, result = true) => ({ boardId, result }))
@@ -33,28 +33,6 @@ const changeLikeDictDB = (dictId, likeCount, like) => {
   }
 }
 
-// const changeLikeBoardDB = (boardId, result) => {
-//   return function (dispatch, getState, { history }) {
-//     likeApi
-//       .likeBoard(boardId)
-//       .then((response) => {
-//         let like_data = []
-//         for (let i = 0; i < response.data.post_list.length; i++) {
-//           console.log(response)
-//           like_data.push({
-//             post_id: response.data.post_list[i].post_Id,
-//             like_user: response.data.post_list[i].like_user,
-//             like_count: response.data.post_list[i].like_count,
-//           })
-//         }
-//         dispatch(setLikeBoard(like_data))
-//       })
-//       .catch((error) => {
-//         console.log(error)
-//       })
-//   }
-// }
-
 const changeLikeBoardDB = (boardId, liked) => {
   return function (dispatch, getState, { history }) {
     likeApi
@@ -73,11 +51,11 @@ export default handleActions(
   {
     [SET_LIKE_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.like = action.payload.like_data
+        draft.like = action.payload.result
       }),
     [ADD_LIKE_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.like = action.payload.like_data
+        draft.like = action.payload.result
       }),
 
     [SET_LIKE_BOARD]: (state, action) =>
