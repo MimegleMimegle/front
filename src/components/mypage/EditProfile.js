@@ -118,9 +118,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
             <div style={{ padding: '20px 0 0' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <input type="text" className="input-nickname" onChange={handleChangeNickname} />
-                <button onClick={checkNickname} style={{ marginLeft: '12px', fontSize: '9px', fontWeight: '700', textDecoration: 'underline' }}>
-                  중복확인
-                </button>
+                <DoubleCheckButton onClick={checkNickname}>중복확인</DoubleCheckButton>
               </div>
               <div style={{ padding: '10px 0' }}>
                 <p style={{ fontSize: '12px' }}>10자 이하로 입력해주세요.</p>
@@ -230,6 +228,15 @@ const ProfileImagePreview = styled.div`
 const ConfirmButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.blue};
+`
+
+const DoubleCheckButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 700;
+  margin: 0 0 0 12px;
+  text-decoration: underline;
 `
 
 export default EditProfile

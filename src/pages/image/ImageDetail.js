@@ -23,8 +23,9 @@ const ImageDetail = (props) => {
   const [isLiked, setIsLiked] = useState(false)
   const [profile, setProfile] = useState(null)
   const [createdAt, setCreatedAt] = useState('')
+  const [thumbNail, setThumbNail] = useState('')
   const [shareVisible, setShareVisible] = useState(false)
-  const [showModal, setShowModal] = React.useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const handleShowModal = (e) => {
     e.preventDefault()
@@ -90,6 +91,7 @@ const ImageDetail = (props) => {
         setImageData(image_data)
         setLikeCount(image_data.likeCnt)
         setIsLiked(image_data.isLike)
+        setThumbNail(image_data.thumbNail)
         const createdDate = image_data.createdAt.split('T')[0]
         setCreatedAt(createdDate)
       })
@@ -112,7 +114,7 @@ const ImageDetail = (props) => {
         <div style={{ width: '100%', padding: '0 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <button
             onClick={() => {
-              history.goBack()
+              history.replace('/image')
             }}
             style={{ padding: '0' }}
           >
@@ -145,7 +147,7 @@ const ImageDetail = (props) => {
           <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
           <ImageLikeCount>{likeCount}</ImageLikeCount>
         </div>
-        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />}
+        {shareVisible && <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />}
       </ImageWrapper>
       {showModal && (
         <ConfirmModal question="밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>

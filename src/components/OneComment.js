@@ -72,16 +72,31 @@ const Commentprofile = styled.img`
 `
 
 const UserName = styled.div`
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
   font-size: 9px;
+  line-height: 12px;
   padding: 0 8px 0 0;
+  display: flex;
+  align-items: center;
 `
 
 const CreatedAt = styled.div`
   font-size: 9px;
+  line-height: 11px;
+  display: flex;
+  align-items: center;
+  
 `
 const Content = styled.div`
   font-size: 12px;
-`
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  
+`;
+
 const DeleteButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.blue};

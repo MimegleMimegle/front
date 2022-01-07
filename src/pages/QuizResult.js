@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { history } from '../redux/ConfigureStore'
+import { actionCreators as quizActions } from '../redux/modules/quiz'
 
 import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
@@ -10,7 +11,13 @@ import { ReactComponent as GoBack } from '../styles/icons/되돌아가기_24dp.s
 import { ReactComponent as CopyLink } from '../styles/icons/링크복사_24dp.svg'
 
 const QuizResult = ({ quiz_list }) => {
+  const dispatch = useDispatch()
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
+  const answerCnt = quiz_list
+    ? quiz_list.filter((quiz, i) => {
+        return quiz.solution === user_answer_list[i]
+      }).length
+    : null
 
   const [showQuiz, setShowQuiz] = useState(false)
   const [resultText, setResultText] = useState({ sub: '', main: '' })
@@ -22,15 +29,18 @@ const QuizResult = ({ quiz_list }) => {
     setShareVisible(!shareVisible)
   }
 
-  const handleShowQuiz = () => {
+  const handleShowQuiz = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowQuiz(!showQuiz)
   }
 
-  const answerCnt = quiz_list
-    ? quiz_list.filter((quiz, i) => {
-        return quiz.solution === user_answer_list[i]
-      }).length
-    : null
+  const handleMoveQuizIntro = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    history.push('/quiz')
+    dispatch(quizActions.initAnswer())
+  }
 
   useEffect(() => {
     if (answerCnt >= 0 && answerCnt < 4) {
@@ -51,9 +61,9 @@ const QuizResult = ({ quiz_list }) => {
             <div className="quiz-subject box-1">결과</div>
             <div className="quiz-subject box-2"></div>
             <div style={{ padding: '50px 0 30px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: '16px', fontWeight: '700' }}>{answerCnt}/10</span>
-              <h2 style={{ fontSize: '14px', padding: '10px 0 0' }}>{resultText.sub}</h2>
-              <h2 className="resultDesc">{resultText.main}</h2>
+              <span className="result-text__answerCnt">{answerCnt}/10</span>
+              <h2 className="result-text__sub">{resultText.sub}</h2>
+              <h2 className="result-text__main">{resultText.main}</h2>
             </div>
           </QuizResultBox>
           <ResultButtonContainer>
@@ -77,13 +87,7 @@ const QuizResult = ({ quiz_list }) => {
                 </div>
                 <div className="circle-button btn-2"></div>
               </CircleButtonBox>
-              <TextButton
-                onClick={() => {
-                  history.push('/quiz')
-                }}
-              >
-                다른 테스트 하러 가기
-              </TextButton>
+              <TextButton onClick={handleMoveQuizIntro}>다른 테스트 하러 가기</TextButton>
             </div>
             <div style={{ width: '100%', margin: '5px 0' }}>
               <CircleButtonBox>
@@ -139,7 +143,9 @@ const QuizResultBox = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.white};
     font-size: ${({ theme }) => theme.fontSizes.xxl};
-    font-weight: 700;
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
   }
 
   .box-1 {
@@ -159,12 +165,27 @@ const QuizResultBox = styled.div`
     transform: translateX(-51%);
     background-color: ${({ theme }) => theme.colors.white};
   }
+  .result-text__answerCnt {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
+  }
 
-  .resultDesc {
+  .result-text__sub {
+    padding: 10px 0 0;
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-family: 'YdestreetL';
+    font-style: normal;
+    font-weight: normal;
+  }
+  .result-text__main {
     width: 100%;
     text-align: center;
     font-size: 24px;
-    font-weight: 700;
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
   }
 `
 
@@ -195,7 +216,9 @@ const ResultButtonContainer = styled.div`
       width: 135px;
       height: 40px;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
-      font-weight: 700;
+      font-family: 'YdestreetB';
+      font-style: normal;
+      font-weight: normal;
     }
   }
 
@@ -223,7 +246,9 @@ const ResultButtonContainer = styled.div`
 const TextButton = styled.button`
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-weight: 700;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
   padding: 12px 0;
 `
 

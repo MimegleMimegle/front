@@ -174,7 +174,7 @@ const Join = () => {
               <input
                 className="JoinInputBox input1"
                 id="NicknameInput_Join"
-                maxLength="16"
+                maxLength="10"
                 placeholder="한글,영어 대소문자, 숫자 2~10자"
                 text="이름"
                 type="text"
@@ -264,13 +264,15 @@ const DoubleCheckBox = styled.div`
 `
 const SpanUsername = styled.span`
   font-size: 12px;
-  margin-bottom: -15px;
+  margin-top: -5px;
+  margin-bottom: -10px;
   color: #ffa07a;
 `
 
 const SpanNickname = styled.span`
   font-size: 12px;
-  margin-bottom: -15px;
+  margin-top: -5px;
+  margin-bottom: -10px;
   color: #ffa07a;
 `
 const SpanPassword = styled.span`
@@ -280,7 +282,7 @@ const SpanPassword = styled.span`
 `
 const SpanPasswordCheck = styled.span`
   font-size: 12px;
-  margin-bottom: -15px;
+  margin-bottom: -10px;
   color: #ffa07a;
 `
 

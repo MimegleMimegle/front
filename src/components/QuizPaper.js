@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
 
 import Header from './Header'
@@ -12,10 +11,8 @@ import SpinningCircles from '../styles/image/spinning-circles.svg'
 const QuizPaper = (props) => {
   const category = useParams().category
   const dispatch = useDispatch()
-
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
-  const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
-  console.log(user_answer_list)
+  console.log(quiz_list)
 
   const [showResult, setShowResult] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -58,23 +55,24 @@ const QuizPaper = (props) => {
     setClicked4(true)
   }
 
-  const submitAnswer = () => {
-    setClicked1(false)
-    setClicked2(false)
-    setClicked3(false)
-    setClicked4(false)
+  const submitAnswer = (e) => {
     // 추후 quiz_list ? currentIndex === quiz_list.length -1 로 조건문 변경
     if (currentIndex === 9) {
+      dispatch(quizActions.addAnswer(answer))
       setShowResult(true)
     } else {
       dispatch(quizActions.addAnswer(answer))
       setCurrentIndex(currentIndex + 1)
     }
+    setClicked1(false)
+    setClicked2(false)
+    setClicked3(false)
+    setClicked4(false)
   }
 
   React.useEffect(() => {
     setLoading(true)
-    setTimeout(() => setLoading(false), 1000)
+    setTimeout(() => setLoading(false), 600)
     dispatch(quizActions.getQuizListDB(category))
   }, [dispatch])
 
@@ -91,6 +89,9 @@ const QuizPaper = (props) => {
               <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
               <div className="question-number-box box-2"></div>
               <h2 className="title">{quiz ? quiz.question : null}</h2>
+              <QuizImageBox>
+                <img src={quiz?.quizImage} className="quiz-image" />
+              </QuizImageBox>
             </QuizTitle>
             <QuizBox>
               <button className={`answer-btn ${clicked1 ? 'clicked' : ''}`} value={quiz ? quiz.choice[0] : ''} onClick={clickAnswer1}>
@@ -126,12 +127,12 @@ const QuizPaper = (props) => {
 }
 
 const Wrapper = styled.div`
-  max-width: 325px;
+  max-width: 340px;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   flex-grow: 0;
   flex-shrink: 0;
@@ -144,11 +145,12 @@ const Wrapper = styled.div`
 const QuizTitle = styled.div`
   position: relative;
   width: 100%;
-  height: 164px;
-  padding: 42px 36px;
+  height: auto;
+  padding: 42px 36px 20px;
   margin: 30px 0 0;
   border: 1px solid ${({ theme }) => theme.colors.black};
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
@@ -167,7 +169,9 @@ const QuizTitle = styled.div`
     text-align: center;
     line-height: 40px;
     font-size: ${({ theme }) => theme.fontSizes.xxl};
-    font-weight: 700;
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
     background-color: ${({ theme }) => theme.colors.yellow};
   }
 
@@ -180,7 +184,7 @@ const QuizTitle = styled.div`
 
   .title {
     width: 100%;
-    height: 100%;
+    height: fit-content;
     text-align: left;
     font-size: ${({ theme }) => theme.fontSizes.lg};
     line-height: 22px;
@@ -228,7 +232,9 @@ const ButtonSection = styled.div`
       padding: 0;
       border-radius: 20px;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
-      font-weight: 700;
+      font-family: 'YdestreetB';
+      font-style: normal;
+      font-weight: normal;
       :disabled {
         background-color: ${({ theme }) => theme.colors.line};
         cursor: not-allowed;
@@ -257,4 +263,20 @@ const ButtonSection = styled.div`
     background-color: ${({ theme }) => theme.colors.white};
   }
 `
+
+const QuizImageBox = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 0;
+  .quiz-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+`
+
 export default QuizPaper

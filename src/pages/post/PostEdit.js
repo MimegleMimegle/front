@@ -163,14 +163,14 @@ const PostEdit = (props) => {
               <div>기존에 등록한 해시태그는 수정이 어렵습니다.</div>
             </HashTagInfo>
             <HashDivWrap className="hashWrap originHashWrap">
-              {/* {post.hashTags !== undefined &&
+              {post.hashTags !== undefined &&
                 post.hashTags.map((hashTag, idx) => {
                   return (
                     <div className="originHashWrapOutter" key={`hashTag-id-${idx}`}>
                       <div className="originHashWrapInner">#{hashTag}</div>
                     </div>
                   )
-                })} */}
+                })}
             </HashDivWrap>
             <HashDivWrap className="hashWrap newHashWrap">
               <div className="hashWrapOutter"></div>

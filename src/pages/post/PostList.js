@@ -11,7 +11,7 @@ import axios from 'axios'
 import Header from '../../components/Header'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import SearchPost from '../../components/SearchPost'
-
+import '../../index.css'
 
 const PostList = (props) => {
   const dispatch = useDispatch()
@@ -39,8 +39,8 @@ const PostList = (props) => {
     setTotalCount(totalLength.data.data)
   }
 
-  const searchClick = ()=> {
-    show? setShow(false):setShow(true)
+  const searchClick = () => {
+    show ? setShow(false) : setShow(true)
   }
 
   console.log(show)
@@ -53,25 +53,25 @@ const PostList = (props) => {
         </button>
       </Header>
       <Container>
-      <SearchPostDiv>  {show && <SearchPost/>} </SearchPostDiv>
+        <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv>
         <Wrap>
-        <Empty>
-          <Addbtn
-            onClick={() => {
-              history.push('/post/write')
-            }}
-          >
-            밈+글 등록
-          </Addbtn>
-          <AddbtnShadow />
-        </Empty>
+          <Empty>
+            <Addbtn
+              onClick={() => {
+                history.push('/post/write')
+              }}
+            >
+              밈+글 등록
+            </Addbtn>
+            <AddbtnShadow />
+          </Empty>
 
-        {post &&
-          post.map((post, index) => {
-            return <PostCard post={post} key={post.boardId} />
-          })}
+          {post &&
+            post.map((post, index) => {
+              return <PostCard post={post} key={post.boardId} />
+            })}
 
-        <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+          <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
         </Wrap>
       </Container>
     </>
@@ -81,18 +81,16 @@ const PostList = (props) => {
 export default PostList
 
 const Container = styled.div`
-  position:relative;
-  
-`;
+  position: relative;
+`
 
 const SearchPostDiv = styled.div`
   position: absolute;
-  z-index:5
-`;
+  z-index: 5;
+`
 
-const Wrap =styled.div`
+const Wrap = styled.div`
   position: absolute;
-  
 `
 
 const Empty = styled.div`
@@ -109,11 +107,13 @@ const Addbtn = styled.div`
   justify-content: center;
   align-itmes: center;
   font-size: 14px;
+  font-family: 'YdestreetB';
+  font-style: normal;
   font-weight: bold;
   cursor: pointer;
   z-index: 2;
   margin: 20px 42px 20px 38px;
-  padding: 12px 105px 13px 106px;
+  padding: 11px 0px;
 `
 
 const AddbtnShadow = styled.div`

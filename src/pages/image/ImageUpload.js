@@ -54,7 +54,9 @@ const ImageUpload = ({ preview, fileInput }) => {
 const UploadButton = styled.button`
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fontSizes.xl};
-  font-weight: 700;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
 `
 
 const SubmitButton = styled.button`

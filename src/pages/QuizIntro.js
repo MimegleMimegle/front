@@ -1,12 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
+import { actionCreators as quizActions } from '../redux/modules/quiz'
+
 import Header from '../components/Header'
 import ModalWrapper from '../components/ModalWrapper'
 import ModalContainer from '../components/ModalContainer'
 import QuizIntroImage from '../styles/image/quiz_main_image2.gif'
 
 const QuizIntro = (props) => {
+  const dispatch = useDispatch()
+
   const [showModal, setShowModal] = React.useState(false)
   const [subject, setSubject] = React.useState('')
   const [y2000, setY2000] = React.useState(false)
@@ -47,7 +52,7 @@ const QuizIntro = (props) => {
       return
     } else {
       history.push(`/quiz/${subject}`)
-      // window.location.reload()
+      dispatch(quizActions.initAnswer())
     }
   }
 
@@ -59,9 +64,9 @@ const QuizIntro = (props) => {
           <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </ImageSection>
         <SubjectSection>
-          <div className="subject-question">
-            <p>어느 레벨 밈을</p>
-            <p>테스트하고 싶으신가요?</p>
+          <div style={{ padding: '15px 0 10px' }}>
+            <p className="subject-question">어느 레벨 밈을</p>
+            <p className="subject-question">테스트하고 싶으신가요?</p>
           </div>
           <div>
             <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="IMAGE" onClick={handleChangeSubjectY2000}>
@@ -120,8 +125,10 @@ const SubjectSection = styled.div`
   align-items: center;
   justify-content: center;
   .subject-question {
-    padding: 15px 0 10px;
     font-size: ${({ theme }) => theme.fontSizes.xxl};
+    font-family: 'YdestreetL';
+    font-style: normal;
+    font-weight: normal;
     text-align: center;
   }
   .subject-button {
@@ -132,6 +139,9 @@ const SubjectSection = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.black};
     text-align: left;
     font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-weight: 500;
   }
   .selected {
     transition: background-color 0.3s ease-in-out;
@@ -155,7 +165,9 @@ const ButtonSection = styled.div`
       padding: 0;
       border-radius: 20px;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
-      font-weight: 700;
+      font-family: 'YdestreetB';
+      font-style: normal;
+      font-weight: normal;
     }
   }
   .box1 {

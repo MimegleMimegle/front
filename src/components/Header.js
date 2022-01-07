@@ -19,9 +19,9 @@ const Header = ({ type, children, location, low, noBorder }) => {
     return (
       <>
         <NavHeader {...styles}>
-          <ul className="nav-list">
+          <ul style={{ height: '100%', display: 'flex', alignItems: 'end', justifyContent: 'center' }}>
             <li>
-              <div style={{ fontSize: '14px', fontWeight: '700', textAlign: 'center' }}>{location}</div>
+              <QuizLocation>{location}</QuizLocation>
             </li>
           </ul>
         </NavHeader>
@@ -181,9 +181,18 @@ const NavHeader = styled.nav`
 `
 
 const Location = styled.h2`
-  font-weight: 700;
   font-size: ${({ theme }) => theme.fontSizes.xxl};
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
   cursor: default;
+`
+const QuizLocation = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
 `
 
 export default Header
