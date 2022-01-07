@@ -39,10 +39,11 @@ const SearchPost = (props) => {
         console.log(response.data)
         setFilteredPosts(response.data.data)
         history.push({
-            pathname:'/post/search',
-            search:search,
-            filteredPosts:filteredPosts
+        pathname:'/post/search',
+        search:search,
+        filteredPosts:filteredPosts,
         })
+        
       })
       .catch((error) => {
         console.log('검색한 게시글 정보를 불러오는 데 문제가 발생했습니다.', error.response)
@@ -61,16 +62,19 @@ const SearchPost = (props) => {
         console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
       })
   }, [])
-
+//   ()=>history.push({
+//     pathname:'/post/search',
+//     search:search,
+//     })
   return (
     <>
       <Wrapper>
         <div>
           <div style={{ width: '100%', height:'50px', backgroundColor: '#e8e8e8', display: 'flex', alignItems: 'center' ,borderBottom:'1px solid black' }} >
-            <button onClick={clickSearch} style={{ height: '100%', padding: '0 16px 0 5px' }}>
+            <div onClick={clickSearch} style={{ height: '100%', padding: '0 16px 0 5px' }}>
               <GoSearch style={{ fontSize: '13px', margin: '18px 0 18px 18px' }} />
-            </button>
-            <input placeholder="검색어를 입력해주세요" type="text" onChange={handleSearch} style={{ width: '100%', border: 'none', backgroundColor: '#e8e8e8',}} />
+            </div>
+            <input placeholder="검색어를 입력해주세요" type="text" onKeyPress={(e)=>{if(e.key === "Enter"){clickSearch()}}} onChange={handleSearch} style={{ width: '100%', border: 'none', backgroundColor: '#e8e8e8',}} />
           </div>
           <div>
             {/* DB에서 불러온 HashTags list map */}
