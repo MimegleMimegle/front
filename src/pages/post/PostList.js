@@ -120,7 +120,7 @@ const AddbtnShadow = styled.div`
   width: 280px;
   height: 40px;
   top: 4px;
-  right: 42px;
+  right: 38px;
   background-color: white;
   border: 1px solid black;
   position: absolute;

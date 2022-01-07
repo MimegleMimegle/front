@@ -167,7 +167,9 @@ const QuizTitle = styled.div`
     text-align: center;
     line-height: 40px;
     font-size: ${({ theme }) => theme.fontSizes.xxl};
-    font-weight: 700;
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
     background-color: ${({ theme }) => theme.colors.yellow};
   }
 
@@ -228,7 +230,9 @@ const ButtonSection = styled.div`
       padding: 0;
       border-radius: 20px;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
-      font-weight: 700;
+      font-family: 'YdestreetB';
+      font-style: normal;
+      font-weight: normal;
       :disabled {
         background-color: ${({ theme }) => theme.colors.line};
         cursor: not-allowed;
