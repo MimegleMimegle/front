@@ -13,7 +13,7 @@ import {IoClose} from 'react-icons/io5'
 /********* 검색된 게시글 정보가 없을 때 보여줄 화면!! 모달이든 뭐든 띄워야함! *********/
 
 const SearchPost = (props) => {
-  const history = useHistory();
+  const history = useHistory();  
 
   const [hashTags, setHashTags] = React.useState([])
   const [search, setSearch] = React.useState('')
@@ -80,7 +80,7 @@ const SearchPost = (props) => {
             {/* DB에서 불러온 HashTags list map */}
             <RecommendHashTag style={{ fontSize: '14px', margin: '10px 0 3px 48px'}}>추천 해시태그</RecommendHashTag>
             {hashTags&&hashTags.map((hashtag, index) => {
-              return <HashTag key={index} hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} />
+              return <HashTag key={index} search={search }hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} />
             })}
           </div>
         </div>
@@ -91,7 +91,7 @@ const SearchPost = (props) => {
 }
 
 const Wrapper = styled.div`
-  width: 367px;
+  width: 375px;
   height: 100%;
   border-bottom: 1px solid black;
   background: white;

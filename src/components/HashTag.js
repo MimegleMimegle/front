@@ -7,9 +7,10 @@ import { boardApi } from '../shared/api'
 const HashTag = (props) => {
   const history = useHistory();
   const search = props.hashtag
+  console.log(props)
   const clickHashTag = () => {
     boardApi
-      .searchPost(props.hashtag)
+      .searchPost(search)
       .then((response) => {
         console.log(response.data)
         props.setFilteredPosts(response.data.data)

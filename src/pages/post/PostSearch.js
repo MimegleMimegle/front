@@ -90,7 +90,7 @@ const PostSearch = (props) => {
   return (
     <>
     <Header type="PostList" location="밈+글 커뮤니티">
-      <div onClick={()=> {history.goBack()}} 
+      <div onClick={()=> {history.push('/post')}} 
                style={{margin: "0 10px 0 0", display:"flex", alignItems:"center",cursor:"pointer"}}>
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
           <path d="M0 0h24v24H0V0z" fill="none"/>
