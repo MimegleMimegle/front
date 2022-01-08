@@ -74,17 +74,16 @@ const PostSearch = (props) => {
         console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
       })
 
-    
+      boardApi
+      .searchPost(props.match.params.search)
+      .then((response) => {
+        console.log(response.data)
+        setFilteredPosts(response.data.data)
+        setShow(false)
 
-    // boardApi
-    //   .searchPost(search)
-    //   .then((response) => {
-    //     console.log(response.data)
-    //     setFilteredPosts(response.data.data)
-    //   })
-    //   .catch((err) => {
-    //     console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
-    //   })
+      })
+      .catch((error) => {
+        console.log('검색한 게시글 정보를 불러오는 데 문제가 발생했습니다.', error.response)})
   }, [])
  
 
