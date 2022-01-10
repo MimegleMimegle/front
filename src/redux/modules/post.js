@@ -17,16 +17,17 @@ const DELETE_POST = 'DELETE_POST'
 const LOADING = 'LOADING'
 
 // /* action creator */
-const getPost = createAction(GET_POST, (post_list) => ({ post_list }))
+const getPost = createAction(GET_POST, (post_list, paging) => ({ post_list, paging }))
 const getOnePost = createAction(GET_ONE_POST, (post, boardId) => ({ post, boardId }))
 const addPost = createAction(ADD_POST, (post) => ({ post }))
-const editPost = createAction(EDIT_POST, (boardId,newPost) => ({ boardId, newPost }))
+const editPost = createAction(EDIT_POST, (boardId, _post) => ({ boardId, _post }))
 const deletePost = createAction(DELETE_POST, (boardId, post) => ({ boardId, post }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
 // /* initial state */
 const initialState = {
   list: [],
+  paging: { page: null, size: 10 },
   detail: false,
 }
 
@@ -44,18 +45,26 @@ const initalPost = {
 
 // /* middleware */
 
-const getPostsDB = () => {
+const getPostsDB = (page = null, size = null) => {
   return function (dispatch, getState, { history }) {
     boardApi
       .getPosts()
       .then((res) => {
         const post_list = res.data.data
-        dispatch(getPost(post_list))
+        let result = res.data.data.slice(page, size)
+        let paging = {
+          page: page + result.length + 1,
+          size: size + 10,
+        }
+        if (result.length === 0) {
+          dispatch(loading(false))
+          return
+        }
+        dispatch(getPost(post_list, paging, result))
       })
       .catch((err) => {
         console.log('게시판을 불러오기 문제 발생', err.response.data)
         console.log(err.response.status)
-        console.log(err.res.headers)
       })
   }
 }
@@ -75,7 +84,7 @@ const getOnePostDB = (boardId) => {
   }
 }
 
-const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
+const addPostDB = (title, content, uploadFile, hashTag_list) => {
   return async function (dispatch, getState, { history }) {
     const formData = new FormData()
     const post = {
@@ -88,10 +97,11 @@ const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
     formData.append('boardUploadRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
 
     await boardApi
-      .writePost(category, formData)
+      .writePost(formData)
       .then((response) => {
         const post = response.data.data
         dispatch(addPost(post))
+        console.log(post)
       })
       .then(() => {
         history.push('/post')
@@ -102,23 +112,29 @@ const addPostDB = (category, title, content, uploadFile, hashTag_list) => {
   }
 }
 
-const editPostDB = (boardId, uploadFile, newPost) => {
+const editPostDB = (boardId, hashTag_List, title, uploadFile, content) => {
   return async function (dispatch, getState, { history }) {
-    if(!boardId){
-      console.log('게시물의 정보가 없습니다.')
-      return
+    const formData = new FormData()
+    const post = {
+      title: title,
+      content: content,
+      hashTags: hashTag_List,
     }
-    await boardApi
-    .editPost(boardId, newPost)
-      .then(() => {
-        dispatch(editPost(boardId,newPost))
 
-        swal('', '게시글이 수정되었습니다.', 'success')
+    formData.append('thumbNail', uploadFile)
+    formData.append('boardUpdateRequestDto', new Blob([JSON.stringify(post)], { type: 'application/json' }))
+
+    await boardApi
+      .editPost(boardId, formData)
+      .then((response) => {
+        console.log(response.data)
+        const _post = { ...post, thumbNail: uploadFile }
+        dispatch(editPost(boardId, _post))
+
         history.push('/post')
       })
       .catch((err) => {
         console.log('게시글 수정하는데 문제 발생', err.response)
-        console.log(err.response.status)
       })
   }
 }
@@ -129,7 +145,7 @@ const delPostDB = (boardId) => {
       .deletePost(boardId)
       .then((res) => {
         console.log(res.data)
-        dispatch(deletePost(boardId));
+        dispatch(deletePost(boardId))
         history.push('/post')
       })
 
@@ -168,11 +184,11 @@ export default handleActions(
 
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
-        let index = draft.list.findIndex((l) => l.boardId === action.payload.boardId)
+        let index = draft.list.findIndex((p) => p.boardId === action.payload.boardId)
 
         draft.list[index] = {
           ...draft.list[index],
-          ...action.payload.new_post,
+          ...action.payload._post,
         }
       }),
     // [EDIT_POST] : (state, action) => produce(state, (draft) => {

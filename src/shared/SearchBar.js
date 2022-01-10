@@ -7,31 +7,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { dictApi } from '../shared/api'
 
-function SearchBar({ onAddKeyword }) {
+function SearchBar({ onAddKeyword }, props) {
   const dispatch = useDispatch()
 
   const [keyword, setKeyword] = useState('')
-  const [filteredPosts, setFilteredPosts] = React.useState([])
-  const [notFound, setNotFound] = React.useState(false)
 
-  const [pageSize, setPageSize] = useState(5)
+  const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
   const searchDictDB = async () => {
-    let response = await axios.get(`http://52.78.155.185/api/dict/search?q=${keyword}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`)
-    let searchTotalLength = await dictApi.tellMeTotalLengthSearch()
+    let response = await dictApi.searchDict(keyword, pageSize, currentPage)
+    let searchTotalLength = await dictApi.tellMeTotalLengthSearch(keyword)
 
     console.log(response.data.data)
-    console.log(totalCount)
-    setFilteredPosts(response.data.data)
+    console.log(searchTotalLength)
     setTotalCount(searchTotalLength.data.data)
-  }
-
-  const closeNotFountModal = () => {
-    setTimeout(() => {
-      setNotFound(false)
-    }, 2000)
   }
 
   const handleKeyword = (e) => {
@@ -44,7 +35,7 @@ function SearchBar({ onAddKeyword }) {
       onAddKeyword(keyword)
       setKeyword('')
       searchDictDB(keyword)
-      dispatch(history.push('/dict/search'))
+      history.push(`/dict/search/${keyword}`)
     }
   }
 
@@ -63,7 +54,7 @@ function SearchBar({ onAddKeyword }) {
 
   return (
     <Container>
-      <InputContainer>
+      <InputContainer id="SearchBar">
         <Input placeholder="🔍 검색어를 입력해주세요" active={hasKeyword} value={keyword} onChange={handleKeyword} onKeyDown={handleEnter} />
         {keyword && <RemoveIcon onClick={handleClearKeyword} />}
       </InputContainer>
@@ -81,8 +72,8 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   /* border-bottom: 1px solid grey; */
-  background-color: #fff;
-  padding: 20px 60px;
+  background-color: white;
+  padding: 0px 0px;
   box-sizing: border-box;
 `
 
@@ -108,19 +99,19 @@ const InputContainer = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  background-color: #fff;
+  background-color: rgba(229, 229, 229, 1);
   font-weight: 500;
   font-size: 14px;
   box-sizing: border-box;
-  border: 1px solid gray;
-  border-radius: 30px;
-  padding-left: 20px;
-
+  border: none;
+  border-bottom: 1px solid black;
+  /* border-radius: 30px; */
+  padding: 15px 0 15px 20px;
   ${({ active }) =>
     active &&
     `
     padding-right: 30px; 
-  `}
+  `};
 `
 
 export default SearchBar

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import History from '../shared/SearchHistory'
 import SearchBar from '../shared/SearchBar'
 
-function SearchPage() {
+function SearchPage(props) {
   const dispatch = useDispatch()
   //string은 map을 사용 할 수 없기때문에 object 형태로 변환 시키기 위해 parsing을 해줘야함
   const [keywords, setKeywords] = useState(JSON.parse(localStorage.getItem('keywords') || '[]'))
@@ -41,11 +42,24 @@ function SearchPage() {
 
   //자식 컴포넌트에서 setState를 못하기때문에 그거를 바꿔주는 함수를 선언후 그 함수를 넘겨야함
   return (
-    <div>
+    <SearchBarPage>
       <SearchBar onAddKeyword={handleAddKeyword}></SearchBar>
       <History keywords={keywords} onClearKeywords={handleClearKeywords} onRemoveKeyword={handleRemoveKeyword} />
-    </div>
+    </SearchBarPage>
   )
 }
+
+const SearchBarPage = styled.div`
+  width: 100%;
+  height: fit-content;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-bottom: 0.5px solid rgba(229, 229, 229, 1);
+  position: relative;
+  overflow: auto;
+
+  z-index: 15;
+`
 
 export default SearchPage

@@ -1,62 +1,167 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai'
-import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
-import HashTag from './HashTag'
+import '../index.css'
+import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비활성_18dp.svg'
+import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
+import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
 
 const PostCard = ({ post }) => {
   const history = useHistory()
 
-  console.log(post)
   const onC = () => {
     history.push(`/post/detail/${post.boardId}`)
   }
 
+  const hour = post.createdAt.split('T')[1].split('.')[0]
+
   return (
     <>
-      <Container postList={post} onClick={onC}>
-        <p>{post ? post.writer : null}</p>
-        <p>{post ? post.username : null}</p>
-        <PostBody>
-          <img className="uploadimg" src={post ? post.thumbNail : null} alt="" />
-          <div className="listtitle">
-            <h4>{post ? post.title : null}</h4>
-            <p>{post ? post.content : null}</p>
-          </div>
-          {post
-            ? post.hashTags.map((hashTag, index) => {
-                return <p key={index}>#{hashTag}</p>
-              })
-            : null}
-        </PostBody>
-        <p>{post ? post.createdAt : null}</p>
-        <AiOutlineEye /> {post ? post.views : null} <AiOutlineHeart />
-        {post ? post.likeCnt : null}
-      </Container>
+      <FullWrap>
+        <Wrap postList={post} onClick={onC}>
+          <UserInfo>
+            <UserImg src={post ? post.profileImageUrl : null} alt="" />
+            <div className="userinfo">
+              <Writer>{post ? post.writer : null}</Writer>
+              <div className="createdate">
+                <CreatedAt>{post ? post.createdAt.split('T')[0] : null}</CreatedAt>
+                <CreatedAt>{post ? hour.split(':')[0] + ':' + hour.split(':')[1] : null}</CreatedAt>
+              </div>
+            </div>
+          </UserInfo>
+          <Content>
+            <Title>{post ? post.title : null}</Title>
+            <HashTagHere>
+              {post.hashTags &&
+                post.hashTags.map((hashTag, index) => {
+                  return <pre key={index}> #{hashTag}</pre>
+                })}
+            </HashTagHere>
+          </Content>
+          <Icon>
+            <IconBox>
+              <ViewIcon />
+              <Number>{post ? post.views : null}</Number>
+            </IconBox>
+            <IconBox>
+              <EmptyHeartIcon />
+              <Number>{post ? post.likeCnt : null}</Number>
+            </IconBox>
+            <IconBox>
+              <CommentIcon />
+              <Number>{post ? post.commentCnt : null}</Number>
+            </IconBox>
+          </Icon>
+        </Wrap>
+        {post.thumbNail ? <ThumbNail className="uploadimg" src={post && post.thumbNail} alt="" /> : null}
+      </FullWrap>
     </>
   )
 }
 
 export default PostCard
 
-const Container = styled.div`
-  background: red;
-`
-
-const PostBody = styled.div`
-  width: 100%;
-  height: auto;
-  padding: 8px;
+const FullWrap = styled.div`
+  height: 133px;
+  padding: 16px;
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
+  border-bottom: 1px solid #e5e5e5;
+`
 
-  .listtitle {
-    margin: 5px 10px;
+const Wrap = styled.div`
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+`
+
+const UserInfo = styled.div`
+  display: flex;
+  height: 30px;
+  margin: 0 0 0 3px;
+  .createdate {
+    display: flex;
   }
-  .uploadimg {
-    width: 70px;
-    height: 70px;
-  }
+`
+
+const UserImg = styled.img`
+  margin: 0 8px 0 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e5e5e5;
+  box-sizing: border-box;
+  border-radius: 150px;
+`
+const Writer = styled.p`
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 4px 0;
+`
+
+const CreatedAt = styled.div`
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 9px;
+  line-height: 11px;
+  margin: 0 3px 0 0;
+`
+
+const Content = styled.div`
+  margin: 10px 0 0 0;
+  cursor: pointer;
+  height: 30px;
+  width: 250px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  display: flex;
+  flex-direction: column;
+`
+const Title = styled.div`
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  margin: 0 0 0 3px;
+`
+
+const HashTagHere = styled.div`
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: normal;
+  display: flex;
+  font-size: 12px;
+  line-height: 20px;
+`
+
+const Icon = styled.div`
+  display: flex;
+  padding: 8px 0;
+`
+
+const Number = styled.p`
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  margin: 0 9.5px 0 5px;
+`
+
+const ThumbNail = styled.img`
+  width: 60px;
+  height: 60px;
+  margin: 27px 0 0 0;
+`
+const IconBox = styled.div`
+  display: flex;
+  align-items: center;
 `

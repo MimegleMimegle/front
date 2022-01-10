@@ -1,6 +1,35 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetL.otf') format('truetype'), url('../fonts/YdestreetL.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/Pretendard-Medium.woff') format('woff'), url('../fonts/Pretendard-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Pretendard-Bold.woff') format('woff'), url('../fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
 .DictCardWritePageLayout {
-  height: 550px;
-  border: 3px solid green;
+  width: 100%;
+  height: fit-content;
+  /* border: 3px solid green; */
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -12,116 +41,259 @@
   display: none;
 }
 
-.DictCardPreviewGuideText {
-  margin: 0 0 0 30px;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.DictCardPreviewSection {
-  /* position: absolute; */
-}
-
-.WordCard1 {
-  border: 1px solid black;
-  border-radius: 0 0 0 0;
-  margin: 5px 0 0 20px;
-  background-color: white;
-  width: 20rem;
-  height: 10rem;
-  font-size: 15px;
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-
-  z-index: 2;
-}
-
-.DictCardPreviewTitle {
-  font-size: 18px;
-  margin: 0 0 20px 20px;
-}
-
-.DictCardPreviewSummary {
-  font-size: 18px;
-  margin: 0 0 0 20px;
-}
-
 .DictCardInputSection {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 300px;
+  width: 100%;
+  height: fit-content;
   font-size: 16px;
   font-weight: bold;
-  margin-left: 50px;
-  margin-top: 50px;
+}
+
+.DictCardInputTitleContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  padding: 15px 0 15px 20px;
+}
+
+.DictCardInputTitleGuideText {
+  width: 60px;
+  height: 25px;
+  display: flex;
+  align-self: flex-start;
+  padding-top: 3px;
+
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .DictCardInputTitle {
-  width: 80%;
-  margin: 0 0 30px 0;
+  width: 200px;
+  height: 25px;
+  word-wrap: break-word;
+  word-break: keep-all;
+  display: flex;
+  align-self: flex-start;
+  padding-top: 12px;
+  margin: 0 0 0 0;
   border: none;
-  border-bottom: 1px solid black;
-  font-size: 16px;
+  font-size: 12px;
   background-color: transparent;
+  overflow: hidden;
+  resize: horizontal;
+
+  color: -internal-light-dark(black, white);
+}
+
+.DictCardInputTitleDoubleCheck {
+  width: fit-content;
+  height: 25px;
+  padding-top: 3px;
+  text-decoration-line: underline;
+  background-color: transparent;
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 700;
+}
+.DictCardInputTitleDoubleCheck:hover {
+  cursor: pointer;
+}
+
+.DictCardInputSummaryContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  padding: 20px 0 20px 20px;
+}
+
+.DictCardInputSummaryGuideText {
+  width: 60px;
+  height: 25px;
+  display: flex;
+  align-self: flex-start;
+  padding-top: 5px;
+
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .DictCardInputSummary {
-  width: 80%;
-  margin: 0 0 30px 0;
+  width: 265px;
+  height: fit-content;
+  word-wrap: break-word;
+  word-break: keep-all;
+  display: flex;
+  align-self: center;
+  padding-top: 8px;
+  margin: 0 0 0 0;
   border: none;
-  border-bottom: 1px solid black;
-  font-size: 16px;
+  font-size: 12px;
   background-color: transparent;
+  min-height: 5rem;
+  overflow-y: hidden;
   resize: none;
-  overflow: auto;
+
+  color: -internal-light-dark(black, white);
+}
+
+.DictCardInputContentContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  padding: 20px 0 20px 20px;
+}
+
+.DictCardInputContentGuideText {
+  width: 60px;
+  height: 25px;
+  display: flex;
+  align-self: flex-start;
+  padding-top: 5px;
+
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .DictCardInputContent {
-  width: 80%;
-  margin: 0 0 30px 0;
+  width: 265px;
+  height: fit-content;
+  word-wrap: break-word;
+  word-break: keep-all;
+  display: flex;
+  align-self: center;
+  padding-top: 8px;
+  margin: 0 0 0 0;
   border: none;
-  border-bottom: 1px solid black;
-  font-size: 16px;
+  font-size: 12px;
   background-color: transparent;
+  min-height: 5rem;
+  overflow-y: hidden;
   resize: none;
-  overflow: auto;
+
+  color: -internal-light-dark(black, white);
 }
 
-.DictCardSubmitSection {
+.DictCardTemporaryOrSubmitButton {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 50px;
+  justify-content: space-evenly;
+  margin: 30px 0 0 0;
+  padding: 10px 30px 50px 30px;
 }
 
-.DictCardSubmitButton1 {
-  width: 100px;
-  height: 40px;
-  background-color: white;
+.DictCardTemporaryButton {
+  position: relative;
+}
+.DictCardTemporaryButton:hover {
+  cursor: pointer;
+}
+
+.DictCardTemporaryButton_1 {
+  width: 60px;
+  height: 26px;
   border: 1px solid black;
+  background-color: rgba(196, 196, 196, 1);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
 
   z-index: 2;
 }
 
-.DictCardSubmitButton1:active {
-  margin: 15px -8px 0 0;
-  transition: 0.1s ease;
-}
-
-.DictCardSubmitButton2 {
-  background-color: #faea59;
+.DictCardTemporaryButton_2 {
   border: 1px solid black;
-  width: 100px;
-  height: 40px;
-  margin: 15px 0 0 -92px;
+  top: 4px;
+  left: 4px;
+  background-color: white;
+  width: 60px;
+  height: 26px;
+  position: absolute;
 
   z-index: -1;
+}
+
+.DictCardSubmitButton {
+  position: relative;
+}
+.DictCardSubmitButton:hover {
+  cursor: pointer;
+}
+
+.DictCardSubmitButton_1 {
+  /* width: 60px;
+  height: 26px; */
+  width: 100px;
+  height: 40px;
+  border: 1px solid black;
+  background-color: rgba(0, 160, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 16px;
+  font-weight: normal;
+
+  z-index: 2;
+}
+
+.DictCardSubmitButton_2 {
+  border: 1px solid black;
+  top: 4px;
+  left: 4px;
+  background-color: white;
+  /* width: 60px;
+  height: 26px; */
+  width: 100px;
+  height: 40px;
+  border: 1px solid black;
+  position: absolute;
+
+  z-index: -1;
+}
+
+.DictWriteMoveButton,
+.DictListMoveButton {
+  font-size: 14px;
+  color: #00a0ff;
+}
+
+/* sweet alret */
+.swal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.swal-modal {
+  position: relative;
+  width: 250px;
+  height: fit-content;
+}
+
+.swal-title {
+  font-size: 14px;
 }

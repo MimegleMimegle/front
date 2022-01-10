@@ -13,7 +13,7 @@ const HashTag = (props) => {
       })
       .catch((error) => {
         console.log('해시태그 관련 게시글 정보를 불러오는 데 문제가 발생했습니다.', error.response)
-        if (error.response.status === 404) {
+        if (error.response.status === 404 || 400) {
           props.setNotFound(true)
           props.closeNotFountModal()
         }
@@ -32,14 +32,13 @@ HashTag.defaultProps = {
 }
 
 const HashTagButton = styled.button`
-  display: inline-block;
+  display: flex;
+  align-items: center;  
   font-size: 14px;
-  /* background-color: #fff8b6; */
-  border: 1px solid #111;
-  margin: 0px 10px 10px 0px;
+  margin: 12px 0px 12px 48px;
   padding: 0 10px;
-  border-radius: 20px;
-  line-height: 27px;
+  line-height: 17px;  
+
 `
 
 export default HashTag

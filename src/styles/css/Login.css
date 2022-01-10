@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
 .LoginLayout {
   width: 100%;
   max-width: 400px;
@@ -11,9 +18,9 @@
   right: 0;
   top: 0;
   bottom: 0;
-  margin: 15px 0 0 0;
+  padding: 10px 16px 0;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -23,8 +30,8 @@
 
 .MultiInputBoxLayout_login {
   border: 1px solid black;
-  width: 328px;
-  height: 220px;
+  width: 100%;
+  height: 240px;
 }
 
 .LoginOrJoinButtons_login {
@@ -37,8 +44,6 @@
 }
 
 .LoginButton_login {
-  font-size: 16px;
-  font-weight: 500;
   width: 100%;
   height: 100%;
   border-left: 0.5px solid black;
@@ -47,11 +52,15 @@
   align-items: center;
   padding: 10px;
   background-color: #ffe330;
+  cursor: pointer;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 .JoinButton_login {
-  font-size: 16px;
-  font-weight: 500;
   width: 100%;
   height: 100%;
   /* border-left: 0.5px solid black; */
@@ -60,29 +69,55 @@
   align-items: center;
   padding: 10px;
   background-color: none;
+  cursor: pointer;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 .LoginOrJoinInputs_login {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 280px;
+  padding: 0 30px;
+}
+
+.IdInputLabel {
+  font-size: 14px;
+  display: flex;
+  align-self: flex-start;
+  margin-top: 10px;
 }
 
 .IdInputBox {
   border: 0.5px solid black;
-  width: 267px;
+  width: 100%;
   height: 36px;
-  margin: 30px 0 10px 0;
+  margin: 0px 0 5px 0;
   padding-left: 10px;
+
+  font-size: 12px;
+}
+
+.PwdInputLabel {
+  font-size: 14px;
+  display: flex;
+  align-self: flex-start;
+  margin-top: 5px;
 }
 
 .PwdInputBox {
   border: 0.5px solid black;
-  width: 267px;
+  width: 100%;
   height: 36px;
-  margin: 20px 0 15px 0;
+  margin: 0px 0 15px 0;
   padding-left: 10px;
+
+  font-size: 12px;
 }
 
 .MemegleButton_LoginSubmit {
@@ -94,16 +129,19 @@
 .Login1 {
   border: 1px solid black;
   border-radius: 0 0 0 0;
-  top: 77px;
-  left: -55px;
+  top: 175px;
+  left: -50px;
   background-color: #00a0ff;
   width: 100px;
   height: 40px;
-  font-size: 15px;
-  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 16px;
+  font-weight: normal;
 
   z-index: 2;
 }
@@ -111,8 +149,8 @@
   border: 1px solid black;
   border-radius: 0 0 0 0;
   background-color: white;
-  top: 81px;
-  left: -51px;
+  top: 179px;
+  left: -46px;
   width: 100px;
   height: 40px;
   font-size: 15px;
@@ -126,7 +164,7 @@
   justify-content: center;
   color: rgba(0, 0, 0, 0.4);
   font-size: 14px;
-  margin: 70px 0 20px 0;
+  margin: 55px 0 20px 0;
 }
 
 .SocialLoginBtns {
@@ -160,4 +198,10 @@
 }
 .NaverLoginBtn:hover {
   cursor: pointer;
+}
+
+/* sweetalret */
+.swal-modal {
+  width: 45%;
+  word-break: keep-all;
 }

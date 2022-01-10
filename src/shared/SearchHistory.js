@@ -3,11 +3,10 @@ import styled from 'styled-components'
 
 function History({ keywords, onRemoveKeyword, onClearKeywords }) {
   console.log('keyword', keywords)
+
   if (keywords.length === 0) {
     return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>
   }
-
-  // const recommendKeyword = dispatch()
 
   return (
     <HistoryContainer>
@@ -32,18 +31,14 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
             </KeywordContainer>
           )
         })}
-        {/* <hr />
-        <RecommendKeyWordSection>
-          <RecommendKeyWordTitle>추천 검색어</RecommendKeyWordTitle>
-          <RecommendKeyWordList>ㅈㅂㅈㅇ</RecommendKeyWordList>
-        </RecommendKeyWordSection> */}
       </ListContainer>
     </HistoryContainer>
   )
 }
 
 const HistoryContainer = styled.div`
-  padding: 18px;
+  padding: 10px 20px 10px 20px;
+  width: 100%;
 `
 const HeaderContainer = styled.div`
   overflow: hidden;
@@ -81,8 +76,7 @@ const KeywordContainer = styled.li`
 
 const RemoveButton = styled.button`
   float: right;
-  color: #0cde8b;
-  border: 1px solid #0cde8b;
+  color: #a7a7a7;
   padding: 3px 5px;
   border-radius: 15px;
 `

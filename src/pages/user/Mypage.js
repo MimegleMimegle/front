@@ -1,39 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
-import { history } from '../../redux/ConfigureStore'
-
 import '../../styles/css/Mypage.css'
 
+import Header from '../../components/Header'
+import EditProfile from '../../components/mypage/EditProfile'
 import PostCard from '../../components/PostCard'
 import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
-import ModalWrapper from '../../components/ModalWrapper'
+import OneDictionaryCard from '../../components/OneDictionaryCard'
 
 import { AiOutlineEdit } from 'react-icons/ai'
 
-const Mypage = ({ profileImgUrl }) => {
+const Mypage = (props) => {
   const dispatch = useDispatch()
 
-  const userId = localStorage.getItem('id')
-
-  const fileInput = React.useRef('')
-
   const [showModal, setShowModal] = React.useState(false)
-  const [imageFile, setImageFile] = React.useState(null)
-  const [nickname, setNickname] = React.useState('')
-  const [isNickname, setIsNickname] = React.useState(false)
-  const [isNicknameChecked, setIsNicknameChecked] = React.useState(false)
-
   const [showDictionary, setShowDictionary] = React.useState(true)
   const [showBoard, setShowBoard] = React.useState(false)
-  const [showPhoto, setShowPhoto] = React.useState(false)
+  const [showImage, setShowImage] = React.useState(false)
 
-  const user_info = useSelector((state) => state.mypage.user_info)
+  const my = useSelector((state) => state.mypage.myPageData)
+  const myMemeDictList = my && my.dict
+  const myMemePostList = my && my.postBoards.filter((post) => post.category === 'FREEBOARD')
+  const myMemeImageList = my && my.postBoards.filter((post) => post.category === 'IMAGEBOARD')
 
-  const editProfile = () => {
+  const handleEditProfile = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowModal(true)
   }
 
@@ -43,108 +37,56 @@ const Mypage = ({ profileImgUrl }) => {
     }
   })
 
-  const handleChangeFile = (e) => {
-    setImageFile(e.target.files)
-    let reader = new FileReader()
-    reader.readAsDataURL(e.target.files[0])
-
-    reader.onload = () => {
-      const file = reader.result
-
-      if (file) {
-        let fileInfo = file.toString()
-        setImageFile(fileInfo)
-      }
-    }
-  }
-
-  const handleChangeNickname = (e) => {
-    const nicknameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/
-    const currentNickname = e.target.value
-    setNickname(currentNickname)
-    if (!nicknameRegExp.test(currentNickname)) {
-      setIsNickname(false)
-    } else {
-      setIsNickname(true)
-    }
-  }
-
-  const checkNickname = async () => {
-    await userApi
-      .checkNickname(nickname)
-      .then((response) => {
-        console.log(response.data)
-        if (response.data.result === true) {
-          window.alert('사용 가능한 닉네임입니다.')
-          setIsNicknameChecked(true)
-        } else {
-          window.alert('사용 중인 닉네임입니다.')
-          setIsNicknameChecked(false)
-        }
-      })
-      .catch((error) => {
-        console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
-      })
-  }
-
-  const _editProfile = async () => {
-    if (imageFile) {
-      const uploadFile = fileInput.current.files[0]
-      dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
-    }
-    if (nickname && isNickname && isNicknameChecked) {
-      dispatch(mypageActions.editNicknameDB(userId, nickname))
-    } else {
-      window.alert('닉네임을 확인해주세요!')
-    }
-    setShowModal(false)
-    setImageFile(null)
-    setNickname('')
-    setIsNickname(false)
-    setIsNicknameChecked(false)
-  }
-
-  const handleShowDictionary = () => {
+  const handleShowDictionary = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowDictionary(true)
     setShowBoard(false)
-    setShowPhoto(false)
+    setShowImage(false)
   }
-  const handleShowBoard = () => {
+  const handleShowBoard = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowDictionary(false)
     setShowBoard(true)
-    setShowPhoto(false)
+    setShowImage(false)
   }
-  const handleShowPhoto = () => {
+  const handleShowPhoto = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowDictionary(false)
     setShowBoard(false)
-    setShowPhoto(true)
+    setShowImage(true)
   }
 
   React.useEffect(() => {
+    // if (my == null) {
     dispatch(mypageActions.getUserInfoDB())
-  }, [dispatch, setShowDictionary, setShowBoard, setShowPhoto])
+    // }
+  }, [])
 
   return (
     <>
+      <Header type="MyPage" location="마이페이지"></Header>
       <Wrapper>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>
           <UserProfile>
-            <ProfileImage src={profileImgUrl} />
+            <ProfileImage src={my && my.profileImageUrl} />
             <div className="profile-info box-1">
               <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className="user-nickname">nickname</div>
-                <button onClick={editProfile}>
-                  <AiOutlineEdit fontSize="20px" />
+                <div className="user-nickname">{my && my.nickname}</div>
+                <button onClick={handleEditProfile}>
+                  <AiOutlineEdit fontSize="22px" />
                 </button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className="user-activity-info">
                   <div className="user-activity-info-subject">단어장</div>
-                  <div className="user-activity-info-count">35</div>
+                  <div className="user-activity-info-count">{my && my.dictCount}</div>
                 </div>
                 <div className="user-activity-info">
                   <div className="user-activity-info-subject">게시글</div>
-                  <div className="user-activity-info-count">2</div>
+                  <div className="user-activity-info-count">{my && my.postCount}</div>
                 </div>
               </div>
             </div>
@@ -158,106 +100,39 @@ const Mypage = ({ profileImgUrl }) => {
             <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
               밈글
             </button>
-            <button className={`filter-button ${showPhoto ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
+            <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
               짤방
             </button>
           </Filter>
           <UserActivity>
             {/* Dictionary */}
-            {showDictionary && <div>내가 등록한 단어</div>}
+            {showDictionary && myMemeDictList !== null
+              ? myMemeDictList.map((dict) => {
+                  return <OneDictionaryCard key={dict.dictId} dict={dict} />
+                })
+              : null}
             {/* Board */}
-            {showBoard && <div>내가 작성한 밈글</div>}
+            {showBoard && myMemePostList.length > 0
+              ? myMemePostList.map((post) => {
+                  return <PostCard key={post.boardId} post={post} />
+                })
+              : null}
             {/* Photo */}
-            {showPhoto && (
+            {showImage && (
               <MyImageList>
-                <MyPageOneImageCard />
-                <MyPageOneImageCard />
-                <MyPageOneImageCard />
-                <MyPageOneImageCard />
-                <MyPageOneImageCard />
+                {myMemeImageList.length > 0
+                  ? myMemeImageList.map((image) => {
+                      return <MyPageOneImageCard key={image.boardId} image={image} />
+                    })
+                  : null}
               </MyImageList>
             )}
           </UserActivity>
         </div>
-        {showModal && (
-          <ModalWrapper visible={true}>
-            <ModalContainer>
-              <ModalBody>
-                <div>
-                  <ProfileImagePreview src={imageFile ? imageFile : profileImgUrl} />
-                </div>
-                <input type="file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg" />
-                <div>
-                  <input type="text" onChange={handleChangeNickname} />
-                  <button onClick={checkNickname}>중복확인</button>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <button
-                  className="btn cancel-btn"
-                  onClick={() => {
-                    setShowModal(false)
-                  }}
-                >
-                  취소
-                </button>
-                <button className="btn upload-btn" onClick={_editProfile}>
-                  프로필 변경
-                </button>
-              </ModalFooter>
-            </ModalContainer>
-          </ModalWrapper>
-        )}
+        {showModal && <EditProfile showModal={showModal} setShowModal={setShowModal} my={my} />}
       </Wrapper>
-      {/* <div className="MypageLayout">
-        <div className="UserProfileBox">
-          <div className="UserProfileImage" />
-          <div className="userProfileNameTag">
-            <text className="UserProfileName">Username</text>
-            <div className="VerticalLine" />
-            <text className="UserProfileAge">20대</text>
-          </div>
-          <div className="UserActivityInfo">
-            <div className="UserMyDictTag">
-              <text className="UserMyDict">단어</text>
-              <text className="UserMyDictCount">5개</text>
-            </div>
-            <div className="UserMyPostTag">
-              <text className="UserMyPost">게시물</text>
-              <text className="UserMyPostCount">10개</text>
-            </div>
-            <div className="UserGetMyLikeTag">
-              <text className="UserGetMyLike">좋아요</text>
-              <text className="USerGetMyLikeCount">3개</text>
-            </div>
-          </div>
-        </div>
-        <div className="UserMyPostList">
-          <div className="UserMyPostListButton1">전체</div>
-          <div className="UserMyPostListButton2">최신순</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-        <div className="UserMyPostListCard">
-          <div>어쩔티비 저쩔티비</div>
-        </div>
-      </div> */}
     </>
   )
-}
-
-Mypage.defaultProps = {
-  profileImgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXdd3u5NqCQXagF3DlT5PqENDPrUx_Dy4BNF0l3v44cFnSOnrIU1JJXnCYtqovHd7lVY8&usqp=CAU',
 }
 
 const Wrapper = styled.div`
@@ -287,41 +162,47 @@ const UserProfile = styled.div`
     width: 90%;
     max-height: 150px;
     height: 100%;
-    border: 1px solid #111;
+    border: 1px solid ${({ theme }) => theme.colors.black};
     position: absolute;
 
     .user-nickname {
       padding: 0 5px;
-      font-size: 16px;
+      font-size: ${({ theme }) => theme.fontSizes.xl};
+      font-family: 'Pretendard Variable';
+      font-style: normal;
       font-weight: 700;
     }
 
     .user-activity-info {
-      padding: 0 20px;
+      padding: 5px 20px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       .user-activity-info-subject {
-        font-size: 16px;
+        font-size: ${({ theme }) => theme.fontSizes.xl};
+        font-family: 'YdestreetL';
+        font-style: normal;
+        font-weight: normal;
       }
       .user-activity-info-count {
-        font-size: 14px;
+        padding-top: 2px;
+        font-size: ${({ theme }) => theme.fontSizes.lg};
       }
     }
   }
   .box-1 {
     top: 0;
-    left: 40%;
-    transform: translateX(-40%);
-    background-color: #fff;
+    left: 41%;
+    transform: translateX(-41%);
+    background-color: ${({ theme }) => theme.colors.white};
     z-index: 500;
   }
   .box-2 {
     left: 60%;
     transform: translateX(-60%);
     top: 7px;
-    background-color: #fff27b;
+    background-color: ${({ theme }) => theme.colors.yellow};
   }
 `
 
@@ -329,13 +210,13 @@ const ProfileImage = styled.div`
   position: absolute;
   width: 80px;
   height: 80px;
-  border: 1px solid #111;
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 40px;
   top: -40px;
   left: 49%;
   transform: translateX(-49%);
   z-index: 999;
-  /* background-color: #fff; */
+  background-color: ${({ theme }) => theme.colors.white};
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
@@ -346,16 +227,18 @@ const Filter = styled.div`
   padding: 40px 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  border-bottom: 1px solid #c4c4c4;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.line};
 
   .filter-button {
-    font-size: 16px;
-    padding: 0;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    color: ${({ theme }) => theme.colors.grey};
+    padding: 0 0 10px;
     border-bottom: 2px solid transparent;
   }
   .filter-button-active {
     transition: all 0.2s ease-in-out;
-    border-bottom: 2px solid #c4c4c4;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.black};
   }
 `
 
@@ -366,63 +249,10 @@ const UserActivity = styled.div`
 
 const MyImageList = styled.div`
   width: 100%;
-  padding: 0 20px;
+  padding: 0 16px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 16px;
 `
 
-const ModalContainer = styled.div`
-  width: 70%;
-  height: 300px;
-  background-color: #fff;
-  /* border-radius: 10px; */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const ModalBody = styled.div`
-  width: 100%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-
-const ProfileImagePreview = styled.div`
-  width: 80px;
-  height: 80px;
-  /* border: 1px solid #111; */
-  border-radius: 40px;
-  background-size: cover;
-  background-image: url('${(props) => props.src}');
-  background-position: center;
-`
-
-const ModalFooter = styled.div`
-  width: 100%;
-  height: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .btn {
-    height: 100%;
-  }
-
-  .cancel-btn {
-    width: 35%;
-    background-color: #e8e8e8;
-  }
-  .upload-btn {
-    width: 65%;
-    background-color: #faea59;
-  }
-`
 export default Mypage
