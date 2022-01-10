@@ -1,25 +1,26 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { likeApi } from '../shared/api'
 import { useHistory } from 'react-router'
 import '../index.css'
 import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비활성_18dp.svg'
 import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
-import { likeApi } from '../shared/api'
 
 
 const PostCard = ({ post }) => {
   const history = useHistory()
-  const boardId = post.boardId
 
   const onC = () => {
-    history.push(`/post/detail/${post.boardId}`)
+    history.push(`/post/detail/${post && post.boardId}`)
   }
   const [likeCount, setLikeCount] = useState(post.likeCnt)
   const [isLiked, setIsLiked] = useState(post.isLike)
+
   const hour = post.createdAt.split('T')[1].split('.')[0]
-  console.log(isLiked)
+
+
   const handleClickLike = async (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -63,7 +64,7 @@ const PostCard = ({ post }) => {
             </div>
           </UserInfo>
           <Content>
-            <Title>{post ? post.title : null}</Title>
+            <Title>{post && post.title}</Title>
             <HashTagHere>
               {post.hashTags &&
                 post.hashTags.map((hashTag, index) => {
@@ -74,15 +75,15 @@ const PostCard = ({ post }) => {
           <Icon>
             <IconBox>
               <ViewIcon />
-              <Number>{post ? post.views : null}</Number>
+              <Number>{post && post.views }</Number>
             </IconBox>
             <IconBox>
-              {isLiked? < FullHeartIcon IcononClick={handleClickLike}/> :< EmptyHeartIcon onClick={handleClickLike}/>}
+              {isLiked? < FullHeartIcon onClick={handleClickLike}/> :< EmptyHeartIcon onClick={handleClickLike}/>}
               <Number className="like-count">{likeCount}</Number>
             </IconBox>
             <IconBox>
               <CommentIcon />
-              <Number>{post ? post.commentCnt : null}</Number>
+              <Number>{post&&post.commentCnt}</Number>
             </IconBox>
           </Icon>
         </Wrap>

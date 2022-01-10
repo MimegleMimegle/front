@@ -23,10 +23,7 @@ const PostList = (props) => {
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [show, setShow] = useState(false)
-
-  const postList = useSelector((state) => state.post.list) // state는 리덕스 스토어의 전체 데이터
-  console.log(postList)
-
+  
   useEffect(() => {
     getPostListDB()
     // dispatch(postActions.getPostsDB())
@@ -44,8 +41,6 @@ const PostList = (props) => {
   const searchClick = () => {
     show ? setShow(false) : setShow(true)
   }
-
-  console.log(show)
 
   return (
     <>

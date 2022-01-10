@@ -66,6 +66,7 @@ const PostDetail = (props) => {
           console.log(response.data)
           setIsLiked(false)
           setLikeCount(likeCount - 1)
+
         })
         .catch((error) => {
           console.log('이미지 좋아요 취소 문제 발생', error.response)
