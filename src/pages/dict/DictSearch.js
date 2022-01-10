@@ -25,10 +25,10 @@ const DictSearch = (props) => {
 
   const searchDictDB = async () => {
     let response = await dictApi.searchDict(keyword, pageSize, currentPage)
-    let searchTotalLength = await dictApi.tellMeTotalLengthSearch()
+    let searchTotalLength = await dictApi.tellMeTotalLengthSearch(keyword)
 
     setSearchResult(response.data.data)
-    setTotalCount(response.data.data.length)
+    setTotalCount(searchTotalLength.data.data)
 
     console.log(searchResult)
     console.log(totalCount)
