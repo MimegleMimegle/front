@@ -140,7 +140,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 0 40px;
+  padding: 74px 0 40px;
 `
 
 const PWHeader = styled.div`
@@ -270,8 +270,8 @@ const PWFooter = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.black};
   }
   .btn-1 {
-    left: 49.3%;
-    transform: translateX(-49.3%);
+    left: 50%;
+    transform: translateX(-50%);
     background-color: ${({ theme }) => theme.colors.blue};
     font-size: ${({ theme }) => theme.fontSizes.xl};
     font-weight: 700;
@@ -279,14 +279,14 @@ const PWFooter = styled.div`
     transition-duration: 0.3s;
     &:active {
       margin-top: 4px;
-      left: 50.7%;
-      transform: translateX(-50.7%);
+      left: calc(50%);
+      transform: translateX(calc(-50% + 4px));
     }
   }
   .btn-2 {
     top: 4px;
-    left: 50.7%;
-    transform: translateX(-50.7%);
+    left: calc(50%);
+    transform: translateX(calc(-50% + 4px));
   }
 `
 
