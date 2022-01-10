@@ -27,6 +27,8 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   scroll-behavior: smooth;
+
+  z-index: -1;
 }
 .DictLayout::-webkit-scrollbar {
   display: none;
@@ -36,6 +38,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2px 0px 0px;
 }
 .DictPageSearchButton:hover {
   cursor: pointer;

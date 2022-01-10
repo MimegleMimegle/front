@@ -59,7 +59,7 @@ const SearchBarPage = styled.div`
   position: relative;
   overflow: auto;
 
-  z-index: 10;
+  z-index: 15;
 `
 
 export default SearchPage
