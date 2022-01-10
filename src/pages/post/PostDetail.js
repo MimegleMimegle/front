@@ -185,7 +185,7 @@ const PostDetail = (props) => {
 }
 
 const PostWrap = styled.div`
-  padding: 0 16px;
+  padding: 78px 16px 16px;
 `
 
 const Profile = styled.div`
@@ -263,7 +263,6 @@ const HashTagHere = styled.div`
 const ViewLikeComment = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 0 16px;
   .icon-box {
     display: flex;
     align-items: center;

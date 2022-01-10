@@ -69,66 +69,64 @@ const Mypage = (props) => {
     <>
       <Header type="MyPage" location="마이페이지"></Header>
       <Wrapper>
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>
-          <UserProfile>
-            <ProfileImage src={my && my.profileImageUrl} />
-            <div className="profile-info box-1">
-              <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className="user-nickname">{my && my.nickname}</div>
-                <button onClick={handleEditProfile}>
-                  <AiOutlineEdit fontSize="22px" />
-                </button>
+        <UserProfile>
+          <ProfileImage src={my && my.profileImageUrl} />
+          <div className="profile-info box-1">
+            <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="user-nickname">{my && my.nickname}</div>
+              <button onClick={handleEditProfile}>
+                <AiOutlineEdit fontSize="22px" />
+              </button>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="user-activity-info">
+                <div className="user-activity-info-subject">단어장</div>
+                <div className="user-activity-info-count">{my && my.dictCount}</div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className="user-activity-info">
-                  <div className="user-activity-info-subject">단어장</div>
-                  <div className="user-activity-info-count">{my && my.dictCount}</div>
-                </div>
-                <div className="user-activity-info">
-                  <div className="user-activity-info-subject">게시글</div>
-                  <div className="user-activity-info-count">{my && my.postCount}</div>
-                </div>
+              <div className="user-activity-info">
+                <div className="user-activity-info-subject">게시글</div>
+                <div className="user-activity-info-count">{my && my.postCount}</div>
               </div>
             </div>
-            <div className="profile-info box-2"></div>
-          </UserProfile>
+          </div>
+          <div className="profile-info box-2"></div>
+        </UserProfile>
 
-          <Filter>
-            <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
-              단어장
-            </button>
-            <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
-              밈글
-            </button>
-            <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
-              짤방
-            </button>
-          </Filter>
-          <UserActivity>
-            {/* Dictionary */}
-            {showDictionary && myMemeDictList !== null
-              ? myMemeDictList.map((dict) => {
-                  return <OneDictionaryCard key={dict.dictId} dict={dict} />
-                })
-              : null}
-            {/* Board */}
-            {showBoard && myMemePostList.length > 0
-              ? myMemePostList.map((post) => {
-                  return <PostCard key={post.boardId} post={post} />
-                })
-              : null}
-            {/* Photo */}
-            {showImage && (
-              <MyImageList>
-                {myMemeImageList.length > 0
-                  ? myMemeImageList.map((image) => {
-                      return <MyPageOneImageCard key={image.boardId} image={image} />
-                    })
-                  : null}
-              </MyImageList>
-            )}
-          </UserActivity>
-        </div>
+        <Filter>
+          <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
+            단어장
+          </button>
+          <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
+            밈글
+          </button>
+          <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
+            짤방
+          </button>
+        </Filter>
+        <UserActivity>
+          {/* Dictionary */}
+          {showDictionary && myMemeDictList !== null
+            ? myMemeDictList.map((dict) => {
+                return <OneDictionaryCard key={dict.dictId} dict={dict} />
+              })
+            : null}
+          {/* Board */}
+          {showBoard && myMemePostList.length > 0
+            ? myMemePostList.map((post) => {
+                return <PostCard key={post.boardId} post={post} />
+              })
+            : null}
+          {/* Photo */}
+          {showImage && (
+            <MyImageList>
+              {myMemeImageList.length > 0
+                ? myMemeImageList.map((image) => {
+                    return <MyPageOneImageCard key={image.boardId} image={image} />
+                  })
+                : null}
+            </MyImageList>
+          )}
+        </UserActivity>
         {showModal && <EditProfile showModal={showModal} setShowModal={setShowModal} my={my} />}
       </Wrapper>
     </>
@@ -137,18 +135,21 @@ const Mypage = (props) => {
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 400px;
-  max-height: 545px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding: 74px 0 0;
 `
 
 const UserProfile = styled.div`
   position: relative;
-  max-width: 360px;
-  max-height: 150px;
+  max-height: 160px;
+  padding: 0 20px;
   width: 100%;
   height: 100%;
-  margin: 50px 0 0;
+  margin: 70px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -158,9 +159,8 @@ const UserProfile = styled.div`
   flex-basis: 360px;
 
   .profile-info {
-    /* max-width: 310px; */
-    width: 90%;
-    max-height: 150px;
+    width: calc(100% - 40px);
+    max-height: 160px;
     height: 100%;
     border: 1px solid ${({ theme }) => theme.colors.black};
     position: absolute;
@@ -174,7 +174,7 @@ const UserProfile = styled.div`
     }
 
     .user-activity-info {
-      padding: 5px 20px 0;
+      padding: 5px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -193,15 +193,15 @@ const UserProfile = styled.div`
   }
   .box-1 {
     top: 0;
-    left: 41%;
-    transform: translateX(-41%);
+    left: 50%;
+    transform: translateX(-50%);
     background-color: ${({ theme }) => theme.colors.white};
     z-index: 500;
   }
   .box-2 {
-    left: 60%;
-    transform: translateX(-60%);
-    top: 7px;
+    left: calc(50%);
+    transform: translateX(calc(-50% + 4px));
+    top: 4px;
     background-color: ${({ theme }) => theme.colors.yellow};
   }
 `
@@ -213,8 +213,8 @@ const ProfileImage = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 40px;
   top: -40px;
-  left: 49%;
-  transform: translateX(-49%);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 999;
   background-color: ${({ theme }) => theme.colors.white};
   background-size: cover;
@@ -249,7 +249,7 @@ const UserActivity = styled.div`
 
 const MyImageList = styled.div`
   width: 100%;
-  padding: 0 16px;
+  padding: 0 16px 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;

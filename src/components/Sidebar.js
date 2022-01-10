@@ -70,7 +70,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
-        <div style={{ width: '100%', padding: '48px 10px 16px 16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ width: '100%', padding: '90px 10px 16px 16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
             {isLogin ? (
               <>
@@ -99,7 +99,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
         {menu_list.map((menu, index) => {
           return <SidebarItem key={index} menu={menu} setShowSidebar={setShowSidebar} />
         })}
-        <UserMenuBox>{isLogin ? <UserMenu onClick={handleShowModal}>로그아웃</UserMenu> : null}</UserMenuBox>
+        <LogOutBox>{isLogin ? <LogOut onClick={handleShowModal}>로그아웃</LogOut> : null}</LogOutBox>
       </Wrapper>
       {showModal && (
         <ConfirmModal question="로그아웃 하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
@@ -153,24 +153,34 @@ const ProfileImage = styled.div`
 `
 
 const UserNickname = styled.p`
-  padding: 0 0 0 10px;
+  padding: 0 0 0 12px;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-family: 'YdestreetB';
+  font-family: 'Pretendard Variable';
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
 `
 
-const UserMenuBox = styled.div`
+const LogOutBox = styled.div`
   width: 100%;
   height: 100%;
   padding: 20px 16px;
   display: flex;
   align-items: end;
   justify-content: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  -webkit-box-pack: left;
+  -ms-flex-pack: left;
+  -webkit-justify-content: left;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  -webkit-align-items: end;
 `
 
-const UserMenu = styled.button`
+const LogOut = styled.button`
+  padding: 0;
   color: ${({ theme }) => theme.colors.grey};
   font-size: ${({ theme }) => theme.fontSizes.xl};
   font-family: 'YdestreetB';
