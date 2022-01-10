@@ -124,6 +124,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: top;
   z-index: 2000;
+  visibility: hidden;
+  opacity: 0;
 
   -webkit-transform: translateX(0);
   transform: translateX(0);
@@ -131,6 +133,8 @@ const Wrapper = styled.div`
   transition: all 0.3s ease;
 
   &.open {
+    opacity: 1;
+    visibility: visible;
     -webkit-transform: translateX(240px);
     transform: translateX(240px);
   }
@@ -139,7 +143,7 @@ const Wrapper = styled.div`
 const ProfileImage = styled.div`
   width: 40px;
   height: 40px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 1px solid ${({ theme }) => theme.colors.line};
   border-radius: 20px;
   background-size: cover;
   background-image: url('${(props) => props.src}');

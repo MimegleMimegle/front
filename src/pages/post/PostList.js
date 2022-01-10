@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { history } from '../../redux/ConfigureStore'
 import styled from 'styled-components'
 import PostCard from '../../components/PostCard'
-import { MdPostAdd } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import post, { actionCreators as postActions } from '../../redux/modules/post'
 import Pagination from 'rc-pagination'
 import { boardApi } from '../../shared/api'
 import axios from 'axios'
 import Header from '../../components/Header'
-import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import SearchPost from '../../components/SearchPost'
 import '../../index.css'
+import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
+import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+
 
 
 const PostList = (props) => {
@@ -40,8 +41,8 @@ const PostList = (props) => {
     setTotalCount(totalLength.data.data)
   }
 
-  const searchClick = ()=> {
-    show? setShow(false):setShow(true)
+  const searchClick = () => {
+    show ? setShow(false) : setShow(true)
   }
 
   console.log(show)
@@ -49,30 +50,28 @@ const PostList = (props) => {
   return (
     <>
       <Header type="PostList" location="밈+글 커뮤니티">
-        <button style={{ padding: '5px 8px 0' }} onClick={searchClick}>
-          <SearchIcon/>
-        </button>
+          {show?  <CloseIcon cursor="pointer" onClick={searchClick} /> : < SearchIcon cursor="pointer" onClick={searchClick} style={{margin:'0 20px 0 0'}}/>}
       </Header>
       <Container>
-      <SearchPostDiv>  {show && <SearchPost/>} </SearchPostDiv>
+        <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv>
         <Wrap>
-        <Empty>
-          <Addbtn
-            onClick={() => {
-              history.push('/post/write')
-            }}
-          >
-            밈+글 등록
-          </Addbtn>
-          <AddbtnShadow />
-        </Empty>
+          <Empty>
+            <Addbtn
+              onClick={() => {
+                history.push('/post/write')
+              }}
+            >
+              밈+글 등록
+            </Addbtn>
+            <AddbtnShadow />
+          </Empty>
 
-        {post &&
-          post.map((post, index) => {
-            return <PostCard post={post} key={post.boardId} />
-          })}
+          {post &&
+            post.map((post, index) => {
+              return <PostCard post={post} key={post.boardId} />
+            })}
 
-        <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+          <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
         </Wrap>
       </Container>
     </>
@@ -82,23 +81,24 @@ const PostList = (props) => {
 export default PostList
 
 const Container = styled.div`
-  position:relative;
-  
-`;
+  position: relative;
+`
 
 const SearchPostDiv = styled.div`
   position: absolute;
-  z-index:5
+  z-index: 5;
 `
 
-const Wrap =styled.div`
+const Wrap = styled.div`
   position: absolute;
-  
+  width: 100%;
 `
 
 const Empty = styled.div`
   border-bottom: 1px solid #e5e5e5;
   position: relative;
+  display: flex;
+  justify-content: center;
 `
 
 const Addbtn = styled.div`
@@ -115,15 +115,15 @@ const Addbtn = styled.div`
   font-weight: bold;
   cursor: pointer;
   z-index: 2;
-  margin: 15px 27px 15px 43px;
+  margin: 15px 0 30px 0;
   /* padding: 11px 0px; */
 `
 
 const AddbtnShadow = styled.div`
   width: 280px;
   height: 40px;
-  top: 5px;
-  right: 22px;
+  top: 19px;
+  left: 51px;
   background-color: white;
   border: 1px solid black;
   position: absolute;

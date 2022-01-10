@@ -5,6 +5,10 @@
   src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
 }
 
+.DictPageSearchButton {
+  font-size: 18px;
+}
+
 .DictHistoryPageLayout {
   width: 100%;
   height: 100%;

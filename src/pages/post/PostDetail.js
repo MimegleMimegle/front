@@ -19,7 +19,6 @@ import '../../index.css'
 
 const PostDetail = (props) => {
   const dispatch = useDispatch()
-
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
   const boardId = Number(props.match.params.boardId)
 
@@ -208,13 +207,13 @@ const UserProfile = styled.img`
   border-radius: 150px;
   width: 28px;
   height: 28px;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #e5e5e5;
   margin: 0 8px 0 0;
 `
 const Writer = styled.div`
   font-size: 12px;
-  line-height:16p;
-  font-family:'YdestreetL';
+  line-height: 16p;
+  font-family: 'YdestreetL';
   font-style: normal;
   font-weight: normal;
 `
@@ -235,7 +234,7 @@ const Title = styled.div`
 
 const Content = styled.div`
   font-size: 12px;
-  line-height:12px;
+  line-height: 12px;
 `
 
 const ImageBox = styled.div`

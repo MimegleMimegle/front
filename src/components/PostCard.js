@@ -1,20 +1,52 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai'
-import { FiMessageSquare } from 'react-icons/fi'
-import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
-import HashTag from './HashTag'
 import '../index.css'
+import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비활성_18dp.svg'
+import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
+import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
+import { likeApi } from '../shared/api'
+
 
 const PostCard = ({ post }) => {
   const history = useHistory()
+  const boardId = post.boardId
 
   const onC = () => {
     history.push(`/post/detail/${post.boardId}`)
   }
-
+  const [likeCount, setLikeCount] = useState(post.likeCnt)
+  const [isLiked, setIsLiked] = useState(post.isLike)
   const hour = post.createdAt.split('T')[1].split('.')[0]
+  console.log(isLiked)
+  const handleClickLike = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isLiked) {
+      await likeApi
+        .likeBoard(post.boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(false)
+          setLikeCount(likeCount - 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 취소 문제 발생', error.response)
+        })
+    } else {
+      await likeApi
+        .likeBoard(post.boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(true)
+          setLikeCount(likeCount + 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 문제 발생', error.response)
+        })
+    }
+  }
 
   return (
     <>
@@ -40,12 +72,18 @@ const PostCard = ({ post }) => {
             </HashTagHere>
           </Content>
           <Icon>
-            <AiOutlineEye size="18" color="#878C92" />
-            <Number>{post ? post.views : null}</Number>
-            <AiOutlineHeart color="#878C92" size="18" />
-            <Number>{post ? post.likeCnt : null}</Number>
-            <FiMessageSquare size="19" color="#878C92" />
-            <Number>{post ? post.commentCnt : null}</Number>
+            <IconBox>
+              <ViewIcon />
+              <Number>{post ? post.views : null}</Number>
+            </IconBox>
+            <IconBox>
+              {isLiked? < FullHeartIcon IcononClick={handleClickLike}/> :< EmptyHeartIcon onClick={handleClickLike}/>}
+              <Number className="like-count">{likeCount}</Number>
+            </IconBox>
+            <IconBox>
+              <CommentIcon />
+              <Number>{post ? post.commentCnt : null}</Number>
+            </IconBox>
           </Icon>
         </Wrap>
         {post.thumbNail ? <ThumbNail className="uploadimg" src={post && post.thumbNail} alt="" /> : null}
@@ -58,7 +96,7 @@ export default PostCard
 
 const FullWrap = styled.div`
   height: 133px;
-  padding: 16px 16px 16px 16px;
+  padding: 16px;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #e5e5e5;
@@ -66,6 +104,8 @@ const FullWrap = styled.div`
 
 const Wrap = styled.div`
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 `
 
 const UserInfo = styled.div`
@@ -81,11 +121,11 @@ const UserImg = styled.img`
   margin: 0 8px 0 0;
   width: 28px;
   height: 28px;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #e5e5e5;
   box-sizing: border-box;
   border-radius: 150px;
 `
-const Writer = styled.text`
+const Writer = styled.p`
   font-family: 'YdestreetL';
   font-style: normal;
   font-weight: normal;
@@ -108,13 +148,14 @@ const CreatedAt = styled.div`
 const Content = styled.div`
   margin: 10px 0 0 0;
   cursor: pointer;
-  hight: 30px;
+  height: 30px;
   width: 250px;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 20px;
-
+  display: flex;
+  flex-direction: column;
 `
 const Title = styled.div`
   font-family: 'Pretendard Variable';
@@ -123,7 +164,6 @@ const Title = styled.div`
   font-size: 12px;
   line-height: 20px;
   margin: 0 0 0 3px;
-
 `
 
 const HashTagHere = styled.div`
@@ -133,7 +173,6 @@ const HashTagHere = styled.div`
   display: flex;
   font-size: 12px;
   line-height: 20px;
-
 `
 
 const Icon = styled.div`
@@ -153,4 +192,8 @@ const ThumbNail = styled.img`
   width: 60px;
   height: 60px;
   margin: 27px 0 0 0;
+`
+const IconBox = styled.div`
+  display: flex;
+  align-items: center;
 `

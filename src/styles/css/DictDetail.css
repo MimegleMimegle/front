@@ -193,6 +193,7 @@
   display: flex;
   align-self: center;
   color: rgba(135, 140, 146, 1);
+  size: 24;
 
   margin: 2px 0 0 220px;
 }
