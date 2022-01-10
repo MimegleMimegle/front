@@ -186,7 +186,7 @@ const PostDetail = (props) => {
 }
 
 const PostWrap = styled.div`
-  padding: 78px 16px 16px;
+  padding: 78px 16px 0;
 `
 
 const Profile = styled.div`

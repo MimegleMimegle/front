@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
+import { mainApi } from '../shared/api'
 
 import Header from '../components/Header'
 import AlertModal from '../components/modal/AlertModal'
@@ -54,6 +55,17 @@ const QuizIntro = (props) => {
       dispatch(quizActions.initAnswer())
     }
   }
+
+  useEffect(() => {
+    async function submitVisitors() {
+      try {
+        const result = await mainApi.countVisitors()
+      } catch (error) {
+        console.log('방문자 전송 문제 발생', error.response)
+      }
+    }
+    submitVisitors()
+  }, [])
 
   return (
     <>
