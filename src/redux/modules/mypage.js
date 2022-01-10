@@ -31,7 +31,6 @@ const getUserInfoDB = () => {
       .getUserInfo()
       .then((response) => {
         const myPageData = response.data.data
-        console.log(myPageData)
         dispatch(getUserInfo(myPageData))
       })
       .catch((error) => {
@@ -75,7 +74,6 @@ const editNicknameDB = (userId, newNickname) => {
     await mypageApi
       .editNickname(newNickname)
       .then((response) => {
-        console.log(response.data)
         dispatch(editNickname(newNickname))
       })
       .catch((error) => {

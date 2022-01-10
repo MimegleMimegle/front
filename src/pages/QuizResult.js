@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { history } from '../redux/ConfigureStore'
+import { useParams } from 'react-router-dom' // 삭제 X (props로 받은 useParams().category)
 import { actionCreators as quizActions } from '../redux/modules/quiz'
+import { quizApi } from '../shared/api'
 
 import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
@@ -10,7 +12,7 @@ import Header from '../components/Header'
 import { ReactComponent as GoBackIcon } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLinkIcon } from '../styles/icons/링크복사_24dp.svg'
 
-const QuizResult = ({ quiz_list }) => {
+const QuizResult = ({ quiz_list, category }) => {
   const dispatch = useDispatch()
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
   const answerCnt = quiz_list
@@ -50,6 +52,17 @@ const QuizResult = ({ quiz_list }) => {
     } else {
       setResultText({ sub: '치료가 필요할 정도로 심각한', main: '"밈중독"입니다.' })
     }
+  }, [])
+
+  useEffect(function () {
+    async function submitQuizScore() {
+      try {
+        const result = await quizApi.submitScore(category, answerCnt)
+      } catch (error) {
+        console.log('퀴즈 결과 전송 문제 발생', error.response)
+      }
+    }
+    submitQuizScore()
   }, [])
 
   return (
@@ -194,7 +207,7 @@ const QuizResultBox = styled.div`
 `
 
 const QuizContainer = styled.div`
-  padding: 20px 20px 0;
+  padding: 20px;
   width: 100%;
   height: 100%;
   display: flex;

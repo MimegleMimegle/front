@@ -90,9 +90,9 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             onClick={() => {
               setShowSidebar(false)
             }}
-            style={{ height: '100%', padding: '0', textAlign: 'right' }}
+            style={{ width: '100%', height: '100%', padding: '0', textAlign: 'right' }}
           >
-            <CloseIcon style={{ paddingTop: '2px' }} />
+            <CloseIcon style={{ paddingTop: '3px' }} />
           </button>
         </div>
 
@@ -111,7 +111,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
 }
 
 const Wrapper = styled.div`
-  width: 240px;
+  width: 60%;
   height: 100%;
   position: absolute;
   top: 0;
