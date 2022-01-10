@@ -6,15 +6,47 @@ import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비활성_18dp.svg'
 import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
+import { likeApi } from '../shared/api'
+
 
 const PostCard = ({ post }) => {
   const history = useHistory()
+  const boardId = post.boardId
 
   const onC = () => {
     history.push(`/post/detail/${post.boardId}`)
   }
-
+  const [likeCount, setLikeCount] = useState(post.likeCnt)
+  const [isLiked, setIsLiked] = useState(post.isLike)
   const hour = post.createdAt.split('T')[1].split('.')[0]
+  console.log(isLiked)
+  const handleClickLike = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isLiked) {
+      await likeApi
+        .likeBoard(post.boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(false)
+          setLikeCount(likeCount - 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 취소 문제 발생', error.response)
+        })
+    } else {
+      await likeApi
+        .likeBoard(post.boardId)
+        .then((response) => {
+          console.log(response.data)
+          setIsLiked(true)
+          setLikeCount(likeCount + 1)
+        })
+        .catch((error) => {
+          console.log('이미지 좋아요 문제 발생', error.response)
+        })
+    }
+  }
 
   return (
     <>
@@ -45,8 +77,8 @@ const PostCard = ({ post }) => {
               <Number>{post ? post.views : null}</Number>
             </IconBox>
             <IconBox>
-              <EmptyHeartIcon />
-              <Number>{post ? post.likeCnt : null}</Number>
+              {isLiked? < FullHeartIcon IcononClick={handleClickLike}/> :< EmptyHeartIcon onClick={handleClickLike}/>}
+              <Number className="like-count">{likeCount}</Number>
             </IconBox>
             <IconBox>
               <CommentIcon />

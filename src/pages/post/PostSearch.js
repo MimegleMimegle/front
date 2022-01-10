@@ -25,8 +25,7 @@ const PostSearch = (props) => {
   const [notFound, setNotFound] = React.useState(false)
   const [show, setShow] = React.useState(false)
 
-  const searchprops = props.match.params.search
-  console.log(search)
+  console.log(props.match.params.search)
 
   const searchClick = () => {
     show ? setShow(false) : setShow(true)
@@ -49,6 +48,7 @@ const PostSearch = (props) => {
       .then((response) => {
         console.log(response.data)
         setFilteredPosts(response.data.data)
+
         setShow(false)
       })
       .catch((error) => {
@@ -73,15 +73,20 @@ const PostSearch = (props) => {
         console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
       })
 
-    // boardApi
-    //   .searchPost(search)
-    //   .then((response) => {
-    //     console.log(response.data)
-    //     setFilteredPosts(response.data.data)
-    //   })
-    //   .catch((err) => {
-    //     console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
-    //   })
+      boardApi
+      .searchPost(props.match.params.search)
+      .then((response) => {
+        console.log(response.data)
+        setFilteredPosts(response.data.data)
+        setShow(false)
+        setSearch(props.match.params.search)
+
+
+      })
+      .catch((error) => {
+        console.log('검색한 게시글 정보를 불러오는 데 문제가 발생했습니다.', error.response)
+      })
+
   }, [])
 
   return (
@@ -89,7 +94,7 @@ const PostSearch = (props) => {
       <Header type="PostList" location="밈+글 커뮤니티">
         <div
           onClick={() => {
-            history.goBack()
+            history.push('/post')
           }}
           style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
         >
@@ -102,18 +107,7 @@ const PostSearch = (props) => {
             <div style={{ height: '100%', padding: '0 16px 0 5px' }}>
               <GoSearch style={{ fontSize: '13px', margin: '18px 0 18px 18px' }} />
             </div>
-            <input
-              placeholder="검색어를 입력해주세요"
-              type="text"
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  clickSearch()
-                }
-              }}
-              onClick={searchClick}
-              onChange={handleSearch}
-              style={{ width: '100%', padding: '10px 16px', border: 'none', backgroundColor: '#e8e8e8' }}
-            />
+            <input placeholder="두 글자 이상의 검색어를 입력해주세요" type="text" onKeyPress={(e)=>{if(e.key === "Enter"){clickSearch()}}} onClick={searchClick} onChange={handleSearch} style={{ width: '100%', padding: '10px 16px', border: 'none', backgroundColor: '#e8e8e8',}} />
           </div>
           {show && (
             <div style={{ borderBottom: '1px solid black' }}>
