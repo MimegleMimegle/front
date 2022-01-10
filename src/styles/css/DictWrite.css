@@ -30,6 +30,7 @@
   width: 100%;
   height: fit-content;
   /* border: 3px solid green; */
+  padding: 74px 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -58,14 +59,12 @@
   width: 100%;
   height: fit-content;
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
-  padding: 15px 0 15px 20px;
+  padding: 20px;
 }
 
 .DictCardInputTitleGuideText {
   width: 60px;
   height: 25px;
-  display: flex;
-  align-self: flex-start;
   padding-top: 3px;
 
   font-family: 'Pretendard Variable';
@@ -75,25 +74,26 @@
 }
 
 .DictCardInputTitle {
-  width: 200px;
+  width: calc(100% - 95px);
   height: 25px;
   word-wrap: break-word;
   word-break: keep-all;
   display: flex;
   align-self: flex-start;
-  padding-top: 12px;
   margin: 0 0 0 0;
+  padding: 0 10px;
   border: none;
   font-size: 12px;
   background-color: transparent;
   overflow: hidden;
   resize: horizontal;
+  padding: 0;
 
   color: -internal-light-dark(black, white);
 }
 
 .DictCardInputTitleDoubleCheck {
-  width: fit-content;
+  width: 35px;
   height: 25px;
   padding-top: 3px;
   text-decoration-line: underline;
@@ -118,7 +118,7 @@
   width: 100%;
   height: fit-content;
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
-  padding: 20px 0 20px 20px;
+  padding: 20px;
 }
 
 .DictCardInputSummaryGuideText {
@@ -135,7 +135,7 @@
 }
 
 .DictCardInputSummary {
-  width: 265px;
+  width: 100%;
   height: fit-content;
   word-wrap: break-word;
   word-break: keep-all;
@@ -159,7 +159,7 @@
   width: 100%;
   height: fit-content;
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
-  padding: 20px 0 20px 20px;
+  padding: 20px;
 }
 
 .DictCardInputContentGuideText {
@@ -176,7 +176,7 @@
 }
 
 .DictCardInputContent {
-  width: 265px;
+  width: 100%;
   height: fit-content;
   word-wrap: break-word;
   word-break: keep-all;

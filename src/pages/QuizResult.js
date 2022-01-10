@@ -7,8 +7,8 @@ import { actionCreators as quizActions } from '../redux/modules/quiz'
 import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
 import Header from '../components/Header'
-import { ReactComponent as GoBack } from '../styles/icons/되돌아가기_24dp.svg'
-import { ReactComponent as CopyLink } from '../styles/icons/링크복사_24dp.svg'
+import { ReactComponent as GoBackIcon } from '../styles/icons/되돌아가기_24dp.svg'
+import { ReactComponent as CopyLinkIcon } from '../styles/icons/링크복사_24dp.svg'
 
 const QuizResult = ({ quiz_list }) => {
   const dispatch = useDispatch()
@@ -48,7 +48,7 @@ const QuizResult = ({ quiz_list }) => {
     } else if (answerCnt >= 4 && answerCnt < 8) {
       setResultText({ sub: `${answerCnt}개나 맞춘 나,`, main: '제법 "밈잘알"이에요.' })
     } else {
-      setResultText({ sub: '치료가 필요할 정도로 심각한', main: '"밈 중독"입니다.' })
+      setResultText({ sub: '치료가 필요할 정도로 심각한', main: '"밈중독"입니다.' })
     }
   }, [])
 
@@ -74,31 +74,35 @@ const QuizResult = ({ quiz_list }) => {
             </div>
             <div className="resultButtonBox box2"></div>
           </ResultButtonContainer>
-          <div style={{ width: '80%', padding: '12px 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ width: '100%', margin: '5px 0' }}>
-              <CircleButtonBox>
+          <TextButtonContainer>
+            <div className="text-button-box">
+              <div className="circle-button-box">
                 <div
                   className="circle-button btn-1"
                   onClick={() => {
                     history.push('/quiz')
                   }}
                 >
-                  <GoBack />
+                  <GoBackIcon />
                 </div>
                 <div className="circle-button btn-2"></div>
-              </CircleButtonBox>
-              <TextButton onClick={handleMoveQuizIntro}>다른 테스트 하러 가기</TextButton>
+              </div>
+              <button className="text-button" onClick={handleMoveQuizIntro}>
+                다른 테스트 하러 가기
+              </button>
             </div>
-            <div style={{ width: '100%', margin: '5px 0' }}>
-              <CircleButtonBox>
+            <div className="text-button-box">
+              <div className="circle-button-box">
                 <div className="circle-button btn-1" onClick={handleShareVisible}>
-                  <CopyLink />
+                  <CopyLinkIcon />
                 </div>
                 <div className="circle-button btn-2"></div>
-              </CircleButtonBox>
-              <TextButton onClick={handleShareVisible}>친구에게 공유하기</TextButton>
+              </div>
+              <button className="text-button" onClick={handleShareVisible}>
+                친구에게 공유하기
+              </button>
             </div>
-          </div>
+          </TextButtonContainer>
           <QuizContainer>
             {showQuiz &&
               quiz_list &&
@@ -114,9 +118,9 @@ const QuizResult = ({ quiz_list }) => {
 }
 
 const Wrapper = styled.div`
+  padding: 74px 0 0;
   width: 100%;
   height: 100%;
-  max-height: 620px;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -150,8 +154,8 @@ const QuizResultBox = styled.div`
 
   .box-1 {
     top: -20px;
-    left: 49.5%;
-    transform: translateX(-49.5%);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
     text-align: center;
     line-height: 40px;
@@ -161,8 +165,8 @@ const QuizResultBox = styled.div`
 
   .box-2 {
     top: -16px;
-    left: 51%;
-    transform: translateX(-51%);
+    left: calc(50%);
+    transform: translateX(calc(-50% + 4px));
     background-color: ${({ theme }) => theme.colors.white};
   }
   .result-text__answerCnt {
@@ -190,7 +194,7 @@ const QuizResultBox = styled.div`
 `
 
 const QuizContainer = styled.div`
-  padding: 0 0 16px;
+  padding: 20px 20px 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -198,23 +202,21 @@ const QuizContainer = styled.div`
 `
 
 const ResultButtonContainer = styled.div`
-  padding-top: 20px;
+  margin: 20px 0 0;
   width: 100%;
-  height: 60px;
-  /* max-height: 200px; */
+  height: 40px;
   position: relative;
 
   .resultButtonBox {
-    width: 135px;
+    width: 130px;
     height: 40px;
     position: absolute;
     border: 1px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
     background-color: ${({ theme }) => theme.colors.white};
     .resultButton {
-      padding: 0;
-      width: 135px;
-      height: 40px;
+      width: 100%;
+      height: 100%;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
       font-family: 'YdestreetB';
       font-style: normal;
@@ -223,63 +225,75 @@ const ResultButtonContainer = styled.div`
   }
 
   .box1 {
-    left: 49.5%;
-    transform: translateX(-49.5%);
+    left: 50%;
+    transform: translateX(-50%);
     background-color: ${({ theme }) => theme.colors.blue};
     z-index: 2;
     transition-duration: 0.5s;
     &:active {
-      left: 51%;
-      transform: translateX(-51%);
+      left: calc(50%);
+      transform: translateX(calc(-50% + 4px));
       margin-top: 4px;
     }
   }
 
   .box2 {
-    left: 51%;
-    transform: translateX(-51%);
+    left: calc(50%);
+    transform: translateX(calc(-50% + 4px));
     margin-top: 4px;
     background-color: ${({ theme }) => theme.colors.white};
   }
 `
 
-const TextButton = styled.button`
+const TextButtonContainer = styled.div`
   width: 100%;
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-  padding: 12px 0;
-`
-
-const CircleButtonBox = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  .circle-button {
-    position: absolute;
-    width: 36px;
-    height: 36px;
-    border: 1px solid ${({ theme }) => theme.colors.black};
-    border-radius: 20px;
-  }
-  .btn-1 {
-    left: 24px;
-    background-color: ${({ theme }) => theme.colors.orange};
+  padding: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .text-button-box {
+    width: 100%;
+    padding: 16px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 300;
-    cursor: pointer;
-    transition-duration: 0.5s;
-    &:active {
-      left: 27px;
-      margin-top: 3px;
+    .text-button {
+      width: 100%;
+      font-size: ${({ theme }) => theme.fontSizes.lg};
+      font-family: 'Pretendard Variable';
+      font-style: normal;
+      font-weight: 700;
     }
-  }
-  .btn-2 {
-    left: 27px;
-    top: 3px;
+    .circle-button-box {
+      position: relative;
+      .circle-button {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border: 1px solid ${({ theme }) => theme.colors.black};
+        border-radius: 20px;
+      }
+      .btn-1 {
+        background-color: ${({ theme }) => theme.colors.orange};
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 300;
+        cursor: pointer;
+        transition-duration: 0.5s;
+        left: 20px;
+        top: -18px;
+        &:active {
+          left: 23px;
+          top: -15px;
+        }
+      }
+      .btn-2 {
+        left: 23px;
+        top: -15px;
+      }
+    }
   }
 `
 

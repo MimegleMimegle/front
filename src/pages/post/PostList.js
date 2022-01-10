@@ -23,10 +23,7 @@ const PostList = (props) => {
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [show, setShow] = useState(false)
-
-  const postList = useSelector((state) => state.post.list) // state는 리덕스 스토어의 전체 데이터
-  console.log(postList)
-
+  
   useEffect(() => {
     getPostListDB()
     // dispatch(postActions.getPostsDB())
@@ -44,8 +41,6 @@ const PostList = (props) => {
   const searchClick = () => {
     show ? setShow(false) : setShow(true)
   }
-
-  console.log(show)
 
   return (
     <>
@@ -81,10 +76,12 @@ const PostList = (props) => {
 export default PostList
 
 const Container = styled.div`
+  padding: 74px 0 0;
   position: relative;
 `
 
 const SearchPostDiv = styled.div`
+  width: 100%;
   position: absolute;
   z-index: 5;
 `
@@ -123,7 +120,8 @@ const AddbtnShadow = styled.div`
   width: 280px;
   height: 40px;
   top: 19px;
-  left: 51px;
+  left: calc(50%);
+  transform: translateX(calc(-50% + 4px));
   background-color: white;
   border: 1px solid black;
   position: absolute;

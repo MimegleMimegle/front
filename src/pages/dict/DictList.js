@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/css/DictList.css'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import axios from 'axios'
@@ -62,7 +63,7 @@ const DictList = (props) => {
         </div>
       </Header>
       <div className="DictLayout">
-        {show && <SearchPage />}
+        <SearchBarSection>{show && <SearchPage />}</SearchBarSection>
         <div className="NewDictAddButtonSection">
           <div className="NewDictAddButton_1" onClick={() => history.push('/dict/write')}>
             밈 단어 등록
@@ -96,5 +97,12 @@ const DictList = (props) => {
     </>
   )
 }
+
+const SearchBarSection = styled.div`
+  position: absolute;
+  width: 100%;
+  height: fit-content;
+  z-index: 5;
+`
 
 export default DictList

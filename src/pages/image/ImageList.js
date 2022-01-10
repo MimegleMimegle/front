@@ -131,6 +131,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 74px 0 20px;
 `
 
 const Title = styled.span`
@@ -159,8 +160,8 @@ const Container = styled.div`
 const PopularGridLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 110px 152px;
-  gap: 8px;
+  grid-template-rows: 160px 220px;
+  gap: 2px;
 
   div {
     &:nth-child(1) {
@@ -182,7 +183,7 @@ const GeneralGridLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(121px, 121px);
-  gap: 3px;
+  gap: 2px;
 `
 
 export default ImageList

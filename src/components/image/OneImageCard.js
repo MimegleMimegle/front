@@ -90,8 +90,8 @@ const OneImageCard = ({ image }) => {
 
 const ImageBox = styled.div`
   position: relative;
-  max-width: 160px;
-  max-height: 270px;
+  max-width: 200px;
+  max-height: 420px;
   width: 100%;
   height: 100%;
   overflow: hidden;

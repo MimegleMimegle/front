@@ -66,6 +66,7 @@ const PostDetail = (props) => {
           console.log(response.data)
           setIsLiked(false)
           setLikeCount(likeCount - 1)
+
         })
         .catch((error) => {
           console.log('이미지 좋아요 취소 문제 발생', error.response)
@@ -185,7 +186,7 @@ const PostDetail = (props) => {
 }
 
 const PostWrap = styled.div`
-  padding: 0 16px;
+  padding: 78px 16px 16px;
 `
 
 const Profile = styled.div`
@@ -263,7 +264,6 @@ const HashTagHere = styled.div`
 const ViewLikeComment = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 0 16px;
   .icon-box {
     display: flex;
     align-items: center;
