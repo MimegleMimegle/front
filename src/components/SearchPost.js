@@ -74,7 +74,7 @@ const SearchPost = (props) => {
             <div onClick={clickSearch} style={{ height: '100%', padding: '0 16px 0 5px' }}>
               <GoSearch style={{ fontSize: '13px', margin: '18px 0 18px 18px' }} />
             </div>
-            <input placeholder="검색어를 입력해주세요" type="text" onKeyPress={(e)=>{if(e.key === "Enter"){clickSearch()}}} onChange={handleSearch} style={{ width: '100%', border: 'none', backgroundColor: '#e8e8e8',}} />
+            <input placeholder="두 글자 이상의 검색어를 입력해주세요" type="text" onKeyPress={(e)=>{if(e.key === "Enter"){clickSearch()}}} onChange={handleSearch} style={{ width: '100%', border: 'none', backgroundColor: '#e8e8e8',}} />
           </div>
           <div>
             {/* DB에서 불러온 HashTags list map */}

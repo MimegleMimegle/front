@@ -7,7 +7,7 @@ import { boardApi } from '../shared/api'
 const HashTag = (props) => {
   const history = useHistory();
   const search = props.hashtag
-  console.log(props)
+  console.log(search)
   const clickHashTag = () => {
     boardApi
       .searchPost(search)
@@ -16,7 +16,6 @@ const HashTag = (props) => {
         props.setFilteredPosts(response.data.data)
         history.push({
           pathname:`/post/search/${search}`,
-          search:search
           })
       })
       .catch((error) => {
