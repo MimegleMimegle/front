@@ -67,7 +67,7 @@ const OneImageCard = ({ image }) => {
       >
         <ImageThumbnail src={image && image.thumbNail}></ImageThumbnail>
         {/* {hover && ( */}
-        {/* <Overlay className={`${hover ? 'active' : 'in-active'}`}>
+        <Overlay className={`${hover ? 'active' : 'inactive'}`}>
           <div style={{ width: '100%', height: '100%', padding: '7px 7px 5px 7px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between' }}>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
               <button className="share-button" onClick={handleShareVisible}>
@@ -81,7 +81,7 @@ const OneImageCard = ({ image }) => {
               <span className="like-count">{likeCount}</span>
             </div>
           </div>
-        </Overlay> */}
+        </Overlay>
       </ImageBox>
       {shareVisible && <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />}
     </>
@@ -98,7 +98,6 @@ const ImageBox = styled.div`
   overflow: hidden;
   cursor: pointer;
   .active {
-    display: inline-block;
     position: absolute;
     top: 0;
     left: 0;

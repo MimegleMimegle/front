@@ -199,12 +199,13 @@ const GeneralGridLayout = styled.div`
 /* 실험 */
 const Masonry = styled.div`
   column-count: 3;
-  column-gap: 7px;
+  column-gap: 2px;
 `
 const Items = styled.div`
+  height: fit-content;
   display: flex;
   justify-content: center;
-  /* margin-bottom: 2px; */
+  margin-bottom: 2px;
   cursor: pointer;
 `
 
