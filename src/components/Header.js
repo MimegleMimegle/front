@@ -150,8 +150,9 @@ const NavHeader = styled.nav`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  padding: 0 10px;
   width: 100%;
-  height: ${(props) => (props.low ? '50px' : '74px')};
+  height: ${(props) => (props.low ? '62px' : '74px')};
   background-color: ${({ theme }) => theme.colors.white};
   border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid black')};
   /* padding: 10px 0 12px; */

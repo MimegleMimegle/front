@@ -35,8 +35,6 @@ const MyPageOneImageCard = ({ image }) => {
       })
   }
 
-  // 이미지 삭제 시 확인하는 알럿!!
-
   return (
     <>
       <Wrapper
@@ -77,9 +75,10 @@ const MyPageOneImageCard = ({ image }) => {
 
 const Wrapper = styled.div`
   position: relative;
-  max-width: 180px;
+  max-width: 200px;
   width: 100%;
-  height: 170px;
+  max-height: 260px;
+  height: 100%;
   padding: 8px 5px 8px 8px;
   border: 1px solid ${({ theme }) => theme.colors.black};
   .container {
@@ -92,12 +91,15 @@ const Wrapper = styled.div`
 
 const ImageSection = styled.div`
   display: flex;
+  width: 100%;
+  height: 100%;
 `
 
 const Image = styled.div`
-  max-width: 130px;
+  max-width: 150px;
   width: 100%;
-  height: 110px;
+  padding-top: 90%;
+  height: 100%;
   border: 1px solid ${({ theme }) => theme.colors.black};
   background-image: url('${(props) => props.src}');
   background-size: cover;

@@ -4,9 +4,7 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
 
-import Header from './Header'
 import QuizResult from '../pages/QuizResult'
-import SpinningCircles from '../styles/image/spinning-circles.svg'
 import CircularProgress from '@mui/material/CircularProgress'
 
 const QuizPaper = (props) => {
@@ -83,11 +81,10 @@ const QuizPaper = (props) => {
 
   return (
     <>
-      <Header type="QuizPaper" location={`${currentIndex + 1}/10`} noBorder></Header>
       {!showResult ? (
         !loading ? (
           <Wrapper>
-            {/* <div style={{ fontSize: '14px', fontWeight: '700' }}>{currentIndex + 1}/10</div> */}
+            {/* <div className="quiz-current">{currentIndex + 1}/10</div> */}
             <QuizTitle>
               <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
               <div className="question-number-box box-2"></div>
@@ -132,18 +129,23 @@ const QuizPaper = (props) => {
 }
 
 const Wrapper = styled.div`
-  max-width: 340px;
   width: 100%;
   height: 100%;
+  padding: 74px 0 0;
   display: flex;
   flex-direction: column;
   align-items: start;
-  /* justify-content: center; */
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 360px;
   transition: all 0.1s ease-in-out;
-  &::after {
+  .quiz-current {
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-weight: 700;
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    width: 100%;
+    text-align: center;
   }
 `
 
@@ -151,7 +153,7 @@ const QuizTitle = styled.div`
   position: relative;
   width: 100%;
   height: auto;
-  padding: 42px 36px 20px;
+  padding: 54px 36px 20px;
   margin: 30px 0 0;
   border: 1px solid ${({ theme }) => theme.colors.black};
   display: flex;
@@ -168,8 +170,8 @@ const QuizTitle = styled.div`
   }
   .box-1 {
     top: -20px;
-    left: 49.5%;
-    transform: translateX(-49.5%);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
     text-align: center;
     line-height: 40px;
@@ -182,8 +184,8 @@ const QuizTitle = styled.div`
 
   .box-2 {
     top: -16px;
-    left: 51%;
-    transform: translateX(-51%);
+    left: calc(50%);
+    transform: translateX(calc(-50% + 4px));
     background-color: ${({ theme }) => theme.colors.white};
   }
 
@@ -191,11 +193,26 @@ const QuizTitle = styled.div`
     width: 100%;
     height: fit-content;
     text-align: left;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-size: ${({ theme }) => theme.fontSizes.xl};
     line-height: 22px;
     font-family: 'Pretendard Variable';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 300;
+  }
+`
+
+const QuizImageBox = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0 0;
+  .quiz-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 `
 
@@ -227,8 +244,9 @@ const QuizBox = styled.div`
 const ButtonSection = styled.div`
   position: relative;
   width: 100%;
+  margin-top: 20px;
   .next-btn-box {
-    width: 107px;
+    width: 100px;
     height: 40px;
     position: absolute;
     border: 1px solid ${({ theme }) => theme.colors.black};
@@ -252,38 +270,23 @@ const ButtonSection = styled.div`
   }
 
   .box-1 {
-    top: 24px;
-    left: 49.5%;
-    transform: translateX(-49.5%);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
     transition-duration: 0.3s;
     &:active {
-      left: 51%;
-      transform: translateX(-51%);
-      top: 28px;
+      left: calc(50%);
+      transform: translateX(calc(-50% + 4px));
+      top: 4px;
     }
   }
 
   .box-2 {
-    top: 28px;
-    left: 51%;
-    transform: translateX(-51%);
+    top: 4px;
+    left: calc(50%);
+    transform: translateX(calc(-50% + 4px));
     background-color: ${({ theme }) => theme.colors.white};
-  }
-`
-
-const QuizImageBox = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0 0;
-  .quiz-image {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
   }
 `
 

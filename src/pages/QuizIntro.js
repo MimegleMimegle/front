@@ -5,8 +5,7 @@ import { history } from '../redux/ConfigureStore'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
 
 import Header from '../components/Header'
-import ModalWrapper from '../components/ModalWrapper'
-import ModalContainer from '../components/ModalContainer'
+import AlertModal from '../components/modal/AlertModal'
 import QuizIntroImage from '../styles/image/quiz_main_image2.gif'
 
 const QuizIntro = (props) => {
@@ -64,21 +63,21 @@ const QuizIntro = (props) => {
           <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </ImageSection>
         <SubjectSection>
-          <div style={{ padding: '15px 0 10px' }}>
+          <div style={{ padding: '24px 0 15px' }}>
             <p className="subject-question">어느 레벨 밈을</p>
             <p className="subject-question">테스트하고 싶으신가요?</p>
           </div>
-          <div>
+          <div className="subject-button-box">
             <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="IMAGE" onClick={handleChangeSubjectY2000}>
               Lv. 밈기적
             </button>
           </div>
-          <div>
+          <div className="subject-button-box">
             <button className={`subject-button ${y2010 ? 'selected' : ''}`} value="y2010" onClick={handleChangeSubjectY2010}>
               Lv. 밈잘알
             </button>
           </div>
-          <div>
+          <div className="subject-button-box">
             <button className={`subject-button ${y2020 ? 'selected' : ''}`} value="y2020" onClick={handleChangeSubjectY2020}>
               Lv. 밈중독
             </button>
@@ -95,13 +94,9 @@ const QuizIntro = (props) => {
         </ButtonSection>
       </Wrapper>
       {showModal && (
-        <ModalWrapper visible={true}>
-          <ModalContainer>
-            <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <p>퀴즈 주제를 선택해주세요!</p>
-            </div>
-          </ModalContainer>
-        </ModalWrapper>
+        <AlertModal showModal={showModal}>
+          <p>퀴즈 주제를 선택해주세요! 🤓</p>
+        </AlertModal>
       )}
     </>
   )
@@ -110,6 +105,7 @@ const QuizIntro = (props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 74px 0 0;
 `
 
 const ImageSection = styled.div`
@@ -131,21 +127,24 @@ const SubjectSection = styled.div`
     font-weight: normal;
     text-align: center;
   }
-  .subject-button {
-    width: 240px;
-    height: 48px;
-    padding: 15px 24px;
-    margin: 8px auto;
-    border: 1px solid ${({ theme }) => theme.colors.black};
-    text-align: left;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-    font-family: 'Pretendard Variable';
-    font-style: normal;
-    font-weight: 500;
-  }
-  .selected {
-    transition: background-color 0.3s ease-in-out;
-    background-color: ${({ theme }) => theme.colors.yellow};
+  .subject-button-box {
+    width: 100%;
+    padding: 12px 40px;
+    .subject-button {
+      width: 100%;
+      height: 48px;
+      padding: 15px 24px;
+      border: 1px solid ${({ theme }) => theme.colors.black};
+      text-align: left;
+      font-size: ${({ theme }) => theme.fontSizes.xl};
+      font-family: 'Pretendard Variable';
+      font-style: normal;
+      font-weight: 500;
+    }
+    .selected {
+      transition: background-color 0.3s ease-in-out;
+      background-color: ${({ theme }) => theme.colors.yellow};
+    }
   }
 `
 
@@ -153,7 +152,7 @@ const ButtonSection = styled.div`
   position: relative;
   width: 100%;
   .start-button-box {
-    width: 107px;
+    width: 100px;
     height: 40px;
     position: absolute;
     border: 1px solid ${({ theme }) => theme.colors.black};
@@ -172,20 +171,20 @@ const ButtonSection = styled.div`
   }
   .box1 {
     top: 8px;
-    left: 49.5%;
-    transform: translateX(-49.5%);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
     transition-duration: 0.3s;
     &:active {
-      left: 51%;
-      transform: translateX(-51%);
+      left: calc(50%);
+      transform: translateX(calc(-50% + 4px));
       top: 12px;
     }
   }
   .box2 {
     top: 12px;
-    left: 51%;
-    transform: translateX(-51%);
+    left: calc(50%);
+    transform: translateX(calc(-50% + 4px));
     background-color: ${({ theme }) => theme.colors.white};
   }
 `

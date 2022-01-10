@@ -81,10 +81,12 @@ const PostList = (props) => {
 export default PostList
 
 const Container = styled.div`
+  padding: 74px 0 0;
   position: relative;
 `
 
 const SearchPostDiv = styled.div`
+  width: 100%;
   position: absolute;
   z-index: 5;
 `
@@ -123,7 +125,8 @@ const AddbtnShadow = styled.div`
   width: 280px;
   height: 40px;
   top: 19px;
-  left: 51px;
+  left: calc(50%);
+  transform: translateX(calc(-50% + 4px));
   background-color: white;
   border: 1px solid black;
   position: absolute;
