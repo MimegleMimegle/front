@@ -130,8 +130,9 @@ const FileUploader = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  max-height: 100%;
   height: 100%;
-  padding: 74px 0 20px;
+  padding: 74px 0 0;
 `
 
 const Title = styled.span`
@@ -180,6 +181,7 @@ const PopularGridLayout = styled.div`
 `
 
 const GeneralGridLayout = styled.div`
+  padding: 0 0 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(121px, 121px);

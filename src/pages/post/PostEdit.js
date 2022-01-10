@@ -193,7 +193,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 74px 0 40px;
+  padding: 74px 0 0;
 `
 
 const PWHeader = styled.div`

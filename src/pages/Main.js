@@ -38,17 +38,30 @@ const Main = (props) => {
     searchDictDB()
   }, [])
 
-  let characterArray = new Array()
-  characterArray[0] = '../styles/image/smileIcon_Orange.png'
-  characterArray[1] = '../styles/image/smileIcon_Yellow.png'
-  characterArray[2] = '../styles/image/smileIcon_Blue.png'
+  useEffect(() => {
+    async function submitVisitors() {
+      try {
+        const result = await mainApi.countVisitors()
+      } catch (error) {
+        console.log('방문자 전송 문제 발생', error.response)
+      }
+    }
+    submitVisitors()
+  }, [])
 
-  function showCharacter() {
+  let characterArray = new Array()
+  characterArray[0] = 'smileIcon_Orange.png'
+  characterArray[1] = 'smileIcon_Yellow.png'
+  characterArray[2] = 'smileIcon_Blue.png'
+
+  window.onload = function showCharacter() {
     let characterNumber = Math.round(Math.random() * 2)
 
     console.log(characterNumber)
-    let objImg = document.getElementById('defaultThumbnail')
+    let objImg = document.getElementById('introImg')
     objImg.src = characterArray[characterNumber]
+
+    console.log(objImg)
   }
 
   return (
@@ -121,7 +134,7 @@ const Main = (props) => {
           {popularBoards.map((popularBoards) => (
             <div className="MainPagePopularBoardList" key={popularBoards.id} onClick={() => history.push(`/post/detail/${popularBoards.boardId}`)}>
               <div onload="showCharacter()">
-                <img className="MainPagePopularBoardImage" src={popularBoards.thumbNail ? popularBoards.thumbNail : ''}></img>
+                <img className="MainPagePopularBoardImage" id="introImg" border="0" src={popularBoards.thumbNail ? popularBoards.thumbNail : ''}></img>
               </div>
               <div className="MainPagePopularBoardInfo">
                 <div className="MainPagePopularBoardTitle">{popularBoards.title}</div>

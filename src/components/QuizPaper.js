@@ -122,7 +122,7 @@ const QuizPaper = (props) => {
           </div>
         )
       ) : (
-        <QuizResult quiz_list={quiz_list} />
+        <QuizResult quiz_list={quiz_list} category={category} />
       )}
     </>
   )
@@ -131,7 +131,7 @@ const QuizPaper = (props) => {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 74px 0 0;
+  padding: 32px 0 20px;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -244,7 +244,7 @@ const QuizBox = styled.div`
 const ButtonSection = styled.div`
   position: relative;
   width: 100%;
-  margin-top: 20px;
+  margin: 20px 0 0;
   .next-btn-box {
     width: 100px;
     height: 40px;
