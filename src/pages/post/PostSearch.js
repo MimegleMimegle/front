@@ -80,6 +80,7 @@ const PostSearch = (props) => {
         setFilteredPosts(response.data.data)
         setShow(false)
         setSearch(props.match.params.search)
+        
 
 
       })

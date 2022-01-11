@@ -30,7 +30,6 @@ const PostList = (props) => {
   }, [currentPage])
 
   const getPostListDB = async () => {
-    
     let response = await boardApi.getPosts(pageSize,currentPage)
     let totalLength = await boardApi.totalLength()
     console.log(response)
