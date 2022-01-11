@@ -30,12 +30,13 @@ const PostList = (props) => {
   }, [currentPage])
 
   const getPostListDB = async () => {
-    let response = await axios.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${currentPage - 1}&size=${pageSize}`)
+    let response = await boardApi.getPosts(pageSize,currentPage)
     let totalLength = await boardApi.totalLength()
     console.log(response)
     console.log(totalLength)
     setPost(response.data.data)
     setTotalCount(totalLength.data.data)
+    
   }
 
   const searchClick = () => {
@@ -109,11 +110,17 @@ const Addbtn = styled.div`
   font-size: 14px;
   font-family: 'YdestreetB';
   font-style: normal;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   z-index: 2;
+  /* transform: translateX(-50%); */
   margin: 15px 0 30px 0;
-  /* padding: 11px 0px; */
+  transition-duration: 0.1s;
+
+  &:hover {
+      left: calc(50%);
+      transform: translate(4px,10%);
+    }
 `
 
 const AddbtnShadow = styled.div`

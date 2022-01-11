@@ -35,7 +35,7 @@ const CommentTest = ({ post }) => {
       <CommentWrite>
         <ImgInput>
           <img className="commentImg" src={now_profile && now_profile.profileImage} alt="" />
-          <input className="writebox" placeholder="댓글을 입력해주세요" type="text" value={comment} onChange={onChangeComment}></input>
+          <input className="writebox" placeholder="댓글을 입력해주세요" type="text" value={comment} onChange={onChangeComment} onKeyPress={(e)=>{if(e.key === "Enter"){addComment()}}}></input>
         </ImgInput>
         <MdOutlineSend style={{ fontSize: '18px', cursor: 'pointer' }} onClick={addComment} />
       </CommentWrite>

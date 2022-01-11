@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { likeApi } from '../shared/api'
 import { useHistory } from 'react-router'
@@ -17,10 +17,11 @@ const PostCard = ({ post }) => {
   }
   const [likeCount, setLikeCount] = useState(post.likeCnt)
   const [isLiked, setIsLiked] = useState(post.isLike)
-
+  console.log(post.isLike)
   const hour = post.createdAt.split('T')[1].split('.')[0]
 
-
+ 
+  
   const handleClickLike = async (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -30,6 +31,7 @@ const PostCard = ({ post }) => {
         .then((response) => {
           console.log(response.data)
           setIsLiked(false)
+          console.log(isLiked)
           setLikeCount(likeCount - 1)
         })
         .catch((error) => {
@@ -42,6 +44,7 @@ const PostCard = ({ post }) => {
           console.log(response.data)
           setIsLiked(true)
           setLikeCount(likeCount + 1)
+          console.log(isLiked)
         })
         .catch((error) => {
           console.log('이미지 좋아요 문제 발생', error.response)

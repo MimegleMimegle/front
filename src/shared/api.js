@@ -37,7 +37,7 @@ export const mypageApi = {
 }
 
 export const boardApi = {
-  getPosts: (pageSize, currentPage) => instance.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  getPosts: (pageSize, currentPage) => instance.get(`/api/board/list/FREEBOARD?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
   writePost: (post) => instance.post('/api/board/FREEBOARD', post),
   editPost: (boardId, content) => instance.put(`/api/board/${boardId}`, content),
