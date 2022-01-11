@@ -16,7 +16,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.lock') }}
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
@@ -35,4 +35,4 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
-            dist s3://memeglememegle
+            build s3://memeglememegle
