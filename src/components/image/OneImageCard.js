@@ -92,16 +92,18 @@ const ImageBox = styled.div`
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
   .active {
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 0;
+    bottom: 7px;
     right: 0;
-    margin-bottom: -7px;
-    background-color: rgba(0, 0, 0, 0.6);
     z-index: 100;
     transition: all 0.3s ease-in-out;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
   }
   .inactive {
     display: none;
