@@ -10,14 +10,12 @@ import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
 
 const PostCard = ({ post }) => {
   const history = useHistory()
-  console.log(post)
 
   const onC = () => {
     history.push(`/post/detail/${post && post.boardId}`)
   }
   const [likeCount, setLikeCount] = useState(post.likeCnt)
   const [isLiked, setIsLiked] = useState(post.isLike)
-  console.log(post.isLike)
   const hour = post.createdAt.split('T')[1].split('.')[0]
 
   const handleClickLike = async (e) => {
