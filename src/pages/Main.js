@@ -8,7 +8,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
 import Header from '../components/Header'
 
-import 'swiper/swiper-bundle.css'
 import 'swiper/swiper.min.css'
 import 'swiper/components/lazy/lazy.min.css'
 import 'swiper/components/pagination/pagination.min.css'
@@ -115,7 +114,7 @@ const Main = (props) => {
             <div className="MainPageTagMoreButton_1st" onClick={() => history.push('/dict')}>
               <div className="MainPageTagMoreButton1">More</div>
               <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+                <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
               </svg>
             </div>
           </div>
@@ -126,7 +125,7 @@ const Main = (props) => {
           <div className="MainPageTagMoreButton_2nd" onClick={() => history.push('/image')}>
             <div className="MainPageTagMoreButton2">More</div>
             <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+              <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
             </svg>
           </div>
         </div>
@@ -147,7 +146,7 @@ const Main = (props) => {
             <div className="MainPageTagMoreButton_3rd" onClick={() => history.push('/post')}>
               <div className="MainPageTagMoreButton3">More</div>
               <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+                <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
               </svg>
             </div>
           </div>

@@ -7,7 +7,6 @@ import { dictApi } from '../shared/api'
 import { actionCreators as dictActions } from '../redux/modules/dict'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import 'swiper/swiper-bundle.css'
 import 'swiper/swiper.min.css'
 // import 'swiper/css/free-mode'
 import 'swiper/components/scrollbar/scrollbar.min.css'
