@@ -161,7 +161,20 @@ const Join = () => {
               아이디
             </label>
             <DoubleCheckBox>
-              <input className="JoinInputBox input1" id="UsernameInput_Join" maxLength="16" placeholder="영어, 숫자 3~16자" type="text" value={username} onChange={onChangeUsername} />
+              <input
+                className="JoinInputBox input1"
+                id="UsernameInput_Join"
+                maxLength="16"
+                placeholder="영어, 숫자 3~16자"
+                type="text"
+                value={username}
+                onChange={onChangeUsername}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    checkUsername()
+                  }
+                }}
+              />
               <button className="doubleCheckButton" onClick={checkUsername}>
                 중복확인
               </button>
@@ -180,6 +193,11 @@ const Join = () => {
                 type="text"
                 value={nickname}
                 onChange={onChangeNickname}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    checkNickname()
+                  }
+                }}
               />
               <button className="doubleCheckButton" onClick={checkNickname}>
                 중복확인
@@ -227,7 +245,7 @@ const Join = () => {
                 }
               }}
             >
-              <div className="MemegleButton_JoinSubmit Join1">회원가입</div>
+              <button className="MemegleButton_JoinSubmit Join1">회원가입</button>
               <div className="MemegleButton_JoinSubmit Join2"></div>
             </div>
           </div>

@@ -106,7 +106,19 @@ const DictWrite = (props) => {
       <div className="DictCardWritePageLayout">
         <div className="DictCardInputSection">
           <div className="DictCardInputTitleContainer">
-            <div className="DictCardInputTitleGuideText">단어</div> <input className="DictCardInputTitle" type="text" value={title} onChange={onChangeTitle} placeholder="등록할 단어를 입력해주세요" />
+            <div className="DictCardInputTitleGuideText">단어</div>{' '}
+            <input
+              className="DictCardInputTitle"
+              type="text"
+              value={title}
+              onChange={onChangeTitle}
+              placeholder="등록할 단어를 입력해주세요"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  doubleCheckDict()
+                }
+              }}
+            />
             <div
               className="DictCardInputTitleDoubleCheck"
               onClick={() => {
