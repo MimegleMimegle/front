@@ -6,6 +6,7 @@ import { actionCreators as imageActions } from '../../redux/modules/image'
 
 import Header from '../../components/Header'
 import InfinityScroll from '../../shared/InfinityScroll'
+import MaysonryLayout from '../../components/image/MasonryLayout'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -13,14 +14,12 @@ import { AiOutlinePlus } from 'react-icons/ai'
 
 const ImageList = (props) => {
   const dispatch = useDispatch()
-
   const fileInput = useRef('')
+  const image_data = useSelector((state) => state.image)
 
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
   const [bestImageList, setBestImageList] = useState([])
-
-  const image_data = useSelector((state) => state.image)
 
   const getImageList = () => {
     dispatch(imageActions.getImageListDB(image_data.page))
@@ -88,11 +87,20 @@ const ImageList = (props) => {
               </div>
               <Container>
                 <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
-                  <GeneralGridLayout>
+                  {/* <GeneralGridLayout> */}
+                  {/* <MaysonryLayout> */}
+                  <Masonry>
                     {image_data.image_list.map((image) => {
-                      return <OneImageCard key={image.boardId} image={image} />
+                      return (
+                        <Items>
+                          <OneImageCard key={image.boardId} image={image} />
+                        </Items>
+                      )
                     })}
-                  </GeneralGridLayout>
+                  </Masonry>
+
+                  {/* </MaysonryLayout> */}
+                  {/* </GeneralGridLayout> */}
                 </InfinityScroll>
               </Container>
             </GeneralSection>
@@ -130,8 +138,9 @@ const FileUploader = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  max-height: 100%;
   height: 100%;
-  padding: 74px 0 20px;
+  padding: 74px 0 0;
 `
 
 const Title = styled.span`
@@ -180,10 +189,24 @@ const PopularGridLayout = styled.div`
 `
 
 const GeneralGridLayout = styled.div`
+  padding: 0 0 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(121px, 121px);
   gap: 2px;
+`
+
+/* 실험 */
+const Masonry = styled.div`
+  column-count: 3;
+  column-gap: 2px;
+`
+const Items = styled.div`
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2px;
+  cursor: pointer;
 `
 
 export default ImageList

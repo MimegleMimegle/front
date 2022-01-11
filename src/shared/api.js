@@ -29,7 +29,6 @@ export const userApi = {
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
 }
 
-/* 추가 */
 export const mypageApi = {
   getUserInfo: () => instance.get('/api/mypage'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
@@ -43,7 +42,6 @@ export const boardApi = {
   editPost: (boardId, content) => instance.put(`/api/board/${boardId}`, content),
   deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
   selectPost: () => instance.get('/api/board?q=query'),
-  // 추가
   getSubject: () => instance.get('/api/board/subject'),
   recommendHashTag: () => instance.get('/api/board/hashTag'),
   searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
@@ -61,22 +59,21 @@ export const dictApi = {
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
   searchDict: (keyword, pageSize, currentPage) => instance.get(`/api/dict/search?q=${keyword}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
-  /* 추가 */
   tellMeTotalLength: () => instance.get('/api/count/dict'),
   tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
   dobleCheckDict: (dictName) => instance.post('/api/check/dict', { dictName: dictName }),
 }
 
 export const quizApi = {
-  /* 추가 */
   getQuizList: (category) => instance.get(`/api/quiz/${category}?count=10`),
+  submitScore: (category, score) => instance.get(`api/stat/quiz/${category}?score=${score}`),
 }
 
 export const mainApi = {
   mainPage: () => instance.get('/api/main'),
+  countVisitors: () => instance.get('api/stat/visitor'),
 }
 
-/* 추가 */
 export const commentApi = {
   addComment: (boardId, comment) => instance.post(`/api/board/${boardId}/comment`, { content: comment }),
   editComment: (commentId) => instance.put(`/api/board/${commentId}`),

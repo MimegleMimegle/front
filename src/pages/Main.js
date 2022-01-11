@@ -38,6 +38,17 @@ const Main = (props) => {
     searchDictDB()
   }, [])
 
+  useEffect(() => {
+    async function submitVisitors() {
+      try {
+        const result = await mainApi.countVisitors()
+      } catch (error) {
+        console.log('방문자 전송 문제 발생', error.response)
+      }
+    }
+    submitVisitors()
+  }, [])
+
   let characterArray = new Array()
   characterArray[0] = 'smileIcon_Orange.png'
   characterArray[1] = 'smileIcon_Yellow.png'

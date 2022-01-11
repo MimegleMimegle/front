@@ -73,21 +73,17 @@ const PostSearch = (props) => {
         console.log('해시태그 정보를 불러오는 데 문제가 발생했습니다.', err.response)
       })
 
-      boardApi
+    boardApi
       .searchPost(props.match.params.search)
       .then((response) => {
         console.log(response.data)
         setFilteredPosts(response.data.data)
         setShow(false)
         setSearch(props.match.params.search)
-        
-
-
       })
       .catch((error) => {
         console.log('검색한 게시글 정보를 불러오는 데 문제가 발생했습니다.', error.response)
       })
-
   }, [])
 
   return (
@@ -108,7 +104,18 @@ const PostSearch = (props) => {
             <div style={{ height: '100%', padding: '0 16px 0 5px' }}>
               <GoSearch style={{ fontSize: '13px', margin: '18px 0 18px 18px' }} />
             </div>
-            <input placeholder="두 글자 이상의 검색어를 입력해주세요" type="text" onKeyPress={(e)=>{if(e.key === "Enter"){clickSearch()}}} onClick={searchClick} onChange={handleSearch} style={{ width: '100%', padding: '10px 16px', border: 'none', backgroundColor: '#e8e8e8',}} />
+            <input
+              placeholder="두 글자 이상의 검색어를 입력해주세요"
+              type="text"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  clickSearch()
+                }
+              }}
+              onClick={searchClick}
+              onChange={handleSearch}
+              style={{ width: '100%', padding: '10px 16px', border: 'none', backgroundColor: '#e8e8e8' }}
+            />
           </div>
           {show && (
             <div style={{ borderBottom: '1px solid black' }}>
@@ -143,7 +150,7 @@ const PostSearch = (props) => {
 }
 
 const Container = styled.div`
-  padding: 74px 0 20px;
+  padding: 74px 0 0;
   width: 100%;
   height: 100%;
 `
