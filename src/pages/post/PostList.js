@@ -113,11 +113,18 @@ const Addbtn = styled.div`
   font-size: 14px;
   font-family: 'YdestreetB';
   font-style: normal;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   z-index: 2;
+  /* transform: translateX(-50%); */
   margin: 15px 0 30px 0;
-  /* padding: 11px 0px; */
+  transition-duration: 0.1s;
+
+  &:active {
+      left: calc(50%);
+      transform: translate(4px,10%);
+      
+    }
 `
 
 const AddbtnShadow = styled.div`
