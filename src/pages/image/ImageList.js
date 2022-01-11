@@ -76,7 +76,7 @@ const ImageList = (props) => {
               <Container>
                 <PopularGridLayout>
                   {bestImageList.map((image) => {
-                    return <OneImageCard key={image.boardId} image={image} />
+                    return <OneImageCard type="popular" key={image.boardId} image={image} />
                   })}
                 </PopularGridLayout>
               </Container>
@@ -173,8 +173,8 @@ const Container = styled.div`
 const PopularGridLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 160px 220px;
-  gap: 7px;
+  grid-template-rows: minmax(100px, 180px);
+  column-gap: 7px;
 
   div {
     &:nth-child(1) {
