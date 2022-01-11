@@ -115,7 +115,16 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
             </div>
             <div style={{ padding: '20px 0 0' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <input type="text" className="input-nickname" onChange={handleChangeNickname} />
+                <input
+                  type="text"
+                  className="input-nickname"
+                  onChange={handleChangeNickname}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      checkNickname()
+                    }
+                  }}
+                />
                 <DoubleCheckButton onClick={checkNickname}>중복확인</DoubleCheckButton>
               </div>
               <div style={{ padding: '10px 0' }}>

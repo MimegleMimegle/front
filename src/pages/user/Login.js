@@ -105,6 +105,11 @@ const Login = (props) => {
               typeName="password"
               onChange={onChangePassword}
               value={password}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  login()
+                }
+              }}
             />
             {password.length > 0 && <SpanPassword className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</SpanPassword>}
             <div
@@ -114,11 +119,11 @@ const Login = (props) => {
               onClick={login}
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
-                  console.log('Enter')
+                  login()
                 }
               }}
             >
-              <div className="MemegleButton_LoginSubmit Login1">로그인</div>
+              <button className="MemegleButton_LoginSubmit Login1">로그인</button>
               <div className="MemegleButton_LoginSubmit Login2"></div>
             </div>
           </div>

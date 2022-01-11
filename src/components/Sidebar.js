@@ -90,7 +90,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
             onClick={() => {
               setShowSidebar(false)
             }}
-            style={{ width: '100%', height: '100%', padding: '0', textAlign: 'right' }}
+            style={{ height: '100%', padding: '0', textAlign: 'right' }}
           >
             <CloseIcon style={{ paddingTop: '3px' }} />
           </button>
