@@ -162,7 +162,7 @@ const UserProfile = styled.div`
     width: calc(100% - 40px);
     max-height: 160px;
     height: 100%;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
     position: absolute;
 
     .user-nickname {
@@ -203,6 +203,7 @@ const UserProfile = styled.div`
     transform: translateX(calc(-50% + 4px));
     top: 4px;
     background-color: ${({ theme }) => theme.colors.yellow};
+    border: none;
   }
 `
 
@@ -210,7 +211,7 @@ const ProfileImage = styled.div`
   position: absolute;
   width: 80px;
   height: 80px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 2px solid ${({ theme }) => theme.colors.black};
   border-radius: 40px;
   top: -40px;
   left: 50%;
