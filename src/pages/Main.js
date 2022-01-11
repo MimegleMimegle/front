@@ -8,10 +8,11 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
 import Header from '../components/Header'
 
-import 'swiper/css'
-import 'swiper/css/lazy'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
+import 'swiper/swiper-bundle.css'
+import 'swiper/swiper.min.css'
+import 'swiper/components/lazy/lazy.min.css'
+import 'swiper/components/pagination/pagination.min.css'
+import 'swiper/components/navigation/navigation.min.css'
 import '../styles/css/Main.css'
 
 const Main = (props) => {
