@@ -9,7 +9,7 @@ import { MdShare } from 'react-icons/md'
 import { HiOutlineHeart } from 'react-icons/hi'
 import { HiHeart } from 'react-icons/hi'
 
-const OneImageCard = ({ image }) => {
+const OneImageCard = ({ image, type }) => {
   const boardId = image.boardId
 
   const [hover, setHover] = useState(false)
@@ -89,17 +89,24 @@ const OneImageCard = ({ image }) => {
 }
 
 const ImageBox = styled.div`
+  display: flex;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 7px;
+
   .active {
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 7px;
+    bottom: 0;
     right: 0;
+    border-radius: 10px;
     z-index: 100;
+
     transition: all 0.3s ease-in-out;
     &:hover {
       background-color: rgba(0, 0, 0, 0.6);
@@ -114,6 +121,7 @@ const ImageThumbnail = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px;
 `
 
 const Overlay = styled.div`
@@ -125,7 +133,7 @@ const Overlay = styled.div`
   .like-button {
     color: ${({ theme }) => theme.colors.white};
     z-index: 1000;
-    padding: 0 3px 0 0;
+    padding: 3px 3px 0 0;
   }
   .like-count {
     color: ${({ theme }) => theme.colors.white};
