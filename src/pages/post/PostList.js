@@ -30,15 +30,13 @@ const PostList = (props) => {
   }, [currentPage])
 
   const getPostListDB = async () => {
-    boardApi
-    .getPosts(pageSize, currentPage)
-    .then((response)=> {
-      let totalLength = boardApi.totalLength()
-      console.log(response)
-      console.log(totalLength)
-      setPost(response.data.data)
-      setTotalCount(totalLength.data.data)
-    })
+    
+    let response = await boardApi.getPosts(pageSize,currentPage)
+    let totalLength = await boardApi.totalLength()
+    console.log(response)
+    console.log(totalLength)
+    setPost(response.data.data)
+    setTotalCount(totalLength.data.data)
     
   }
 
@@ -120,10 +118,9 @@ const Addbtn = styled.div`
   margin: 15px 0 30px 0;
   transition-duration: 0.1s;
 
-  &:active {
+  &:hover {
       left: calc(50%);
       transform: translate(4px,10%);
-      
     }
 `
 

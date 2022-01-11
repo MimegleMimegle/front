@@ -135,6 +135,7 @@ const editPostDB = (boardId, hashTag_List, title, uploadFile, content) => {
       })
       .catch((err) => {
         console.log('게시글 수정하는데 문제 발생', err.response)
+        history.push('/post') 
       })
   }
 }
@@ -151,6 +152,7 @@ const delPostDB = (boardId) => {
 
       .catch((err) => {
         console.log('게시물 삭제  실패', err)
+        history.push('/post')
       })
   }
 }
