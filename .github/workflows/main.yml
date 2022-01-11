@@ -25,7 +25,7 @@ jobs:
         run: yarn
 
       - name: Build
-        run: yarn build
+        run: unset CI && yarn build
 
       - name: Deploy
         env:
