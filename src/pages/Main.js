@@ -8,10 +8,10 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
 import Header from '../components/Header'
 
-import 'swiper/css'
-import 'swiper/css/lazy'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
+import 'swiper/swiper.min.css'
+import 'swiper/components/lazy/lazy.min.css'
+import 'swiper/components/pagination/pagination.min.css'
+import 'swiper/components/navigation/navigation.min.css'
 import '../styles/css/Main.css'
 
 const Main = (props) => {
@@ -50,9 +50,9 @@ const Main = (props) => {
   }, [])
 
   let characterArray = new Array()
-  characterArray[0] = 'smileIcon_Orange.png'
-  characterArray[1] = 'smileIcon_Yellow.png'
-  characterArray[2] = 'smileIcon_Blue.png'
+  characterArray[0] = '../styles/image/smileIcon_Orange.png'
+  characterArray[1] = '../styles/image/smileIcon_Yellow.png'
+  characterArray[2] = '../styles/image/smileIcon_Blue.png'
 
   window.onload = function showCharacter() {
     let characterNumber = Math.round(Math.random() * 2)
@@ -61,8 +61,12 @@ const Main = (props) => {
     let objImg = document.getElementById('introImg')
     objImg.src = characterArray[characterNumber]
 
+    console.log(characterArray)
     console.log(objImg)
+    console.log(objImg.src)
   }
+
+  const hasThumbNail = popularBoards.thumbNail !== ''
 
   return (
     <>
@@ -72,7 +76,14 @@ const Main = (props) => {
           slidesPerView={1}
           spaceBetween={30}
           lazy={true}
+          grabCursor={true}
           centeredSlides={true}
+          breakpoints={{
+            769: {
+              slidesPerView: 1,
+              slidesPerGroup: 2,
+            },
+          }}
           autoplay={{
             delay: 3200,
             disableOnInteraction: false,
@@ -114,7 +125,7 @@ const Main = (props) => {
             <div className="MainPageTagMoreButton_1st" onClick={() => history.push('/dict')}>
               <div className="MainPageTagMoreButton1">More</div>
               <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+                <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
               </svg>
             </div>
           </div>
@@ -125,7 +136,7 @@ const Main = (props) => {
           <div className="MainPageTagMoreButton_2nd" onClick={() => history.push('/image')}>
             <div className="MainPageTagMoreButton2">More</div>
             <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+              <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
             </svg>
           </div>
         </div>
@@ -133,9 +144,7 @@ const Main = (props) => {
           <div className="MainPagePopularBoardText">핫 밈글</div>
           {popularBoards.map((popularBoards) => (
             <div className="MainPagePopularBoardList" key={popularBoards.id} onClick={() => history.push(`/post/detail/${popularBoards.boardId}`)}>
-              <div onload="showCharacter()">
-                <img className="MainPagePopularBoardImage" id="introImg" border="0" src={popularBoards.thumbNail ? popularBoards.thumbNail : ''}></img>
-              </div>
+              <div onload="showCharacter()">{hasThumbNail ? <img className="MainPagePopularBoardImage" src={popularBoards.thumbNail} /> : <img id="introImg" border="0" />}</div>
               <div className="MainPagePopularBoardInfo">
                 <div className="MainPagePopularBoardTitle">{popularBoards.title}</div>
                 <div className="MainPagePopularBoardWriter">{popularBoards.writer}</div>
@@ -146,7 +155,7 @@ const Main = (props) => {
             <div className="MainPageTagMoreButton_3rd" onClick={() => history.push('/post')}>
               <div className="MainPageTagMoreButton3">More</div>
               <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 29H93L65.1497 1" stroke="black" stroke-width="2" />
+                <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
               </svg>
             </div>
           </div>

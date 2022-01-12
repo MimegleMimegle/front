@@ -5,18 +5,18 @@ import { history } from '../redux/ConfigureStore'
 import { mainApi } from '../shared/api'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import 'swiper/css'
-import 'swiper/css/free-mode'
-import 'swiper/css/scrollbar'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
+import 'swiper/swiper.min.css'
+// import 'swiper/css/free-mode'
+import 'swiper/components/scrollbar/scrollbar.min.css'
+import 'swiper/components/pagination/pagination.min.css'
+import 'swiper/components/navigation/navigation.min.css'
 
 import '../styles/css/PopularBoardCardSwiper.css'
 
-import SwiperCore, { FreeMode, Pagination, Navigation, Scrollbar } from 'swiper'
+import SwiperCore, { Pagination, Navigation, Scrollbar } from 'swiper'
 
 const PopularBoardCardSwiper = (props) => {
-  SwiperCore.use([FreeMode, Pagination, Navigation, Scrollbar])
+  SwiperCore.use([Pagination, Navigation, Scrollbar])
 
   const dispatch = useDispatch()
 

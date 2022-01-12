@@ -105,6 +105,11 @@ const Login = (props) => {
               typeName="password"
               onChange={onChangePassword}
               value={password}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  login()
+                }
+              }}
             />
             {password.length > 0 && <SpanPassword className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</SpanPassword>}
             <div
@@ -114,11 +119,11 @@ const Login = (props) => {
               onClick={login}
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
-                  console.log('Enter')
+                  login()
                 }
               }}
             >
-              <div className="MemegleButton_LoginSubmit Login1">로그인</div>
+              <button className="MemegleButton_LoginSubmit Login1">로그인</button>
               <div className="MemegleButton_LoginSubmit Login2"></div>
             </div>
           </div>
@@ -128,10 +133,10 @@ const Login = (props) => {
           <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
             <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
           </a>
-          {/* <GoogleButton /> */}
-          <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
-          {/* <NaverLogin /> */}
-          <img className="NaverLoginBtn" size="5" src={naver}></img>
+          <GoogleButton />
+          {/* <img className="GoogleLoginBtn" size="5" src={googleColor}></img> */}
+          <NaverLogin />
+          {/* <img className="NaverLoginBtn" size="5" src={naver}></img> */}
         </div>
       </div>
       {showModal && (

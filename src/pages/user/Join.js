@@ -161,7 +161,20 @@ const Join = () => {
               아이디
             </label>
             <DoubleCheckBox>
-              <input className="JoinInputBox input1" id="UsernameInput_Join" maxLength="16" placeholder="영어, 숫자 3~16자" type="text" value={username} onChange={onChangeUsername} />
+              <input
+                className="JoinInputBox input1"
+                id="UsernameInput_Join"
+                maxLength="16"
+                placeholder="영어, 숫자 3~16자"
+                type="text"
+                value={username}
+                onChange={onChangeUsername}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    checkUsername()
+                  }
+                }}
+              />
               <button className="doubleCheckButton" onClick={checkUsername}>
                 중복확인
               </button>
@@ -180,6 +193,11 @@ const Join = () => {
                 type="text"
                 value={nickname}
                 onChange={onChangeNickname}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    checkNickname()
+                  }
+                }}
               />
               <button className="doubleCheckButton" onClick={checkNickname}>
                 중복확인
@@ -227,17 +245,9 @@ const Join = () => {
                 }
               }}
             >
-              <div className="MemegleButton_JoinSubmit Join1">회원가입</div>
+              <button className="MemegleButton_JoinSubmit Join1">회원가입</button>
               <div className="MemegleButton_JoinSubmit Join2"></div>
             </div>
-          </div>
-          <div className="SocialLoginHR_JoinPage">또는</div>
-          <div className="SocialLoginBtns_JoinPage">
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
-              <img className="KakaoLoginBtn_JoinPage" size="5" src={kakaotalk}></img>
-            </a>
-            <img className="GoogleLoginBtn_JoinPage" size="5" src={googleColor}></img>
-            <img className="NaverLoginBtn_JoinPage" size="5" src={naver}></img>
           </div>
         </div>
       </div>
@@ -292,3 +302,16 @@ const ConfirmButton = styled.button`
 `
 
 export default Join
+
+{
+  /* <div className="SocialLoginHR_JoinPage">또는</div> */
+}
+{
+  /* <div className="SocialLoginBtns_JoinPage"> */
+}
+// <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
+// <img className="KakaoLoginBtn_JoinPage" size="50" src={kakaotalk}></img>
+// </a>
+// <img className="GoogleLoginBtn_JoinPage" size="50" src={googleColor}></img>
+// <img className="NaverLoginBtn_JoinPage" size="50" src={naver}></img>
+// </div>

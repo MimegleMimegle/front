@@ -139,6 +139,8 @@
   border-bottom: 0.5px solid rgb(200, 200, 200);
   margin-top: 10px;
   margin-bottom: 20px;
+
+  -webkit-appearance: none;
 }
 
 .OneDictionaryCardList {
@@ -147,6 +149,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+
+  -webkit-appearance: none;
 }
 
 .DictListTitle {
@@ -158,6 +162,8 @@
   font-style: normal;
   font-size: 18px;
   font-weight: 700;
+
+  -webkit-appearance: none;
 }
 
 .DictListSummary {
@@ -166,12 +172,16 @@
   margin-top: -15px;
   width: 300px;
   word-break: keep-all;
+
+  -webkit-appearance: none;
 }
 
 .DictWriteInfo {
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  -webkit-appearance: none;
 }
 
 .DictListFirstWriter {
@@ -180,6 +190,8 @@
   display: flex;
   align-items: flex-end;
   margin: 0 0 0 120px;
+
+  -webkit-appearance: none;
 }
 
 .DictListCreatedAt {
@@ -188,6 +200,8 @@
   display: flex;
   align-items: flex-end;
   margin: 0 20px 0 0;
+
+  -webkit-appearance: none;
 }
 
 .DictListLikeButton {
@@ -197,6 +211,8 @@
   display: flex;
   align-items: flex-start;
   margin: 0px 0px 0px 20px;
+
+  -webkit-appearance: none;
 }
 
 .DictListLikeCount {
@@ -206,6 +222,8 @@
   display: flex;
   align-items: flex-start;
   margin: 0 0 0 5px;
+
+  -webkit-appearance: none;
 }
 
 .rc-pagination {

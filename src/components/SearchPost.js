@@ -13,7 +13,7 @@ import { IoClose } from 'react-icons/io5'
 /********* 검색된 게시글 정보가 없을 때 보여줄 화면!! 모달이든 뭐든 띄워야함! *********/
 
 const SearchPost = (props) => {
-  const history = useHistory();  
+  const history = useHistory()
 
   const [hashTags, setHashTags] = React.useState([])
   const [search, setSearch] = React.useState('')
@@ -64,7 +64,17 @@ const SearchPost = (props) => {
             <div onClick={clickSearch} style={{ height: '100%', padding: '0 16px 0 5px' }}>
               <GoSearch style={{ fontSize: '13px', margin: '18px 0 18px 18px' }} />
             </div>
-            <input placeholder="두 글자 이상의 검색어를 입력해주세요" type="text" onKeyPress={(e)=>{if(e.key === "Enter"){clickSearch()}}} onChange={handleSearch} style={{ width: '100%', border: 'none', backgroundColor: '#e8e8e8',}} />
+            <input
+              placeholder="두 글자 이상의 검색어를 입력해주세요"
+              type="text"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  clickSearch()
+                }
+              }}
+              onChange={handleSearch}
+              style={{ width: '100%', border: 'none', backgroundColor: '#e8e8e8' }}
+            />
           </div>
           <div>
             {/* DB에서 불러온 HashTags list map */}
