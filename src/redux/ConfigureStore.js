@@ -19,7 +19,6 @@ const rootReducer = combineReducers({
   dict: Dict,
   comment: Comment,
   mypage: Mypage,
-  like: like,
   image: Image,
   router: connectRouter(history),
 })
