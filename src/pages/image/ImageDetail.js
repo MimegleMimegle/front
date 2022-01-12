@@ -6,6 +6,7 @@ import { imageApi } from '../../shared/api'
 import { userApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
 
+import Grid from '../../elements/Grid'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import ImageWrapper from '../../components/image/ImageWrapper'
 import ShareBottomSheet from '../../components/ShareBottomSheet'
@@ -111,7 +112,7 @@ const ImageDetail = (props) => {
   return (
     <>
       <ImageWrapper>
-        <div style={{ width: '100%', padding: '0 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Grid flex_between padding="0 10px">
           <button
             onClick={() => {
               history.replace('/image')
@@ -120,15 +121,15 @@ const ImageDetail = (props) => {
           >
             <IoCloseOutline style={{ fontSize: '24px' }} />
           </button>
-        </div>
-        <div style={{ width: '100%', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+        </Grid>
+        <Grid flex_between padding="10px">
+          <Grid flex_align>
             <ProfileImage src={imageData.profileImageUrl} />
             <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'column' }}>
               <ImageWriter>{imageData.writer}</ImageWriter>
               <ImageCreatedAt>{createdAt}</ImageCreatedAt>
             </div>
-          </div>
+          </Grid>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <button onClick={handleShareVisible}>
               <MdShare style={{ fontSize: '20px' }} />
@@ -139,14 +140,14 @@ const ImageDetail = (props) => {
               </button>
             )}
           </div>
-        </div>
-        <div style={{ width: '100%', height: '70%', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
+        </Grid>
+        <Grid flex_align height="70%" overflow="hidden">
           <img src={imageData.thumbNail} style={{ width: '100%', objectFit: 'cover' }} />
-        </div>
-        <div style={{ width: '100%', padding: '5px 10px 0', display: 'flex', alignItems: 'center' }}>
+        </Grid>
+        <Grid flex_align padding="5px 10px 0">
           <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
           <ImageLikeCount>{likeCount}</ImageLikeCount>
-        </div>
+        </Grid>
         <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />
       </ImageWrapper>
       {showModal && (

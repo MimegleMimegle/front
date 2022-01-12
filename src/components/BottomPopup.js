@@ -1,10 +1,9 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { useSpring, animated } from 'react-spring'
-import Backdrop from '@mui/material/Backdrop'
 
 const BottomPopup = (props) => {
-  const { shareVisible, setShareVisible, children, heightPixel } = props
+  const { isOpen, onClose, children, heightPixel } = props
 
   const [isInDOM, setIsInDOM] = useState(false)
 
@@ -30,11 +29,17 @@ const BottomPopup = (props) => {
     },
   }))
 
-  const handleOverlayClick = useCallback(() => setShareVisible(false), [setShareVisible])
+  window.addEventListener('keyup', (e) => {
+    if (isOpen && e.key === 'Escape') {
+      onClose()
+    }
+  })
+
+  const handleOverlayClick = useCallback(() => onClose(), [onClose])
   const handleContentClick = useCallback((e) => e.stopPropagation(), [])
 
   useEffect(() => {
-    if (shareVisible) {
+    if (isOpen) {
       const currY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
 
       bodyOverflowStyleRef.current = document.body.style.overflow
@@ -45,7 +50,7 @@ const BottomPopup = (props) => {
     } else {
       api.start({ height: '0px', immediate: false })
     }
-  }, [shareVisible, api])
+  }, [isOpen, api])
 
   useEffect(() => {
     if (isInDOM) {
@@ -67,24 +72,23 @@ const BottomPopup = (props) => {
 
   return (
     <>
-      {/* <Backdrop open={shareVisible} onClick={handleOverlayClick}> */}
       <Overlay onClick={handleOverlayClick} />
       <animated.div style={springProps} onClick={handleContentClick}>
         {children}
       </animated.div>
-      {/* </Backdrop> */}
     </>
   )
 }
 
 const Overlay = styled.div`
+  z-index: 10000;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
   transition: background-color 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.6);
 `
 
 export default BottomPopup
