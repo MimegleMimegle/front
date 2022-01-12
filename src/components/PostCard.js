@@ -8,7 +8,6 @@ import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비�
 import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
 
-
 const PostCard = ({ post }) => {
   const history = useHistory()
 
@@ -17,11 +16,8 @@ const PostCard = ({ post }) => {
   }
   const [likeCount, setLikeCount] = useState(post.likeCnt)
   const [isLiked, setIsLiked] = useState(post.isLike)
-  console.log(post.isLike)
   const hour = post.createdAt.split('T')[1].split('.')[0]
 
- 
-  
   const handleClickLike = async (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -78,15 +74,15 @@ const PostCard = ({ post }) => {
           <Icon>
             <IconBox>
               <ViewIcon />
-              <Number>{post && post.views }</Number>
+              <Number>{post && post.views}</Number>
             </IconBox>
             <IconBox>
-              {isLiked? < FullHeartIcon onClick={handleClickLike}/> :< EmptyHeartIcon onClick={handleClickLike}/>}
+              {isLiked ? <FullHeartIcon onClick={handleClickLike} /> : <EmptyHeartIcon onClick={handleClickLike} />}
               <Number className="like-count">{likeCount}</Number>
             </IconBox>
             <IconBox>
               <CommentIcon />
-              <Number>{post&&post.commentCnt}</Number>
+              <Number>{post && post.commentCnt}</Number>
             </IconBox>
           </Icon>
         </Wrap>

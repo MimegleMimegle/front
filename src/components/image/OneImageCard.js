@@ -89,12 +89,7 @@ const OneImageCard = ({ image }) => {
 }
 
 const ImageBox = styled.div`
-  display: inline-block;
   position: relative;
-  max-width: 200px;
-  max-height: 420px;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
   cursor: pointer;
   .active {
@@ -103,6 +98,7 @@ const ImageBox = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
+    margin-bottom: -7px;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 100;
     transition: all 0.3s ease-in-out;
@@ -111,6 +107,7 @@ const ImageBox = styled.div`
     display: none;
   }
 `
+
 const ImageThumbnail = styled.img`
   width: 100%;
   height: 100%;

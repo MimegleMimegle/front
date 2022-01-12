@@ -10,11 +10,8 @@ const CommentTest = ({ post }) => {
   const dispatch = useDispatch()
   const boardId = post.boardId
   const comment_list = post.commentList
-  console.log(boardId)
-  console.log(post.commentList)
 
   const now_profile = useSelector((state) => state.user.profile)
-  console.log(now_profile)
   const [comment, setComment] = React.useState('')
 
   const onChangeComment = (e) => {

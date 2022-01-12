@@ -6,7 +6,7 @@ import { actionCreators as imageActions } from '../../redux/modules/image'
 
 import Header from '../../components/Header'
 import InfinityScroll from '../../shared/InfinityScroll'
-import MaysonryLayout from '../../components/image/MasonryLayout'
+import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -88,18 +88,11 @@ const ImageList = (props) => {
               <Container>
                 <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
                   {/* <GeneralGridLayout> */}
-                  {/* <MaysonryLayout> */}
-                  <Masonry>
+                  <Masonry breakpointCols={3} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
                     {image_data.image_list.map((image) => {
-                      return (
-                        <Items>
-                          <OneImageCard key={image.boardId} image={image} />
-                        </Items>
-                      )
+                      return <OneImageCard key={image.boardId} image={image} />
                     })}
                   </Masonry>
-
-                  {/* </MaysonryLayout> */}
                   {/* </GeneralGridLayout> */}
                 </InfinityScroll>
               </Container>
@@ -164,13 +157,24 @@ const GeneralSection = styled.div`
 
 const Container = styled.div`
   padding: 24px 0 0;
+  .my-masonry-grid {
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: flex;
+    margin-left: -7px; /* gutter size offset */
+    width: auto;
+  }
+  .my-masonry-grid_column {
+    padding-left: 7px; /* gutter size */
+    background-clip: padding-box;
+  }
 `
 
 const PopularGridLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 160px 220px;
-  gap: 2px;
+  gap: 7px;
 
   div {
     &:nth-child(1) {
@@ -194,19 +198,6 @@ const GeneralGridLayout = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(121px, 121px);
   gap: 2px;
-`
-
-/* 실험 */
-const Masonry = styled.div`
-  column-count: 3;
-  column-gap: 2px;
-`
-const Items = styled.div`
-  height: fit-content;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2px;
-  cursor: pointer;
 `
 
 export default ImageList
