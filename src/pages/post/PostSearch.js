@@ -18,19 +18,16 @@ import { IoClose } from 'react-icons/io5'
 
 const PostSearch = (props) => {
   const history = useHistory()
-
+  console.log(props.match.params.search)
   const [hashTags, setHashTags] = React.useState([])
   const [search, setSearch] = React.useState('')
   const [filteredPosts, setFilteredPosts] = React.useState([])
   const [notFound, setNotFound] = React.useState(false)
   const [show, setShow] = React.useState(false)
 
-  console.log(props.match.params.search)
-
   const searchClick = () => {
     show ? setShow(false) : setShow(true)
   }
-
   const handleSearch = (e) => {
     setSearch(e.target.value)
     setShow(true)
@@ -48,7 +45,7 @@ const PostSearch = (props) => {
       .then((response) => {
         console.log(response.data)
         setFilteredPosts(response.data.data)
-
+        
         setShow(false)
       })
       .catch((error) => {
@@ -67,6 +64,7 @@ const PostSearch = (props) => {
       .then((res) => {
         console.log(res.data.data)
         setHashTags(res.data.data.hashTags)
+        console.log(props.match.params.search)
         setSearch(props.match.params.search)
       })
       .catch((err) => {
@@ -123,12 +121,12 @@ const PostSearch = (props) => {
               <RecommendHashTag>추천 해시태그</RecommendHashTag>
               {hashTags &&
                 hashTags.map((hashtag, index) => {
-                  return <HashTag key={index} hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} closeNotFountModal={closeNotFountModal} />
+                  return <HashTag key={index} search={search} hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} closeNotFountModal={closeNotFountModal} />
                 })}
             </div>
           )}
         </Wrapper>
-        <HistoryContainer>"{search}" 에 대한 검색 결과</HistoryContainer>
+        {search? <HistoryContainer>"{search}" 에 대한 검색 결과</HistoryContainer>: null}
         <div>
           {/* 검색어 관련 게시글 목록 잘 불러와지는 지 확인 후 주석 해제 */}
           {filteredPosts.length > 0 ? (
