@@ -8,7 +8,6 @@ import User from './modules/user'
 import Dict from './modules/dict'
 import Comment from './modules/comment'
 import Mypage from './modules/mypage'
-import like from './modules/like'
 import Image from './modules/image'
 
 export const history = createBrowserHistory()
