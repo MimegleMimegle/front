@@ -34,7 +34,7 @@ const PostList = (props) => {
     console.log(totalLength)
     setPost(response.data.data)
     setTotalCount(totalLength.data.data)
-    
+
   }
 
   const searchClick = () => {
@@ -113,7 +113,7 @@ const Addbtn = styled.div`
   z-index: 2;
   /* transform: translateX(-50%); */
   margin: 15px 0 30px 0;
-  transition-duration: 0.1s;
+  transition-duration: 0.2s;
 
   &:hover {
       left: calc(50%);
