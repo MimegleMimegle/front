@@ -39,9 +39,9 @@ const Main = (props) => {
   }, [])
 
   let characterArray = new Array()
-  characterArray[0] = 'smileIcon_Orange.png'
-  characterArray[1] = 'smileIcon_Yellow.png'
-  characterArray[2] = 'smileIcon_Blue.png'
+  characterArray[0] = '../styles/image/smileIcon_Orange.png'
+  characterArray[1] = '../styles/image/smileIcon_Yellow.png'
+  characterArray[2] = '../styles/image/smileIcon_Blue.png'
 
   window.onload = function showCharacter() {
     let characterNumber = Math.round(Math.random() * 2)
@@ -50,8 +50,12 @@ const Main = (props) => {
     let objImg = document.getElementById('introImg')
     objImg.src = characterArray[characterNumber]
 
+    console.log(characterArray)
     console.log(objImg)
+    console.log(objImg.src)
   }
+
+  const hasThumbNail = popularBoards.thumbNail !== ''
 
   return (
     <>
@@ -61,7 +65,14 @@ const Main = (props) => {
           slidesPerView={1}
           spaceBetween={30}
           lazy={true}
+          grabCursor={true}
           centeredSlides={true}
+          breakpoints={{
+            769: {
+              slidesPerView: 1,
+              slidesPerGroup: 2,
+            },
+          }}
           autoplay={{
             delay: 3200,
             disableOnInteraction: false,
@@ -122,9 +133,7 @@ const Main = (props) => {
           <div className="MainPagePopularBoardText">핫 밈글</div>
           {popularBoards.map((popularBoards) => (
             <div className="MainPagePopularBoardList" key={popularBoards.id} onClick={() => history.push(`/post/detail/${popularBoards.boardId}`)}>
-              <div onload="showCharacter()">
-                <img className="MainPagePopularBoardImage" id="introImg" border="0" src={popularBoards.thumbNail ? popularBoards.thumbNail : ''}></img>
-              </div>
+              <div onload="showCharacter()">{hasThumbNail ? <img className="MainPagePopularBoardImage" src={popularBoards.thumbNail} /> : <img id="introImg" border="0" />}</div>
               <div className="MainPagePopularBoardInfo">
                 <div className="MainPagePopularBoardTitle">{popularBoards.title}</div>
                 <div className="MainPagePopularBoardWriter">{popularBoards.writer}</div>

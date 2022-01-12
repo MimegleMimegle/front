@@ -58,31 +58,9 @@
   overflow: hidden;
   font-size: 0;
   position: absolute;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 
   z-index: 10;
-}
-
-@media screen and (max-width: 375px) {
-  .swiper-pagination-bullets-dynamic {
-    overflow: hidden;
-    font-size: 0;
-    position: absolute;
-    margin-bottom: 35px;
-
-    z-index: 10;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .swiper-pagination-bullets-dynamic {
-    overflow: hidden;
-    font-size: 0;
-    position: absolute;
-    margin-bottom: 100px;
-
-    z-index: 10;
-  }
 }
 
 .swiper-slide img {

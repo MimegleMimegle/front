@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.2.1",
     "axios": "^0.24.0",
     "connected-react-router": "6.9.1",
+    "dotenv": "^10.0.0",
     "history": "4.10.1",
     "immer": "^9.0.7",
     "lodash": "^4.17.21",
