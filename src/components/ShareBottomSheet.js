@@ -4,15 +4,16 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import useScript from '../util/useScript'
 
 import Backdrop from '@mui/material/Backdrop'
+import BottomPopup from './BottomPopup'
 import { ReactComponent as LinkCopyIcon } from '../styles/icons/링크복사_24dp.svg'
 import { KakaoShareButton } from '../shared/kakaoShare'
 import { KakaoImageShareButton } from '../shared/kakaoImageShare'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
-import { boardApi } from '../shared/api'
 
-const ShareBottomSheet = ({ shareVisible, setShareVisible, type, thumbNail, boardId }) => {
+const ShareBottomSheet = (props) => {
+  const { shareVisible, setShareVisible, type, thumbNail, boardId } = props
+
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
-
   const quizIntroUrl = 'http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/quiz'
 
   const [copied, setCopied] = useState(false)
@@ -36,8 +37,9 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible, type, thumbNail, boar
 
   if (type === 'image') {
     return (
-      <Backdrop open={shareVisible} sx={{ zIndex: '10000' }}>
-        <Container className={`${shareVisible ? 'open' : 'close'}`}>
+      // <Backdrop open={shareVisible} sx={{ zIndex: '10000' }}>
+      <BottomPopup shareVisible={shareVisible} setShareVisible={setShareVisible} heightPixel={240}>
+        <Container>
           <div className="share share-header">공유하기</div>
           <ShareBody>
             <div className="each-share-container">
@@ -79,14 +81,17 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible, type, thumbNail, boar
           </div>
           {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
         </Container>
-      </Backdrop>
+      </BottomPopup>
+
+      // </Backdrop>
     )
   }
 
   return (
     <>
-      <Backdrop open={shareVisible} sx={{ zIndex: '10000' }}>
-        <Container className={`${shareVisible ? 'open' : 'close'}`}>
+      {/* <Backdrop open={shareVisible} sx={{ zIndex: '10000' }}> */}
+      <BottomPopup shareVisible={shareVisible} setShareVisible={setShareVisible} heightPixel={240}>
+        <Container>
           <div className="share share-header">공유하기</div>
           <ShareBody>
             <div className="each-share-container">
@@ -113,7 +118,6 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible, type, thumbNail, boar
               </TwitterShareButton>
               <p className="each-share-container__text">트위터</p>
             </div>
-
             <div className="each-share-container">
               <LineShareButton url={quizIntroUrl}>
                 <LineIcon size={52} round={true} />
@@ -128,7 +132,9 @@ const ShareBottomSheet = ({ shareVisible, setShareVisible, type, thumbNail, boar
           </div>
           {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
         </Container>
-      </Backdrop>
+      </BottomPopup>
+
+      {/* </Backdrop> */}
     </>
   )
 }
@@ -138,31 +144,17 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  z-index: 1;
+  /* position: absolute; */
+  z-index: 10001;
   width: 100%;
-  height: 180px;
-  /* top: 100%; */
+  height: 240px;
   left: 0;
-  /* right: 0; */
-  /* bottom: 0; */
+  bottom: 0;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
-  transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
-  &.open {
-    bottom: 0;
-    visibility: visible;
-    opacity: 1;
-    transition: all 1s ease-out;
-  }
-  &.close {
-    bottom: -180px;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 1s ease-in;
-  }
+
   .share {
     height: 100%;
     display: flex;
@@ -170,12 +162,13 @@ const Container = styled.div`
     justify-content: center;
   }
   .share-header {
-    font-size: ${({ theme }) => theme.fontSizes.base};
+    font-size: ${({ theme }) => theme.fontSizes.lg};
     cursor: default;
   }
   .share-footer {
     .share-footer__close-button {
-      font-size: ${({ theme }) => theme.fontSizes.base};
+      font-size: ${({ theme }) => theme.fontSizes.lg};
+      cursor: pointer;
     }
   }
   .link-copied {
