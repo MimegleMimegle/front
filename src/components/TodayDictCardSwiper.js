@@ -42,12 +42,11 @@ const TodayDictCardSwiper = (props) => {
     <>
       <Swiper
         slidesPerView={2}
-        spaceBetween={20}
+        spaceBetween={15}
         keyboard={{
           enabled: true,
         }}
         centeredSlides={true}
-        slidesPerGroupSkip={0}
         grabCursor={true}
         breakpoints={{
           769: {
@@ -61,6 +60,7 @@ const TodayDictCardSwiper = (props) => {
           disableOnInteraction: false,
         }}
         freeMode={true}
+        lazy={true}
         loop={false}
         className="mySwiper"
       >

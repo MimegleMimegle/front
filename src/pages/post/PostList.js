@@ -13,8 +13,6 @@ import '../../index.css'
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 
-
-
 const PostList = (props) => {
   const dispatch = useDispatch()
 
@@ -36,7 +34,7 @@ const PostList = (props) => {
     console.log(totalLength)
     setPost(response.data.data)
     setTotalCount(totalLength.data.data)
-    
+
   }
 
   const searchClick = () => {
@@ -46,7 +44,7 @@ const PostList = (props) => {
   return (
     <>
       <Header type="PostList" location="밈+글 커뮤니티">
-          {show?  <CloseIcon cursor="pointer" onClick={searchClick} /> : < SearchIcon cursor="pointer" onClick={searchClick} style={{margin:'0 20px 0 0'}}/>}
+        {show ? <CloseIcon cursor="pointer" onClick={searchClick} /> : <SearchIcon cursor="pointer" onClick={searchClick} style={{ margin: '0 5px 2px 0' }} />}
       </Header>
       <Container>
         <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv>
@@ -115,7 +113,7 @@ const Addbtn = styled.div`
   z-index: 2;
   /* transform: translateX(-50%); */
   margin: 15px 0 30px 0;
-  transition-duration: 0.1s;
+  transition-duration: 0.2s;
 
   &:hover {
       left: calc(50%);

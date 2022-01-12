@@ -1,4 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
+import ReactDOM from 'react-dom'
+
+const _clientId = process.env.REACT_APP_NAVER_API_KEY
 
 class NaverLogin extends Component {
   componentDidMount() {
@@ -11,33 +14,37 @@ class NaverLogin extends Component {
     // Naver sdk 스크립트 로드 완료시
     naverScript.onload = () => {
       const naverLogin = new window.naver.LoginWithNaverId({
-        clientId: 'IaCTr_4fzmaZxLyIDAN_',
-        callbackUrl: 'http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/',
+        clientId: _clientId,
+        callbackUrl: 'http://localhost:3000',
         callbackHandle: true,
-        isPopup: false, // 로그인 팝업여부
+        isPopup: true, // 로그인 팝업여부
         loginButton: {
           color: 'green', // 색상(white, green)
-          type: 3, // 버튼타입(1,2,3)
-          height: 60, // 배너 및 버튼 높이
+          type: 1, // 버튼타입(1,2,3)
+          height: 50, // 배너 및 버튼 높이
         },
       })
 
       naverLogin.init()
-      naverLogin.logout() // 네이버 로그인이 계속 유지되는 경우가 있다. 초기화시 로그아웃
       naverLogin.getLoginStatus((status) => {
         if (status) {
+          const nickName = naverLogin.user.id()
+          const userName = naverLogin.user.email()
           console.log('Naver 로그인 상태', naverLogin.user)
-          const { id, email, gender } = naverLogin.user
-
-          // 필수 제공 동의 조건
-          if (gender == undefined) {
-            alert('성별은 필수 동의 입니다. 정보제공을 동의해주세요.')
-            naverLogin.reprompt()
-            return
-          }
+          const { id, email } = naverLogin.user
         } else {
           console.log('Naver 비 로그인 상태')
         }
+      })
+      naverLogin.logout(() => {
+        const button_area = document.getElementById('button_area')
+        button_area.innerHTML = "<button id='btn_logout'>로그아웃</button>"
+
+        const logout = document.getElementById('btn_logout')
+        logout.addEventListener('click', (e) => {
+          naverLogin.logout()
+          window.location.replace('http://localhost:3000')
+        }) // 네이버 로그인이 계속 유지되는 경우가 있다. 초기화시 로그아웃
       })
     }
   }

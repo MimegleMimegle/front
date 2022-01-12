@@ -133,10 +133,10 @@ const Login = (props) => {
           <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
             <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
           </a>
-          {/* <GoogleButton /> */}
-          <img className="GoogleLoginBtn" size="5" src={googleColor}></img>
-          {/* <NaverLogin /> */}
-          <img className="NaverLoginBtn" size="5" src={naver}></img>
+          <GoogleButton />
+          {/* <img className="GoogleLoginBtn" size="5" src={googleColor}></img> */}
+          <NaverLogin />
+          {/* <img className="NaverLoginBtn" size="5" src={naver}></img> */}
         </div>
       </div>
       {showModal && (

@@ -59,7 +59,7 @@ const DictList = (props) => {
             showSearchBar()
           }}
         >
-          <SearchIcon />
+          <SearchIcon style={{ margin: '0 5px 5px 0' }} />
         </div>
       </Header>
       <div className="DictLayout">

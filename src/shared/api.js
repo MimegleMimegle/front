@@ -12,7 +12,7 @@ const instance = axios.create({
 
 /* Interceptor를 통한 Header 설정 */
 instance.interceptors.request.use((config) => {
-  const accessToken = document.cookie.split('=')[1]
+  const accessToken = document.cookie.split('=')[2]
   config.headers.common['authorization'] = `${accessToken}`
   return config
 })
@@ -27,6 +27,9 @@ export const userApi = {
   /* 추가 */
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
+  KakaoLogin: (code) => instance.get(`/api/user/kakao/callback?code=${code}`),
+  NaverLogin: (code, state) => instance.get(`/api/user/naver/callback?code=[code]&state=[state]`),
+  GoogleLogin: () => instance.get(`/api/user/google/callback`),
 }
 
 export const mypageApi = {
@@ -36,7 +39,7 @@ export const mypageApi = {
 }
 
 export const boardApi = {
-  getPosts: (pageSize, currentPage) => instance.get(`/api/board/list/FREEBOARD?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  getPosts: (pageSize, currentPage) => instance.get(`/api/board/list/FREEBOARD?page=${currentPage - 1}&size=${pageSize}`),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
   writePost: (post) => instance.post('/api/board/FREEBOARD', post),
   editPost: (boardId, content) => instance.put(`/api/board/${boardId}`, content),

@@ -1,23 +1,25 @@
 import React from 'react'
 import GoogleLogin from 'react-google-login'
 
-const clientId = '3438713532-peaai64rmnkjpmqe1ohqdgl8lmbk35gd.apps.googleusercontent.com'
+const clientId = process.env.REACT_APP_GOOGLE_API_KEY
 
 export default function GoogleButton({ onSocial }) {
   const onSuccess = async (response) => {
     console.log(response)
+    console.log(response.profileObj.email)
+    console.log(response.profileObj.name)
 
     const {
       googleId,
       profileObj: { email, name },
     } = response
 
-    await onSocial({
-      socialId: googleId,
-      socialType: 'google',
-      email,
-      nickname: name,
-    })
+    // await onSocial({
+    //   socialId: googleId,
+    //   socialType: 'google',
+    //   email,
+    //   nickname: name,
+    // })
   }
 
   const onFailure = (error) => {
@@ -26,7 +28,8 @@ export default function GoogleButton({ onSocial }) {
 
   return (
     <div>
-      <GoogleLogin clientId={clientId} responseType={'id_token'} onSuccess={onSuccess} onFailure={onFailure} />
+      <GoogleLogin clientId={clientId} onSuccess={onSuccess} onFailure={onFailure} />
+      {/* <GoogleLogin clientId={clientId} responseType={'id_token'} onSuccess={onSuccess} onFailure={onFailure} /> */}
     </div>
   )
 }
