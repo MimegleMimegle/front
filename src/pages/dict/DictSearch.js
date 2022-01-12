@@ -12,12 +12,10 @@ import Header from '../../components/Header'
 const DictSearch = (props) => {
   const dispatch = useDispatch()
 
-  console.log(props)
-
   const [show, setShow] = useState(false)
 
   const keyword = props.match.params.keyword
-  const [searchResult, setSearchResult] = useState(keyword)
+  const [searchResult, setSearchResult] = useState([])
 
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState('')
@@ -25,17 +23,15 @@ const DictSearch = (props) => {
 
   const searchDictDB = async () => {
     let response = await dictApi.searchDict(keyword, pageSize, currentPage)
-    let searchTotalLength = await dictApi.tellMeTotalLengthSearch(keyword)
+    // let searchTotalLength = await dictApi.tellMeTotalLengthSearch(keyword)
 
     setSearchResult(response.data.data)
-    setTotalCount(searchTotalLength.data.data)
-
-    console.log(searchResult)
-    console.log(totalCount)
+    setTotalCount(response.data.data.length)
   }
 
   React.useEffect(() => {
-    searchDictDB()
+    searchDictDB(keyword)
+    setShow(false)
   }, [currentPage])
 
   const showSearchBar = () => {
@@ -45,6 +41,8 @@ const DictSearch = (props) => {
       setShow(false)
     }
   }
+
+  const notKeyword = totalCount === 0
 
   return (
     <>
@@ -61,16 +59,41 @@ const DictSearch = (props) => {
           </svg>
         </div>
       </Header>
-      {show && <SearchPage />}
+      <SearchBarSection>{show && <SearchPage />}</SearchBarSection>
       <div className="DictSearchPageLayout">
         <div className="DictSearchResultText">"{keyword}"에 대한 검색결과</div>
-        <div className="DictSearchListSection">
-          <div className="DictSearchNoResult">검색결과가 없습니다</div>
-        </div>
-        <div className="DictSearchNoResultAddDictGuideText">새로운 단어를 직접 추가해주세요!</div>
-        {totalCount !== 0 ? (
+        {notKeyword ? (
+          <div className="DictSearchListSection">
+            <div className="DictSearchNoResult">검색결과가 없습니다</div>
+          </div>
+        ) : (
+          ''
+        )}
+        {notKeyword ? <div className="DictSearchNoResultAddDictGuideText">새로운 단어를 직접 추가해주세요!</div> : ''}
+        {notKeyword ? (
           ''
         ) : (
+          <div className="DictSearchLists">
+            {searchResult.map((searchResult) => (
+              <div className="DictSearchList" key={searchResult.id} onClick={() => history.push(`/dict/detail/${searchResult.dictId}`)}>
+                <div className="DictSearchList SearchDictListTitle">{searchResult.title}</div>
+                <div className="DictSearchList SearchDictListSummary">{searchResult.summary}</div>
+                <div className="DictSearchList SearchDictWriteInfo">
+                  <div className="DictSearchList SearchDictListLikeButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="40px" fill="#000000">
+                      <path d="M0 0h24v24H0V0z" fill="none" />
+                      <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z" />
+                    </svg>
+                  </div>
+                  <div className="DictSearchList SearchDictListLikeCount">{searchResult.likeCount}</div>
+                  <div className="DictSearchList SearchDictListFirstWriter">{searchResult.firstWriter}</div>
+                  <div className="DictSearchList SearchDictListCreatedAt">{searchResult.createdAt.split('T', 1)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        {notKeyword ? (
           <div className="DictSearchNoResult_AddDictButtonSection">
             <div
               className="DictSearchNoResult_AddDictButton"
@@ -82,29 +105,21 @@ const DictSearch = (props) => {
               <div className="DictSearchNoResult_AddDictButton_2"></div>
             </div>
           </div>
+        ) : (
+          ''
         )}
-        {totalCount !== 0 ? <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} /> : ''}
+        {notKeyword ? '' : <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />}
       </div>
     </>
   )
 }
 
-export default DictSearch
+const SearchBarSection = styled.div`
+  position: absolute;
+  top: 74px;
+  width: 100%;
+  height: fit-content;
+  z-index: 5;
+`
 
-// {searchResult.map((searchResult) => (
-//   <div className="DictSearchList" key={searchResult.id}>
-//     <div className="DictSearchList SearchDictListTitle">{searchResult.title}</div>
-//     <div className="DictSearchList SearchDictListSummary">{searchResult.summary}</div>
-//     <div className="DictSearchList SearchDictWriteInfo">
-//       <div className="DictSearchList SearchDictListLikeButton">
-//         <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="40px" fill="#000000">
-//           <path d="M0 0h24v24H0V0z" fill="none" />
-//           <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z" />
-//         </svg>
-//       </div>
-//       <div className="DictSearchList SearchDictListLikeCount">{searchResult.likeCount}</div>
-//       <div className="DictSearchList SearchDictListFirstWriter">{searchResult.firstWriter}</div>
-//       <div className="DictSearchList SearchDictListCreatedAt">{searchResult.createdAt}</div>
-//     </div>
-//   </div>
-// ))}
+export default DictSearch

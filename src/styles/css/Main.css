@@ -14,9 +14,9 @@
 
 .MainPageLayout {
   width: 100%;
-  max-width: 100%;
-  max-height: 560px;
+  height: 100%;
   margin: 0px 0 0 0;
+  padding: 74px 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -24,11 +24,6 @@
 }
 .MainPageLayout::-webkit-scrollbar {
   display: none;
-}
-
-.swiper {
-  width: 100%;
-  height: 100%;
 }
 
 .swiper-wrapper {
@@ -63,31 +58,9 @@
   overflow: hidden;
   font-size: 0;
   position: absolute;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 
   z-index: 10;
-}
-
-@media screen and (max-width: 375px) {
-  .swiper-pagination-bullets-dynamic {
-    overflow: hidden;
-    font-size: 0;
-    position: absolute;
-    margin-bottom: 35px;
-
-    z-index: 10;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .swiper-pagination-bullets-dynamic {
-    overflow: hidden;
-    font-size: 0;
-    position: absolute;
-    margin-bottom: 100px;
-
-    z-index: 10;
-  }
 }
 
 .swiper-slide img {
@@ -100,7 +73,7 @@
 .swiper {
   margin-left: none;
   margin-right: none;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .MainPageTagSection {
@@ -116,7 +89,7 @@
 .MainPageTagName {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 10px 20px;
+  margin: 30px 0 10px 16px;
   font-size: 18px;
   font-weight: 700;
   width: fit-content;
@@ -129,8 +102,6 @@
 }
 
 .MainPageTagList {
-  /* width: 95%; */
-  /* margin-left: 10px; */
   padding: 12px 16px 0;
   display: flex;
   flex-direction: row;
@@ -138,20 +109,14 @@
 }
 
 .MainPageTag {
-  /* border: none; */
   border: 1px solid black;
   border-radius: 75px;
-  /* background-color: lightblue; */
   background-color: white;
   width: fit-content;
   height: fit-content;
-  /* padding: 5px 15px 5px 15px; */
   padding: 6px 12px;
   color: black;
-  /* font-size: 16px; */
   font-size: 14px;
-  /* font-weight: bold; */
-  /* margin: 5px 0 5px 10px; */
   margin: 0 12px 10px 0;
 }
 
@@ -195,7 +160,7 @@
 .MainPageTopPostText {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 10px 20px;
+  margin: 30px 0 10px 16px;
   font-size: 18px;
   font-weight: 700;
   width: fit-content;
@@ -247,7 +212,7 @@
 
 .MainPagePopularBoardSection {
   width: 100%;
-  /* margin: 30px 0 0 0; */
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -256,7 +221,7 @@
 .MainPagePopularBoardText {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 20px 20px;
+  margin: 30px 0 20px 0;
   font-size: 18px;
   font-weight: 700;
   width: fit-content;
@@ -269,9 +234,9 @@
 }
 
 .MainPagePopularBoardList {
-  width: 328px;
+  width: 100%;
   height: 120px;
-  margin: 0 0 16px 17px;
+  margin: 0 0 16px 0;
   display: flex;
   border: 1px solid black;
 }
@@ -286,7 +251,7 @@
 .MainPagePopularBoardInfo {
   display: flex;
   flex-direction: column;
-  width: 208px;
+  width: 100%;
   height: 100%;
   padding: 15px;
 }

@@ -20,6 +20,7 @@
 }
 
 .OneDictCardDetailPageLayout {
+  padding: 74px 0 0;
   width: 100%;
   height: fit-content;
   /* border: 3px solid cornflowerblue; */
@@ -162,16 +163,20 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+
+  -webkit-appearance: none;
 }
 
 .OneDictCardDetailInfoLike {
   font-size: 20px;
   font-weight: 400;
-  margin: 2px 0 0 0;
+  margin: 0px 0 0 0;
   display: flex;
   align-self: center;
 
   color: rgba(135, 140, 146, 1);
+
+  -webkit-appearance: none;
 }
 .OneDictCardDetailInfoLike:hover {
   cursor: pointer;
@@ -180,11 +185,13 @@
 .OneDictCardDetailInfoLikeCnt {
   font-size: 14px;
   font-weight: 500;
-  margin: 2px 0 0 -20px;
+  margin: 2px 0 0 -40px;
   display: flex;
   align-self: center;
 
   color: rgba(135, 140, 146, 1);
+
+  -webkit-appearance: none;
 }
 
 .OneDictCardDetailInfoCopyLinkButton {
@@ -193,9 +200,11 @@
   display: flex;
   align-self: center;
   color: rgba(135, 140, 146, 1);
-  size: 24;
+  size: 24px;
 
-  margin: 2px 0 0 220px;
+  margin: 10px 0 0 220px;
+
+  -webkit-appearance: none;
 }
 .OneDictCardDetailInfoCopyLinkButton:hover {
   cursor: pointer;
@@ -296,7 +305,7 @@
 .OneDictCardDetailInfoModifiedGuideText {
   font-size: 12px;
   margin: 20px 0 0 95px;
-  width: 200px;
+  width: 240px;
   height: 50px;
   display: flex;
   justify-self: center;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../../styles/css/DictDetail.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import axios from 'axios'
 import { dictApi } from '../../shared/api'
@@ -119,7 +120,7 @@ const DictDetail = (props) => {
           </svg>
         </div>
       </Header>
-      {show && <SearchPage />}
+      <SearchBarSection>{show && <SearchPage />}</SearchBarSection>
       <div className="OneDictCardDetailPageLayout">
         <div className="OneDictCardDetailInfoSection">
           <div className="OneDictCardDetailInfoTitle">
@@ -186,5 +187,13 @@ const DictDetail = (props) => {
     </>
   )
 }
+
+const SearchBarSection = styled.div`
+  position: absolute;
+  top: 74px;
+  width: 100%;
+  height: fit-content;
+  z-index: 5;
+`
 
 export default DictDetail

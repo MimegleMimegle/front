@@ -16,7 +16,6 @@ const Quiz = (props) => {
 const Wrapper = styled.div`
   padding: 0 16px 20px;
   width: 100%;
-  max-height: 620px;
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;

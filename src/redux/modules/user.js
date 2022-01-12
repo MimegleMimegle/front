@@ -29,19 +29,66 @@ const initialState = {
 }
 
 //middleware
-const KakaoLogin = (KakaoCode) => {
+const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
-    axios({
-      method: 'get',
-      url: 'http://52.78.155.185/callback/kakao?code=' + `${KakaoCode}`,
-    })
+    userApi
+      .KakaoLogin(code)
       .then((res) => {
-        localStorage.setItem('token', res.data)
-        console.log(res)
-        history.replace('/')
-        window.location.reload()
+        console.log(res) // 토큰이 넘어올 것임
+
+        const ACCESS_TOKEN = res.data.accessToken
+
+        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
+
+        history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log('카카오로그인 에러', err)
+        window.alert('로그인에 실패하였습니다.')
+        history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
+      })
+  }
+}
+
+const naverLogin = (code, state) => {
+  return function (dispatch, getState, { history }) {
+    userApi
+      .NaverLogin(code)
+      .then((res) => {
+        console.log(res) // 토큰이 넘어올 것임
+
+        const ACCESS_TOKEN = res.data.accessToken
+
+        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
+
+        history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      })
+      .catch((err) => {
+        console.log('네이버로그인 에러', err)
+        window.alert('로그인에 실패하였습니다.')
+        history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
+      })
+  }
+}
+
+const googleLogin = () => {
+  return function (dispatch, getState, { history }) {
+    userApi
+      .GoogleLogin()
+      .then((res) => {
+        console.log(res) // 토큰이 넘어올 것임
+
+        const ACCESS_TOKEN = res.data.accessToken
+
+        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
+
+        history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      })
+      .catch((err) => {
+        console.log('구글로그인 에러', err)
+        window.alert('로그인에 실패하였습니다.')
+        history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
+      })
   }
 }
 
@@ -165,7 +212,9 @@ const actionCreators = {
   logInDB,
   logOutDB,
   loginCheckDB,
-  KakaoLogin,
+  kakaoLogin,
+  naverLogin,
+  googleLogin,
   getProfileInfo,
   getProfileInfoDB,
   setLogin,
