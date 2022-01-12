@@ -1,35 +1,39 @@
-import React from 'react'
-import styled from 'styled-components'
-import '../styles/css/KakaoLoginBtn.css'
-import KaKaoLogin from 'react-kakao-login'
+import React, { Component } from 'react'
 
-const buttonBlock = {
-  border: 'none',
-  borderRadius: '9px',
-  fontSize: '17px',
-  width: '284px',
-  fontWeight: '500',
-  height: '32px',
-  cursor: 'pointer',
-  background: '#fae101',
-  alignItems: 'center',
-  display: 'flex',
-  justifyContent: 'center',
-  padding: '4px 0px',
+class KakaoLogin extends Component {
+  componentDidMount() {
+    // Kakao sdk import
+    const kakaoScript = document.createElement('script')
+    kakaoScript.src = 'https://developers.kakao.com/sdk/js/kakao.min.js'
+    document.head.appendChild(kakaoScript)
+
+    // Kakao sdk 스크립트 로드 완료시
+    kakaoScript.onload = () => {
+      window.Kakao.init('Kakao API KEY')
+      window.Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: (auth) => {
+          console.log('Kakao 로그인 완료', auth)
+          // Kakao 로그인 성공시, 사용자정보 API 호출
+          window.Kakao.API.request({
+            url: '/v2/user/me',
+            success: (res) => {
+              console.log('Kakao 사용자 정보', res)
+            },
+            fail: (err) => {
+              console.log(err)
+            },
+          })
+        },
+        fail: (err) => {
+          console.log(err)
+        },
+      })
+    }
+  }
+  render() {
+    return <button type="button" id="kakao-login-btn"></button>
+  }
 }
 
-const ButtoninnerText = styled.h3`
-  margin: 0;
-  font-size: 14px;
-`
-
-const KakaoLoginBtn = ({ oAuthLoginHandler }) => {
-  return (
-    <>
-      <KaKaoLogin token="96a19735de948eb6ddb3bfcc34fb2f78" buttonText="kakao" onSuccess={oAuthLoginHandler} onFail={console.error} onLogout={console.info} style={buttonBlock}>
-        <ButtoninnerText>카카오 계정으로 로그인</ButtoninnerText>
-      </KaKaoLogin>
-    </>
-  )
-}
-export default KakaoLoginBtn
+export default KakaoLogin

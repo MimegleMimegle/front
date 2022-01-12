@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/css/DictHistory.css'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import { dictApi } from '../../shared/api'
@@ -58,7 +59,7 @@ const DictEditHistory = (props) => {
           </svg>
         </div>
       </Header>
-      {show && <SearchPage />}
+      <SearchBarSection>{show && <SearchPage />}</SearchBarSection>
       <div className="DictHistoryPageLayout">
         <div className="DictHistoryListText">"{isDict.title}"에 대한 편집기록</div>
         <div className="DictHistoryListSection">
@@ -95,5 +96,13 @@ const DictEditHistory = (props) => {
     </>
   )
 }
+
+const SearchBarSection = styled.div`
+  position: absolute;
+  top: 74px;
+  width: 100%;
+  height: fit-content;
+  z-index: 5;
+`
 
 export default DictEditHistory
