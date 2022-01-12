@@ -185,7 +185,7 @@
 .OneDictCardDetailInfoLikeCnt {
   font-size: 14px;
   font-weight: 500;
-  margin: 2px 0 0 -40px;
+  margin: 2px 0 0 -35px;
   display: flex;
   align-self: center;
 
@@ -195,14 +195,14 @@
 }
 
 .OneDictCardDetailInfoCopyLinkButton {
-  width: fit-content;
-  height: fit-content;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-self: center;
   color: rgba(135, 140, 146, 1);
   size: 24px;
 
-  margin: 10px 0 0 220px;
+  margin: 10px 0 0 200px;
 
   -webkit-appearance: none;
 }
