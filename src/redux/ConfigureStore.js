@@ -6,7 +6,6 @@ import Post from './modules/post'
 import Quiz from './modules/quiz'
 import User from './modules/user'
 import Dict from './modules/dict'
-import Main from './modules/main'
 import Comment from './modules/comment'
 import Mypage from './modules/mypage'
 import like from './modules/like'
@@ -19,10 +18,9 @@ const rootReducer = combineReducers({
   quiz: Quiz,
   user: User,
   dict: Dict,
-  main: Main,
   comment: Comment,
   mypage: Mypage,
-  like:like,
+  like: like,
   image: Image,
   router: connectRouter(history),
 })
