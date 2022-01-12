@@ -68,8 +68,9 @@
 .SearchDictListTitle {
   font-size: 18px;
   font-weight: bold;
-  margin-left: 30px;
-  margin-top: 10px;
+  margin: 20px 0 15px 30px;
+  width: fit-content;
+  height: fit-content;
   color: rgba(1, 109, 173, 1);
 
   -webkit-appearance: none;
@@ -77,9 +78,9 @@
 
 .SearchDictListSummary {
   font-size: 12px;
-  margin-left: 30px;
-  margin-top: -15px;
+  margin: 0 0 15px 30px;
   width: 300px;
+  height: fit-content;
   word-break: keep-all;
 
   -webkit-appearance: none;
@@ -95,16 +96,18 @@
 
 .SearchDictListFirstWriter {
   font-size: 9px;
+  width: 100px;
   height: fit-content;
   display: flex;
   align-items: flex-end;
-  margin: 0 0 0 120px;
+  margin: 0 0 0 80px;
 
   -webkit-appearance: none;
 }
 
 .SearchDictListCreatedAt {
   font-size: 9px;
+  width: fit-content;
   height: fit-content;
   display: flex;
   align-items: flex-end;
@@ -119,7 +122,7 @@
   height: fit-content;
   display: flex;
   align-items: flex-start;
-  margin: 0px 0px 0px 20px;
+  margin: 0px -20px 0px 10px;
 
   -webkit-appearance: none;
 }
@@ -130,7 +133,7 @@
   height: fit-content;
   display: flex;
   align-items: flex-start;
-  margin: 0 0 0 5px;
+  margin: 0 0 0 0;
 
   -webkit-appearance: none;
 }

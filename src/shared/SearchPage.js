@@ -52,7 +52,7 @@ function SearchPage(props) {
 const SearchBarPage = styled.div`
   width: 100%;
   height: fit-content;
-  top: 0px;
+  top: -2px;
   padding-bottom: 10px;
   margin-bottom: 10px;
   background-color: white;
