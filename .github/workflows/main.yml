@@ -3,20 +3,20 @@ name: React build
 on:
   push:
     branches:
-      - deploy # develop 브랜치에서 push 이벤트가 일어났을 때 실행
+      - deploy # deploy 브랜치에서 push 이벤트가 일어났을 때 실행
 
 jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
 
       - name: Cache node modules # node modules 캐싱
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: ${{ runner.OS }}-develop-build-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.OS }}-deploy-build-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
