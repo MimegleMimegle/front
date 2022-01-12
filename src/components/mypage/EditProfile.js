@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { userApi } from '../../shared/api'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
+import Grid from '../../elements/Grid'
 import DoubleCheckModal from '../modal/DoubleCheckModal'
 import Backdrop from '@mui/material/Backdrop'
 import { IoCloseOutline } from 'react-icons/io5'
@@ -93,8 +94,8 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
     <>
       <Backdrop open={showModal} sx={{ zIndex: '10000' }}>
         <ModalContainer>
-          <ModalBody>
-            <div style={{ width: '100%', padding: '10px 14px 0 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Grid flex_center column position="relative">
+            <Grid flex_between padding="10px 14px 0 8px">
               <button
                 onClick={() => {
                   setShowModal(false)
@@ -105,7 +106,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
               <button className="submit-button" onClick={_editProfile}>
                 완료
               </button>
-            </div>
+            </Grid>
             <ProfileImagePreview src={imageFile ? imageFile : my.profileImageUrl} />
             <div className="file">
               <label htmlFor="file" className="upload-label">
@@ -114,7 +115,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
               <input type="file" id="file" className="upload-file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg, image/png" />
             </div>
             <div style={{ padding: '20px 0 0' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Grid flex_center>
                 <input
                   type="text"
                   className="input-nickname"
@@ -126,13 +127,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
                   }}
                 />
                 <DoubleCheckButton onClick={checkNickname}>중복확인</DoubleCheckButton>
-              </div>
+              </Grid>
               <div style={{ padding: '10px 0' }}>
                 <p style={{ fontSize: '12px' }}>10자 이하로 입력해주세요.</p>
                 <p style={{ fontSize: '12px', color: '#878C92' }}>(한글, 영어, 대소문자, 숫자 사용 가능)</p>
               </div>
             </div>
-          </ModalBody>
+          </Grid>
         </ModalContainer>
       </Backdrop>
       {doubleCheck === null && null}
@@ -155,7 +156,6 @@ const ModalContainer = styled.div`
   height: 170px;
   border: 1px solid ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
-  /* border-radius: 10px; */
   position: absolute;
   top: 26%;
   left: 50%;
@@ -163,15 +163,6 @@ const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-
-const ModalBody = styled.div`
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   .submit-button {
     font-size: ${({ theme }) => theme.fontSizes.lg};
     color: ${({ theme }) => theme.colors.grey};

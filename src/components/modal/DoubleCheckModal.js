@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import Backdrop from '@mui/material/Backdrop'
 
@@ -12,10 +12,13 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
     }
   })
 
+  const handleOverlayClick = useCallback(() => setDoubleCheck(null), [setDoubleCheck])
+  const handleContentClick = useCallback((e) => e.stopPropagation(), [])
+
   if (type === 'exist-onlyConfirm') {
     return (
-      <Backdrop open={!doubleCheck} sx={{ zIndex: 10000 }}>
-        <Container>
+      <Backdrop open={!doubleCheck} sx={{ zIndex: 10000 }} onClick={handleOverlayClick}>
+        <Container onClick={handleContentClick}>
           <div>
             <div className="title-box">{title}</div>
             <div className="question-box">{question}</div>
@@ -50,8 +53,8 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
   }
   return (
     <>
-      <Backdrop open={doubleCheck} sx={{ zIndex: 10000 }}>
-        <Container>
+      <Backdrop open={doubleCheck} sx={{ zIndex: 10000 }} onClick={handleOverlayClick}>
+        <Container onClick={handleContentClick}>
           <div>
             <div className="title-box">{title}</div>
             <div className="question-box">{question}</div>
