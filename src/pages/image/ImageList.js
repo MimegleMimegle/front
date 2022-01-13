@@ -6,6 +6,7 @@ import { actionCreators as imageActions } from '../../redux/modules/image'
 
 import Grid from '../../elements/Grid'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import InfinityScroll from '../../shared/InfinityScroll'
 import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
@@ -60,14 +61,7 @@ const ImageList = (props) => {
 
   return (
     <>
-      <Header type="ImageList" location="짤방">
-        <FileUploader>
-          <label htmlFor="file" className="upload-label">
-            <AiOutlinePlus style={{ fontSize: '22px' }} />
-          </label>
-          <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
-        </FileUploader>
-      </Header>
+      <Header location="짤방"></Header>
       <Wrapper>
         {!loading ? (
           <>
@@ -86,6 +80,12 @@ const ImageList = (props) => {
             <GeneralSection>
               <div className="title-border">
                 <Title>짤 방앗간</Title>
+                <FileUploader>
+                  <label htmlFor="file" className="upload-label">
+                    <AiOutlinePlus style={{ fontSize: '22px' }} />
+                  </label>
+                  <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+                </FileUploader>
               </div>
               <Container>
                 <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
@@ -105,16 +105,22 @@ const ImageList = (props) => {
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
       </Wrapper>
+      <Footer />
     </>
   )
 }
 
 const FileUploader = styled.div`
+  padding: 0 5px 0 0;
   .upload-label {
     height: 100%;
     display: flex;
     align-items: center;
     cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    &:hover {
+      color: ${({ theme }) => theme.colors.blue};
+    }
   }
   .upload-file {
     position: absolute;
@@ -133,10 +139,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   max-height: 100%;
   height: 100%;
-  padding: 74px 0 0;
+  padding: 60px 0 0;
   .title-border {
     border-bottom: 1px solid ${({ theme }) => theme.colors.line};
-    padding-bottom: 5px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 `
 
