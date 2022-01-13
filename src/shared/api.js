@@ -51,6 +51,18 @@ export const boardApi = {
   totalLength: () => instance.get('api/board/count/FREEBOARD'),
 }
 
+export const dictQuestionApi={
+  getQuestions: (currentPage, pageSize) => instance.get(`/api/dict/question?page=${currentPage - 1}&size=${pageSize}`),
+  getOneQuestion: (questionId) => instance.get(`/api/dict/question/${questionId}`),
+  addQuestion: (question)=>instance.post('/api/dict/question',question),
+  editQuestion: (questionId,content) => instance.put(`/api/dict/question/${questionId}`,content),
+  deleteQuestion: (questionId) => instance.delete(`/api/dict/question/${questionId}`),
+  curiousToo:(questionId)=> instance.get(`/api/dict/question/curiousToo/${questionId}`),
+  //백엔드진행중
+  searchAlldict:(currentPage,pageSize) => instance.get(`/api/dict/search?q=’테스트’&page=${currentPage -1}&size=${pageSize}`),  
+
+}
+
 export const dictApi = {
   getDictMain: (pageSize, currentPage) => instance.get(`http://54.180.150.230/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
