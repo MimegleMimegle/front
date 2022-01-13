@@ -52,7 +52,8 @@ export const boardApi = {
 }
 
 export const dictQuestionApi={
-  getQuestions: (currentPage, pageSize) => instance.get(`/api/dict/question?page=${currentPage - 1}&size=${pageSize}`),
+  // getQuestions: (currentPage, pageSize) => instance.get(`/api/dict/question?page=${currentPage - 1}&size=${pageSize}`),
+  getQuestions: () => instance.get('/api/dict/question?page=0&size=10'),
   getOneQuestion: (questionId) => instance.get(`/api/dict/question/${questionId}`),
   addQuestion: (question)=>instance.post('/api/dict/question',question),
   editQuestion: (questionId,content) => instance.put(`/api/dict/question/${questionId}`,content),

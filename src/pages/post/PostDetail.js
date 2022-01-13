@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
-import { actionCreators as postActions } from '../../redux/modules/post'
-import swal from 'sweetalert'
+import { actionCreators as questionActions } from '../../redux/modules/dictquestion'
 import styled from 'styled-components'
-import { likeApi } from '../../shared/api'
-import { boardApi } from '../../shared/api'
+import { dictQuestionApi } from '../../shared/api'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import CommentTest from '../CommentTest'
-import Header from '../../components/Header'
+import '../../components/Header'
 import { ReactComponent as ViewIcon } from '../../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
 import { ReactComponent as FullHeartIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
@@ -20,11 +18,11 @@ import '../../index.css'
 const PostDetail = (props) => {
   const dispatch = useDispatch()
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
-  const boardId = Number(props.match.params.boardId)
+  const questionId = Number(props.match.params.questionId)
 
-  const [post, setPost] = useState([])
-  const [likeCount, setLikeCount] = useState(0)
-  const [isLiked, setIsLiked] = useState(false)
+  const [question, setQuestion] = useState([])
+  const [isCuriousToo, setIsCuriousToo] = useState(false)
+  const [curiousTooCnt, setCuriousTooCnt] = useState(0)
   const [toggleModalChang, setToggleModalChang] = useState(false)
   const [createdAt, setCreatedAt] = useState('')
   const [showModal, setShowModal] = React.useState(false)
@@ -34,13 +32,13 @@ const PostDetail = (props) => {
     setShowModal(!showModal)
   }
 
-  const getOnePostDB = async () => {
-    await boardApi
-      .getOnePost(boardId)
+  const getOneQuestionDB = async () => {
+    await dictQuestionApi
+      .getOneQuestion(questionId)
       .then((response) => {
-        setPost(response.data.data)
-        setIsLiked(response.data.data.isLike)
-        setLikeCount(response.data.data.likeCnt)
+        setQuestion(response.data.data)
+        setIsCuriousToo(response.data.data.isCuriousToo)
+        setCuriousTooCnt(response.data.data.curiousTooCnt)
         setCreatedAt(response.data.data.createdAt.split('T')[0])
       })
       .catch((error) => {
@@ -48,36 +46,37 @@ const PostDetail = (props) => {
       })
   }
 
-  const handleDeletePost = () => {
-    dispatch(postActions.delPostDB(boardId))
+  const handleDeleteQuestion = () => {
+    dispatch(questionActions.delPostDB(questionId))
   }
 
   useEffect(() => {
-    getOnePostDB()
+    getOneQuestionDB()
   }, [])
 
-  const handleClickLike = async (e) => {
+  const handleClickCuriousToo = async (e) => {
     e.preventDefault()
     e.stopPropagation()
-    if (isLiked) {
-      await likeApi
-        .likeBoard(boardId)
+    if (isCuriousToo) {
+      await dictQuestionApi 
+        .curiousToo(questionId)
         .then((response) => {
           console.log(response.data)
-          setIsLiked(false)
-          setLikeCount(likeCount - 1)
-
+          setIsCuriousToo(false)
+          console.log(isCuriousToo)
+          setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
           console.log('이미지 좋아요 취소 문제 발생', error.response)
         })
     } else {
-      await likeApi
-        .likeBoard(boardId)
+      await dictQuestionApi
+        .curiousToo(questionId)
         .then((response) => {
           console.log(response.data)
-          setIsLiked(true)
-          setLikeCount(likeCount + 1)
+          setIsCuriousToo(true)
+          setCuriousTooCnt(curiousTooCnt + 1)
+          console.log(isCuriousToo)
         })
         .catch((error) => {
           console.log('이미지 좋아요 문제 발생', error.response)
@@ -93,17 +92,17 @@ const PostDetail = (props) => {
 
   return (
     <>
-      <Header type="PostDetail" low></Header>
+      {/* <Header type="PostDetail" low></Header> */}
       <PostWrap>
         <Profile>
           <UserInfo>
-            <UserProfile src={post.profileImageUrl} alt="" />
+            <UserProfile src={question.profileImageUrl} alt="" />
             <div className="userinfo">
-              <Writer>{post.writer}</Writer>
-              <div className="createdate">{post && createdAt}</div>
+              <Writer>{question.writer}</Writer>
+              <div className="createdate">{question && createdAt}</div>
             </div>
           </UserInfo>
-          {username === post.username ? (
+          {username === question.username ? (
             <button style={{ padding: '5px 5px 0' }} onClick={clickToggleModalChang}>
               <BsThreeDotsVertical size="18" />
             </button>
@@ -119,7 +118,7 @@ const PostDetail = (props) => {
                 <button
                   style={{ fontSize: '12px', padding: '0' }}
                   onClick={() => {
-                    history.push(`/post/edit/${boardId}`)
+                    history.push(`/post/edit/${questionId}`)
                   }}
                 >
                   수정하기
@@ -135,13 +134,13 @@ const PostDetail = (props) => {
         </Profile>
 
         <Middle>
-          <Title>{post.title}</Title>
+          <Title>{question.title}</Title>
 
-          <Content>{post.content}</Content>
+          <Content>{question.content}</Content>
           <ImageBox>
-            <ContentImg src={post ? post.thumbNail : null} alt="" />
+            <ContentImg src={question ? question.thumbNail : null} alt="" />
           </ImageBox>
-          <HashTagHere>
+          {/* <HashTagHere>
             {post.hashTags &&
               post.hashTags.map((hashTag, index) => {
                 return (
@@ -150,7 +149,7 @@ const PostDetail = (props) => {
                   </pre>
                 )
               })}
-          </HashTagHere>
+          </HashTagHere> */}
         </Middle>
 
         <ViewLikeComment>
@@ -158,27 +157,27 @@ const PostDetail = (props) => {
             <button className="icon-box__button no-pointer">
               <ViewIcon />
             </button>
-            <span className="icon-box__text">{post.views}</span>
+            <span className="icon-box__text">{question.views}</span>
           </div>
           <div className="icon-box">
-            <button className="icon-box__button" onClick={handleClickLike}>
-              {isLiked ? <FullHeartIcon /> : <EmptyHeartIcon />}
+            <button className="icon-box__button" onClick={handleClickCuriousToo}>
+              {isCuriousToo ? <FullHeartIcon /> : <EmptyHeartIcon />}
             </button>
-            <span className="icon-box__text">{likeCount}</span>
+            <span className="icon-box__text">{curiousTooCnt}</span>
           </div>
           <div className="icon-box">
             <button className="icon-box__button no-pointer">
               <CommentIcon />
             </button>
-            <span className="icon-box__text">{post.commentCnt ? post.commentCnt : 0}</span>
+            <span className="icon-box__text">{question.commentCnt ? question.commentCnt : 0}</span>
           </div>
         </ViewLikeComment>
       </PostWrap>
 
-      <CommentTest post={post} />
+      <CommentTest question={question} />
       {showModal && (
         <ConfirmModal question="밈글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
-          <DeleteButton onClick={handleDeletePost}>삭제</DeleteButton>
+          <DeleteButton onClick={handleDeleteQuestion}>삭제</DeleteButton>
         </ConfirmModal>
       )}
     </>
