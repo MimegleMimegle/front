@@ -5,11 +5,11 @@ import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 import '../../styles/css/Mypage.css'
 
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import EditProfile from '../../components/mypage/EditProfile'
 import PostCard from '../../components/PostCard'
 import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
 import OneDictionaryCard from '../../components/OneDictionaryCard'
-
 import { AiOutlineEdit } from 'react-icons/ai'
 
 const Mypage = (props) => {
@@ -129,6 +129,7 @@ const Mypage = (props) => {
         </UserActivity>
         {showModal && <EditProfile showModal={showModal} setShowModal={setShowModal} my={my} />}
       </Wrapper>
+      <Footer />
     </>
   )
 }
@@ -245,7 +246,7 @@ const Filter = styled.div`
 
 const UserActivity = styled.div`
   width: 100%;
-  padding: 30px 0 0;
+  padding: 30px 0 84px;
 `
 
 const MyImageList = styled.div`

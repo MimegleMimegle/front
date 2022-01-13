@@ -5,22 +5,21 @@ import PostCard from '../../components/PostCard'
 import Pagination from 'rc-pagination'
 import { boardApi } from '../../shared/api'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import SearchPost from '../../components/SearchPost'
 import '../../index.css'
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
 
-
 const PostList = (props) => {
-
   const [post, setPost] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [show, setShow] = useState(false)
-  const [loading,setLoading] = useState(false)
-  
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     setLoading(true)
     setTimeout(() => setLoading(false), 600)
@@ -29,11 +28,10 @@ const PostList = (props) => {
   }, [currentPage])
 
   const getPostListDB = async () => {
-    let response = await boardApi.getPosts(pageSize,currentPage)
+    let response = await boardApi.getPosts(pageSize, currentPage)
     let totalLength = await boardApi.totalLength()
     setPost(response.data.data)
     setTotalCount(totalLength.data.data)
-
   }
 
   const searchClick = () => {
@@ -45,36 +43,37 @@ const PostList = (props) => {
       <Header type="PostList" location="밈+글 커뮤니티">
         {show ? <CloseIcon cursor="pointer" onClick={searchClick} /> : <SearchIcon cursor="pointer" onClick={searchClick} style={{ margin: '0 5px 2px 0' }} />}
       </Header>
-      {!loading? (
-            <>
-      <Container>
-        <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv>
-        <Wrap>
-          
-          <Empty>
-            <Addbtn
-              onClick={() => {
-                history.push('/post/write')
-              }}
-            >
-              밈+글 등록
-            </Addbtn>
-            <AddbtnShadow />
-          </Empty>
+      {!loading ? (
+        <>
+          <Container>
+            <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv>
+            <Wrap>
+              <Empty>
+                <Addbtn
+                  onClick={() => {
+                    history.push('/post/write')
+                  }}
+                >
+                  밈+글 등록
+                </Addbtn>
+                <AddbtnShadow />
+              </Empty>
 
-          {post &&
-            post.map((post, index) => {
-              return <PostCard post={post} key={post.boardId} />
-            })}
+              {post &&
+                post.map((post, index) => {
+                  return <PostCard post={post} key={post.boardId} />
+                })}
 
-          <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-          </Wrap>
-      </Container>
-      </>):(
-            <div style={{ width: '100%', height: '100%',  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <CircularProgress color="inherit" />
-                  </div>
-          )}
+              <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+            </Wrap>
+          </Container>
+          <Footer />
+        </>
+      ) : (
+        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <CircularProgress color="inherit" />
+        </div>
+      )}
     </>
   )
 }
@@ -123,9 +122,9 @@ const Addbtn = styled.div`
   transition-duration: 0.2s;
 
   &:hover {
-      left: calc(50%);
-      transform: translate(4px,10%);
-    }
+    left: calc(50%);
+    transform: translate(4px, 10%);
+  }
 `
 
 const AddbtnShadow = styled.div`

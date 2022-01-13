@@ -11,6 +11,7 @@ import googleColor from '../../styles/image/google_color.svg'
 import styled from 'styled-components'
 import DoubleCheckModal from '../../components/modal/DoubleCheckModal'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 
 const Join = () => {
   const dispatch = useDispatch()
@@ -251,6 +252,7 @@ const Join = () => {
           </div>
         </div>
       </div>
+      <Footer />
       {doubleCheck === null && null}
       {doubleCheck === true && (
         <DoubleCheckModal title="사용 가능합니다." doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>

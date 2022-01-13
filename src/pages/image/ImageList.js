@@ -6,6 +6,7 @@ import { actionCreators as imageActions } from '../../redux/modules/image'
 
 import Grid from '../../elements/Grid'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import InfinityScroll from '../../shared/InfinityScroll'
 import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
@@ -105,6 +106,7 @@ const ImageList = (props) => {
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
       </Wrapper>
+      <Footer />
     </>
   )
 }
@@ -133,7 +135,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   max-height: 100%;
   height: 100%;
-  padding: 74px 0 0;
+  padding: 60px 0 0;
   .title-border {
     border-bottom: 1px solid ${({ theme }) => theme.colors.line};
     padding-bottom: 5px;

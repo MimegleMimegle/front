@@ -13,9 +13,9 @@ import { BsBell, BsBellFill } from 'react-icons/bs'
 const Header = ({ type, children, location }) => {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.mypage.myProfile)
-  const username = localStorage.getItem('username')
-  const nickname = localStorage.getItem('nickname')
-  const isLogin = username && nickname ? true : false
+  const userId = localStorage.getItem('id')
+  const token = document.cookie.split('=')[1]
+  const isLogin = userId !== null && token !== undefined ? true : false
 
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)

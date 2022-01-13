@@ -4,47 +4,53 @@ import { NavLink } from 'react-router-dom'
 
 import Grid from '../elements/Grid'
 import SmileIcon from '../styles/image/smileIcon_Yellow.png'
+import { RiBookMarkLine, RiGamepadLine } from 'react-icons/ri'
+import { MdOutlinePhotoLibrary, MdOutlineQuiz } from 'react-icons/md'
+import { CgProfile } from 'react-icons/cg'
 
 const Footer = (props) => {
+  const activeStyle = {
+    color: '#6698FC',
+  }
   return (
     <>
       <NavFooter>
         <ul className="nav-list">
           <li className="nav-item">
-            <NavLink to="/dict" className="nav-link" activeClassName="is-active">
+            <NavLink to="/dict" className="nav-link" activeStyle={activeStyle}>
               <Grid flex_center column>
-                <div>아이콘</div>
+                <RiBookMarkLine className="nav-icon" />
                 <div className="nav-link__text">사전</div>
               </Grid>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/image" className="nav-link" activeClassName="is-active">
+            <NavLink to="/image" className="nav-link" activeStyle={activeStyle}>
               <Grid flex_center column>
-                <div>아이콘</div>
+                <MdOutlinePhotoLibrary className="nav-icon" />
                 <div className="nav-link__text">짤방</div>
               </Grid>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/" className="nav-link fixed" activeClassName="is-active">
+            <NavLink to="/" className="nav-link fixed">
               <Grid flex_center column>
                 <Logo src={SmileIcon} />
               </Grid>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/quiz" className="nav-link" activeClassName="is-active">
+            <NavLink to="/quiz" className="nav-link" activeStyle={activeStyle}>
               <Grid flex_center column>
-                <div>아이콘</div>
+                <RiGamepadLine className="nav-icon" />
                 <div className="nav-link__text">퀴즈</div>
               </Grid>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/mypage" className="nav-link" activeClassName="is-active">
+            <NavLink to="/mypage" className="nav-link" activeStyle={activeStyle}>
               <Grid flex_center column>
-                <div>아이콘</div>
+                <CgProfile className="nav-icon" />
                 <div className="nav-link__text">MY</div>
               </Grid>
             </NavLink>
@@ -78,7 +84,15 @@ const NavFooter = styled.nav`
     .nav-item {
       max-width: 50px;
       width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       .nav-link {
+        .nav-icon {
+          font-size: 26px;
+        }
         &:visited,
         &:link {
           text-decoration: none;
@@ -86,13 +100,11 @@ const NavFooter = styled.nav`
         }
         .nav-link__text {
           font-size: ${({ theme }) => theme.fontSizes.lg};
-          font-weight: inherit;
-          color: inherit;
+          font-weight: 500;
+          padding: 3px 0 0;
         }
       }
-      .is-active {
-        color: yellow;
-      }
+
       .fixed {
         position: fixed;
         left: 50%;
