@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <!-- 0112추가 핸드폰 노치 부분 꽉 채워지게 -->
     <meta name="viewport" content="width=device-width, minimal-ui, viewport-fit=contain" />
     <!-- 0112추가 핸드폰 노치 부분 꽉 채워지게 -->
@@ -27,18 +28,11 @@
     <title>React App</title>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" type="text/javascript" charset="utf-8"></script>
-    <!-- 상태표시줄에 url감추기 -->
-    <script langauage="Javascript">
-      function hidestatus() {
-        window.status = ''
-        return true
-      }
-      if (document.layers) document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
-
-      document.onmouseover = hidestatus
-      document.onmouseout = hidestatus
-    </script>
-    <!-- 상태표시줄에 url감추기 -->
+    <!-- 상태표시줄에 url숨기기 -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Safari UI 숨기기 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

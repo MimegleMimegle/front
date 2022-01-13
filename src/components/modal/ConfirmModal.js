@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import Backdrop from '@mui/material/Backdrop'
 import { history } from '../../redux/ConfigureStore'
@@ -9,10 +9,13 @@ const ConfirmModal = ({ showModal, setShowModal, handleShowModal, question, chil
       setShowModal(!showModal)
     }
   })
+
+  const handleOverlayClick = useCallback(() => setShowModal(false), [setShowModal])
+  const handleContentClick = useCallback((e) => e.stopPropagation(), [])
   return (
     <>
-      <Backdrop open={showModal} sx={{ zIndex: 10000 }}>
-        <Container>
+      <Backdrop open={showModal} sx={{ zIndex: 10000 }} onClick={handleOverlayClick}>
+        <Container onClick={handleContentClick}>
           <div className="question-box">{question}</div>
           <div className="confirm-box">
             <div>

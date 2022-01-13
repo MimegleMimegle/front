@@ -174,8 +174,8 @@ const NavHeader = styled.nav`
   padding: 0 10px;
   width: 100%;
   height: ${(props) => (props.low ? '62px' : '74px')};
-  background-color: ${({ theme }) => theme.colors.white};
-  border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid black')};
+  background-color: ${({ theme }) => theme.colors.bg};
+  border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid  #e5e5e5')};
   /* padding: 10px 0 12px; */
   z-index: 1000;
   .nav-list {
