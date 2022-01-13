@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import Grid from '../elements/Grid'
 import SmileIcon from '../styles/image/smileIcon_Yellow.png'
 import { RiBookMarkLine, RiGamepadLine } from 'react-icons/ri'
-import { MdOutlinePhotoLibrary, MdOutlineQuiz } from 'react-icons/md'
+import { MdOutlinePhotoLibrary } from 'react-icons/md'
 import { CgProfile } from 'react-icons/cg'
 
 const Footer = (props) => {

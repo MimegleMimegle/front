@@ -119,7 +119,7 @@ const QuizIntro = (props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 74px 0 0;
+  padding: 60px 0 80px;
 `
 
 const ImageSection = styled.div`
