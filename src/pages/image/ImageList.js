@@ -6,7 +6,6 @@ import { actionCreators as imageActions } from '../../redux/modules/image'
 
 import Grid from '../../elements/Grid'
 import Header from '../../components/Header'
-import Footer from '../../components/Footer'
 import InfinityScroll from '../../shared/InfinityScroll'
 import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
@@ -106,7 +105,6 @@ const ImageList = (props) => {
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
       </Wrapper>
-      <Footer></Footer>
     </>
   )
 }
