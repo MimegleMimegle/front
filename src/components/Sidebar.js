@@ -5,6 +5,7 @@ import { history } from '../redux/ConfigureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
 import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
+import Grid from '../elements/Grid'
 import SidebarItem from './SidebarItem'
 import ConfirmModal from './modal/ConfirmModal'
 import SmileIcon from '../styles/image/smileIcon_Yellow.png'
@@ -70,8 +71,8 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
-        <div style={{ width: '100%', padding: '90px 10px 16px 16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+        <Grid flex_between padding="90px 10px 16px 16px" borderBottom="1px solid #111">
+          <Grid flex_align>
             {isLogin ? (
               <>
                 <ProfileImage src={my ? my.profileImageUrl : null} onClick={moveToMypage} />
@@ -85,7 +86,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
                 </p>
               </>
             )}
-          </div>
+          </Grid>
           <button
             onClick={() => {
               setShowSidebar(false)
@@ -94,7 +95,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
           >
             <CloseIcon style={{ paddingTop: '3px' }} />
           </button>
-        </div>
+        </Grid>
 
         {menu_list.map((menu, index) => {
           return <SidebarItem key={index} menu={menu} setShowSidebar={setShowSidebar} />
@@ -123,7 +124,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: top;
-  z-index: 2000;
   visibility: hidden;
   opacity: 0;
 

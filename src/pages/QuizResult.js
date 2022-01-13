@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom' // 삭제 X (props로 받은 usePar
 import { actionCreators as quizActions } from '../redux/modules/quiz'
 import { quizApi } from '../shared/api'
 
+import Grid from '../elements/Grid'
 import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
 import Header from '../components/Header'
@@ -69,15 +70,15 @@ const QuizResult = ({ quiz_list, category }) => {
     <>
       <Header type="QuizResult" location="밈퀴즈"></Header>
       <Wrapper>
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid flex_center column>
           <QuizResultBox>
             <div className="quiz-subject box-1">결과</div>
             <div className="quiz-subject box-2"></div>
-            <div style={{ padding: '50px 0 30px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Grid flex_center column padding="50px 0 30px">
               <span className="result-text__answerCnt">{answerCnt}/10</span>
               <h2 className="result-text__sub">{resultText.sub}</h2>
               <h2 className="result-text__main">{resultText.main}</h2>
-            </div>
+            </Grid>
           </QuizResultBox>
           <ResultButtonContainer>
             <div className="resultButtonBox box1">
@@ -88,7 +89,7 @@ const QuizResult = ({ quiz_list, category }) => {
             <div className="resultButtonBox box2"></div>
           </ResultButtonContainer>
           <TextButtonContainer>
-            <div className="text-button-box">
+            <Grid flex_center padding="16px 0">
               <div className="circle-button-box">
                 <div
                   className="circle-button btn-1"
@@ -103,8 +104,8 @@ const QuizResult = ({ quiz_list, category }) => {
               <button className="text-button" onClick={handleMoveQuizIntro}>
                 다른 테스트 하러 가기
               </button>
-            </div>
-            <div className="text-button-box">
+            </Grid>
+            <Grid flex_center padding="16px 0">
               <div className="circle-button-box">
                 <div className="circle-button btn-1" onClick={handleShareVisible}>
                   <CopyLinkIcon />
@@ -114,7 +115,7 @@ const QuizResult = ({ quiz_list, category }) => {
               <button className="text-button" onClick={handleShareVisible}>
                 친구에게 공유하기
               </button>
-            </div>
+            </Grid>
           </TextButtonContainer>
           <QuizContainer>
             {showQuiz &&
@@ -123,8 +124,8 @@ const QuizResult = ({ quiz_list, category }) => {
                 return <OneQuiz key={index} quiz={quiz} index={index} />
               })}
           </QuizContainer>
-        </div>
-        {shareVisible && <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />}
+        </Grid>
+        <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />
       </Wrapper>
     </>
   )
@@ -265,47 +266,40 @@ const TextButtonContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  .text-button-box {
+  .text-button {
     width: 100%;
-    padding: 16px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .text-button {
-      width: 100%;
-      font-size: ${({ theme }) => theme.fontSizes.lg};
-      font-family: 'Pretendard Variable';
-      font-style: normal;
-      font-weight: 700;
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-weight: 700;
+  }
+  .circle-button-box {
+    position: relative;
+    .circle-button {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border: 1px solid ${({ theme }) => theme.colors.black};
+      border-radius: 20px;
     }
-    .circle-button-box {
-      position: relative;
-      .circle-button {
-        position: absolute;
-        width: 36px;
-        height: 36px;
-        border: 1px solid ${({ theme }) => theme.colors.black};
-        border-radius: 20px;
-      }
-      .btn-1 {
-        background-color: ${({ theme }) => theme.colors.orange};
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 300;
-        cursor: pointer;
-        transition-duration: 0.5s;
-        left: 20px;
-        top: -18px;
-        &:active {
-          left: 23px;
-          top: -15px;
-        }
-      }
-      .btn-2 {
+    .btn-1 {
+      background-color: ${({ theme }) => theme.colors.orange};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      cursor: pointer;
+      transition-duration: 0.5s;
+      left: 20px;
+      top: -18px;
+      &:active {
         left: 23px;
         top: -15px;
       }
+    }
+    .btn-2 {
+      left: 23px;
+      top: -15px;
     }
   }
 `

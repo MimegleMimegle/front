@@ -16,11 +16,12 @@ const fontSizes = {
 const colors = {
   black: '#000000',
   white: '#FFFFFF',
-  yellow: '#FFE330',
-  blue: '#00A0FF',
-  orange: '#FF8E00',
+  yellow: '#FFD400',
+  blue: '#6698FC',
+  orange: '#F97D39',
   grey: '#878C92',
   line: '#E5E5E5',
+  bg: '#FCFCFC',
 }
 
 // 자주 사용하는 스타일 속성을 theme으로 만들어보자.
