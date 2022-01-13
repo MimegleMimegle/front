@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
 import { boardApi } from '../../shared/api'
 import { useHistory } from 'react-router'
 
@@ -14,11 +13,9 @@ import Header from '../../components/Header'
 /* icons */
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { GoSearch } from 'react-icons/go'
-import { IoClose } from 'react-icons/io5'
 
 const PostSearch = (props) => {
   const history = useHistory()
-  console.log(props.match.params.search)
   const [hashTags, setHashTags] = React.useState([])
   const [search, setSearch] = React.useState('')
   const [filteredPosts, setFilteredPosts] = React.useState([])
@@ -43,7 +40,6 @@ const PostSearch = (props) => {
     await boardApi
       .searchPost(search)
       .then((response) => {
-        console.log(response.data)
         setFilteredPosts(response.data.data)
         
         setShow(false)
@@ -62,9 +58,7 @@ const PostSearch = (props) => {
     boardApi
       .recommendHashTag()
       .then((res) => {
-        console.log(res.data.data)
         setHashTags(res.data.data.hashTags)
-        console.log(props.match.params.search)
         setSearch(props.match.params.search)
       })
       .catch((err) => {
@@ -74,7 +68,6 @@ const PostSearch = (props) => {
     boardApi
       .searchPost(props.match.params.search)
       .then((response) => {
-        console.log(response.data)
         setFilteredPosts(response.data.data)
         setShow(false)
         setSearch(props.match.params.search)

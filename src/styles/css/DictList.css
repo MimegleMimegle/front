@@ -68,9 +68,12 @@
   font-family: 'YdestreetB';
   font-style: normal;
   font-weight: normal;
+  transition-duration: 0.2s;
 }
 .NewDictAddButton_1:hover {
   cursor: pointer;
+  left: calc(50%);
+  transform: translate(4px, 10%);
 }
 
 .NewDictAddButton_2 {
@@ -145,7 +148,7 @@
 
 .OneDictionaryCardList {
   width: 100%;
-  height: 150px;
+  height: 10rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -154,9 +157,10 @@
 }
 
 .DictListTitle {
-  margin-left: 30px;
-  margin-top: 10px;
+  margin: 20px 0 0 30px;
   color: rgba(1, 109, 173, 1);
+  height: fit-content;
+  width: fit-content;
 
   font-family: 'Pretendard Variable';
   font-style: normal;
@@ -169,8 +173,9 @@
 .DictListSummary {
   font-size: 12px;
   margin-left: 30px;
-  margin-top: -15px;
+  margin: 30px 0 15px 30px;
   width: 300px;
+  height: fit-content;
   word-break: keep-all;
 
   -webkit-appearance: none;
@@ -186,6 +191,7 @@
 
 .DictListFirstWriter {
   font-size: 9px;
+  width: 40px;
   height: fit-content;
   display: flex;
   align-items: flex-end;
@@ -196,10 +202,11 @@
 
 .DictListCreatedAt {
   font-size: 9px;
+  width: fit-content;
   height: fit-content;
   display: flex;
   align-items: flex-end;
-  margin: 0 20px 0 0;
+  margin: 0 0 0 0;
 
   -webkit-appearance: none;
 }
@@ -210,7 +217,7 @@
   height: fit-content;
   display: flex;
   align-items: flex-start;
-  margin: 0px 0px 0px 20px;
+  margin: 0 -20px 0 10px;
 
   -webkit-appearance: none;
 }
@@ -221,7 +228,7 @@
   height: fit-content;
   display: flex;
   align-items: flex-start;
-  margin: 0 0 0 5px;
+  margin: 1px 0 0 0;
 
   -webkit-appearance: none;
 }

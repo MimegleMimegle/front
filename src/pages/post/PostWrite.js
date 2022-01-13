@@ -49,13 +49,11 @@ const PostWrite = (props) => {
       /* 태그를 클릭 이벤트 관련 로직 */
       $hashWrapInner.addEventListener('click', () => {
         $hashWrapOutter?.removeChild($hashWrapInner)
-        console.log($hashWrapInner.innerHTML)
         setHashTagList(hashTagList.filter((hashTag) => hashTag))
       })
 
       /* enter 키 코드 :13 */
       if (e.keyCode === 13 && e.target.value.trim() !== '') {
-        console.log('Enter Key 입력됨!', e.target.value)
         $hashWrapInner.innerHTML = '#' + e.target.value
         $hashWrapOutter?.appendChild($hashWrapInner)
         setHashTagList((hashTagList) => [...hashTagList, hashTag])
@@ -80,9 +78,6 @@ const PostWrite = (props) => {
       }
     }
   }
-  console.log(title)
-  console.log(content)
-  console.log(hashTagList)
 
   const addPost = () => {
     if (title === '' || content === '') {
