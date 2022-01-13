@@ -7,7 +7,6 @@ import { actionCreators as userActions } from '../redux/modules/user'
 import Grid from '../elements/Grid'
 import BottomPopup from './BottomPopup'
 import ConfirmModal from './modal/ConfirmModal'
-import { IoIosArrowForward } from 'react-icons/io'
 
 const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
   const dispatch = useDispatch()
@@ -29,7 +28,7 @@ const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
 
   return (
     <>
-      <BottomPopup isOpen={showProfile} onClose={() => setShowProfile(false)} heightPixel={180}>
+      <BottomPopup isOpen={showProfile} onClose={() => setShowProfile(false)} heightPixel={200}>
         <Container>
           <Grid flex_center>
             <Handler />
@@ -38,17 +37,17 @@ const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
             <ProfileImage src={profile?.profileImage} />
             <Nickname>{profile?.nickname}</Nickname>
           </Grid>
-          <Grid flex_around padding="8px 20px 12px">
+          <Grid flex_around padding="16px 20px">
+            <Button className="logout" onClick={handleShowModal}>
+              로그아웃
+            </Button>
             <Button
+              className="mypage"
               onClick={() => {
                 history.push('/mypage')
               }}
             >
               마이페이지
-              <IoIosArrowForward className="arrow-icon" />
-            </Button>
-            <Button onClick={handleShowModal}>
-              로그아웃 <IoIosArrowForward className="arrow-icon" />
             </Button>
           </Grid>
         </Container>
@@ -66,7 +65,7 @@ const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
 const Container = styled.div`
   padding: 5px 0 0;
   width: 100%;
-  height: 180px;
+  height: 200px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-color: #fff;
@@ -103,22 +102,28 @@ const Nickname = styled.div`
 
 const Button = styled.button`
   border-radius: 20px;
-  padding: 5px 0 5px 7px;
-  width: 110px;
+  padding: 8px 0;
+  width: 100px;
   height: auto;
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease-in-out;
-  color: #333;
-  &:hover {
-    /* background-color: #f0f0f0; */
-    color: ${({ theme }) => theme.colors.blue};
+  &.mypage {
+    background-color: ${({ theme }) => theme.colors.blue};
+    color: ${({ theme }) => theme.colors.white};
+    &:hover {
+      background-color: #4b83f4;
+    }
   }
-  .arrow-icon {
-    font-size: 24px;
+  &.logout {
+    background-color: ${({ theme }) => theme.colors.line};
+    color: #333;
+    &:hover {
+      background-color: #dcdcdc;
+    }
   }
 `
 

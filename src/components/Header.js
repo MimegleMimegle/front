@@ -6,6 +6,7 @@ import { actionCreators as mypageAction } from '../redux/modules/mypage'
 
 import Grid from '../elements/Grid'
 import ProfileBottom from './ProfileBottom'
+import AlarmModal from './modal/AlarmModal'
 import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
 import { BsBell, BsBellFill } from 'react-icons/bs'
 
@@ -17,9 +18,14 @@ const Header = ({ type, children, location }) => {
   const isLogin = username && nickname ? true : false
 
   const [showProfile, setShowProfile] = useState(false)
+  const [showAlarm, setShowAlarm] = useState(false)
 
   const handleShowProfile = () => {
     setShowProfile(!showProfile)
+  }
+
+  const handleShowModal = () => {
+    setShowAlarm(!showAlarm)
   }
 
   useEffect(() => {
@@ -35,14 +41,21 @@ const Header = ({ type, children, location }) => {
           <Grid flex_between height="100%">
             <div className="header-title">Memegle</div>
             <Grid flex_end height="100%">
-              <div className="header-bell-box">
-                <BsBell className="header-bell" />
+              <div className="header-bell-box" onClick={handleShowModal}>
+                {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
               </div>
               {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
             </Grid>
           </Grid>
         </NavHeader>
         <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
+        {showAlarm && (
+          <AlarmModal
+            onClose={() => {
+              setShowAlarm(false)
+            }}
+          />
+        )}
       </>
     )
   }
@@ -54,14 +67,21 @@ const Header = ({ type, children, location }) => {
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
           <div className="header-icon">
-            <div className="header-bell-box">
-              <BsBell className="header-bell" />
+            <div className="header-bell-box" onClick={handleShowModal}>
+              {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
             </div>
             {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
           </div>
         </Grid>
       </NavHeader>
       <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
+      {showAlarm && (
+        <AlarmModal
+          onClose={() => {
+            setShowAlarm(false)
+          }}
+        />
+      )}
     </>
   )
 }
@@ -93,6 +113,7 @@ const NavHeader = styled.nav`
     font-style: normal;
     font-weight: normal;
     font-size: ${({ theme }) => theme.fontSizes.xl};
+    cursor: default;
   }
   .header-icon {
     display: flex;
@@ -102,18 +123,23 @@ const NavHeader = styled.nav`
     width: 32px;
     height: 32px;
     border-radius: 20px;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: transparent;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease-in-out;
     &:hover {
-      background-color: #f0f0f0;
+      background-color: #eeeeee;
     }
     .header-bell {
       font-size: 18px;
-      color: #333;
+      &.shown {
+        color: ${({ theme }) => theme.colors.blue};
+      }
+      &.hidden {
+        color: #333;
+      }
     }
   }
 `
