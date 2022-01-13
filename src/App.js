@@ -46,10 +46,10 @@ function App() {
             <Route path="/quiz" exact component={QuizIntro} />
             <Route path="/quiz/:category" exact component={Quiz} />
             <Route path="/quiz/:category/result" exact component={QuizResult} />
-            <Route path="/post" exact component={PostList} />
-            <Route path="/post/detail/:boardId" exact component={PostDetail} />
-            <Route path="/post/write" exact component={Auth(PostWrite, true)} />
-            <Route path="/post/edit/:boardId" exact component={Auth(PostEdit, true)} />
+            <Route path="/dict/question" exact component={PostList} />
+            <Route path="/dict/question/detail/:questionId" exact component={PostDetail} />
+            <Route path="/dict/question/write" exact component={Auth(PostWrite, true)} />
+            <Route path="/dict/question/edit/:boardId" exact component={Auth(PostEdit, true)} />
             <Route path="/post/search/:search" exact component={PostSearch} />
             <Route path="/dict" exact component={DictList} />
             <Route path="/dict/write" exact component={Auth(DictWrite, true)} />
