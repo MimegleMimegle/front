@@ -25,6 +25,7 @@ import {
   DictWrite,
   DictDetail,
   DictHistory,
+  DictMyMeMe,
   ImageList,
   ImageDetail,
   ImageUpload,
@@ -57,6 +58,7 @@ function App() {
             <Route path="/dict/detail/:dictId" exact component={DictDetail} />
             <Route path="/dict/search/:keyword" exact component={DictSearch} />
             <Route path="/dict/history/:dictId" exact component={DictHistory} />
+            <Route path="/dict/mymeme" exact component={Auth(DictMyMeMe, true)} />
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/detail/:imageId" exact component={ImageDetail} />
             <Route path="/image/upload" exact component={Auth(ImageUpload, true)} />
