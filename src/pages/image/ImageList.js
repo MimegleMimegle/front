@@ -156,7 +156,7 @@ const PopularSection = styled.div`
 
 const GeneralSection = styled.div`
   width: 100%;
-  padding: 16px 16px 80px;
+  padding: 16px 16px 84px;
 `
 
 const Container = styled.div`
