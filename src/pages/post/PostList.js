@@ -2,27 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { history } from '../../redux/ConfigureStore'
 import styled from 'styled-components'
 import PostCard from '../../components/PostCard'
-import { useDispatch, useSelector } from 'react-redux'
-import post, { actionCreators as postActions } from '../../redux/modules/post'
 import Pagination from 'rc-pagination'
 import { boardApi } from '../../shared/api'
-import axios from 'axios'
 import Header from '../../components/Header'
 import SearchPost from '../../components/SearchPost'
 import '../../index.css'
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import { CircularProgress } from '@mui/material'
+
 
 const PostList = (props) => {
-  const dispatch = useDispatch()
 
   const [post, setPost] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [show, setShow] = useState(false)
+  const [loading,setLoading] = useState(false)
   
   useEffect(() => {
+    setLoading(true)
+    setTimeout(() => setLoading(false), 600)
     getPostListDB()
     // dispatch(postActions.getPostsDB())
   }, [currentPage])
@@ -30,8 +31,6 @@ const PostList = (props) => {
   const getPostListDB = async () => {
     let response = await boardApi.getPosts(pageSize,currentPage)
     let totalLength = await boardApi.totalLength()
-    console.log(response)
-    console.log(totalLength)
     setPost(response.data.data)
     setTotalCount(totalLength.data.data)
 
@@ -46,9 +45,12 @@ const PostList = (props) => {
       <Header type="PostList" location="밈+글 커뮤니티">
         {show ? <CloseIcon cursor="pointer" onClick={searchClick} /> : <SearchIcon cursor="pointer" onClick={searchClick} style={{ margin: '0 5px 2px 0' }} />}
       </Header>
+      {!loading? (
+            <>
       <Container>
         <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv>
         <Wrap>
+          
           <Empty>
             <Addbtn
               onClick={() => {
@@ -66,8 +68,13 @@ const PostList = (props) => {
             })}
 
           <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-        </Wrap>
+          </Wrap>
       </Container>
+      </>):(
+            <div style={{ width: '100%', height: '100%',  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <CircularProgress color="inherit" />
+                  </div>
+          )}
     </>
   )
 }
