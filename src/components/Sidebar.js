@@ -64,7 +64,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
 
   React.useEffect(() => {
     if (my == null) {
-      dispatch(mypageActions.getUserInfoDB())
+      dispatch(mypageActions.getMypageDataDB())
     }
   }, [])
 

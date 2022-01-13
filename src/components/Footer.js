@@ -60,8 +60,8 @@ const NavFooter = styled.nav`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 72px;
-  background-color: #f2f2f2;
+  height: 74px;
+  background-color: #f0f0f0;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   padding: 12px 10px 10px;

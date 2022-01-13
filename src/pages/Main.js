@@ -70,7 +70,7 @@ const Main = (props) => {
 
   return (
     <>
-      <Header />
+      <Header type="main" />
       <div className="MainPageLayout">
         <Swiper
           slidesPerView={1}

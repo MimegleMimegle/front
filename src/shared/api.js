@@ -12,7 +12,7 @@ const instance = axios.create({
 
 /* Interceptor를 통한 Header 설정 */
 instance.interceptors.request.use((config) => {
-  const accessToken = document.cookie.split('=')[2]
+  const accessToken = document.cookie.split('=')[1]
   config.headers.common['authorization'] = `${accessToken}`
   return config
 })
@@ -22,7 +22,6 @@ export const userApi = {
   login: (username, password) => instance.post('/api/user', { username: username, password: password }),
   socialLogin: () => instance.get('/api/user/kakao/callback'),
   join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
-  getProfileInfo: () => instance.get('/api/userInfo'),
 
   /* 추가 */
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
@@ -33,7 +32,8 @@ export const userApi = {
 }
 
 export const mypageApi = {
-  getUserInfo: () => instance.get('/api/mypage'),
+  getMypageData: () => instance.get('/api/mypage'),
+  getProfileInfo: () => instance.get('/api/userInfo'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
   editNickname: (nickname) => instance.post('/api/user/nickname', { nickname: nickname }),
 }

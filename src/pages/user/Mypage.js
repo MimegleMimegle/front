@@ -60,9 +60,9 @@ const Mypage = (props) => {
   }
 
   React.useEffect(() => {
-    // if (my == null) {
-    dispatch(mypageActions.getUserInfoDB())
-    // }
+    if (my == null) {
+      dispatch(mypageActions.getMypageDataDB())
+    }
   }, [])
 
   return (
