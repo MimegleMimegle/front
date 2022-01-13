@@ -7,15 +7,13 @@ import { boardApi } from '../shared/api'
 const HashTag = (props) => {
   const history = useHistory();
   const hashTag = props.hashtag
-  const [search, setSearch] = React.useState(props.search)
-  console.log(hashTag)
+
   const clickHashTag = () => {
     boardApi
       .searchPost(hashTag)
       .then((response) => {
         console.log(response.data)
         props.setFilteredPosts(response.data.data)
-        // props.setSearch(hashTag)
         history.push({
           pathname:`/post/search/${hashTag}`,
           })

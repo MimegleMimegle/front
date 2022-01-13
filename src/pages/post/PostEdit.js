@@ -24,13 +24,10 @@ const PostEdit = (props) => {
   const [hashTag, setHashTag] = useState('')
   const [hashTagList, setHashTagList] = useState([])
 
-  console.log(hashTagList)
-
   const getOnePostDB = async () => {
     await boardApi
       .getOnePost(boardId)
       .then((response) => {
-        console.log(response.data)
         const _post = response.data.data
         setPost(response.data.data)
         setTitle(_post.title)
