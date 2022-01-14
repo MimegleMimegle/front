@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { likeApi } from '../shared/api'
+import { dictQuestionApi } from '../shared/api'
 import { useHistory } from 'react-router'
 import '../index.css'
 import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
@@ -8,39 +8,39 @@ import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비�
 import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
 
-const PostCard = ({ post }) => {
+const PostCard = ({ question }) => {
   const history = useHistory()
 
   const onC = () => {
-    history.push(`/post/detail/${post && post.boardId}`)
+    history.push(`/dict/question/detail/${question && question.questionId}`)
   }
-  const [likeCount, setLikeCount] = useState(post.likeCnt)
-  const [isLiked, setIsLiked] = useState(post.isLike)
-  const hour = post.createdAt.split('T')[1].split('.')[0]
+  const [curiousTooCnt, setCuriousTooCnt] = useState(question.curiousTooCnt)
+  const [isCuriousToo, setIsCuriousToo] = useState(question.isCuriousToo)
+  const hour = question.createdAt.split('T')[1].split('.')[0]
 
-  const handleClickLike = async (e) => {
+  const handleClickCuriousToo = async (e) => {
     e.preventDefault()
     e.stopPropagation()
-    if (isLiked) {
-      await likeApi
-        .likeBoard(post.boardId)
+    if (isCuriousToo) {
+      await dictQuestionApi 
+        .curiousToo(question.questionId)
         .then((response) => {
           console.log(response.data)
-          setIsLiked(false)
-          console.log(isLiked)
-          setLikeCount(likeCount - 1)
+          setIsCuriousToo(false)
+          console.log(isCuriousToo)
+          setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
           console.log('이미지 좋아요 취소 문제 발생', error.response)
         })
     } else {
-      await likeApi
-        .likeBoard(post.boardId)
+      await dictQuestionApi
+        .curiousToo(question.questionId)
         .then((response) => {
           console.log(response.data)
-          setIsLiked(true)
-          setLikeCount(likeCount + 1)
-          console.log(isLiked)
+          setIsCuriousToo(true)
+          setCuriousTooCnt(curiousTooCnt + 1)
+          console.log(isCuriousToo)
         })
         .catch((error) => {
           console.log('이미지 좋아요 문제 발생', error.response)
@@ -51,42 +51,42 @@ const PostCard = ({ post }) => {
   return (
     <>
       <FullWrap>
-        <Wrap postList={post} onClick={onC}>
+        <Wrap questionList={question} onClick={onC}>
           <UserInfo>
-            <UserImg src={post ? post.profileImageUrl : null} alt="" />
+            <UserImg src={ question.profileImageUrl} alt="" />
             <div className="userinfo">
-              <Writer>{post ? post.writer : null}</Writer>
+              <Writer>{ question.writer }</Writer>
               <div className="createdate">
-                <CreatedAt>{post ? post.createdAt.split('T')[0] : null}</CreatedAt>
-                <CreatedAt>{post ? hour.split(':')[0] + ':' + hour.split(':')[1] : null}</CreatedAt>
+                <CreatedAt>{ question.createdAt.split('T')[0] }</CreatedAt>
+                <CreatedAt>{ hour.split(':')[0] + ':' + hour.split(':')[1] }</CreatedAt>
               </div>
             </div>
           </UserInfo>
           <Content>
-            <Title>{post && post.title}</Title>
-            <HashTagHere>
-              {post.hashTags &&
-                post.hashTags.map((hashTag, index) => {
+            <Title>{question && question.title}</Title>
+            {/* <HashTagHere>
+              {question.hashTags &&
+                question.hashTags.map((hashTag, index) => {
                   return <pre key={index}> #{hashTag}</pre>
                 })}
-            </HashTagHere>
+            </HashTagHere> */}
           </Content>
           <Icon>
             <IconBox>
               <ViewIcon />
-              <Number>{post && post.views}</Number>
+              <Number>{question && question.views}</Number>
             </IconBox>
             <IconBox>
-              {isLiked ? <FullHeartIcon onClick={handleClickLike} /> : <EmptyHeartIcon onClick={handleClickLike} />}
-              <Number className="like-count">{likeCount}</Number>
+              {isCuriousToo ? <FullHeartIcon onClick={handleClickCuriousToo} /> : <EmptyHeartIcon onClick={handleClickCuriousToo} />}
+              <Number className="like-count">{curiousTooCnt}</Number>
             </IconBox>
             <IconBox>
               <CommentIcon />
-              <Number>{post && post.commentCnt}</Number>
+              <Number>{question && question.commentCnt}</Number>
             </IconBox>
           </Icon>
         </Wrap>
-        {post.thumbNail ? <ThumbNail className="uploadimg" src={post && post.thumbNail} alt="" /> : null}
+        {question.thumbNail ? <ThumbNail className="uploadimg" src={question && question.thumbNail} alt="" /> : null}
       </FullWrap>
     </>
   )

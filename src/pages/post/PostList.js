@@ -3,10 +3,10 @@ import { history } from '../../redux/ConfigureStore'
 import styled from 'styled-components'
 import PostCard from '../../components/PostCard'
 import Pagination from 'rc-pagination'
-import { boardApi } from '../../shared/api'
+import { dictQuestionApi } from '../../shared/api'
 import Header from '../../components/Header'
 import SearchPost from '../../components/SearchPost'
-import '../../index.css'
+// import '../../index.css'
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
@@ -14,60 +14,62 @@ import { CircularProgress } from '@mui/material'
 
 const PostList = (props) => {
 
-  const [post, setPost] = useState([])
-  const [pageSize, setPageSize] = useState(10)
-  const [totalCount, setTotalCount] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [show, setShow] = useState(false)
+  const [question, setQuestion] = useState([])
+  // const [pageSize, setPageSize] = useState(10)
+  // const [totalCount, setTotalCount] = useState(0)
+  // const [currentPage, setCurrentPage] = useState(1)
+  // const [show, setShow] = useState(false)
   const [loading,setLoading] = useState(false)
   
   useEffect(() => {
     setLoading(true)
     setTimeout(() => setLoading(false), 600)
-    getPostListDB()
-    // dispatch(postActions.getPostsDB())
-  }, [currentPage])
+    getQuestionListDB()
+    // dispatch(questionActions.getPostsDB())
+  }, [])
 
-  const getPostListDB = async () => {
-    let response = await boardApi.getPosts(pageSize,currentPage)
-    let totalLength = await boardApi.totalLength()
-    setPost(response.data.data)
-    setTotalCount(totalLength.data.data)
-
+  const getQuestionListDB = async () => {
+    // let response = await dictQuestionApi.getQuestions(pageSize,currentPage)
+    let response = await dictQuestionApi.getQuestions()
+    // let totalLength = await dictQuestionApi.totalLength()
+    setQuestion(response.data.data)
+    // setTotalCount(totalLength.data.data)
+    console.log(response)
   }
 
-  const searchClick = () => {
-    show ? setShow(false) : setShow(true)
-  }
+  // const searchClick = () => {
+  //   show ? setShow(false) : setShow(true)
+  // }
 
   return (
     <>
-      <Header type="PostList" location="밈+글 커뮤니티">
+      {/* <Header type="PostList" location="밈+글 커뮤니티">
         {show ? <CloseIcon cursor="pointer" onClick={searchClick} /> : <SearchIcon cursor="pointer" onClick={searchClick} style={{ margin: '0 5px 2px 0' }} />}
-      </Header>
+      </Header> */}
       {!loading? (
             <>
       <Container>
-        <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv>
+        {/* <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv> */}
         <Wrap>
-          
           <Empty>
             <Addbtn
               onClick={() => {
-                history.push('/post/write')
+                history.push('/dict/question/write')
               }}
             >
-              밈+글 등록
+              질문등록
             </Addbtn>
             <AddbtnShadow />
           </Empty>
 
-          {post &&
-            post.map((post, index) => {
-              return <PostCard post={post} key={post.boardId} />
+          {question &&
+            question.map((question, index) => {
+              return <PostCard question={question} key={question.questionId} />
             })}
 
-          <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+          {/* <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} /> */}
+          <Empty/>
+
           </Wrap>
       </Container>
       </>):(
