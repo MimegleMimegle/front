@@ -84,7 +84,7 @@ const DictEdit = (props) => {
 
   return (
     <>
-      <Header type="DictEdit" location="오픈 밈사전"></Header>
+      <Header location="오픈 밈사전"></Header>
       <div className="DictCardEditPageLayout">
         <div className="DictCardEditInputSection">
           <div className="DictCardEditInputTitleContainer">

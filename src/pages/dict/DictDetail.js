@@ -108,7 +108,7 @@ const DictDetail = (props) => {
 
   return (
     <>
-      <Header type="DictDetail" location="오픈 밈사전">
+      <Header location="오픈 밈사전">
         <div
           className="DictPageSearchButton"
           onClick={() => {

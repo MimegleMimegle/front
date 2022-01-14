@@ -46,7 +46,7 @@ const DictSearch = (props) => {
 
   return (
     <>
-      <Header type="DictSearchResult" location="오픈 밈사전">
+      <Header location="오픈 밈사전">
         <div
           className="DictPageSearchButton"
           onClick={() => {
