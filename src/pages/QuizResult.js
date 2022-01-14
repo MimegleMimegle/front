@@ -7,12 +7,15 @@ import { actionCreators as quizActions } from '../redux/modules/quiz'
 import { quizApi } from '../shared/api'
 
 import Grid from '../elements/Grid'
+import BottomPopup from '../components/BottomPopup'
 import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { ReactComponent as GoBackIcon } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLinkIcon } from '../styles/icons/링크복사_24dp.svg'
+import { MdClose } from 'react-icons/md'
+import { RiCloseCircleLine } from 'react-icons/ri'
 
 const QuizResult = ({ quiz_list, category }) => {
   const dispatch = useDispatch()
@@ -76,9 +79,9 @@ const QuizResult = ({ quiz_list, category }) => {
             <div className="quiz-subject box-1">결과</div>
             <div className="quiz-subject box-2"></div>
             <Grid flex_center column padding="50px 0 30px">
-              <span className="result-text__answerCnt">{answerCnt}/10</span>
               <h2 className="result-text__sub">{resultText.sub}</h2>
               <h2 className="result-text__main">{resultText.main}</h2>
+              <span className="result-text__answerCnt">{answerCnt}/10</span>
             </Grid>
           </QuizResultBox>
           <ResultButtonContainer>
@@ -118,13 +121,18 @@ const QuizResult = ({ quiz_list, category }) => {
               </button>
             </Grid>
           </TextButtonContainer>
-          <QuizContainer>
-            {showQuiz &&
-              quiz_list &&
-              quiz_list.map((quiz, index) => {
-                return <OneQuiz key={index} quiz={quiz} index={index} />
-              })}
-          </QuizContainer>
+          <BottomPopup isOpen={showQuiz} onClose={() => setShowQuiz(false)} heightPixel={600}>
+            <QuizContainer>
+              <Handler />
+              {quiz_list &&
+                quiz_list.map((quiz, index) => {
+                  return <OneQuiz key={index} quiz={quiz} index={index} />
+                })}
+              <Grid flex_center padding="10px 0 0">
+                <RiCloseCircleLine className="close-icon" onClick={() => setShowQuiz(false)} />
+              </Grid>
+            </QuizContainer>
+          </BottomPopup>
         </Grid>
         <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />
       </Wrapper>
@@ -193,7 +201,6 @@ const QuizResultBox = styled.div`
   }
 
   .result-text__sub {
-    padding: 10px 0 0;
     font-size: ${({ theme }) => theme.fontSizes.lg};
     font-family: 'YdestreetL';
     font-style: normal;
@@ -210,11 +217,32 @@ const QuizResultBox = styled.div`
 `
 
 const QuizContainer = styled.div`
-  padding: 20px;
+  padding: 5px 20px 16px;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+  z-index: 10001;
+  .close-icon {
+    font-size: 28px;
+    transition: color 0.3s ease-in-out;
+    cursor: pointer;
+    &:hover {
+      color: ${({ theme }) => theme.colors.blue};
+    }
+  }
+`
+
+const Handler = styled.div`
+  width: 40px;
+  height: 5px;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.line};
 `
 
 const ResultButtonContainer = styled.div`
@@ -227,7 +255,7 @@ const ResultButtonContainer = styled.div`
     width: 130px;
     height: 40px;
     position: absolute;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
     background-color: ${({ theme }) => theme.colors.white};
     .resultButton {
@@ -281,7 +309,7 @@ const TextButtonContainer = styled.div`
       position: absolute;
       width: 36px;
       height: 36px;
-      border: 1px solid ${({ theme }) => theme.colors.black};
+      border: 2px solid ${({ theme }) => theme.colors.black};
       border-radius: 20px;
     }
     .btn-1 {
