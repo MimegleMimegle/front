@@ -2,11 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Grid = (props) => {
-  const { flex_center, flex_between, flex_align, column, width, height, padding, margin, overflow, borderBottom, position, children, _onClick } = props
+  const { flex_center, flex_between, flex_align, flex_end, flex_around, column, width, height, padding, margin, overflow, borderBottom, position, children, _onClick } = props
   const styles = {
     flex_center: flex_center,
     flex_between: flex_between,
     flex_align: flex_align,
+    flex_end: flex_end,
+    flex_around: flex_around,
     column: column,
     width: width,
     height: height,
@@ -29,6 +31,8 @@ Grid.defaultProps = {
   flex_center: false,
   flex_between: false,
   flex_align: false,
+  flex_end: false,
+  flex_around: false,
   column: false,
   children: null,
   width: '100%',
@@ -53,6 +57,8 @@ const GridBox = styled.div`
   ${(props) => (props.flex_between ? `display: flex; align-items: center; justify-content: space-between;` : '')}
   ${(props) => (props.flex_align ? `display: flex; align-items: center;` : '')}
   ${(props) => (props.column ? `flex-direction: column;` : '')}
+  ${(props) => (props.flex_end ? `display: flex; align-items: center; justify-content: flex-end;` : '')}
+  ${(props) => (props.flex_around ? `display: flex; align-items: center; justify-content: space-around;` : '')}
 `
 
 export default Grid

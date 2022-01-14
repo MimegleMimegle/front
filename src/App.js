@@ -25,10 +25,12 @@ import {
   DictWrite,
   DictDetail,
   DictHistory,
+  DictMyMeMe,
   ImageList,
   ImageDetail,
   ImageUpload,
   DictSearch,
+  DictStat,
 } from './pages'
 import MobileFrame from './components/MobileFrame'
 
@@ -57,9 +59,11 @@ function App() {
             <Route path="/dict/detail/:dictId" exact component={DictDetail} />
             <Route path="/dict/search/:keyword" exact component={DictSearch} />
             <Route path="/dict/history/:dictId" exact component={DictHistory} />
+            <Route path="/dict/mymeme" exact component={Auth(DictMyMeMe, true)} />
+            <Route path="/dict/stat" exact component={DictStat} />
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/detail/:imageId" exact component={ImageDetail} />
-            <Route path="/image/upload" exact component={Auth(ImageUpload, true)} />
+            <Route path="/image/upload" exact component={ImageUpload} />
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>

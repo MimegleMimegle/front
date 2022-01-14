@@ -7,6 +7,7 @@ import PopularBoardCardSwiper from '../components/PopularBoardCardSwiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 import 'swiper/swiper.min.css'
 import 'swiper/components/lazy/lazy.min.css'
@@ -70,7 +71,7 @@ const Main = (props) => {
 
   return (
     <>
-      <Header />
+      <Header type="main" />
       <div className="MainPageLayout">
         <Swiper
           slidesPerView={1}
@@ -161,6 +162,7 @@ const Main = (props) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

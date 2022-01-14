@@ -6,6 +6,7 @@ import { actionCreators as quizActions } from '../redux/modules/quiz'
 import { mainApi } from '../shared/api'
 
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import AlertModal from '../components/modal/AlertModal'
 import QuizIntroImage from '../styles/image/quiz_main_image2.gif'
 
@@ -105,6 +106,7 @@ const QuizIntro = (props) => {
           <div className="start-button-box box2"></div>
         </ButtonSection>
       </Wrapper>
+      <Footer />
       {showModal && (
         <AlertModal showModal={showModal}>
           <p>퀴즈 주제를 선택해주세요! 🤓</p>
@@ -117,7 +119,7 @@ const QuizIntro = (props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 74px 0 0;
+  padding: 60px 0 80px;
 `
 
 const ImageSection = styled.div`

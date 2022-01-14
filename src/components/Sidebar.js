@@ -14,9 +14,9 @@ import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const dispatch = useDispatch()
   const my = useSelector((state) => state.mypage.myPageData)
-  const username = localStorage.getItem('username')
-  const nickname = localStorage.getItem('nickname')
-  const isLogin = username && nickname ? true : false
+  const userId = localStorage.getItem('id')
+  const token = document.cookie.split('=')[1]
+  const isLogin = userId !== null && token !== undefined ? true : false
 
   const [showModal, setShowModal] = React.useState(false)
 
@@ -64,7 +64,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
 
   React.useEffect(() => {
     if (my == null) {
-      dispatch(mypageActions.getUserInfoDB())
+      dispatch(mypageActions.getMypageDataDB())
     }
   }, [])
 

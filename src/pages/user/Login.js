@@ -13,6 +13,7 @@ import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
 import AlertModal from '../../components/modal/AlertModal'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 
 const Login = (props) => {
   const dispatch = useDispatch()
@@ -139,6 +140,7 @@ const Login = (props) => {
           {/* <img className="NaverLoginBtn" size="5" src={naver}></img> */}
         </div>
       </div>
+      <Footer />
       {showModal && (
         <AlertModal showModal={showModal}>
           <WelcomeMessage>
