@@ -61,7 +61,7 @@ function App() {
             <Route path="/dict/stat" exact component={DictStat} />
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/detail/:imageId" exact component={ImageDetail} />
-            <Route path="/image/upload" exact component={Auth(ImageUpload, true)} />
+            <Route path="/image/upload" exact component={ImageUpload} />
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>
