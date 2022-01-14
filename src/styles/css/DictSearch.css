@@ -15,6 +15,7 @@
 .DictSearchPageLayout {
   padding: 74px 0 0;
   width: 100%;
+  height: fit-content;
   /* border: 3px solid cornflowerblue; */
   overflow-x: hidden;
   overflow-y: scroll;
@@ -42,6 +43,58 @@
   font-style: normal;
   font-size: 16px;
   font-weight: normal;
+}
+
+.DictSearchResultMemeSection {
+  width: fit-content;
+  height: fit-content;
+  margin: 0 0 10px 0;
+}
+
+.Text {
+  margin-left: 15px;
+  width: fit-content;
+  line-height: normal;
+  background-image: linear-gradient(transparent 60%, #ffe330 40%);
+
+  font-size: 18px;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+}
+
+.List {
+  width: 428px;
+  height: 300px;
+
+  /* border: 1px solid blue; */
+}
+
+.DictSearchResultQnASection {
+  width: fit-content;
+  height: fit-content;
+  margin: 0 0 10px 0;
+}
+
+.Text {
+  margin-left: 15px;
+  margin-bottom: 10px;
+  width: fit-content;
+  line-height: normal;
+  background-image: linear-gradient(transparent 60%, #ffe330 40%);
+
+  font-size: 18px;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+}
+
+.List {
+  width: 428px;
+  height: fit-content;
+  margin: 0 0 50px 0;
+
+  /* border: 1px solid blue; */
 }
 
 .DictSearchLists {
