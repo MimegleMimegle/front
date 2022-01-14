@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
-import { userApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
+import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
 import Grid from '../../elements/Grid'
 import ConfirmModal from '../../components/modal/ConfirmModal'
@@ -17,12 +18,13 @@ import { IoCloseOutline } from 'react-icons/io5'
 import { MdOutlineDelete } from 'react-icons/md'
 
 const ImageDetail = (props) => {
+  const dispatch = useDispatch()
   const boardId = useParams().imageId
+  const profile = useSelector((state) => state.mypage.myProfile)
 
   const [imageData, setImageData] = useState('')
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
-  const [profile, setProfile] = useState(null)
   const [createdAt, setCreatedAt] = useState('')
   const [thumbNail, setThumbNail] = useState('')
   const [shareVisible, setShareVisible] = useState(false)
@@ -47,7 +49,6 @@ const ImageDetail = (props) => {
       await likeApi
         .likeBoard(boardId)
         .then((response) => {
-          console.log(response.data)
           setIsLiked(false)
           setLikeCount(likeCount - 1)
         })
@@ -58,7 +59,6 @@ const ImageDetail = (props) => {
       await likeApi
         .likeBoard(boardId)
         .then((response) => {
-          console.log(response.data)
           setIsLiked(true)
           setLikeCount(likeCount + 1)
         })
@@ -73,9 +73,7 @@ const ImageDetail = (props) => {
     e.stopPropagation()
     await imageApi
       .deleteImage(boardId)
-      .then((response) => {
-        console.log(response.data)
-      })
+      .then((response) => {})
       .then(() => {
         window.location.replace('/image')
       })
@@ -99,14 +97,7 @@ const ImageDetail = (props) => {
       .catch((error) => {
         console.log('상세 이미지를 불러오는 데 문제가 발생했습니다.', error.response)
       })
-    userApi
-      .getProfileInfo()
-      .then((response) => {
-        setProfile(response.data.data)
-      })
-      .catch((error) => {
-        console.log('프로필 정보 문제 발생', error.response)
-      })
+    dispatch(mypageActions.getUserProfileDB())
   }, [])
 
   return (

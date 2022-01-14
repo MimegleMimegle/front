@@ -5,12 +5,12 @@ import PostCard from '../../components/PostCard'
 import Pagination from 'rc-pagination'
 import { dictQuestionApi } from '../../shared/api'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import SearchPost from '../../components/SearchPost'
 // import '../../index.css'
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
-
 
 const PostList = (props) => {
 
@@ -125,9 +125,9 @@ const Addbtn = styled.div`
   transition-duration: 0.2s;
 
   &:hover {
-      left: calc(50%);
-      transform: translate(4px,10%);
-    }
+    left: calc(50%);
+    transform: translate(4px, 10%);
+  }
 `
 
 const AddbtnShadow = styled.div`

@@ -1,147 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
+import { history } from '../redux/ConfigureStore'
+import { actionCreators as mypageAction } from '../redux/modules/mypage'
 
-import Sidebar from './Sidebar'
-import HeaderLogo from './HeaderLogo'
-import HeaderHamburder from './HeaderHamburger'
-import HeaderGoBack from './HeaderGoBack'
-import HeaderClose from './HeaderClose'
-import HeaderGoDictMain from './HeaderGoDictMain'
+import Grid from '../elements/Grid'
+import ProfileBottom from './ProfileBottom'
+import AlarmModal from './modal/AlarmModal'
+import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
+import { BsBell, BsBellFill } from 'react-icons/bs'
 
-const Header = ({ type, children, location, low, noBorder }) => {
-  const [showSidebar, setShowSidebar] = React.useState(false)
-  const handleSidebar = () => {
-    setShowSidebar(!showSidebar)
+const Header = ({ type, children, location }) => {
+  const dispatch = useDispatch()
+  const profile = useSelector((state) => state.mypage.myProfile)
+  const userId = localStorage.getItem('id')
+  const token = document.cookie.split('=')[1]
+  const isLogin = userId !== null && token !== undefined ? true : false
+
+  const [showProfile, setShowProfile] = useState(false)
+  const [showAlarm, setShowAlarm] = useState(false)
+
+  const handleShowProfile = () => {
+    setShowProfile(!showProfile)
   }
 
-  const styles = { low: low, noBorder: noBorder }
-
-  if (type === 'QuizPaper') {
-    return (
-      <>
-        <NavHeader {...styles}>
-          <ul style={{ height: '100%', display: 'flex', alignItems: 'end', justifyContent: 'center' }}>
-            <li>
-              <QuizLocation>{location}</QuizLocation>
-            </li>
-          </ul>
-        </NavHeader>
-      </>
-    )
+  const handleShowModal = () => {
+    setShowAlarm(!showAlarm)
   }
 
-  if (type === 'PostDetail') {
-    return (
-      <>
-        <NavHeader {...styles}>
-          <ul className="nav-list">
-            <li>
-              <HeaderGoBack />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right"></div>
-            </li>
-          </ul>
-        </NavHeader>
-      </>
-    )
-  }
+  useEffect(() => {
+    if (profile === null) {
+      dispatch(mypageAction.getUserProfileDB())
+    }
+  }, [])
 
-  if (type === 'DictWrite' || type === 'DictEdit') {
+  if (type === 'main') {
     return (
       <>
         <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderClose />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right"></div>
-            </li>
-          </ul>
+          <Grid flex_between height="100%">
+            <div className="header-title">Memegle</div>
+            <Grid flex_end height="100%">
+              <div className="header-bell-box" onClick={handleShowModal}>
+                {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
+              </div>
+              {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
+            </Grid>
+          </Grid>
         </NavHeader>
-      </>
-    )
-  }
-
-  if (type === 'PostWrite' || type === 'DictHistory' || type === 'DictDetail' || type === 'QuizIntro' || type === 'PostEdit') {
-    return (
-      <>
-        <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderGoBack />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right">{children}</div>
-            </li>
-          </ul>
-        </NavHeader>
-      </>
-    )
-  }
-
-  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch' || type === 'MyPage' || type === 'DictList' || type === 'QuizResult') {
-    return (
-      <>
-        <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderHamburder handleSidebar={handleSidebar} />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right">{children}</div>
-            </li>
-          </ul>
-        </NavHeader>
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      </>
-    )
-  }
-
-  if (type === 'DictSearchResult') {
-    return (
-      <>
-        <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderGoDictMain />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right">{children}</div>
-            </li>
-          </ul>
-        </NavHeader>
-      </>
-    )
-  }
-
-  if (type === 'Join' || type === 'Login') {
-    return (
-      <>
-        <NavHeader {...styles}>
-          <ul className="nav-list">
-            <li className="nav-item-middle">
-              <HeaderLogo />
-            </li>
-          </ul>
-        </NavHeader>
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+        <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
+        {showAlarm && (
+          <AlarmModal
+            onClose={() => {
+              setShowAlarm(false)
+            }}
+          />
+        )}
       </>
     )
   }
@@ -149,19 +63,25 @@ const Header = ({ type, children, location, low, noBorder }) => {
   return (
     <>
       <NavHeader>
-        <ul className="nav-list">
-          <li>
-            <HeaderHamburder handleSidebar={handleSidebar} />
-          </li>
-          <li className="nav-item-middle">
-            <HeaderLogo />
-          </li>
-          <li>
-            <div className="nav-item-right"></div>
-          </li>
-        </ul>
+        <Grid flex_between height="100%">
+          <div className="header-empty"></div>
+          <div className="header-location">{location}</div>
+          <div className="header-icon">
+            <div className="header-bell-box" onClick={handleShowModal}>
+              {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
+            </div>
+            {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
+          </div>
+        </Grid>
       </NavHeader>
-      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
+      {showAlarm && (
+        <AlarmModal
+          onClose={() => {
+            setShowAlarm(false)
+          }}
+        />
+      )}
     </>
   )
 }
@@ -171,50 +91,69 @@ const NavHeader = styled.nav`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  padding: 0 10px;
+  padding: 6px 16px 0;
   width: 100%;
-  height: ${(props) => (props.low ? '62px' : '74px')};
+  height: 60px;
   background-color: ${({ theme }) => theme.colors.bg};
   border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid  #e5e5e5')};
-  /* padding: 10px 0 12px; */
   z-index: 1000;
-  .nav-list {
+  .header-title {
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    cursor: default;
+  }
+  .header-empty {
+    width: 72px;
     height: 100%;
-    margin: 0;
-    padding: 0;
+  }
+  .header-location {
+    font-family: 'YdestreetL';
+    font-style: normal;
+    font-weight: normal;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    cursor: default;
+  }
+  .header-icon {
     display: flex;
     align-items: center;
-    justify-content: space-between;
   }
-  .nav-item-middle {
-    width: 100%;
-    height: 100%;
+  .header-bell-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+    background-color: transparent;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  .nav-item-right {
-    width: 40px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: background-color 0.3s ease-in-out;
+    &:hover {
+      background-color: #eeeeee;
+    }
+    .header-bell {
+      font-size: 18px;
+      &.shown {
+        color: ${({ theme }) => theme.colors.blue};
+      }
+      &.hidden {
+        color: #333;
+      }
+    }
   }
 `
 
-const Location = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes.xxl};
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-  cursor: default;
-`
-const QuizLocation = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-  text-align: center;
+const ProfileImage = styled.div`
+  margin: 0 0 0 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.colors.white};
 `
 
 export default Header

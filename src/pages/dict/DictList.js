@@ -10,6 +10,7 @@ import SearchPage from '../../shared/SearchPage'
 import { dictApi } from '../../shared/api'
 import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import { ReactComponent as EmptyLikeIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
 import { ReactComponent as FillLikeIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
@@ -94,6 +95,7 @@ const DictList = (props) => {
           <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
         </div>
       </div>
+      <Footer />
     </>
   )
 }
