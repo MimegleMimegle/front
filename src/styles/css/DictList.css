@@ -35,6 +35,22 @@
   display: none;
 }
 
+.DictPageSearchSection {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 95%;
+}
+
+.DictPageSearchButton {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  z-index: 100;
+}
+
 .DictPageSearchButton {
   display: flex;
   justify-content: center;
