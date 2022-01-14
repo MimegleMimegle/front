@@ -98,18 +98,18 @@ const Container = styled.div`
   }
   .share-header {
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    font-family: 'Pretendard Variable';
-    font-style: normal;
     font-weight: 500;
     cursor: default;
   }
   .share-footer {
     .share-footer__close-button {
       font-size: ${({ theme }) => theme.fontSizes.lg};
-      font-family: 'Pretendard Variable';
-      font-style: normal;
       font-weight: 500;
       cursor: pointer;
+      transition: color 0.3s ease-in-out;
+      &:hover {
+        color: ${({ theme }) => theme.colors.blue};
+      }
     }
   }
   .link-copied {
