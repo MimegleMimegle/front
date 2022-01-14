@@ -31,7 +31,7 @@ export default function DictNavBar() {
           label="RANKING"
           icon={<MilitaryTechIcon />}
           onClick={() => {
-            history.push('/dict')
+            history.push('/dict/stat')
           }}
         />
         <BottomNavigationAction
