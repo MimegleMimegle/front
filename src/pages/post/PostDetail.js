@@ -26,6 +26,7 @@ const PostDetail = (props) => {
   const [toggleModalChang, setToggleModalChang] = useState(false)
   const [createdAt, setCreatedAt] = useState('')
   const [showModal, setShowModal] = React.useState(false)
+  console.log(question)
   const handleShowModal = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -118,7 +119,7 @@ const PostDetail = (props) => {
                 <button
                   style={{ fontSize: '12px', padding: '0' }}
                   onClick={() => {
-                    history.push(`/post/edit/${questionId}`)
+                    history.push(`/dict/question/edit/${questionId}`)
                   }}
                 >
                   수정하기
@@ -140,16 +141,6 @@ const PostDetail = (props) => {
           <ImageBox>
             <ContentImg src={question ? question.thumbNail : null} alt="" />
           </ImageBox>
-          {/* <HashTagHere>
-            {post.hashTags &&
-              post.hashTags.map((hashTag, index) => {
-                return (
-                  <pre className="one-hashtag" key={index}>
-                    #{hashTag}
-                  </pre>
-                )
-              })}
-          </HashTagHere> */}
         </Middle>
 
         <ViewLikeComment>
@@ -250,14 +241,6 @@ const ImageBox = styled.div`
 const ContentImg = styled.img`
   width: 100%;
   object-fit: cover;
-`
-
-const HashTagHere = styled.div`
-  display: flex;
-  font-size: 12px;
-  .one-hashtag {
-    padding: 0 7px 0 0;
-  }
 `
 
 const ViewLikeComment = styled.div`

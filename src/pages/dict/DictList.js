@@ -67,6 +67,16 @@ const DictList = (props) => {
       </Header>
       <div className="DictLayout">
         <SearchBarSection>{show && <SearchPage />}</SearchBarSection>
+        <div className="DictPageSearchSection">
+          <div
+            className="DictPageSearchButton"
+            onClick={() => {
+              showSearchBar()
+            }}
+          >
+            <SpeedDialButton />
+          </div>
+        </div>
         <div className="NewDictAddButtonSection">
           <div className="NewDictAddButton_1" onClick={() => history.push('/dict/write')}>
             밈 단어 등록
