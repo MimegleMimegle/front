@@ -12,7 +12,7 @@ const OneComment = (props) => {
 
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
   const commentWriterId = props.commentWriterId
-  const boardId = props.boardId
+  const questionId = props.questionId
   const commentId = props.commentId
   const createdAt = props.createdAt.split('T')[0] + ' ' + props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]
 
@@ -26,7 +26,7 @@ const OneComment = (props) => {
 
   /* 삭제는 되는데 리프레쉬해야만 반영됨 -> 삭제할 건지 확인하는 모달 생성 후 확인 버튼 누르면 dispatch & history.push로 댓글 페이지로 돌아가게 하기? */
   const delComment = () => {
-    dispatch(commentActions.delCommentDB(boardId, commentId))
+    dispatch(commentActions.delCommentDB(questionId, commentId))
     setShowModal(false)
   }
 
