@@ -21,8 +21,8 @@ const Container = styled.div`
   position: absolute;
   top: 68px;
   right: 16px;
-  width: 200px;
-  height: 300px;
+  width: 60%;
+  height: fit-content;
   padding: 10px;
   border-radius: 10px;
   background-color: #fff;

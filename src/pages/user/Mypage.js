@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 import '../../styles/css/Mypage.css'
 
+import Masonry from 'react-masonry-css'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import EditProfile from '../../components/mypage/EditProfile'
@@ -119,11 +120,13 @@ const Mypage = (props) => {
           {/* Photo */}
           {showImage && (
             <MyImageList>
-              {myMemeImageList.length > 0
-                ? myMemeImageList.map((image) => {
-                    return <MyPageOneImageCard key={image.boardId} image={image} />
-                  })
-                : null}
+              <Masonry breakpointCols={2} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
+                {myMemeImageList.length > 0
+                  ? myMemeImageList.map((image) => {
+                      return <MyPageOneImageCard key={image.boardId} image={image} />
+                    })
+                  : null}
+              </Masonry>
             </MyImageList>
           )}
         </UserActivity>
@@ -169,8 +172,6 @@ const UserProfile = styled.div`
     .user-nickname {
       padding: 0 5px;
       font-size: ${({ theme }) => theme.fontSizes.xl};
-      font-family: 'Pretendard Variable';
-      font-style: normal;
       font-weight: 700;
     }
 
@@ -246,15 +247,23 @@ const Filter = styled.div`
 
 const UserActivity = styled.div`
   width: 100%;
-  padding: 30px 0 84px;
+  padding: 30px 0 0;
+  .my-masonry-grid {
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: flex;
+    margin-left: -16px; /* gutter size offset */
+    width: auto;
+  }
+  .my-masonry-grid_column {
+    padding-left: 16px; /* gutter size */
+    background-clip: padding-box;
+  }
 `
 
 const MyImageList = styled.div`
   width: 100%;
-  padding: 0 16px 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  padding: 0 16px 84px;
 `
 
 export default Mypage
