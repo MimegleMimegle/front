@@ -12,7 +12,10 @@ const instance = axios.create({
 
 /* Interceptor를 통한 Header 설정 */
 instance.interceptors.request.use((config) => {
-  const accessToken = document.cookie.split('=')[1]
+  const accessToken = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith('token'))
+    .split('=')[1]
   config.headers.common['authorization'] = `${accessToken}`
   return config
 })
