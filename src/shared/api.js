@@ -62,6 +62,7 @@ export const dictQuestionApi={
   editQuestion: (questionId,content) => instance.put(`/api/dict/question/${questionId}`,content),
   deleteQuestion: (questionId) => instance.delete(`/api/dict/question/${questionId}`),
   curiousToo:(questionId)=> instance.get(`/api/dict/question/curiousToo/${questionId}`),
+  
   //백엔드진행중
   searchAlldict:(currentPage,pageSize) => instance.get(`/api/dict/search?q=’테스트’&page=${currentPage -1}&size=${pageSize}`),  
 
@@ -94,8 +95,7 @@ export const mainApi = {
 }
 
 export const commentApi = {
-  addComment: (questionId, comment) => instance.post(`/api/dict/${questionId}}/comment`, { content: comment }),
-  // editComment: (commentId) => instance.put(`/api/board/${commentId}`),
+  addComment: (questionId, comment) => instance.post(`/api/dict/${questionId}/comment`,{ content: comment }),
   deleteComment: (commentId) => instance.delete(`/api/dict/comment/${commentId}`),
   likeComment: (commentId)=> instance.get(`/api/dict/comment/like/${commentId}`),
 }

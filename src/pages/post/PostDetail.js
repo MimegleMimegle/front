@@ -19,7 +19,6 @@ const PostDetail = (props) => {
   const dispatch = useDispatch()
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
   const questionId = Number(props.match.params.questionId)
-
   const [question, setQuestion] = useState([])
   const [isCuriousToo, setIsCuriousToo] = useState(false)
   const [curiousTooCnt, setCuriousTooCnt] = useState(0)
