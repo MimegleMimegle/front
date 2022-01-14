@@ -30,6 +30,7 @@ import {
   ImageDetail,
   ImageUpload,
   DictSearch,
+  DictStat,
 } from './pages'
 import MobileFrame from './components/MobileFrame'
 
@@ -47,10 +48,10 @@ function App() {
             <Route path="/quiz" exact component={QuizIntro} />
             <Route path="/quiz/:category" exact component={Quiz} />
             <Route path="/quiz/:category/result" exact component={QuizResult} />
-            <Route path="/post" exact component={PostList} />
-            <Route path="/post/detail/:boardId" exact component={PostDetail} />
-            <Route path="/post/write" exact component={Auth(PostWrite, true)} />
-            <Route path="/post/edit/:boardId" exact component={Auth(PostEdit, true)} />
+            <Route path="/dict/question" exact component={PostList} />
+            <Route path="/dict/question/detail/:questionId" exact component={PostDetail} />
+            <Route path="/dict/question/write" exact component={Auth(PostWrite, true)} />
+            <Route path="/dict/question/edit/:questionId" exact component={Auth(PostEdit, true)} />
             <Route path="/post/search/:search" exact component={PostSearch} />
             <Route path="/dict" exact component={DictList} />
             <Route path="/dict/write" exact component={Auth(DictWrite, true)} />
@@ -59,9 +60,10 @@ function App() {
             <Route path="/dict/search/:keyword" exact component={DictSearch} />
             <Route path="/dict/history/:dictId" exact component={DictHistory} />
             <Route path="/dict/mymeme" exact component={Auth(DictMyMeMe, true)} />
+            <Route path="/dict/stat" exact component={DictStat} />
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/detail/:imageId" exact component={ImageDetail} />
-            <Route path="/image/upload" exact component={Auth(ImageUpload, true)} />
+            <Route path="/image/upload" exact component={ImageUpload} />
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>

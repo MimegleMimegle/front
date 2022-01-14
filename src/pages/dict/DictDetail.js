@@ -18,6 +18,7 @@ import 'moment/locale/ko'
 import moment from 'moment'
 import { push } from 'connected-react-router'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import SearchPage from '../../shared/SearchPage'
 
 const DictDetail = (props) => {
@@ -184,6 +185,7 @@ const DictDetail = (props) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

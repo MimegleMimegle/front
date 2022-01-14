@@ -1,14 +1,11 @@
 import React, { useRef, useState, createRef } from 'react'
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
-import ReactQuill from 'react-quill'
+import { useDispatch } from 'react-redux'
 import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
-import { actionCreators as postActions } from '../../redux/modules/post'
-import Header from '../../components/Header'
+import { actionCreators as questionActions } from '../../redux/modules/dictquestion'
+import '../../components/Header'
 
 const PostWrite = (props) => {
-  const history = useHistory()
   const dispatch = useDispatch()
 
   const textRef = createRef()
@@ -17,8 +14,7 @@ const PostWrite = (props) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [thumbNail, setThumbNail] = useState(null)
-  const [hashTag, setHashTag] = useState('')
-  const [hashTagList, setHashTagList] = useState([])
+
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
@@ -28,43 +24,12 @@ const PostWrite = (props) => {
     setContent(e.target.value)
   }
 
-  const onChangeHashTag = (e) => {
-    setHashTag(e.target.value)
-  }
 
   const handleTextareaResize = () => {
     const obj = textRef.current
     obj.style.height = 'auto'
     obj.style.height = obj.scrollHeight + 'px'
   }
-
-  const onKeyUp = React.useCallback(
-    (e) => {
-      // if (process.browser) {
-      /* 요소 불러오기, 만들기*/
-      const $hashWrapOutter = document.querySelector('.hashWrapOutter')
-      const $hashWrapInner = document.createElement('div')
-      $hashWrapInner.className = 'hashWrapInner'
-
-      /* 태그를 클릭 이벤트 관련 로직 */
-      $hashWrapInner.addEventListener('click', () => {
-        $hashWrapOutter?.removeChild($hashWrapInner)
-        console.log($hashWrapInner.innerHTML)
-        setHashTagList(hashTagList.filter((hashTag) => hashTag))
-      })
-
-      /* enter 키 코드 :13 */
-      if (e.keyCode === 13 && e.target.value.trim() !== '') {
-        console.log('Enter Key 입력됨!', e.target.value)
-        $hashWrapInner.innerHTML = '#' + e.target.value
-        $hashWrapOutter?.appendChild($hashWrapInner)
-        setHashTagList((hashTagList) => [...hashTagList, hashTag])
-        setHashTag('')
-      }
-    },
-    // },
-    [hashTag, hashTagList]
-  )
 
   const onChangeFile = (e) => {
     setThumbNail(e.target.files)
@@ -80,23 +45,20 @@ const PostWrite = (props) => {
       }
     }
   }
-  console.log(title)
-  console.log(content)
-  console.log(hashTagList)
 
-  const addPost = () => {
+  const addQuestion = () => {
     if (title === '' || content === '') {
       window.alert('제목 혹은 내용을 작성해주세요.')
       return
     }
 
     const uploadFile = thumbNail ? fileInput.current.files[0] : ''
-    dispatch(postActions.addPostDB(title, content, uploadFile, hashTagList))
+    dispatch(questionActions.addQuestionDB(title, content, uploadFile))
   }
 
   return (
     <>
-      <Header type="PostWrite" location="밈+글 등록하기"></Header>
+      {/* <Header type="PostWrite" location="밈+글 등록하기"></Header> */}
       <Container>
         <PWHeader>
           <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
@@ -112,7 +74,7 @@ const PostWrite = (props) => {
             onKeyUp={handleTextareaResize}
           ></textarea>
           <Preview>
-            <img src={thumbNail} className="thumbNail" />
+            <img src={thumbNail} className="thumbNail" alt=""/>
           </Preview>
           <UploadSection>
             <label htmlFor="file" className="upload-label">
@@ -120,13 +82,9 @@ const PostWrite = (props) => {
             </label>
             <input type="file" id="file" className="upload-input" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           </UploadSection>
-          <HashDivWrap className="hashWrap">
-            <div className="hashWrapOutter"></div>
-            <input className="hashInput" type="text" placeholder="해시태그를 입력해주세요 (최대5개, 해시태그는 클릭 시 지워집니다.)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
-          </HashDivWrap>
         </PWBody>
         <PWFooter>
-          <button className="postbtn btn-1" onClick={addPost}>
+          <button className="postbtn btn-1" onClick={addQuestion}>
             등록
           </button>
           <div className="postbtn btn-2"></div>

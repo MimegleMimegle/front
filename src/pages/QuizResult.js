@@ -10,6 +10,7 @@ import Grid from '../elements/Grid'
 import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { ReactComponent as GoBackIcon } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLinkIcon } from '../styles/icons/링크복사_24dp.svg'
 
@@ -127,12 +128,13 @@ const QuizResult = ({ quiz_list, category }) => {
         </Grid>
         <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />
       </Wrapper>
+      <Footer />
     </>
   )
 }
 
 const Wrapper = styled.div`
-  padding: 74px 0 0;
+  padding: 60px 0 84px;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -149,7 +151,7 @@ const QuizResultBox = styled.div`
   width: 100%;
   height: 100%;
   margin: 40px 0 0;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 2px solid ${({ theme }) => theme.colors.black};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,7 +160,7 @@ const QuizResultBox = styled.div`
     width: 100px;
     height: 40px;
     position: absolute;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.white};
     font-size: ${({ theme }) => theme.fontSizes.xxl};
     font-family: 'YdestreetB';

@@ -20,11 +20,9 @@ const SearchPost = (props) => {
   const [filteredPosts, setFilteredPosts] = React.useState([])
   const [notFound, setNotFound] = React.useState(false)
 
-  console.log(hashTags)
 
   const handleSearch = (e) => {
     setSearch(e.target.value)
-    console.log(e.target.value)
   }
 
   const clickSearch = async () => {

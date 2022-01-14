@@ -1,18 +1,15 @@
-import React, { useEffect, useRef, useState, createRef } from 'react'
+import React, { useState, createRef } from 'react'
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, useParams } from 'react-router'
-import { actionCreators as postActions } from '../../redux/modules/post'
+import { useDispatch } from 'react-redux'
+import { actionCreators as QuestionActions } from '../../redux/modules/dictquestion'
 import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
-import { boardApi } from '../../shared/api'
-
-import Header from '../../components/Header'
+import { dictQuestionApi } from '../../shared/api'
+import '../../components/Header'
 
 const PostEdit = (props) => {
-  const history = useHistory()
   const dispatch = useDispatch()
   const username = localStorage.getItem('username')
-  const boardId = Number(props.match.params.boardId)
+  const questionId = Number(props.match.params.questionId)
 
   const textRef = createRef()
   const fileInput = React.useRef('')
@@ -21,22 +18,17 @@ const PostEdit = (props) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [thumbNail, setThumbNail] = useState('')
-  const [hashTag, setHashTag] = useState('')
-  const [hashTagList, setHashTagList] = useState([])
 
-  console.log(hashTagList)
 
-  const getOnePostDB = async () => {
-    await boardApi
-      .getOnePost(boardId)
+  const getOneQuestionDB = async () => {
+    await dictQuestionApi
+      .getOneQuestion(questionId)
       .then((response) => {
-        console.log(response.data)
-        const _post = response.data.data
+        const _question = response.data.data
         setPost(response.data.data)
-        setTitle(_post.title)
-        setContent(_post.content)
-        setThumbNail(_post.thumbNail)
-        setHashTagList(_post.hashTags)
+        setTitle(_question.title)
+        setContent(_question.content)
+        setThumbNail(_question.thumbNail)
       })
       .catch((error) => {
         console.log('게시글 상세 조회 문제 발생', error.response)
@@ -44,7 +36,7 @@ const PostEdit = (props) => {
   }
 
   React.useEffect(() => {
-    getOnePostDB()
+    getOneQuestionDB()
   }, [])
 
   const handleTextareaResize = () => {
@@ -61,47 +53,6 @@ const PostEdit = (props) => {
     setContent(e.target.value)
   }
 
-  const onChangeHashTag = (e) => {
-    setHashTag(e.target.value)
-  }
-
-  const onKeyUp = React.useCallback(
-    (e) => {
-      // if (process.browser) {
-      /* 요소 불러오기, 만들기*/
-      const $hashWrapOutter = document.querySelector('.hashWrapOutter')
-      const $hashWrapInner = document.createElement('div')
-      $hashWrapInner.className = 'hashWrapInner'
-
-      const $originHashWrapOutter = document.querySelector('.originHashWrapOutter')
-      const $originHashWrapInner = document.querySelector('.originHashWrapInner')
-
-      /* 기존 태그 클릭 이벤트 관련 로직 */
-      $originHashWrapInner.addEventListener('click', () => {
-        $originHashWrapOutter?.removeChild($originHashWrapInner)
-        console.log($originHashWrapInner.innerHTML)
-        setHashTagList(hashTagList.filter((hashTag) => hashTag))
-      })
-
-      /* 새로운 태그 클릭 이벤트 관련 로직 */
-      $hashWrapInner.addEventListener('click', () => {
-        $hashWrapOutter?.removeChild($hashWrapInner)
-        console.log($hashWrapInner.innerHTML)
-        setHashTagList(hashTagList.filter((hashTag) => hashTag))
-      })
-
-      /* enter 키 코드 :13 */
-      if (e.keyCode === 13 && e.target.value.trim() !== '') {
-        console.log('Enter Key 입력됨!', e.target.value)
-        $hashWrapInner.innerHTML = '#' + e.target.value
-        $hashWrapOutter?.appendChild($hashWrapInner)
-        setHashTagList((hashTagList) => [...hashTagList, hashTag])
-        setHashTag('')
-      }
-    },
-    // },
-    [hashTag, hashTagList]
-  )
 
   const onChangeFile = (e) => {
     setThumbNail(e.target.files)
@@ -118,24 +69,24 @@ const PostEdit = (props) => {
     }
   }
 
-  const editPost = () => {
+  const editQuestion = () => {
     if (title === '' || content === '') {
       window.alert('게시물을 모두 작성해주세요')
       return
     }
     if (fileInput.current.files.length === 0) {
       const uploadFile = post.thumbNail
-      dispatch(postActions.editPostDB(boardId, hashTagList, title, uploadFile, content))
+      dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
     } else {
       const uploadFile = fileInput.current.files[0]
-      dispatch(postActions.editPostDB(boardId, hashTagList, title, uploadFile, content))
+      dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
     }
   }
 
   return (
     <>
       <>
-        <Header type="PostEdit" location="밈+글 수정하기"></Header>
+        {/* <Header type="PostEdit" location="밈+글 수정하기"></Header> */}
         <Container>
           <PWHeader>
             <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
@@ -151,7 +102,7 @@ const PostEdit = (props) => {
               onKeyUp={handleTextareaResize}
             ></textarea>
             <Preview>
-              <img src={thumbNail} className="thumbNail" />
+              <img src={thumbNail} className="thumbNail" alt=""/>
             </Preview>
             <UploadSection>
               <label htmlFor="file" className="upload-label">
@@ -159,26 +110,10 @@ const PostEdit = (props) => {
               </label>
               <input type="file" id="file" className="upload-input" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
             </UploadSection>
-            <HashTagInfo>
-              <div>기존에 등록한 해시태그는 수정이 어렵습니다.</div>
-            </HashTagInfo>
-            <HashDivWrap className="hashWrap originHashWrap">
-              {post.hashTags !== undefined &&
-                post.hashTags.map((hashTag, idx) => {
-                  return (
-                    <div className="originHashWrapOutter" key={`hashTag-id-${idx}`}>
-                      <div className="originHashWrapInner">#{hashTag}</div>
-                    </div>
-                  )
-                })}
-            </HashDivWrap>
-            <HashDivWrap className="hashWrap newHashWrap">
-              <div className="hashWrapOutter"></div>
-              <input className="hashInput" type="text" placeholder="해시태그를 추가해주세요 (기존에 작성한 해시태그 포함 최대 5개)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
-            </HashDivWrap>
+           
           </PWBody>
           <PWFooter>
-            <button className="postbtn btn-1" onClick={editPost}>
+            <button className="postbtn btn-1" onClick={editQuestion}>
               수정
             </button>
             <div className="postbtn btn-2"></div>
@@ -212,13 +147,6 @@ const PWHeader = styled.div`
       color: ${({ theme }) => theme.colors.grey};
     }
   }
-`
-
-const HashTagInfo = styled.div`
-  color: ${({ theme }) => theme.colors.grey};
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  padding: 16px 16px 0;
-  letter-spacing: -0.5px;
 `
 
 const PWBody = styled.div`
@@ -331,8 +259,6 @@ const UploadSection = styled.div`
     border: 0;
   }
 `
-
-const HashDivWrap = styled.div``
 
 const PWFooter = styled.div`
   position: relative;
