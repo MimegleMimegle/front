@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { actionCreators as quizActions } from '../redux/modules/quiz'
 
+import Grid from '../elements/Grid'
 import QuizResult from '../pages/QuizResult'
 import CircularProgress from '@mui/material/CircularProgress'
 
@@ -11,9 +12,7 @@ const QuizPaper = (props) => {
   const category = useParams().category
   const dispatch = useDispatch()
   const quiz_list = useSelector((state) => state.quiz.quiz_list)
-  const user_answer_list = useSelector((state) => state.quiz.user_answer_list)
-  console.log(quiz_list)
-  console.log(user_answer_list)
+  const loading = useSelector((state) => state.quiz.is_loading)
 
   const [showResult, setShowResult] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -22,7 +21,6 @@ const QuizPaper = (props) => {
   const [clicked2, setClicked2] = useState(false)
   const [clicked3, setClicked3] = useState(false)
   const [clicked4, setClicked4] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   const clickAnswer1 = (e) => {
     setAnswer(e.target.value)
@@ -57,7 +55,6 @@ const QuizPaper = (props) => {
   }
 
   const submitAnswer = (e) => {
-    // 추후 quiz_list ? currentIndex === quiz_list.length -1 로 조건문 변경
     if (currentIndex === 9) {
       dispatch(quizActions.addAnswer(answer))
       setShowResult(true)
@@ -72,10 +69,8 @@ const QuizPaper = (props) => {
   }
 
   React.useEffect(() => {
-    setLoading(true)
-    setTimeout(() => setLoading(false), 600)
     dispatch(quizActions.getQuizListDB(category))
-  }, [dispatch])
+  }, [])
 
   const quiz = quiz_list ? quiz_list[currentIndex] : null
 
@@ -84,14 +79,13 @@ const QuizPaper = (props) => {
       {!showResult ? (
         !loading ? (
           <Wrapper>
-            {/* <div className="quiz-current">{currentIndex + 1}/10</div> */}
             <QuizTitle>
               <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
               <div className="question-number-box box-2"></div>
               <h2 className="title">{quiz ? quiz.question : null}</h2>
-              <QuizImageBox>
+              <Grid flex_center height="100%" overflow="hidden" margin="20px 0 0">
                 <img src={quiz?.quizImage} className="quiz-image" />
-              </QuizImageBox>
+              </Grid>
             </QuizTitle>
             <QuizBox>
               <button className={`answer-btn ${clicked1 ? 'clicked' : ''}`} value={quiz ? quiz.choice[0] : ''} onClick={clickAnswer1}>
@@ -117,9 +111,9 @@ const QuizPaper = (props) => {
             </ButtonSection>
           </Wrapper>
         ) : (
-          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Grid flex_center height="100%">
             <CircularProgress color="inherit" />
-          </div>
+          </Grid>
         )
       ) : (
         <QuizResult quiz_list={quiz_list} category={category} />
@@ -199,16 +193,6 @@ const QuizTitle = styled.div`
     font-style: normal;
     font-weight: 300;
   }
-`
-
-const QuizImageBox = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px 0 0;
   .quiz-image {
     max-width: 100%;
     height: auto;

@@ -79,30 +79,9 @@ const DictWrite = (props) => {
     setDoubleCheck(null)
   }
 
-  // const allClearKeyword = () => {
-  //   swal({
-  //     title: '초기화를 하시면 작성하신 모든 내용이 사라집니다.',
-  //     text: '그래도 초기화 하시겠습니까?',
-  //     icon: 'warning',
-  //     buttons: true,
-  //     dangerMode: true,
-  //   }).then((allClearKeyword) => {
-  //     if (allClearKeyword) {
-  //       swal('작성하신 모든 내용이 초기화되었습니다.', {
-  //         icon: 'success',
-  //       })
-  //       setTitle('')
-  //       setSummary('')
-  //       setContent('')
-  //     } else {
-  //       swal('초기화가 취소되었습니다.')
-  //     }
-  //   })
-  // }
-
   return (
     <>
-      <Header type="DictWrite" location="오픈 밈사전"></Header>
+      <Header location="오픈 밈사전"></Header>
       <div className="DictCardWritePageLayout">
         <div className="DictCardInputSection">
           <div className="DictCardInputTitleContainer">

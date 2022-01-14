@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import Grid from '../../elements/Grid'
 
 const ImageWrapper = ({ children }) => {
   return (
     <>
       <Wrapper>
-        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>{children}</div>
+        <Grid flex_center column height="100%">
+          {children}
+        </Grid>
       </Wrapper>
     </>
   )

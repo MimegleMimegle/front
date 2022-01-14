@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import '../../styles/css/DictList.css'
-import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
-import axios from 'axios'
-import { actionCreators as dictActions } from '../../redux/modules/dict'
+
+import '../../styles/css/DictMyMeme.css'
+import styled from 'styled-components'
+import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+
 import Pagination from 'rc-pagination'
 import SearchPage from '../../shared/SearchPage'
 import { dictApi } from '../../shared/api'
 import DictNavBar from '../../components/DictNavBar'
-import SpeedDialButton from '../../components/SpeedDialButton'
-import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
 import Header from '../../components/Header'
-import { ReactComponent as EmptyLikeIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
-import { ReactComponent as FillLikeIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
-import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
 
-const DictList = (props) => {
+const DictMyMeMe = (props) => {
   const dispatch = useDispatch()
 
   const [show, setShow] = useState(false)
@@ -75,28 +73,32 @@ const DictList = (props) => {
         <div className="DictNavBarSection">
           <DictNavBar />
         </div>
-        <div className="TodayDictListText">오늘의 밈 카드</div>
-        <hr className="TodayDictListHr" />
-        <TodayDictCardSwiper />
-        <div className="DictListPagination">
-          <div className="DictListText">밈 목록</div>
-          <div className="DictList">
-            {dict.map((dict) => (
-              <div className="OneDictionaryCardSection">
-                <div className="OneDictionaryCardList" key={dict.id} onClick={() => history.push(`/dict/detail/${dict.dictId}`)}>
-                  <div className="OneDictionaryCardList DictListTitle">{dict.title}</div>
-                  <div className="OneDictionaryCardList DictListSummary">{dict.summary}</div>
-                  <div className="OneDictionaryCardList DictWriteInfo">
-                    <div className="OneDictionaryCardList DictListLikeButton">{dict.like ? <FillLikeIcon /> : <EmptyLikeIcon />}</div>
-                    <div className="OneDictionaryCardList DictListLikeCount">{dict.likeCount}</div>
-                    <div className="OneDictionaryCardList DictListFirstWriter">{dict.firstWriter}</div>
-                    <div className="OneDictionaryCardList DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
-                  </div>
+        <div className="MyDictMemeText">나의 밈 카드</div>
+        <div className="MyDictMemeSection">
+          <div className="MyDictMemeList">
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                '& > :not(style)': {
+                  m: 1,
+                  width: 170,
+                  height: 150,
+                },
+              }}
+            >
+              <Paper elevation={3}>
+                <div className="MyDictMemeCard">
+                  <div className="MyDictMemeCard Title">Title</div>
+                  <div className="MyDictMemeCard Summary">한줄요약</div>
+                  <div className="MyDictMemeCard LikeCount">100</div>
                 </div>
-              </div>
-            ))}
+              </Paper>
+              <Paper elevation={3} />
+              <Paper elevation={3} />
+              <Paper elevation={3} />
+            </Box>
           </div>
-          <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
         </div>
       </div>
     </>
@@ -110,4 +112,4 @@ const SearchBarSection = styled.div`
   z-index: 5;
 `
 
-export default DictList
+export default DictMyMeMe
