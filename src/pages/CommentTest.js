@@ -6,10 +6,10 @@ import OneComment from '../components/OneComment'
 import { MdOutlineSend } from 'react-icons/md'
 import styled from 'styled-components'
 
-const CommentTest = ({ post }) => {
+const CommentTest = ({ question }) => {
   const dispatch = useDispatch()
-  const boardId = post.boardId
-  const comment_list = post.commentList
+  const questionId = question.questionId
+  const comment_list = question.commentList
 
   const now_profile = useSelector((state) => state.user.profile)
   const [comment, setComment] = React.useState('')
@@ -19,7 +19,7 @@ const CommentTest = ({ post }) => {
   }
 
   const addComment = () => {
-    dispatch(commentActions.addCommentDB(boardId, comment))
+    dispatch(commentActions.addCommentDB(questionId, comment))
     setComment('')
   }
 
@@ -49,11 +49,11 @@ const CommentTest = ({ post }) => {
       </CommentWrite>
       {comment_list
         ? comment_list.map((c) => {
-            return <OneComment key={c.commentId} boardId={boardId} {...c} />
+            return <OneComment key={c.commentId} questionId={questionId} {...c} />
           })
         : null}
     </>
-  )
+  ) 
 }
 
 const CommentWrite = styled.div`
