@@ -12,7 +12,7 @@ import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
 import CircularProgress from '@mui/material/CircularProgress'
-import { AiOutlinePlus } from 'react-icons/ai'
+import { FaPlus } from 'react-icons/fa'
 
 const ImageList = (props) => {
   const dispatch = useDispatch()
@@ -82,7 +82,7 @@ const ImageList = (props) => {
                 <Title>짤 방앗간</Title>
                 <FileUploader>
                   <label htmlFor="file" className="upload-label">
-                    <AiOutlinePlus style={{ fontSize: '22px' }} />
+                    <FaPlus style={{ fontSize: '22px' }} />
                   </label>
                   <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
                 </FileUploader>

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
 
+import Grid from '../../elements/Grid'
 import ConfirmModal from '../modal/ConfirmModal'
 import { ReactComponent as DeleteIcon } from '../../styles/icons/delete_black_18dp.svg'
 import { ReactComponent as EmptyHeart } from '../../styles/icons/좋아요 비활성_18dp.svg'
@@ -44,28 +45,23 @@ const MyPageOneImageCard = ({ image }) => {
           history.push(`/image/detail/${image.boardId}`)
         }}
       >
-        <div className="container">
-          <ImageSection>
-            <Image src={image && image.thumbNail} />
-            <div>
-              <button style={{ padding: '0 0 0 5px' }} onClick={handleShowModal}>
-                <DeleteIcon />
-              </button>
-            </div>
-          </ImageSection>
-          <LikeSection>
-            <button style={{ padding: '0 0 0 2px' }}>
-              <EmptyHeart />
-            </button>
-            <span style={{ fontSize: '9px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
-          </LikeSection>
-          <DateSection>
-            <p className="createdDate">{image && createdDate}</p>
-          </DateSection>
-        </div>
+        <ImageSection>
+          <Image src={image && image.thumbNail} />
+        </ImageSection>
+        <Grid flex_between padding="6px">
+          <p className="createdDate">{image && createdDate}</p>
+          {/* <Grid flex_align>
+            <EmptyHeart />
+            <span style={{ fontSize: '12px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
+          </Grid> */}
+          <DeleteIcon onClick={handleShowModal} style={{ cursor: 'pointer' }} />
+        </Grid>
+        {/* <DateSection>
+          <p className="createdDate">{image && createdDate}</p>
+        </DateSection> */}
       </Wrapper>
       {showModal && (
-        <ConfirmModal question="이 밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+        <ConfirmModal question="밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
           <DeleteButton onClick={handleDeleteImage}>삭제</DeleteButton>
         </ConfirmModal>
       )}
@@ -77,39 +73,35 @@ const Wrapper = styled.div`
   position: relative;
   max-width: 200px;
   width: 100%;
-  max-height: 260px;
-  height: 100%;
-  padding: 8px 5px 8px 8px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
-  .container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  height: auto;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px 4px hsl(0deg 0% 64% / 35%);
+  display: flex;
+  flex-direction: column;
+  .createdDate {
+    font-size: ${({ theme }) => theme.fontSizes.small};
+    color: ${({ theme }) => theme.colors.grey};
+    text-align: right;
+    padding: 3px 6px 5px;
   }
 `
 
 const ImageSection = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 `
 
-const Image = styled.div`
-  max-width: 150px;
+const Image = styled.img`
   width: 100%;
-  padding-top: 90%;
   height: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.black};
-  background-image: url('${(props) => props.src}');
-  background-size: cover;
-  background-position: center;
-`
-
-const LikeSection = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 4px 0 0;
+  object-fit: cover;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 `
 
 const DateSection = styled.div`
@@ -118,7 +110,7 @@ const DateSection = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.small};
     color: ${({ theme }) => theme.colors.grey};
     text-align: right;
-    padding: 7px 0 0 0;
+    padding: 3px 6px 5px;
   }
 `
 
