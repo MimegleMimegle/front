@@ -24,8 +24,6 @@ const Header = ({ type, children, location }) => {
   const [showAlarm, setShowAlarm] = useState(false)
   const [hide, setHide] = useState(false)
   const [pageY, setPageY] = useState(0)
-  console.log(hide)
-  console.log(pageY)
 
   const handleShowProfile = () => {
     setShowProfile(!showProfile)
@@ -63,14 +61,14 @@ const Header = ({ type, children, location }) => {
   }, [])
 
   useEffect(() => {
-    window.addEventListener('scroll', throttleScroll)
-    return () => window.removeEventListener('scroll', throttleScroll)
+    documentRef.current.addEventListener('scroll', throttleScroll)
+    return () => documentRef.current.removeEventListener('scroll', throttleScroll)
   }, [pageY])
 
   if (type === 'main') {
     return (
       <>
-        <NavHeader className={hide && 'hide'}>
+        <NavHeader className={hide && 'hide'} ref={documentRef}>
           <Grid flex_between height="100%">
             <div className="header-title">Memegle</div>
             <Grid flex_end height="100%">
@@ -95,7 +93,7 @@ const Header = ({ type, children, location }) => {
 
   return (
     <>
-      <NavHeader className={hide && 'hide'}>
+      <NavHeader className={hide && 'hide'} ref={documentRef}>
         <Grid flex_between height="100%">
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
