@@ -95,13 +95,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       <Backdrop open={showModal} sx={{ zIndex: '10000' }}>
         <ModalContainer>
           <Grid flex_center column position="relative">
-            <Grid flex_between padding="10px 14px 0 8px">
+            <Grid flex_between padding="8px 10px 0 4px">
               <button
                 onClick={() => {
                   setShowModal(false)
                 }}
               >
-                <IoCloseOutline style={{ fontSize: '24px' }} />
+                <IoCloseOutline style={{ fontSize: '28px' }} />
               </button>
               <button className="submit-button" onClick={_editProfile}>
                 완료
@@ -152,19 +152,21 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
 }
 
 const ModalContainer = styled.div`
-  width: 340px;
+  max-width: 360px;
+  min-width: 280px;
+  width: 100%;
   height: 170px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
   position: absolute;
-  top: 26%;
+  top: 110px;
   left: 50%;
-  transform: translate(-50%, -26%);
+  transform: translate(-50%, 0);
   display: flex;
   flex-direction: column;
   align-items: center;
   .submit-button {
     font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-weight: 500;
     color: ${({ theme }) => theme.colors.grey};
     transition: color 0.3s ease-in-out;
     &:hover {

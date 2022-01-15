@@ -3,20 +3,55 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { actionCreators as commentActions } from '../redux/modules/comment'
 import { history } from '../redux/ConfigureStore'
-
+import { dictQuestionApi } from '../shared/api'
 import ConfirmModal from '../components/modal/ConfirmModal'
 import { ReactComponent as DustBinIcon } from '../styles/icons/delete_black_18dp.svg'
+import {BiBadge, BiBadgeCheck} from "react-icons/bi"
+
+
 
 const OneComment = (props) => {
   const dispatch = useDispatch()
-
+  
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
+  const questionUser=props.username //질문작성자
   const commentWriterId = props.commentWriterId
   const questionId = props.questionId
   const commentId = props.commentId
   const createdAt = props.createdAt.split('T')[0] + ' ' + props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]
 
+  console.log(props)
+  console.log(questionUser,username)
+
+  const [isSelected, setIsSelected] = React.useState(false)
+  const [showSelectModal, setShowSelectModal] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
+  
+
+  const handleClickIsSelected = async (e) => {
+    if (!isSelected) {
+      await dictQuestionApi 
+        .selectQuestion(commentId)
+        .then((response) => {
+          console.log(response.data)
+          setIsSelected(true)
+          console.log(isSelected)
+          setShowSelectModal(false)
+
+        })
+        .catch((error) => {    
+          console.log('질문채택 문제 발생', error.response)
+        })
+    } else {
+      console.log('이미 채택된 질문입니다.')
+    }
+  }
+  
+  const handleShowSelectModal = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowSelectModal(!showSelectModal)
+  }
 
   const handleShowModal = (e) => {
     e.preventDefault()
@@ -43,17 +78,30 @@ const OneComment = (props) => {
             <Content>{props.commentContent}</Content>
           </div>
         </div>
+        
+        {isSelected?
+        <text><BiBadgeCheck/>채택완료</text>:
+        <text style={{ height: '100%', cursor:"pointer"}} onClick={handleClickIsSelected} >
+            <BiBadge />채택하기
+          </text> 
+        }
+        {showSelectModal && (
+          <ConfirmModal question="채택 후 변경이 불가합니다. 이 답변을 채택하시겠습니까?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+            <DeleteButton onClick={handleClickIsSelected}>채택</DeleteButton>
+          </ConfirmModal>
+        )}
+
         {commentWriterId === username ? (
           <button style={{ height: '100%' }} onClick={handleShowModal}>
             <DustBinIcon />
           </button>
         ) : null}
+        {showModal && (
+          <ConfirmModal question="댓글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+            <DeleteButton onClick={delComment}>삭제</DeleteButton>
+          </ConfirmModal>
+        )}
       </Wrap>
-      {showModal && (
-        <ConfirmModal question="댓글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
-          <DeleteButton onClick={delComment}>삭제</DeleteButton>
-        </ConfirmModal>
-      )}
     </>
   )
 }

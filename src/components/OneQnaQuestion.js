@@ -1,14 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { history } from '../redux/ConfigureStore'
 
-import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
-
-const OneQnaQuestion = (props) => {
+const OneQnaQuestion = ({ question }) => {
   return (
     <>
-      <Container>
-        <ProfileImage src={MemegleIcon} />
-        <div className="qna-question-title">질문 제목</div>
+      <Container onClick={() => history.push(`/dict/question/detail/${question?.questionId}`)}>
+        <ProfileImage src={question?.profileImage} />
+        <div className="qna-question-title">{question?.title}</div>
       </Container>
     </>
   )

@@ -13,6 +13,7 @@ const GET_USER = 'GET_USER'
 const SET_USER = 'SET_USER'
 const GET_PROFILE_INFO = 'GET_PROFILE_INFO'
 const SET_LOGIN = 'SET_LOGIN'
+const INIT_FIRST_LOGIN = 'SET_FIRST_LOGIN'
 
 // const logIn = createAction(LOG_IN, (user) => ({ user }))
 const logOut = createAction(LOG_OUT, (user) => ({ user }))
@@ -20,12 +21,14 @@ const getUser = createAction(GET_USER, (user) => ({ user }))
 const setUser = createAction(SET_USER, (user) => ({ user }))
 const getProfileInfo = createAction(GET_PROFILE_INFO, (profile) => ({ profile }))
 const setLogin = createAction(SET_LOGIN, (user_info) => ({ user_info }))
+const initFirstLogin = createAction(INIT_FIRST_LOGIN, (init) => ({ init }))
 
 const initialState = {
   user: null,
   is_login: false,
   profile: null,
   user_info: null,
+  is_first: false,
 }
 
 //middleware
@@ -120,6 +123,7 @@ const logInDB = (username, password) => {
         history.replace('/')
       })
       .catch((err) => {
+        console.log(err.response)
         swal('잘못된 아이디나 비밀번호 입니다. 다시 확인해주세요!')
       })
   }
@@ -132,8 +136,6 @@ const logOutDB = () => {
     localStorage.removeItem('nickname')
     localStorage.removeItem('id')
     dispatch(logOut())
-
-    history.replace('/')
   }
 }
 
@@ -181,6 +183,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = action.payload.user
         draft.is_login = true
+        draft.is_first = true
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
@@ -199,6 +202,10 @@ export default handleActions(
     [SET_LOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.user_info = action.payload.user_info
+      }),
+    [INIT_FIRST_LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_first = false
       }),
   },
   initialState
@@ -219,6 +226,7 @@ const actionCreators = {
   getProfileInfoDB,
   setLogin,
   SetLogin,
+  initFirstLogin,
 }
 
 export { actionCreators }

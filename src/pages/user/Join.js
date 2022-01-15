@@ -10,8 +10,9 @@ import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
 import styled from 'styled-components'
 import DoubleCheckModal from '../../components/modal/DoubleCheckModal'
-import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import MemegleIcon from '../../styles/image/smileIcon_Yellow.png'
+import Grid from '../../elements/Grid'
 
 const Join = () => {
   const dispatch = useDispatch()
@@ -148,7 +149,9 @@ const Join = () => {
 
   return (
     <>
-      <Header type="Join" noBorder></Header>
+      <Grid flex_center padding="40px 0 37px">
+        <Logo src={MemegleIcon} />
+      </Grid>
       <div className="JoinPageLayout">
         <div className="MultiInputBoxLayout_join">
           <div className="LoginOrJoinButtons_join">
@@ -301,6 +304,16 @@ const SpanPasswordCheck = styled.span`
 const ConfirmButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.blue};
+`
+
+const Logo = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 2px solid #111;
+  /* cursor: pointer; */
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
 `
 
 export default Join

@@ -17,6 +17,7 @@ import Grid from '../../elements/Grid'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import {MdCheckBoxOutlineBlank, MdCheckBox} from "react-icons/md"
 
 const DictList = (props) => {
   const dispatch = useDispatch()

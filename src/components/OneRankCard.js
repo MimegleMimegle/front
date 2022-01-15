@@ -2,19 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Grid from '../elements/Grid'
-import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
 
-const OneRankCard = () => {
+const OneRankCard = ({ rank, index }) => {
+  console.log(index)
   return (
     <>
       <OneRankBox>
-        <div className="rank">1</div>
+        {/* <div className="rank">{index && index + 1}</div> */}
+        <div className="rank">{index && index === 0 ? '1' : index + 1}</div>
         <Grid flex_center column>
-          <ProfileImage src={MemegleIcon} />
-          <div className="rank-nickname">닉네임</div>
+          <ProfileImage src={rank?.profileImage} />
+          <div className="rank-nickname">{rank?.nickname}</div>
         </Grid>
         <div className="rank-dict-qty">
-          <span className="highlight">n개</span> 등록했어요!
+          <span className="highlight">{rank?.postCount}개</span> 등록했어요!
         </div>
       </OneRankBox>
     </>
@@ -48,7 +49,7 @@ const OneRankBox = styled.div`
     text-align: center;
     .highlight {
       font-weight: 700;
-      background-image: linear-gradient(transparent 75%, #d5e3fe 25%);
+      background-image: linear-gradient(transparent 75%, #6698fc 25%);
     }
   }
 `

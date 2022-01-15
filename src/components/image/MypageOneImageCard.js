@@ -75,7 +75,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: auto;
   margin-bottom: 16px;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 4px 20px 4px hsl(0deg 0% 64% / 35%);
   display: flex;
   flex-direction: column;
@@ -100,8 +100,8 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
 `
 
 const DateSection = styled.div`
