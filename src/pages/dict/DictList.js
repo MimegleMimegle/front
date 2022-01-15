@@ -12,6 +12,8 @@ import DictNavBar from '../../components/DictNavBar'
 import SpeedDialButton from '../../components/SpeedDialButton'
 import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import Grid from '../../elements/Grid'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
@@ -103,13 +105,17 @@ const DictList = (props) => {
             {dict.map((dict) => (
               <div className="OneDictionaryCardSection">
                 <div className="OneDictionaryCardList" key={dict.id} onClick={() => history.push(`/dict/detail/${dict.dictId}`)}>
-                  <div className="OneDictionaryCardList DictListTitle">{dict.title}</div>
-                  <div className="OneDictionaryCardList DictListSummary">{dict.summary}</div>
-                  <div className="OneDictionaryCardList DictWriteInfo">
-                    <div className="OneDictionaryCardList DictListLikeButton">{dict.like ? <FillBookMarkIcon /> : <EmptyBookMarkIcon />}</div>
-                    <div className="OneDictionaryCardList DictListLikeCount">{dict.likeCount}</div>
-                    <div className="OneDictionaryCardList DictListFirstWriter">{dict.firstWriter}</div>
-                    <div className="OneDictionaryCardList DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
+                  <div className="DictListTitle">{dict.title}</div>
+                  <div className="DictListSummary">{dict.summary}</div>
+                  <div className="DictWriteInfo">
+                    <Grid flex_align>
+                      {dict.like ? <FillBookMarkIcon fill="#878c92"/> : <EmptyBookMarkIcon fill="#878c92" />}
+                      <div className="DictListLikeCount">{dict.likeCount}</div>
+                    </Grid>
+                    <Grid flex_end>
+                      <div className="DictListFirstWriter">{dict.firstWriter}</div>
+                      <div className="DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
+                    </Grid>
                   </div>
                 </div>
               </div>

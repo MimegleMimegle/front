@@ -41,7 +41,7 @@ const DictStat = (props) => {
               <span className="highlight">오늘</span> 등록된 <span className="highlight border">n</span>개를 더해서,{' '}
             </Grid>
             <Grid>
-              지금까지 총 <span className="highlight border">n</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
+              총 <span className="highlight border">n</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
             </Grid>
           </div>
         </ChartSection>
@@ -150,7 +150,7 @@ const QNASection = styled.section`
     .qna-title {
       width: fit-content;
       font-weight: 700;
-      background-image: linear-gradient(transparent 65%, #6698fc 35%);
+      background-image: linear-gradient(transparent 65%, #ffe400 35%);
     }
   }
 `

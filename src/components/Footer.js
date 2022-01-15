@@ -21,7 +21,7 @@ const Footer = (props) => {
               <NavLink to="/dict" className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <RiBookMarkLine className="nav-icon" />
-                  <div className="nav-link__text">사전</div>
+                  <div className="nav-link__text">밈사전</div>
                 </Grid>
               </NavLink>
             </li>
@@ -29,14 +29,15 @@ const Footer = (props) => {
               <NavLink to="/image" className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <MdOutlinePhotoLibrary className="nav-icon" />
-                  <div className="nav-link__text">짤방</div>
+                  <div className="nav-link__text">밈짤방</div>
                 </Grid>
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/" className="nav-link fixed">
+              <NavLink to="/" exact className="nav-link fixed" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <Logo src={SmileIcon} />
+                  <div className="nav-link__text">홈</div>
                 </Grid>
               </NavLink>
             </li>
@@ -44,7 +45,7 @@ const Footer = (props) => {
               <NavLink to="/quiz" className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <RiGamepadLine className="nav-icon" />
-                  <div className="nav-link__text">퀴즈</div>
+                  <div className="nav-link__text">밈퀴즈</div>
                 </Grid>
               </NavLink>
             </li>
@@ -75,11 +76,11 @@ const NavContainer = styled.div`
 
 const NavBar = styled.nav`
   width: 100%;
-  height: 74px;
+  height: 70px;
   background-color: ${({ theme }) => theme.colors.yellow};
-  border-radius: 20px;
+  border-radius: 24px;
   border: 2px solid #111;
-  padding: 12px 10px 10px;
+  padding: 4px 10px 0;
   z-index: 1000;
 
   .nav-list {
@@ -114,19 +115,19 @@ const NavBar = styled.nav`
         }
       }
 
-      .fixed {
+      /* .fixed {
         position: fixed;
         left: 50%;
         transform: translateX(-50%);
         bottom: 40px;
-      }
+      } */
     }
   }
 `
 
 const Logo = styled.div`
-  width: 52px;
-  height: 52px;
+  width: 26px;
+  height: 26px;
   border: 2px solid #111;
   cursor: pointer;
   background-size: cover;
