@@ -94,9 +94,10 @@ export const mainApi = {
 }
 
 export const commentApi = {
-  addComment: (boardId, comment) => instance.post(`/api/board/${boardId}/comment`, { content: comment }),
-  editComment: (commentId) => instance.put(`/api/board/${commentId}`),
-  deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
+  addComment: (questionId, comment) => instance.post(`/api/dict/${questionId}}/comment`, { content: comment }),
+  // editComment: (commentId) => instance.put(`/api/board/${commentId}`),
+  deleteComment: (commentId) => instance.delete(`/api/dict/comment/${commentId}`),
+  likeComment: (commentId)=> instance.get(`/api/dict/comment/like/${commentId}`),
 }
 
 export const likeApi = {

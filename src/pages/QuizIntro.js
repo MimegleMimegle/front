@@ -76,8 +76,8 @@ const QuizIntro = (props) => {
           <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </ImageSection>
         <SubjectSection>
-          <div style={{ padding: '24px 0 15px' }}>
-            <p className="subject-question">어느 레벨 밈을</p>
+          <div style={{ padding: '16px 0 10px' }}>
+            <p className="subject-question">어느 레벨의 밈을</p>
             <p className="subject-question">테스트하고 싶으신가요?</p>
           </div>
           <div className="subject-button-box">
@@ -96,7 +96,7 @@ const QuizIntro = (props) => {
             </button>
           </div>
         </SubjectSection>
-        <div style={{ width: '100%', height: '10px' }}></div>
+        <div style={{ width: '100%', height: '6px' }}></div>
         <ButtonSection>
           <div className="start-button-box box1">
             <button className="start-button" onClick={handleStartQuiz}>
@@ -146,9 +146,9 @@ const SubjectSection = styled.div`
     padding: 12px 40px;
     .subject-button {
       width: 100%;
-      height: 48px;
+      height: fit-content;
       padding: 15px 24px;
-      border: 1px solid ${({ theme }) => theme.colors.black};
+      border: 2px solid ${({ theme }) => theme.colors.black};
       text-align: left;
       font-size: ${({ theme }) => theme.fontSizes.xl};
       font-family: 'Pretendard Variable';
@@ -169,7 +169,7 @@ const ButtonSection = styled.div`
     width: 100px;
     height: 40px;
     position: absolute;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
     background-color: ${({ theme }) => theme.colors.blue};
     .start-button {
