@@ -19,6 +19,7 @@ const PostDetail = (props) => {
   const dispatch = useDispatch()
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
   const questionId = Number(props.match.params.questionId)
+
   const [question, setQuestion] = useState([])
   const [isCuriousToo, setIsCuriousToo] = useState(false)
   const [curiousTooCnt, setCuriousTooCnt] = useState(0)
@@ -26,6 +27,7 @@ const PostDetail = (props) => {
   const [createdAt, setCreatedAt] = useState('')
   const [showModal, setShowModal] = React.useState(false)
   console.log(question)
+
   const handleShowModal = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -47,7 +49,7 @@ const PostDetail = (props) => {
   }
 
   const handleDeleteQuestion = () => {
-    dispatch(questionActions.delPostDB(questionId))
+    dispatch(questionActions.delQuestionDB(questionId))
   }
 
   useEffect(() => {
@@ -92,7 +94,6 @@ const PostDetail = (props) => {
 
   return (
     <>
-      {/* <Header type="PostDetail" low></Header> */}
       <PostWrap>
         <Profile>
           <UserInfo>
@@ -161,6 +162,7 @@ const PostDetail = (props) => {
             </button>
             <span className="icon-box__text">{question.commentCnt ? question.commentCnt : 0}</span>
           </div>
+
         </ViewLikeComment>
       </PostWrap>
 

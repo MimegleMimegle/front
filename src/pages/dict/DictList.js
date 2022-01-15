@@ -16,6 +16,7 @@ import Footer from '../../components/Footer'
 import { ReactComponent as EmptyLikeIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
 import { ReactComponent as FillLikeIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import {MdCheckBoxOutlineBlank, MdCheckBox} from "react-icons/md"
 
 const DictList = (props) => {
   const dispatch = useDispatch()

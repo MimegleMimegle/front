@@ -50,7 +50,7 @@ const CommentTest = ({ question }) => {
       </CommentWrite>
       {comment_list
         ? comment_list.map((c) => {
-            return <OneComment key={c.commentId} questionId={question.questionId} {...c} />
+            return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username}/>
           })
         : null}
     </>

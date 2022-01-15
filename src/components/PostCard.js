@@ -7,6 +7,8 @@ import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비활성_18dp.svg'
 import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
+import {BiBadge, BiBadgeCheck} from "react-icons/bi"
+
 
 const PostCard = ({ question }) => {
   const history = useHistory()
@@ -64,12 +66,6 @@ const PostCard = ({ question }) => {
           </UserInfo>
           <Content>
             <Title>{question && question.title}</Title>
-            {/* <HashTagHere>
-              {question.hashTags &&
-                question.hashTags.map((hashTag, index) => {
-                  return <pre key={index}> #{hashTag}</pre>
-                })}
-            </HashTagHere> */}
           </Content>
           <Icon>
             <IconBox>
@@ -83,6 +79,9 @@ const PostCard = ({ question }) => {
             <IconBox>
               <CommentIcon />
               <Number>{question && question.commentCnt}</Number>
+            </IconBox>
+            <IconBox>
+              {question.isComplete? <BiBadgeCheck size='20'/>: <BiBadge size='20'/>}
             </IconBox>
           </Icon>
         </Wrap>
@@ -164,15 +163,6 @@ const Title = styled.div`
   font-size: 12px;
   line-height: 20px;
   margin: 0 0 0 3px;
-`
-
-const HashTagHere = styled.div`
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-weight: normal;
-  display: flex;
-  font-size: 12px;
-  line-height: 20px;
 `
 
 const Icon = styled.div`
