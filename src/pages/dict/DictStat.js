@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { useDispatch, useSelector } from 'react-redux'
+import { actionCreators as dictActions } from '../../redux/modules/dict'
 
 import DictNavBar from '../../components/DictNavBar'
 import Header from '../../components/Header'
@@ -13,6 +15,20 @@ import Grid from '../../elements/Grid'
 import 'swiper/swiper.min.css'
 
 const DictStat = (props) => {
+  const dispatch = useDispatch()
+
+  const stat = useSelector((state) => state.dict.stat)
+  const [rank, setRank] = useState(stat ? stat : '')
+  const [chart, setChart] = useState(stat ? stat : '')
+  const [totalDict, setTotalDict] = useState(stat ? stat : '')
+  const [qna, setQna] = useState(stat ? stat : '')
+
+  useEffect(() => {
+    if (stat === null) {
+      dispatch(dictActions.getDictStatDB())
+    }
+  }, [])
+
   return (
     <>
       <Header location="밈 사전"></Header>
@@ -150,7 +166,7 @@ const QNASection = styled.section`
     .qna-title {
       width: fit-content;
       font-weight: 700;
-      background-image: linear-gradient(transparent 65%, #ffe400 35%);
+      /* background-image: linear-gradient(transparent 65%, #ffe400 35%); */
     }
   }
 `

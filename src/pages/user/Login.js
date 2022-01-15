@@ -12,8 +12,9 @@ import kakaotalk from '../../styles/image/kakaotalk.svg'
 import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
 import AlertModal from '../../components/modal/AlertModal'
-import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import MemegleIcon from '../../styles/image/smileIcon_Yellow.png'
+import Grid from '../../elements/Grid'
 
 const Login = (props) => {
   const dispatch = useDispatch()
@@ -79,7 +80,9 @@ const Login = (props) => {
   }
   return (
     <>
-      <Header type="Login" noBorder></Header>
+      <Grid flex_center padding="40px 0 37px">
+        <Logo src={MemegleIcon} />
+      </Grid>
       <div className="LoginLayout">
         <div className="MultiInputBoxLayout_login">
           <div className="LoginOrJoinButtons_login">
@@ -171,6 +174,16 @@ const WelcomeMessage = styled.p`
     font-size: ${({ theme }) => theme.fontSizes.lg};
     color: ${({ theme }) => theme.colors.blue};
   }
+`
+
+const Logo = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 2px solid #111;
+  /* cursor: pointer; */
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
 `
 
 export default Login

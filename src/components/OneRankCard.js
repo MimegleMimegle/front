@@ -48,7 +48,7 @@ const OneRankBox = styled.div`
     text-align: center;
     .highlight {
       font-weight: 700;
-      background-image: linear-gradient(transparent 75%, #d5e3fe 25%);
+      background-image: linear-gradient(transparent 75%, #6698fc 25%);
     }
   }
 `

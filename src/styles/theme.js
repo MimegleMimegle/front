@@ -21,7 +21,7 @@ const colors = {
   orange: '#F97D39',
   grey: '#878C92',
   line: '#E5E5E5',
-  bg: '#FCFCFC',
+  bg: '#FAFAFA',
 }
 
 // 자주 사용하는 스타일 속성을 theme으로 만들어보자.

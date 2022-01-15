@@ -120,6 +120,7 @@ const logInDB = (username, password) => {
         history.replace('/')
       })
       .catch((err) => {
+        console.log(err.response)
         swal('잘못된 아이디나 비밀번호 입니다. 다시 확인해주세요!')
       })
   }
@@ -132,8 +133,6 @@ const logOutDB = () => {
     localStorage.removeItem('nickname')
     localStorage.removeItem('id')
     dispatch(logOut())
-
-    history.replace('/')
   }
 }
 

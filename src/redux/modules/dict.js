@@ -21,6 +21,7 @@ const LOADING = 'LOADING'
 const TELL_ME_TOTAL_LENGTH = 'TELL_ME_TOTAL_LENGTH'
 const SEARCH_DICT = 'SEARCH_DICT'
 const DOUBLE_CHECK_DICT = 'DOUBLE_CHECK_DICT'
+const GET_DICT_STAT = 'GET_DICT_STAT'
 
 /* action creator */
 const getDictMain = createAction(GET_DICT_MAIN, (dict_list, paging) => ({ dict_list, paging }))
@@ -39,6 +40,7 @@ const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 const tellMeTotalLength = createAction(TELL_ME_TOTAL_LENGTH)
 const searchDict = createAction(SEARCH_DICT, (query, paging) => ({ query, paging }))
 const doubleCheckDict = createAction(DOUBLE_CHECK_DICT, (dictName) => ({ dictName }))
+const getDictStat = createAction(GET_DICT_STAT, (dictStat) => ({ dictStat }))
 
 /* initial state */
 const initialState = {
@@ -46,6 +48,7 @@ const initialState = {
   isLike: false,
   list: [],
   paging: { page: null, size: 10 },
+  stat: null,
 }
 
 /* middleware */
@@ -244,6 +247,18 @@ const doubleCheckDictDB = (dictName) => {
   }
 }
 
+const getDictStatDB = () => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const { data } = await dictApi.getDictStat()
+      console.log(data)
+      dispatch(getDictStat(data.data))
+    } catch (error) {
+      console.log('사전 통계 정보 문제 발생', error.response)
+    }
+  }
+}
+
 /* reducer */
 export default handleActions(
   {
@@ -317,6 +332,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.dictHistory
       }),
+    [GET_DICT_STAT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.stat = action.payload.dictStat
+      }),
   },
   initialState
 )
@@ -345,6 +364,8 @@ const actionCreators = {
   searchDictDB,
   getDictHistoryDB,
   doubleCheckDictDB,
+  getDictStat,
+  getDictStatDB,
 }
 
 export { actionCreators }
