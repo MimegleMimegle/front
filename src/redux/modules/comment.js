@@ -1,7 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { produce } from 'immer'
 import { commentApi } from '../../shared/api'
-import swal from 'sweetalert'
 
 /* action type */
 
@@ -37,6 +36,7 @@ const addCommentDB = (questionId, comment) => {
       })
       .catch((err) => {
         console.log('댓글을 작성하는 데 문제가 발생했습니다.', err.response)
+        console.log(questionId)
       })
   }
 }

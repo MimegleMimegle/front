@@ -4,10 +4,11 @@ import styled from 'styled-components'
 import PostCard from '../../components/PostCard'
 import Pagination from 'rc-pagination'
 import { dictQuestionApi } from '../../shared/api'
-import Header from '../../components/Header'
+import '../../components/Header'
 import Footer from '../../components/Footer'
 import SearchPost from '../../components/SearchPost'
-// import '../../index.css'
+import '../../index.css'
+
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
@@ -15,41 +16,34 @@ import { CircularProgress } from '@mui/material'
 const PostList = (props) => {
 
   const [question, setQuestion] = useState([])
-  // const [pageSize, setPageSize] = useState(10)
-  // const [totalCount, setTotalCount] = useState(0)
-  // const [currentPage, setCurrentPage] = useState(1)
-  // const [show, setShow] = useState(false)
+  const [pageSize, setPageSize] = useState(10)
+  const [totalCount, setTotalCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
   const [loading,setLoading] = useState(false)
   
   useEffect(() => {
     setLoading(true)
     setTimeout(() => setLoading(false), 600)
     getQuestionListDB()
-    // dispatch(questionActions.getPostsDB())
-  }, [])
+  }, [currentPage])
+
+ 
 
   const getQuestionListDB = async () => {
-    // let response = await dictQuestionApi.getQuestions(pageSize,currentPage)
-    let response = await dictQuestionApi.getQuestions()
-    // let totalLength = await dictQuestionApi.totalLength()
+    let response = await dictQuestionApi.getQuestions(pageSize,currentPage)
+    // let response = await dictQuestionApi.getQuestions()
+    let totalLength = await dictQuestionApi.totalLength()
     setQuestion(response.data.data)
-    // setTotalCount(totalLength.data.data)
-    console.log(response)
+    setTotalCount(totalLength.data.data)
+    console.log(response.data.data)
   }
-
-  // const searchClick = () => {
-  //   show ? setShow(false) : setShow(true)
-  // }
 
   return (
     <>
-      {/* <Header type="PostList" location="밈+글 커뮤니티">
-        {show ? <CloseIcon cursor="pointer" onClick={searchClick} /> : <SearchIcon cursor="pointer" onClick={searchClick} style={{ margin: '0 5px 2px 0' }} />}
-      </Header> */}
+
       {!loading? (
             <>
       <Container>
-        {/* <SearchPostDiv> {show && <SearchPost />} </SearchPostDiv> */}
         <Wrap>
           <Empty>
             <Addbtn
@@ -67,8 +61,7 @@ const PostList = (props) => {
               return <PostCard question={question} key={question.questionId} />
             })}
 
-          {/* <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} /> */}
-          <Empty/>
+          <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
 
           </Wrap>
       </Container>
