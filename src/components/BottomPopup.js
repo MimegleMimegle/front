@@ -88,7 +88,7 @@ const Overlay = styled.div`
   bottom: 0;
   right: 0;
   transition: background-color 0.3s ease;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
 `
 
 export default BottomPopup

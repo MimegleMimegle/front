@@ -6,6 +6,7 @@ import { history } from '../../redux/ConfigureStore'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import { dictApi } from '../../shared/api'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import SearchPage from '../../shared/SearchPage'
 
 const DictEditHistory = (props) => {
@@ -93,6 +94,7 @@ const DictEditHistory = (props) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

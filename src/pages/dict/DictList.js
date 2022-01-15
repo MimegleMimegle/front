@@ -118,6 +118,7 @@ const DictList = (props) => {
           <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
         </div>
       </div>
+      <Footer />
     </>
   )
 }
