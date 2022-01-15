@@ -21,15 +21,19 @@ const OneComment = (props) => {
   const createdAt = props.createdAt.split('T')[0] + ' ' + props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]
 
   console.log(props)
-  console.log(questionUser,username)
+  console.log(questionUser,username,commentWriterId)
 
-  const [isSelected, setIsSelected] = React.useState(false)
+  const [isSelected, setIsSelected] = React.useState(props.isSelected)
   const [showSelectModal, setShowSelectModal] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   
 
   const handleClickIsSelected = async (e) => {
-    if (!isSelected) {
+    if(props.isSelected === true){
+      console.log('이미 채택된 질문입니다.')
+    } else if(username === commentWriterId) {
+      console.log('질문작성자는 자신의 답변을 채택할 수 없습니다.')
+    } else if (!isSelected || username!==props.commentwriterId) {
       await dictQuestionApi 
         .selectQuestion(commentId)
         .then((response) => {
@@ -41,10 +45,9 @@ const OneComment = (props) => {
         })
         .catch((error) => {    
           console.log('질문채택 문제 발생', error.response)
+          console.log(error.message)
         })
-    } else {
-      console.log('이미 채택된 질문입니다.')
-    }
+    } 
   }
   
   const handleShowSelectModal = (e) => {
@@ -78,13 +81,14 @@ const OneComment = (props) => {
             <Content>{props.commentContent}</Content>
           </div>
         </div>
-        
-        {isSelected?
-        <text><BiBadgeCheck/>채택완료</text>:
+
+          
+          {isSelected? 
+        <text style={{ height: '100%', cursor:"pointer"}}onClick={handleClickIsSelected}><BiBadgeCheck/>채택완료</text> :null}
+          {!isSelected && username!== commentWriterId && username===questionUser?
         <text style={{ height: '100%', cursor:"pointer"}} onClick={handleClickIsSelected} >
             <BiBadge />채택하기
-          </text> 
-        }
+        </text>  : null}
         {showSelectModal && (
           <ConfirmModal question="채택 후 변경이 불가합니다. 이 답변을 채택하시겠습니까?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
             <DeleteButton onClick={handleClickIsSelected}>채택</DeleteButton>

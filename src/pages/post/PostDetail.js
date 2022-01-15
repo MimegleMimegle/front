@@ -69,7 +69,7 @@ const PostDetail = (props) => {
           setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 취소 문제 발생', error.response)
+          console.log('나도 궁금해요 취소 문제 발생', error.response.data.message)
         })
     } else {
       await dictQuestionApi
@@ -81,7 +81,7 @@ const PostDetail = (props) => {
           console.log(isCuriousToo)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 문제 발생', error.response)
+          console.log('나도 궁금해요 문제 발생', error.response)
         })
     }
   }
