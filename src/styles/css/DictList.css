@@ -253,13 +253,20 @@
   -webkit-appearance: none;
 }
 
+.DictListLikeInfo {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+
 .DictListLikeButton {
   font-size: 8px;
   width: fit-content;
   height: fit-content;
   display: flex;
   align-items: flex-start;
-  margin: 0 -40px 0 0;
+  margin: 0 0 0 0;
 
   -webkit-appearance: none;
 }
@@ -270,7 +277,7 @@
   height: fit-content;
   display: flex;
   align-items: flex-start;
-  margin: -1px 0 0 0;
+  margin: 0 0 0 3px;
 
   -webkit-appearance: none;
 }
