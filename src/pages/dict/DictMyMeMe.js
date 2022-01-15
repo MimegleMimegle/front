@@ -11,6 +11,7 @@ import SearchPage from '../../shared/SearchPage'
 import { dictApi } from '../../shared/api'
 import DictNavBar from '../../components/DictNavBar'
 import Header from '../../components/Header'
+import DictMyScrapbook from '../../components/DictMyScrapbook'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 
@@ -63,41 +64,28 @@ const DictMyMeMe = (props) => {
         </div>
       </Header>
       <div className="DictLayout">
-        <SearchBarSection>{show && <SearchPage />}</SearchBarSection>
-        <div className="NewDictAddButtonSection">
+        <div className="DictNavBarSection">
+          <DictNavBar />
+        </div>
+        <SearchBarSection>
+          <SearchPage />
+        </SearchBarSection>
+        {/* <div className="NewDictAddButtonSection">
           <div className="NewDictAddButton_1" onClick={() => history.push('/dict/write')}>
             밈 단어 등록
           </div>
           <div className="NewDictAddButton_2"></div>
+        </div> */}
+        <div className="MyDictMemeGuide">
+          <div className="MyDictMemeText">내가 스크랩한 목록</div>
+          <div className="MyDictMemeDot" />
         </div>
-        <div className="DictNavBarSection">
-          <DictNavBar />
-        </div>
-        <div className="MyDictMemeText">나의 밈 카드</div>
         <div className="MyDictMemeSection">
           <div className="MyDictMemeList">
-            <Box
-              sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                '& > :not(style)': {
-                  m: 1,
-                  width: 170,
-                  height: 150,
-                },
-              }}
-            >
-              <Paper elevation={3}>
-                <div className="MyDictMemeCard">
-                  <div className="MyDictMemeCard Title">Title</div>
-                  <div className="MyDictMemeCard Summary">한줄요약</div>
-                  <div className="MyDictMemeCard LikeCount">100</div>
-                </div>
-              </Paper>
-              <Paper elevation={3} />
-              <Paper elevation={3} />
-              <Paper elevation={3} />
-            </Box>
+            <DictMyScrapbook />
+          </div>
+          <div className="MyDictMemeList_2">
+            <DictMyScrapbook />
           </div>
         </div>
       </div>
@@ -109,7 +97,6 @@ const SearchBarSection = styled.div`
   position: absolute;
   width: 100%;
   height: fit-content;
-  z-index: 5;
 `
 
 export default DictMyMeMe
