@@ -1,54 +1,55 @@
 import React from 'react'
-import { history } from '../redux/ConfigureStore'
 import Box from '@mui/material/Box'
-import BottomNavigation from '@mui/material/BottomNavigation'
-import BottomNavigationAction from '@mui/material/BottomNavigationAction'
-import MilitaryTechIcon from '@mui/icons-material/MilitaryTech'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
-import SummarizeIcon from '@mui/icons-material/Summarize'
+import Tab from '@mui/material/Tab'
+import TabContext from '@mui/lab/TabContext'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import { history } from '../redux/ConfigureStore'
 
 export default function DictNavBar() {
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = React.useState('1')
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
 
   return (
-    <Box sx={{ width: 500 }}>
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue)
-        }}
-      >
-        <BottomNavigationAction
-          label="LIST"
-          icon={<SummarizeIcon />}
-          onClick={() => {
-            history.push('/dict')
-          }}
-        />
-        <BottomNavigationAction
-          label="RANKING"
-          icon={<MilitaryTechIcon />}
-          onClick={() => {
-            history.push('/dict')
-          }}
-        />
-        <BottomNavigationAction
-          label="Q&A"
-          icon={<QuestionAnswerIcon />}
-          onClick={() => {
-            history.push('/dict')
-          }}
-        />
-        <BottomNavigationAction
-          label="MY DICT"
-          icon={<FavoriteIcon />}
-          onClick={() => {
-            history.push('/Dict/MyMeMe')
-          }}
-        />
-      </BottomNavigation>
+    <Box sx={{ width: '100%', typography: 'body1' }}>
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: '#C4C4C4' }}>
+          <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab
+              label="밈 단어"
+              value="1"
+              onClick={() => {
+                history.push('/dict')
+              }}
+              onChange={handleChange}
+            />
+            <Tab label="Q&A" value="2" onChange={handleChange} />
+            <Tab
+              label="통계"
+              value="3"
+              onClick={() => {
+                history.push('/dict/stat')
+              }}
+              onChange={handleChange}
+            />
+            <Tab
+              label="스크랩"
+              value="4"
+              onClick={() => {
+                history.push('/dict/mymeme')
+              }}
+              onChange={handleChange}
+            />
+          </TabList>
+        </Box>
+        {/* <TabPanel value="1"></TabPanel>
+        <TabPanel value="2"></TabPanel>
+        <TabPanel value="3"></TabPanel>
+        <TabPanel value="4"></TabPanel> */}
+      </TabContext>
     </Box>
   )
 }
