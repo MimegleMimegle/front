@@ -16,11 +16,12 @@ import { CircularProgress } from '@mui/material'
 const PostList = (props) => {
 
   const [question, setQuestion] = useState([])
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(5)
   const [totalCount, setTotalCount] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1) 
   const [loading,setLoading] = useState(false)
-  
+  console.log(currentPage, pageSize)
+
   useEffect(() => {
     setLoading(true)
     setTimeout(() => setLoading(false), 600)
@@ -31,11 +32,11 @@ const PostList = (props) => {
 
   const getQuestionListDB = async () => {
     let response = await dictQuestionApi.getQuestions(pageSize,currentPage)
-    // let response = await dictQuestionApi.getQuestions()
     let totalLength = await dictQuestionApi.totalLength()
     setQuestion(response.data.data)
     setTotalCount(totalLength.data.data)
-    console.log(response.data.data)
+    console.log(response)
+    console.log(totalLength)
   }
 
   return (

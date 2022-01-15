@@ -117,7 +117,7 @@ const editQuestionDB = (questionId, title, uploadFile, content) => {
         const _question = { ...question, thumbNail: uploadFile }
         dispatch(editQuestion(questionId, _question))
 
-        history.push('/question')
+        history.push('/dict/question')
       })
       .catch((err) => {
         console.log('게시글 수정하는데 문제 발생', err.response)
@@ -138,7 +138,6 @@ const delQuestionDB = (questionId) => {
 
       .catch((error) => {
         console.log('게시물 삭제  실패', error)
-        history.push('/question')
       })
   }
 }

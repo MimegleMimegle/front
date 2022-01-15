@@ -15,16 +15,16 @@ const OneComment = (props) => {
   
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
   const questionUser=props.username //질문작성자
-  const commentWriterId = props.commentWriterId
-  const questionId = props.questionId
-  const commentId = props.commentId
+  const commentWriterId = props.commentWriterId 
+  const questionId = props.questionId 
+  const commentId = props.commentId 
   const createdAt = props.createdAt.split('T')[0] + ' ' + props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]
 
   console.log(props)
   console.log(questionUser,username,commentWriterId)
 
   const [isSelected, setIsSelected] = React.useState(props.isSelected)
-  const [showSelectModal, setShowSelectModal] = React.useState(false)
+  const [selectModal, setSelectModal] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   
 
@@ -40,7 +40,7 @@ const OneComment = (props) => {
           console.log(response.data)
           setIsSelected(true)
           console.log(isSelected)
-          setShowSelectModal(false)
+          setSelectModal(false)
 
         })
         .catch((error) => {    
@@ -50,10 +50,10 @@ const OneComment = (props) => {
     } 
   }
   
-  const handleShowSelectModal = (e) => {
+  const handleSelectModal = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    setShowSelectModal(!showSelectModal)
+    setSelectModal(!selectModal)
   }
 
   const handleShowModal = (e) => {
@@ -86,11 +86,11 @@ const OneComment = (props) => {
           {isSelected? 
         <text style={{ height: '100%', cursor:"pointer"}}onClick={handleClickIsSelected}><BiBadgeCheck/>채택완료</text> :null}
           {!isSelected && username!== commentWriterId && username===questionUser?
-        <text style={{ height: '100%', cursor:"pointer"}} onClick={handleClickIsSelected} >
+        <text style={{ height: '100%', cursor:"pointer"}} onClick={handleSelectModal} >
             <BiBadge />채택하기
         </text>  : null}
-        {showSelectModal && (
-          <ConfirmModal question="채택 후 변경이 불가합니다. 이 답변을 채택하시겠습니까?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+        {selectModal && (
+          <ConfirmModal question="채택 후 변경이 불가합니다. 이 답변을 채택하시겠습니까?" showModal={selectModal} handleShowModal={handleSelectModal} setShowModal={setSelectModal}>
             <DeleteButton onClick={handleClickIsSelected}>채택</DeleteButton>
           </ConfirmModal>
         )}
