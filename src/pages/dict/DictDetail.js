@@ -9,8 +9,8 @@ import { dictApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import { actionCreators as likeActions } from '../../redux/modules/like'
-import { ReactComponent as EmptyLikeIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
-import { ReactComponent as FillLikeIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
+import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
+import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import swal from 'sweetalert'
 import { BiLike } from 'react-icons/bi'
 import 'moment'
@@ -139,10 +139,12 @@ const DictDetail = (props) => {
             <div className="OneDictCardDetailInfoContent_DictData">{dict.meaning}</div>
           </div>
           <div className="OneDictCardDetailInfoLikeAndCopyLink">
-            <div className="OneDictCardDetailInfoLike" onClick={handleClickLike}>
-              {like ? <FillLikeIcon /> : <EmptyLikeIcon />}
+            <div className="OneDictCardDetailInfo">
+              <div className="OneDictCardDetailInfoLike" onClick={handleClickLike}>
+                {like ? <FillBookMarkIcon /> : <EmptyBookMarkIcon />}
+              </div>
+              <div className="OneDictCardDetailInfoLikeCnt">{dict.likeCount}</div>
             </div>
-            <div className="OneDictCardDetailInfoLikeCnt">{dict.likeCount}</div>
             <CopyToClipboard className="OneDictCardDetailInfoCopyLinkButton" onCopy={handleCopy} text={currentUrl}>
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="rgba(135, 140, 146, 1)">
                 <path d="M0 0h24v24H0V0z" fill="none" />
