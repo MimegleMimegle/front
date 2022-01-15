@@ -14,8 +14,8 @@ import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Grid from '../../elements/Grid'
-import { ReactComponent as EmptyLikeIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
-import { ReactComponent as FillLikeIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
+import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
+import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 
 const DictList = (props) => {
@@ -67,7 +67,8 @@ const DictList = (props) => {
         </div>
       </Header>
       <div className="DictLayout">
-        <SearchBarSection>{show && <SearchPage />}</SearchBarSection>
+        {/* <SearchBarSection>{show && <SearchPage />}</SearchBarSection> */}
+
         <div className="DictPageSearchSection">
           <div
             className="DictPageSearchButton"
@@ -78,20 +79,28 @@ const DictList = (props) => {
             <SpeedDialButton />
           </div>
         </div>
-        <div className="NewDictAddButtonSection">
+        <div className="DictNavBarSection">
+          <DictNavBar />
+        </div>
+        <SearchBarSection>
+          <SearchPage />
+        </SearchBarSection>
+        {/* <div className="NewDictAddButtonSection">
           <div className="NewDictAddButton_1" onClick={() => history.push('/dict/write')}>
             밈 단어 등록
           </div>
           <div className="NewDictAddButton_2"></div>
+        </div> */}
+        <div className="TodayDictListGuide">
+          <div className="TodayDictListText">오늘의 밈 카드</div>
+          <div className="TodayDictListDot" />
         </div>
-        <div className="DictNavBarSection">
-          <DictNavBar />
-        </div>
-        <div className="TodayDictListText">오늘의 밈 카드</div>
-        <hr className="TodayDictListHr" />
         <TodayDictCardSwiper />
         <div className="DictListPagination">
-          <div className="DictListText">밈 목록</div>
+          <div className="DictListGuide">
+            <div className="DictListText">밈 목록</div>
+            <div className="DictListDot" />
+          </div>
           <div className="DictList">
             {dict.map((dict) => (
               <div className="OneDictionaryCardSection">
@@ -100,7 +109,7 @@ const DictList = (props) => {
                   <div className="DictListSummary">{dict.summary}</div>
                   <div className="DictWriteInfo">
                     <Grid flex_align>
-                      {dict.like ? <FillLikeIcon fill="#878c92" /> : <EmptyLikeIcon fill="#878c92" />}
+                      {dict.like ? <FillBookMarkIcon fill="#878c92"/> : <EmptyBookMarkIcon fill="#878c92" />}
                       <div className="DictListLikeCount">{dict.likeCount}</div>
                     </Grid>
                     <Grid flex_end>
@@ -121,10 +130,15 @@ const DictList = (props) => {
 }
 
 const SearchBarSection = styled.div`
-  position: absolute;
   width: 100%;
   height: fit-content;
-  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
 `
 
 export default DictList
