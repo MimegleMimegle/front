@@ -106,7 +106,7 @@ const ImageDetail = (props) => {
         <Grid flex_between padding="0 10px">
           <button
             onClick={() => {
-              history.replace('/image')
+              history.goBack()
             }}
             style={{ padding: '0' }}
           >

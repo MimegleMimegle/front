@@ -27,6 +27,7 @@ const PostDetail = (props) => {
   const [createdAt, setCreatedAt] = useState('')
   const [showModal, setShowModal] = React.useState(false)
   console.log(question)
+
   const handleShowModal = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -48,7 +49,7 @@ const PostDetail = (props) => {
   }
 
   const handleDeleteQuestion = () => {
-    dispatch(questionActions.delPostDB(questionId))
+    dispatch(questionActions.delQuestionDB(questionId))
   }
 
   useEffect(() => {
@@ -93,7 +94,6 @@ const PostDetail = (props) => {
 
   return (
     <>
-      {/* <Header type="PostDetail" low></Header> */}
       <PostWrap>
         <Profile>
           <UserInfo>
@@ -162,6 +162,7 @@ const PostDetail = (props) => {
             </button>
             <span className="icon-box__text">{question.commentCnt ? question.commentCnt : 0}</span>
           </div>
+
         </ViewLikeComment>
       </PostWrap>
 

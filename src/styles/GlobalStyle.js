@@ -31,7 +31,7 @@ body {
   font-style: normal;
   font-weight: 300;
   background-color: #e5e5e5;
-  color: #000000;
+  color: #333;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.6;

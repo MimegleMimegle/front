@@ -71,31 +71,29 @@ const getOneQuestionDB = (questionId) => {
   }
 }
 
-const addQuestionDB = (title, content, uploadFile,) => {
-  return async function (dispatch, getState, { history }) {
+const addQuestionDB = (title, content, uploadFile) => {
+  return async function (dispatch, getState, {history}) {
     const formData = new FormData()
     const question = {
-      title: title,
-      content: content,
-
+      title:title,
+      content:content,
     }
-
-    formData.append('thumbNail', uploadFile)
-    formData.append('boardUploadRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
-
+    formData.append('thumNail', uploadFile)
+    formData.append('questionUploadRequestDto', new Blob([JSON.stringify(question)],{type: 'application/json'}))
+  
     await dictQuestionApi
-      .addQuestion(formData)
-      .then((response) => {
-        const question = response.data.data
-        dispatch(addQuestion(question))
-        console.log(question)
-      })
-      .then(() => {
-        history.push('/question')
-      })
-      .catch((error) => {
-        console.log('게시글을 작성하는 데 문제가 발생했습니다.', error.response)
-      })
+    .writeQuestion(formData)
+    .then((response)=> {
+      const question =response.data.data
+      dispatch(addQuestion(question))
+      console.log(question)
+    })
+    .then(()=> {
+      history.push('/dict/question')
+    })
+    .catch((err)=>{
+      console.log('질문 작성하는데 문제가 발생했습니다', err.response)
+    })
   }
 }
 

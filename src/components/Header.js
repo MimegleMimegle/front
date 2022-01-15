@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
@@ -20,8 +20,14 @@ const Header = ({ type, children, location }) => {
     // .split('=')[1]
   const isLogin = userId !== null && token !== undefined ? true : false
 
+  const documentRef = useRef(document)
+
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
+  const [hide, setHide] = useState(false)
+  const [pageY, setPageY] = useState(0)
+  console.log(hide)
+  console.log(pageY)
 
   const handleShowProfile = () => {
     setShowProfile(!showProfile)
@@ -31,16 +37,42 @@ const Header = ({ type, children, location }) => {
     setShowAlarm(!showAlarm)
   }
 
+  const throttle = (callback, waitTime) => {
+    let timerId = null
+    return (e) => {
+      if (timerId) return
+      timerId = setTimeout(() => {
+        callback.call(this, e)
+        timerId = null
+      }, waitTime)
+    }
+  }
+
+  const handleScroll = () => {
+    const { pageYOffset } = window
+    const deltaY = pageYOffset - pageY
+    const hide = pageYOffset !== 0 && deltaY >= 0
+    setHide(hide)
+    setPageY(pageYOffset)
+  }
+
+  const throttleScroll = throttle(handleScroll, 50)
+
   useEffect(() => {
     if (profile === null) {
       dispatch(mypageAction.getUserProfileDB())
     }
   }, [])
 
+  useEffect(() => {
+    window.addEventListener('scroll', throttleScroll)
+    return () => window.removeEventListener('scroll', throttleScroll)
+  }, [pageY])
+
   if (type === 'main') {
     return (
       <>
-        <NavHeader>
+        <NavHeader className={hide && 'hide'}>
           <Grid flex_between height="100%">
             <div className="header-title">Memegle</div>
             <Grid flex_end height="100%">
@@ -65,7 +97,7 @@ const Header = ({ type, children, location }) => {
 
   return (
     <>
-      <NavHeader>
+      <NavHeader className={hide && 'hide'}>
         <Grid flex_between height="100%">
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
@@ -77,6 +109,7 @@ const Header = ({ type, children, location }) => {
           </div>
         </Grid>
       </NavHeader>
+
       <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
       {showAlarm && (
         <AlarmModal
@@ -90,16 +123,19 @@ const Header = ({ type, children, location }) => {
 }
 
 const NavHeader = styled.nav`
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   padding: 6px 16px 0;
   width: 100%;
   height: 60px;
   background-color: ${({ theme }) => theme.colors.bg};
   border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid  #e5e5e5')};
   z-index: 1000;
+  transition: 0.4s ease;
+  &.hide {
+    transform: translateY(-60px);
+  }
   .header-title {
     font-family: 'YdestreetB';
     font-style: normal;

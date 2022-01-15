@@ -8,19 +8,20 @@ import styled from 'styled-components'
 
 const CommentTest = ({ question }) => {
   const dispatch = useDispatch()
-  const questionId = question.questionId
+  // const questionId = question.questionId
   const comment_list = question.commentList
-
   const now_profile = useSelector((state) => state.user.profile)
   const [comment, setComment] = React.useState('')
 
   const onChangeComment = (e) => {
     setComment(e.target.value)
+    console.log(e.target.value)
   }
 
   const addComment = () => {
-    dispatch(commentActions.addCommentDB(questionId, comment))
+    dispatch(commentActions.addCommentDB(question.questionId, comment))
     setComment('')
+    console.log(question.questionId)
   }
 
   React.useEffect(() => {
@@ -49,7 +50,7 @@ const CommentTest = ({ question }) => {
       </CommentWrite>
       {comment_list
         ? comment_list.map((c) => {
-            return <OneComment key={c.commentId} questionId={questionId} {...c} />
+            return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username}/>
           })
         : null}
     </>

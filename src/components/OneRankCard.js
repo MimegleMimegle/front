@@ -14,7 +14,7 @@ const OneRankCard = () => {
           <div className="rank-nickname">닉네임</div>
         </Grid>
         <div className="rank-dict-qty">
-          <span className="highlight">n개</span>의 단어를 등록했어요!
+          <span className="highlight">n개</span> 등록했어요!
         </div>
       </OneRankBox>
     </>
