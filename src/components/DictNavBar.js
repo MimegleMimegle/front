@@ -26,7 +26,14 @@ export default function DictNavBar() {
               }}
               onChange={handleChange}
             />
-            <Tab label="Q&A" value="2" onChange={handleChange} />
+            <Tab
+              label="Q&A"
+              value="2"
+              onClick={() => {
+                history.push('/dict/question')
+              }}
+              onChange={handleChange}
+            />
             <Tab
               label="통계"
               value="3"
