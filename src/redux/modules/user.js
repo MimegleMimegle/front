@@ -112,7 +112,8 @@ const logInDB = (username, password) => {
       .login(username, password)
       .then((res) => {
         console.log(res)
-        setCookie('token', res.headers.authorization, 3)
+        // setCookie('token', res.headers.authorization, 3)
+        localStorage.setItem('token', res.headers.authorization)
         localStorage.setItem('username', res.data.data.username)
         localStorage.setItem('nickname', res.data.data.nickname)
         localStorage.setItem('id', res.data.data.userId)
@@ -128,7 +129,8 @@ const logInDB = (username, password) => {
 
 const logOutDB = () => {
   return function (dispatch, getState, { history }) {
-    deleteCookie('token')
+    // deleteCookie('token')
+    localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('nickname')
     localStorage.removeItem('id')
