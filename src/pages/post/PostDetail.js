@@ -128,10 +128,10 @@ const PostDetail = (props) => {
       <PostWrap>
         <Grid flex_align>
           <UserProfile src={question.profileImageUrl} alt="" />
-          <Grid flex_start column>
+          <div className="profile-box">
             <Writer>{question.writer}</Writer>
             <div style={{ fontSize: '9px', width: '100%' }}>{question && createdAt}</div>
-          </Grid>
+          </div>
         </Grid>
 
         <Middle>
@@ -144,19 +144,19 @@ const PostDetail = (props) => {
 
         <ViewLikeComment>
           <div className="icon-box">
-            <ViewIcon fill="#878C92" />
+            <ViewIcon fill="#333" />
             <span className="icon-box__text">{question.views}</span>
           </div>
           <div className="icon-box">
             {isCuriousToo ? (
-              <FullHeartIcon fill="#878C92" className="heart-icon" onClick={handleClickCuriousToo} />
+              <FullHeartIcon fill="#333" className="heart-icon" onClick={handleClickCuriousToo} />
             ) : (
-              <EmptyHeartIcon fill="#878C92" className="heart-icon" onClick={handleClickCuriousToo} />
+              <EmptyHeartIcon fill="#333" className="heart-icon" onClick={handleClickCuriousToo} />
             )}
             <span className="icon-box__text">{curiousTooCnt}</span>
           </div>
           <div className="icon-box">
-            <CommentIcon fill="#878C92" />
+            <CommentIcon fill="#333" />
             <span className="icon-box__text">{question.commentCnt ? question.commentCnt : 0}</span>
           </div>
         </ViewLikeComment>
@@ -190,6 +190,11 @@ const Header = styled.header`
 
 const PostWrap = styled.div`
   padding: 70px 16px 0;
+  .profile-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 const UserProfile = styled.img`
@@ -201,7 +206,6 @@ const UserProfile = styled.img`
 const Writer = styled.div`
   width: 100%;
   font-size: 12px;
-  line-height: 16p;
   font-family: 'YdestreetL';
   font-style: normal;
   font-weight: normal;
@@ -247,7 +251,7 @@ const ViewLikeComment = styled.div`
     display: flex;
     align-items: center;
     padding: 0 10px 0 0;
-    color: ${({ theme }) => theme.colors.grey};
+    color: #333;
     .heart-icon {
       cursor: pointer;
     }
