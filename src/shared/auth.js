@@ -12,7 +12,7 @@ export default function (Page, checkAuth) {
   const AuthCheck = (props) => {
     const dispatch = useDispatch()
     const cookieList = document.cookie.split('=')
-    const token = cookieList.length === 2 ? cookieList[1] : cookieList.lenght === 3 ? cookieList[2] : null
+    const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
     const username = localStorage.getItem('username')
     const isLoggedIn = username !== null && token !== undefined ? true : false
 

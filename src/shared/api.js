@@ -14,7 +14,7 @@ const instance = axios.create({
 /* Interceptor를 통한 Header 설정 */
 instance.interceptors.request.use((config) => {
   const cookieList = document.cookie.split('=')
-  const accessToken = cookieList.length === 2 ? cookieList[1] : cookieList.lenght === 3 ? cookieList[2] : null
+  const accessToken = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   config.headers.common['authorization'] = `${accessToken}`
   return config
 })
