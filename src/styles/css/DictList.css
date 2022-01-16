@@ -240,42 +240,17 @@
 }
 
 .DictListCreatedAt {
-  font-size: 9px;
+  font-size: 12px;
   width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-end;
-  margin: 0 0 0 0;
-
-  -webkit-appearance: none;
-}
-
-.DictListLikeInfo {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  flex-direction: row;
-}
-
-.DictListLikeButton {
-  font-size: 8px;
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-start;
-  margin: 0 0 0 0;
-
+  color: #878c92;
 
   -webkit-appearance: none;
 }
 
 .DictListLikeCount {
-  font-size: 12px;
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-start;
-  margin: 0 0 0 3px;
+  font-size: 14px;
+  padding: 0 0 0 3px;
+  color: #878c92;
 
   -webkit-appearance: none;
 }
