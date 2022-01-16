@@ -17,7 +17,7 @@ import Grid from '../../elements/Grid'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
-import {MdCheckBoxOutlineBlank, MdCheckBox} from "react-icons/md"
+import { MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
@@ -110,7 +110,7 @@ const DictList = (props) => {
                   <div className="DictListSummary">{dict.summary}</div>
                   <div className="DictWriteInfo">
                     <Grid flex_align>
-                      {dict.like ? <FillBookMarkIcon fill="#878c92"/> : <EmptyBookMarkIcon fill="#878c92" />}
+                      {dict.like ? <FillBookMarkIcon fill="#878c92" /> : <EmptyBookMarkIcon fill="#878c92" />}
                       <div className="DictListLikeCount">{dict.likeCount}</div>
                     </Grid>
                     <Grid flex_end>
