@@ -11,7 +11,7 @@ import { actionCreators as userActions } from '../redux/modules/user'
 export default function (Page, checkAuth) {
   const AuthCheck = (props) => {
     const dispatch = useDispatch()
-    const token = document.cookie.split('; ').startsWith('token').split('=')[1]
+    const token = document.cookie.split('=')[2]
     const username = localStorage.getItem('username')
     const isLoggedIn = username !== null && token !== undefined ? true : false
 
