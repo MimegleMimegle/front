@@ -14,7 +14,8 @@ const Header = ({ type, children, location }) => {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.mypage.myProfile)
   const userId = localStorage.getItem('id')
-  const token = document.cookie.split('=')[2]
+  const cookieList = document.cookie.split('=')
+  const token = cookieList.length === 2 ? cookieList[1] : cookieList.lenght === 3 ? cookieList[2] : null
   const isLogin = userId !== null && token !== undefined ? true : false
 
   const documentRef = useRef(document)
