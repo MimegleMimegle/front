@@ -182,6 +182,8 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: ${({ theme }) => theme.colors.bg};
+  z-index: 1000;
   .arrow-back-icon {
     cursor: pointer;
     font-size: 20px;

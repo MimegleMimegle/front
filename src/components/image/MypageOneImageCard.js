@@ -73,7 +73,7 @@ const Wrapper = styled.div`
   position: relative;
   max-width: 200px;
   width: 100%;
-  height: auto;
+  height: fit-content;
   margin-bottom: 16px;
   /* border-radius: 8px; */
   box-shadow: 0 4px 20px 4px hsl(0deg 0% 64% / 35%);
@@ -90,7 +90,7 @@ const Wrapper = styled.div`
 const ImageSection = styled.div`
   display: flex;
   width: 100%;
-  height: auto;
+  height: fit-content;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -98,7 +98,7 @@ const ImageSection = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  /* height: 100%; */
+  height: 100%;
   object-fit: cover;
   /* border-top-right-radius: 8px; */
   /* border-top-left-radius: 8px; */
