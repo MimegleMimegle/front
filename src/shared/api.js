@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { startsWith } from 'lodash'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
@@ -12,7 +13,7 @@ const instance = axios.create({
 
 /* Interceptor를 통한 Header 설정 */
 instance.interceptors.request.use((config) => {
-  const accessToken = document.cookie.split('=')[1]
+  const accessToken = document.cookie.split('; ').startsWith('token').split('=')[1]
   config.headers.common['authorization'] = `${accessToken}`
   return config
 })
