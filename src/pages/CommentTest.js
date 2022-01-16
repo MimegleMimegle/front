@@ -69,6 +69,8 @@ const CommentWrite = styled.div`
   width: 100%;
   padding: 12px 16px;
   margin: 0 0 16px;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,6 +80,8 @@ const CommentWrite = styled.div`
 const ImgInput = styled.div`
   width: 100%;
   display: flex;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   align-items: center;
 
   .commentImg {

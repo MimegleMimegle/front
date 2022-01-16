@@ -136,6 +136,8 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: ${({ theme }) => theme.colors.bg};
+  z-index: 1000;
   .arrow-back-icon {
     cursor: pointer;
     font-size: 20px;
@@ -161,6 +163,7 @@ const Container = styled.div`
 `
 
 const PWHeader = styled.div`
+  border-top: 1px solid #444;
   border-bottom: 1px solid ${({ theme }) => theme.colors.line};
 
   .writetitle {
@@ -182,6 +185,7 @@ const PWHeader = styled.div`
 const PWBody = styled.div`
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid #444;
   .writedesc {
     width: 100%;
     /* min-height: 10rem; */

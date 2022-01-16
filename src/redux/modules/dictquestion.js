@@ -106,7 +106,7 @@ const editQuestionDB = (questionId, title, uploadFile, content) => {
     }
 
     formData.append('thumbNail', uploadFile)
-    formData.append('boardUpdateRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
+    formData.append('dictQuestionUpdateRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
 
     await dictQuestionApi
       .editQuestion(questionId, formData)
