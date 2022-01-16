@@ -6,9 +6,10 @@ import styled from 'styled-components'
 import { dictQuestionApi } from '../../shared/api'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import CommentTest from '../CommentTest'
+import Grid from '../../elements/Grid'
 import { ReactComponent as ViewIcon } from '../../styles/icons/조회_18dp.svg'
-import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
-import { ReactComponent as FullHeartIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/하트 비활성_24dp.svg'
+import { ReactComponent as FullHeartIcon } from '../../styles/icons/하트 활성_24dp.svg'
 import { ReactComponent as CommentIcon } from '../../styles/icons/댓글_18dp.svg'
 import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
 import { IoCloseOutline } from 'react-icons/io5'
@@ -101,46 +102,40 @@ const PostDetail = (props) => {
             <BsThreeDotsVertical size="20" />
           </button>
         ) : null}
+        {toggleModalChang && (
+          <ModalChang>
+            <Grid flex_end padding="5px 8px">
+              <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
+            </Grid>
+            <div className="button-box">
+              <button
+                className="button edit"
+                onClick={() => {
+                  history.push(`/dict/question/edit/${questionId}`)
+                }}
+              >
+                수정하기
+              </button>
+            </div>
+            <div className="button-box">
+              <button className="button delete" onClick={handleShowModal}>
+                삭제하기
+              </button>
+            </div>
+          </ModalChang>
+        )}
       </Header>
       <PostWrap>
-        <Profile>
-          <UserInfo>
-            <UserProfile src={question.profileImageUrl} alt="" />
-            <div className="userinfo">
-              <Writer>{question.writer}</Writer>
-              <div className="createdate">{question && createdAt}</div>
-            </div>
-          </UserInfo>
-
-          {toggleModalChang && (
-            <ModalChang>
-              <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-                <button style={{ padding: '0', height: '100%' }} onClick={clickToggleModalChang}>
-                  <IoCloseOutline style={{ fontSize: '18px' }} />
-                </button>
-              </div>
-              <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-                <button
-                  style={{ fontSize: '12px', padding: '0' }}
-                  onClick={() => {
-                    history.push(`/dict/question/edit/${questionId}`)
-                  }}
-                >
-                  수정하기
-                </button>
-              </div>
-              <div style={{ width: '100%', padding: '8px 5px', borderTop: '1px solid #c4c4c4', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-                <button onClick={handleShowModal} style={{ fontSize: '12px', padding: '0' }}>
-                  삭제하기
-                </button>
-              </div>
-            </ModalChang>
-          )}
-        </Profile>
+        <Grid flex_align>
+          <UserProfile src={question.profileImageUrl} alt="" />
+          <Grid flex_start column>
+            <Writer>{question.writer}</Writer>
+            <div style={{ fontSize: '9px', width: '100%' }}>{question && createdAt}</div>
+          </Grid>
+        </Grid>
 
         <Middle>
           <Title>{question.title}</Title>
-
           <Content>{question.content}</Content>
           <ImageBox>
             <ContentImg src={question ? question.thumbNail : null} alt="" />
@@ -149,21 +144,19 @@ const PostDetail = (props) => {
 
         <ViewLikeComment>
           <div className="icon-box">
-            <button className="icon-box__button no-pointer">
-              <ViewIcon />
-            </button>
+            <ViewIcon fill="#878C92" />
             <span className="icon-box__text">{question.views}</span>
           </div>
           <div className="icon-box">
-            <button className="icon-box__button" onClick={handleClickCuriousToo}>
-              {isCuriousToo ? <FullHeartIcon /> : <EmptyHeartIcon />}
-            </button>
+            {isCuriousToo ? (
+              <FullHeartIcon fill="#878C92" className="heart-icon" onClick={handleClickCuriousToo} />
+            ) : (
+              <EmptyHeartIcon fill="#878C92" className="heart-icon" onClick={handleClickCuriousToo} />
+            )}
             <span className="icon-box__text">{curiousTooCnt}</span>
           </div>
           <div className="icon-box">
-            <button className="icon-box__button no-pointer">
-              <CommentIcon />
-            </button>
+            <CommentIcon fill="#878C92" />
             <span className="icon-box__text">{question.commentCnt ? question.commentCnt : 0}</span>
           </div>
         </ViewLikeComment>
@@ -199,29 +192,14 @@ const PostWrap = styled.div`
   padding: 70px 16px 0;
 `
 
-const Profile = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-const UserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  .createdate {
-    font-size: 9px;
-    line-height: 11px;
-  }
-`
-
 const UserProfile = styled.img`
   border-radius: 150px;
-  width: 28px;
-  height: 28px;
-  border: 1px solid #e5e5e5;
-  margin: 0 8px 0 0;
+  width: 36px;
+  height: 36px;
+  margin: 0 10px 0 0;
 `
 const Writer = styled.div`
+  width: 100%;
   font-size: 12px;
   line-height: 16p;
   font-family: 'YdestreetL';
@@ -238,14 +216,12 @@ const Middle = styled.div`
 const Title = styled.div`
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 12px;
+  font-size: 16px;
   padding: 0 0 8px;
 `
 
 const Content = styled.div`
-  font-size: 12px;
-  line-height: 12px;
+  font-size: 14px;
 `
 
 const ImageBox = styled.div`
@@ -266,34 +242,54 @@ const ContentImg = styled.img`
 const ViewLikeComment = styled.div`
   display: flex;
   align-items: center;
+  padding: 0 0 16px;
   .icon-box {
     display: flex;
     align-items: center;
     padding: 0 10px 0 0;
-    .icon-box__button {
-      padding: 5px 4px 0 0;
-    }
-    .no-pointer {
-      cursor: default;
+    color: ${({ theme }) => theme.colors.grey};
+    .heart-icon {
+      cursor: pointer;
     }
     .icon-box__text {
-      font-size: ${({ theme }) => theme.fontSizes.base};
-      line-height: 27px;
+      font-size: ${({ theme }) => theme.fontSizes.lg};
+      padding: 0 0 0 5px;
     }
   }
 `
 
 const ModalChang = styled.div`
   position: absolute;
-  top: 70px;
+  top: 50px;
   right: 16px;
-  width: auto;
+  width: 80px;
   height: auto;
   border: 1px solid ${({ theme }) => theme.colors.line};
+  box-shadow: 0 4px 35px 4px hsl(0deg 0% 64% / 25%);
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
+  -webkit-appearance: none;
+
+  .close-icon {
+    font-size: 22px;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+  .button-box {
+    width: 100%;
+    padding: 8px 12px;
+    border-top: 1px solid ${({ theme }) => theme.colors.line};
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    --webkit-appearance: none;
+    .button {
+      font-size: ${({ theme }) => theme.fontSizes.base};
+      padding: 0;
+    }
+  }
 `
 
 const DeleteButton = styled.button`

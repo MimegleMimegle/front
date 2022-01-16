@@ -11,7 +11,6 @@ const { Kakao } = window
 const LOG_OUT = 'LOG_OUT'
 const GET_USER = 'GET_USER'
 const SET_USER = 'SET_USER'
-const GET_PROFILE_INFO = 'GET_PROFILE_INFO'
 const SET_LOGIN = 'SET_LOGIN'
 const INIT_FIRST_LOGIN = 'SET_FIRST_LOGIN'
 
@@ -19,14 +18,12 @@ const INIT_FIRST_LOGIN = 'SET_FIRST_LOGIN'
 const logOut = createAction(LOG_OUT, (user) => ({ user }))
 const getUser = createAction(GET_USER, (user) => ({ user }))
 const setUser = createAction(SET_USER, (user) => ({ user }))
-const getProfileInfo = createAction(GET_PROFILE_INFO, (profile) => ({ profile }))
 const setLogin = createAction(SET_LOGIN, (user_info) => ({ user_info }))
 const initFirstLogin = createAction(INIT_FIRST_LOGIN, (init) => ({ init }))
 
 const initialState = {
   user: null,
   is_login: false,
-  profile: null,
   user_info: null,
   is_first: false,
 }
@@ -151,20 +148,6 @@ const loginCheckDB = () => {
   }
 }
 
-const getProfileInfoDB = () => {
-  return async function (dispatch, getState, { history }) {
-    await userApi
-      .getProfileInfo()
-      .then((response) => {
-        const profile = response.data.data
-        dispatch(getProfileInfo(profile))
-      })
-      .catch((error) => {
-        console.log('프로필 정보를 불러오는 데 문제가 발생했습니다.', error.response)
-      })
-  }
-}
-
 const SetLogin = () => {
   return function (dispatch, getState, { history }) {
     const username = localStorage.getItem('username')
@@ -195,10 +178,6 @@ export default handleActions(
         draft.user = action.payload.user
         draft.is_login = true
       }),
-    [GET_PROFILE_INFO]: (state, action) =>
-      produce(state, (draft) => {
-        draft.profile = action.payload.profile
-      }),
     [SET_LOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.user_info = action.payload.user_info
@@ -222,8 +201,6 @@ const actionCreators = {
   kakaoLogin,
   naverLogin,
   googleLogin,
-  getProfileInfo,
-  getProfileInfoDB,
   setLogin,
   SetLogin,
   initFirstLogin,
