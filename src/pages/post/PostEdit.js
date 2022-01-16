@@ -87,7 +87,7 @@ const PostEdit = (props) => {
       <>
         <Header>
           <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
-          <h2 className="location">수정하기</h2>
+          <h2 className="location">질문 수정하기</h2>
           <div className="empty"></div>
         </Header>
         <Container>
