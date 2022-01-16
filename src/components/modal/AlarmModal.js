@@ -19,7 +19,7 @@ const AlarmModal = ({ onClose }) => {
 
 const Container = styled.div`
   position: absolute;
-  top: 68px;
+  top: 56px;
   right: 16px;
   width: 60%;
   height: fit-content;

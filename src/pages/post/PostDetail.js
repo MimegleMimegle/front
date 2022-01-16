@@ -6,11 +6,11 @@ import styled from 'styled-components'
 import { dictQuestionApi } from '../../shared/api'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import CommentTest from '../CommentTest'
-import '../../components/Header'
 import { ReactComponent as ViewIcon } from '../../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
 import { ReactComponent as FullHeartIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
 import { ReactComponent as CommentIcon } from '../../styles/icons/댓글_18dp.svg'
+import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import '../../index.css'
@@ -60,7 +60,7 @@ const PostDetail = (props) => {
     e.preventDefault()
     e.stopPropagation()
     if (isCuriousToo) {
-      await dictQuestionApi 
+      await dictQuestionApi
         .curiousToo(questionId)
         .then((response) => {
           console.log(response.data)
@@ -94,6 +94,14 @@ const PostDetail = (props) => {
 
   return (
     <>
+      <Header>
+        <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
+        {username === question.username ? (
+          <button style={{ padding: '5px 5px 0' }} onClick={clickToggleModalChang}>
+            <BsThreeDotsVertical size="20" />
+          </button>
+        ) : null}
+      </Header>
       <PostWrap>
         <Profile>
           <UserInfo>
@@ -103,11 +111,7 @@ const PostDetail = (props) => {
               <div className="createdate">{question && createdAt}</div>
             </div>
           </UserInfo>
-          {username === question.username ? (
-            <button style={{ padding: '5px 5px 0' }} onClick={clickToggleModalChang}>
-              <BsThreeDotsVertical size="18" />
-            </button>
-          ) : null}
+
           {toggleModalChang && (
             <ModalChang>
               <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
@@ -162,7 +166,6 @@ const PostDetail = (props) => {
             </button>
             <span className="icon-box__text">{question.commentCnt ? question.commentCnt : 0}</span>
           </div>
-
         </ViewLikeComment>
       </PostWrap>
 
@@ -176,8 +179,24 @@ const PostDetail = (props) => {
   )
 }
 
+const Header = styled.header`
+  width: 100%;
+  height: 56px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .arrow-back-icon {
+    cursor: pointer;
+    font-size: 20px;
+  }
+`
+
 const PostWrap = styled.div`
-  padding: 78px 16px 0;
+  padding: 70px 16px 0;
 `
 
 const Profile = styled.div`

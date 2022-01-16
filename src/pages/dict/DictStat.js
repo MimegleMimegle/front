@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { dictApi } from '../../shared/api'
 
 import DictNavBar from '../../components/DictNavBar'
 import Header from '../../components/Header'
@@ -13,6 +14,29 @@ import Grid from '../../elements/Grid'
 import 'swiper/swiper.min.css'
 
 const DictStat = (props) => {
+  const [rankList, setRankList] = useState('')
+  const [chartData, setChartData] = useState('')
+  const [totalDict, setTotalDict] = useState('')
+  const [remainedQuestion, setRemainedQuestion] = useState('')
+  const [completedQuestion, setCompletedQuestion] = useState('')
+  console.log(chartData)
+
+  useEffect(() => {
+    async function getStat() {
+      try {
+        const { data } = await dictApi.getDictStat()
+        setRankList(data.data.dictPostRank)
+        setChartData(data.data.dictCountWeeks)
+        setTotalDict(data.data.dictCountAll)
+        setCompletedQuestion(data.data.completeQuestionList)
+        setRemainedQuestion(data.data.remainQuestionList)
+      } catch (error) {
+        console.log('사전 통계 데이터 조회 실패', error.response)
+      }
+    }
+    getStat()
+  }, [])
+
   return (
     <>
       <Header location="밈 사전"></Header>
@@ -21,27 +45,26 @@ const DictStat = (props) => {
         <RankSection>
           <div className="section-title">👑 열정적인 밈글러 top3</div>
           <StyledSwiper slidesPerView={2.16} spaceBetween={16} freeMode={true} lazy={true}>
-            <SwiperSlide>
-              <OneRankCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <OneRankCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <OneRankCard />
-            </SwiperSlide>
+            {rankList &&
+              rankList.map((rank, index) => {
+                return (
+                  <SwiperSlide key={`rank-${index}`}>
+                    <OneRankCard rank={rank} index={index} />
+                  </SwiperSlide>
+                )
+              })}
           </StyledSwiper>
         </RankSection>
         <ChartSection>
           <div className="section-title">🧐 최근 일주일 동안 얼마나 등록되었을까요?</div>
           <div className="graph-container">
-            <DictChart />
+            <DictChart chartData={chartData} />
             <div className="modifiedAt">00:00 기준</div>
             <Grid padding="10px 0 6px">
               <span className="highlight">오늘</span> 등록된 <span className="highlight border">n</span>개를 더해서,{' '}
             </Grid>
             <Grid>
-              총 <span className="highlight border">n</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
+              총 <span className="highlight border">{totalDict}</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
             </Grid>
           </div>
         </ChartSection>
@@ -52,17 +75,19 @@ const DictStat = (props) => {
               <Grid>
                 <div className="qna-title">답변을 기다리는 질문</div>
                 <Grid flex_center column padding="16px 0">
-                  <OneQnaQuestion />
-                  <OneQnaQuestion />
-                  <OneQnaQuestion />
+                  {remainedQuestion &&
+                    remainedQuestion.map((question) => {
+                      return <OneQnaQuestion key={`question-${question.questionId}`} question={question} />
+                    })}
                 </Grid>
               </Grid>
               <Grid>
                 <div className="qna-title">해결된 질문</div>
                 <Grid flex_center column padding="16px 0 0">
-                  <OneQnaQuestion />
-                  <OneQnaQuestion />
-                  <OneQnaQuestion />
+                  {completedQuestion &&
+                    completedQuestion.map((question) => {
+                      return <OneQnaQuestion key={`question-${question.questionId}`} question={question} />
+                    })}
                 </Grid>
               </Grid>
             </Grid>
@@ -150,7 +175,7 @@ const QNASection = styled.section`
     .qna-title {
       width: fit-content;
       font-weight: 700;
-      background-image: linear-gradient(transparent 65%, #ffe400 35%);
+      /* background-image: linear-gradient(transparent 65%, #ffe400 35%); */
     }
   }
 `

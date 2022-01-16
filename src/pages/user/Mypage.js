@@ -12,6 +12,7 @@ import PostCard from '../../components/PostCard'
 import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
 import OneDictionaryCard from '../../components/OneDictionaryCard'
 import { AiOutlineEdit } from 'react-icons/ai'
+import Grid from '../../elements/Grid'
 
 const Mypage = (props) => {
   const dispatch = useDispatch()
@@ -94,15 +95,21 @@ const Mypage = (props) => {
         </UserProfile>
 
         <Filter>
-          <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
-            단어장
-          </button>
-          <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
-            밈글
-          </button>
-          <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
-            짤방
-          </button>
+          <Grid flex_center>
+            <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
+              단어장
+            </button>
+          </Grid>
+          <Grid flex_center>
+            <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
+              밈글
+            </button>
+          </Grid>
+          <Grid flex_center>
+            <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
+              짤방
+            </button>
+          </Grid>
         </Filter>
         <UserActivity>
           {/* Dictionary */}
@@ -153,7 +160,7 @@ const UserProfile = styled.div`
   padding: 0 20px;
   width: 100%;
   height: 100%;
-  margin: 60px 0 0;
+  margin: 54px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -227,7 +234,7 @@ const ProfileImage = styled.div`
 
 const Filter = styled.div`
   width: 100%;
-  padding: 40px 0 0;
+  padding: 32px 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   border-bottom: 1px solid ${({ theme }) => theme.colors.line};
@@ -235,19 +242,20 @@ const Filter = styled.div`
   .filter-button {
     font-size: ${({ theme }) => theme.fontSizes.xl};
     color: ${({ theme }) => theme.colors.grey};
+    font-weight: 500;
     padding: 0 0 10px;
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent;
   }
   .filter-button-active {
     transition: all 0.2s ease-in-out;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.black};
+    border-bottom: 3px solid ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.black};
   }
 `
 
 const UserActivity = styled.div`
   width: 100%;
-  padding: 30px 0 0;
+  padding: 24px 0 0;
   .my-masonry-grid {
     display: -webkit-box; /* Not needed if autoprefixing */
     display: -ms-flexbox; /* Not needed if autoprefixing */

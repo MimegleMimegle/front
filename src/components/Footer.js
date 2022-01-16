@@ -72,6 +72,7 @@ const NavContainer = styled.div`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 5000;
 `
 
 const NavBar = styled.nav`
@@ -81,7 +82,7 @@ const NavBar = styled.nav`
   border-radius: 24px;
   border: 2px solid #111;
   padding: 4px 10px 0;
-  z-index: 1000;
+  z-index: 5000;
 
   .nav-list {
     height: 100%;
@@ -101,7 +102,7 @@ const NavBar = styled.nav`
       justify-content: center;
       .nav-link {
         .nav-icon {
-          font-size: 26px;
+          font-size: 24px;
         }
         &:visited,
         &:link {
@@ -109,18 +110,13 @@ const NavBar = styled.nav`
           color: ${({ theme }) => theme.colors.black};
         }
         .nav-link__text {
-          font-size: ${({ theme }) => theme.fontSizes.lg};
-          font-weight: 500;
+          font-size: ${({ theme }) => theme.fontSizes.base};
+          font-family: 'YdestreetB';
+          font-style: normal;
+          font-weight: normal;
           padding: 3px 0 0;
         }
       }
-
-      /* .fixed {
-        position: fixed;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 40px;
-      } */
     }
   }
 `
