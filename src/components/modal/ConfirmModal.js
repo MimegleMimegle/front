@@ -45,6 +45,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  -webkit-appearance: none;
   .question-box {
     font-size: ${({ theme }) => theme.fontSizes.lg};
     color: ${({ theme }) => theme.colors.black};
@@ -53,6 +54,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: right;
+    -webkit-appearance: none;
     gap: 24px;
     .cancel-button {
       font-size: ${({ theme }) => theme.fontSizes.lg};

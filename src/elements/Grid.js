@@ -59,6 +59,7 @@ const GridBox = styled.div`
   ${(props) => (props.column ? `flex-direction: column;` : '')}
   ${(props) => (props.flex_end ? `display: flex; align-items: center; justify-content: flex-end;` : '')}
   ${(props) => (props.flex_around ? `display: flex; align-items: center; justify-content: space-around;` : '')}
+  -webkit-appearance:none;
 `
 
 export default Grid
