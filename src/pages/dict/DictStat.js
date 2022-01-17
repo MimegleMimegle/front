@@ -18,7 +18,6 @@ import 'swiper/swiper.min.css'
 
 const DictStat = (props) => {
   const nowTime = moment().format('HH:mm')
-  console.log(nowTime)
 
   const [rankList, setRankList] = useState('')
   const [chartData, setChartData] = useState('')
@@ -48,6 +47,7 @@ const DictStat = (props) => {
   return (
     <>
       <Header location="밈 사전"></Header>
+
       <Wrapper>
         {!loading ? (
           <>

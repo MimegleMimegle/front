@@ -166,7 +166,7 @@ const NavHeader = styled.nav`
     justify-content: center;
     transition: background-color 0.3s ease-in-out;
     &:hover {
-      background-color: #eeeeee;
+      background-color: #e9e9e9;
     }
     .header-bell {
       font-size: 20px;
