@@ -30,7 +30,7 @@ export const userApi = {
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
   KakaoLogin: (code) => instance.get(`/api/user/kakao/callback?code=${code}`),
-  NaverLogin: (code, state) => instance.get(`/api/user/naver/callback?code=[code]&state=[state]`),
+  NaverLogin: (code, state) => instance.get(`/api/user/naver/callback?code=${code}&state=${state}`),
   GoogleLogin: () => instance.get(`/api/user/google/callback`),
 }
 
