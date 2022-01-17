@@ -37,7 +37,7 @@ const Footer = (props) => {
               <NavLink to="/" exact className="nav-link fixed" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <Logo src={SmileIcon} />
-                  <div className="nav-link__text">홈</div>
+                  {/* <div className="nav-link__text">홈</div> */}
                 </Grid>
               </NavLink>
             </li>
@@ -110,7 +110,7 @@ const NavBar = styled.nav`
           color: ${({ theme }) => theme.colors.black};
         }
         .nav-link__text {
-          font-size: ${({ theme }) => theme.fontSizes.base};
+          font-size: ${({ theme }) => theme.fontSizes.small};
           font-family: 'YdestreetB';
           font-style: normal;
           font-weight: normal;
@@ -122,8 +122,8 @@ const NavBar = styled.nav`
 `
 
 const Logo = styled.div`
-  width: 26px;
-  height: 26px;
+  width: 40px;
+  height: 40px;
   border: 2px solid #111;
   cursor: pointer;
   background-size: cover;

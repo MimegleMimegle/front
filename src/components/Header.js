@@ -21,6 +21,8 @@ const Header = ({ type, children, location }) => {
 
   const documentRef = useRef(document)
 
+  console.log(profile)
+
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
   const [hide, setHide] = useState(false)
