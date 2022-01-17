@@ -64,10 +64,10 @@ const DictList = (props) => {
             onClick={() => {
               showSearchBar()
             }}
-          > */}
-        <SpeedDialButton />
-        {/* </div>
-        </div> */}
+          >
+            <SpeedDialButton />
+          </div>
+        </div>
         <div className="DictNavBarSection">
           <DictNavBar />
         </div>
