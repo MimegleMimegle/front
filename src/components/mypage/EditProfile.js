@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { userApi } from '../../shared/api'
@@ -93,11 +93,12 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       }
       if (nickname !== checkedNickname) {
         setDoubleCheckAlert(true)
-        setTimeout(() => setDoubleCheckAlert(false), 2000)
+        setTimeout(() => setDoubleCheckAlert(false), 3000)
       }
       if (isValidNickname === false) {
+        setDoubleCheckAlert(false)
         setValidAlert(true)
-        setTimeout(() => setValidAlert(false), 2000)
+        setTimeout(() => setValidAlert(false), 3000)
       }
     }
   }
@@ -108,10 +109,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
     }
   })
 
+  const handleOverlayClick = useCallback(() => setShowModal(false), [setShowModal])
+  const handleContentClick = useCallback((e) => e.stopPropagation(), [])
+
   return (
     <>
-      <Backdrop open={showModal} sx={{ zIndex: '10000' }}>
-        <ModalContainer>
+      <Backdrop open={showModal} sx={{ zIndex: '10000' }} onClick={handleOverlayClick}>
+        <ModalContainer onClick={handleContentClick}>
           <Grid flex_center column position="relative">
             <Grid flex_between padding="8px 10px 0 4px">
               <button
@@ -138,6 +142,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
                   type="text"
                   className={`input-nickname ${isValidNickname === false ? 'fail' : ''}`}
                   maxLength={10}
+                  placeholder="닉네임을 입력해주세요"
                   onChange={handleChangeNickname}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
@@ -174,7 +179,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       {validAlert && (
         <AlertModal showModal={validAlert}>
           <AlertText>
-            변경하려는 닉네임이 양식과 맞지 않는 것 같아요! <br />
+            변경하려는 닉네임이 양식과 맞지 않습니다! <br />
             다시 한 번 확인해주시겠어요? 🤔
           </AlertText>
         </AlertModal>
@@ -190,9 +195,9 @@ const ModalContainer = styled.div`
   height: 170px;
   background-color: ${({ theme }) => theme.colors.white};
   position: absolute;
-  top: 110px;
+  top: 30%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -30%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -263,7 +268,7 @@ const ProfileImagePreview = styled.div`
   transform: translateX(-50%);
   width: 80px;
   height: 80px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 2px solid ${({ theme }) => theme.colors.black};
   border-radius: 40px;
   background-size: cover;
   background-image: url('${(props) => props.src}');

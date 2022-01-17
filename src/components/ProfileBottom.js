@@ -67,8 +67,8 @@ const Container = styled.div`
   padding: 5px 0 0;
   width: 100%;
   height: 200px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
   z-index: 10001;
@@ -107,7 +107,7 @@ const Button = styled.button`
   width: 100px;
   height: auto;
   font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-weight: 500;
+  font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: center;
