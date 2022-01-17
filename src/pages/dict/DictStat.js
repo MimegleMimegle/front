@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import moment from 'moment'
+import 'moment/locale/ko'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { dictApi } from '../../shared/api'
 
@@ -15,13 +17,15 @@ import CircularProgress from '@mui/material/CircularProgress'
 import 'swiper/swiper.min.css'
 
 const DictStat = (props) => {
+  const nowTime = moment().format('HH:mm')
+  console.log(nowTime)
+
   const [rankList, setRankList] = useState('')
   const [chartData, setChartData] = useState('')
   const [totalDict, setTotalDict] = useState('')
   const [remainedQuestion, setRemainedQuestion] = useState('')
   const [completedQuestion, setCompletedQuestion] = useState('')
   const [loading, setLoading] = useState(false)
-  console.log(chartData)
 
   useEffect(() => {
     setLoading(true)
@@ -38,7 +42,7 @@ const DictStat = (props) => {
       }
     }
     getStat()
-    setLoading(false)
+    setTimeout(() => setLoading(false), 500)
   }, [])
 
   return (
@@ -65,9 +69,9 @@ const DictStat = (props) => {
               <div className="section-title">🧐 최근 일주일 동안 얼마나 등록되었을까요?</div>
               <div className="graph-container">
                 <DictChart chartData={chartData} />
-                <div className="modifiedAt">00:00 기준</div>
+                <div className="modifiedAt">{nowTime} 기준</div>
                 <Grid padding="10px 0 6px">
-                  <span className="highlight">오늘</span> 등록된 <span className="highlight border">n</span>개를 더해서,{' '}
+                  <span className="highlight">오늘</span> 등록된 <span className="highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
                 </Grid>
                 <Grid>
                   총 <span className="highlight border">{totalDict}</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!

@@ -19,12 +19,12 @@ const DictNavBar = () => {
           {/* 네비게이션을 구성하고 있는 하나의 버튼 */}
         </div>
       </Link>
-      <Link to="/second" className="DictNavLink" onClick={() => setActiveNav(2)}>
+      <Link to="/dict/question" className="DictNavLink" onClick={() => setActiveNav(2)}>
         <div>
           <div className={activeNav === 2 ? 'nav-item active' : 'nav-item'}>Q&A</div>
         </div>
       </Link>
-      <Link to="/third" className="DictNavLink" onClick={() => setActiveNav(3)}>
+      <Link to="/dict/stat" className="DictNavLink" onClick={() => setActiveNav(3)}>
         <div>
           <div className={activeNav === 3 ? 'nav-item active' : 'nav-item'}>통계</div>
         </div>
