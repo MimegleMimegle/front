@@ -4,11 +4,11 @@ import { dictQuestionApi } from '../shared/api'
 import { useHistory } from 'react-router'
 import '../index.css'
 import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
-import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비활성_18dp.svg'
-import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../styles/icons/하트 비활성_24dp.svg'
+import { ReactComponent as FullHeartIcon } from '../styles/icons/하트 활성_24dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
-import {BiBadge, BiBadgeCheck} from "react-icons/bi"
-
+import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
+import Grid from '../elements/Grid'
 
 const PostCard = ({ question }) => {
   const history = useHistory()
@@ -24,7 +24,7 @@ const PostCard = ({ question }) => {
     e.preventDefault()
     e.stopPropagation()
     if (isCuriousToo) {
-      await dictQuestionApi 
+      await dictQuestionApi
         .curiousToo(question.questionId)
         .then((response) => {
           console.log(response.data)
@@ -54,38 +54,38 @@ const PostCard = ({ question }) => {
     <>
       <FullWrap>
         <Wrap questionList={question} onClick={onC}>
-          <UserInfo>
-            <UserImg src={ question.profileImageUrl} alt="" />
-            <div className="userinfo">
-              <Writer>{ question.writer }</Writer>
-              <div className="createdate">
-                <CreatedAt>{ question.createdAt.split('T')[0] }</CreatedAt>
-                <CreatedAt>{ hour.split(':')[0] + ':' + hour.split(':')[1] }</CreatedAt>
+          <Grid flex_align>
+            <UserImg src={question.profileImageUrl} alt="" />
+            <div className="profile-box">
+              <Writer>{question.writer}</Writer>
+              <div className="created-date">
+                <CreatedAt>{question.createdAt.split('T')[0]}</CreatedAt>
+                <CreatedAt>{hour.split(':')[0] + ':' + hour.split(':')[1]}</CreatedAt>
               </div>
             </div>
-          </UserInfo>
-          <Content>
-            <Title>{question && question.title}</Title>
-          </Content>
+          </Grid>
+          <Title>{question && question.title}</Title>
           <Icon>
             <IconBox>
-              <ViewIcon />
+              <ViewIcon fill="#333" />
               <Number>{question && question.views}</Number>
             </IconBox>
             <IconBox>
-              {isCuriousToo ? <FullHeartIcon onClick={handleClickCuriousToo} /> : <EmptyHeartIcon onClick={handleClickCuriousToo} />}
+              {isCuriousToo ? <FullHeartIcon fill="#333" onClick={handleClickCuriousToo} /> : <EmptyHeartIcon fill="#333" onClick={handleClickCuriousToo} />}
               <Number className="like-count">{curiousTooCnt}</Number>
             </IconBox>
             <IconBox>
-              <CommentIcon />
+              <CommentIcon fill="#333" />
               <Number>{question && question.commentCnt}</Number>
             </IconBox>
-            <IconBox>
-              {question.isComplete? <BiBadgeCheck size='20'/>: <BiBadge size='20'/>}
-            </IconBox>
+            <IconBox>{question.isComplete ? <BiBadgeCheck size="20" /> : <BiBadge size="20" />}</IconBox>
           </Icon>
         </Wrap>
-        {question.thumbNail ? <ThumbNail className="uploadimg" src={question && question.thumbNail} alt="" /> : null}
+        {question.thumbNail ? (
+          <ThumbNailContainer>
+            <ThumbNail className="uploadimg" src={question && question.thumbNail} alt="" />
+          </ThumbNailContainer>
+        ) : null}
       </FullWrap>
     </>
   )
@@ -94,7 +94,6 @@ const PostCard = ({ question }) => {
 export default PostCard
 
 const FullWrap = styled.div`
-  height: 133px;
   padding: 16px;
   display: flex;
   justify-content: space-between;
@@ -102,86 +101,69 @@ const FullWrap = styled.div`
 `
 
 const Wrap = styled.div`
+  width: 100%;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-`
-
-const UserInfo = styled.div`
-  display: flex;
-  height: 30px;
-  margin: 0 0 0 3px;
-  .createdate {
+  .profile-box {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    .created-date {
+      width: 100%;
+      display: flex;
+    }
   }
 `
 
-const UserImg = styled.img`
-  margin: 0 8px 0 0;
-  width: 28px;
-  height: 28px;
-  border: 1px solid #e5e5e5;
-  box-sizing: border-box;
-  border-radius: 150px;
+const UserImg = styled.div`
+  margin: 0 10px 0 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 20px;
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
 `
 const Writer = styled.p`
+  width: 100%;
   font-family: 'YdestreetL';
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 16px;
-  display: flex;
-  align-items: center;
-  margin: 0 0 4px 0;
+  font-size: ${({ theme }) => theme.fontSizes.base};
 `
 
 const CreatedAt = styled.div`
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-weight: 300;
-  font-size: 9px;
-  line-height: 11px;
-  margin: 0 3px 0 0;
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  margin: 0 5px 0 0;
 `
 
-const Content = styled.div`
-  margin: 10px 0 0 0;
-  cursor: pointer;
-  height: 30px;
-  width: 250px;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 20px;
-  display: flex;
-  flex-direction: column;
-`
-const Title = styled.div`
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 20px;
-  margin: 0 0 0 3px;
+const Title = styled.h2`
+  width: 100%;
+  padding: 16px 0 10px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-weight: 500;
 `
 
 const Icon = styled.div`
   display: flex;
-  padding: 8px 0;
+  align-items: center;
 `
 
 const Number = styled.p`
-  font-size: 12px;
-  line-height: 14px;
-  display: flex;
-  align-items: center;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: #333;
   margin: 0 9.5px 0 5px;
 `
 
+const ThumbNailContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+`
+
 const ThumbNail = styled.img`
-  width: 60px;
-  height: 60px;
-  margin: 27px 0 0 0;
+  width: 80px;
+  height: 80px;
 `
 const IconBox = styled.div`
   display: flex;

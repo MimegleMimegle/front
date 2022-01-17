@@ -24,6 +24,7 @@ const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
     e.stopPropagation()
     dispatch(userActions.logOutDB())
     setShowModal(false)
+    setShowProfile(false)
   }
 
   return (

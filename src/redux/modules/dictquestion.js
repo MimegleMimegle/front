@@ -7,11 +7,11 @@ import 'moment'
 import { Login } from '../../pages'
 
 // /* action type */ 목록/상세/작성/수정/삭제/검색
-const GET_QUESTION= 'GET_QUESTION'
-const GET_ONE_QUESTION= 'GET_ONE_QUESTION'
-const ADD_QUESTION= 'ADD_QUESTION'
-const EDIT_QUESTION= 'EDIT_QUESTION'
-const DELETE_QUESTION= 'DELETE_QUESTION'
+const GET_QUESTION = 'GET_QUESTION'
+const GET_ONE_QUESTION = 'GET_ONE_QUESTION'
+const ADD_QUESTION = 'ADD_QUESTION'
+const EDIT_QUESTION = 'EDIT_QUESTION'
+const DELETE_QUESTION = 'DELETE_QUESTION'
 const LOADING = 'LOADING'
 
 // /* action creator */
@@ -28,7 +28,6 @@ const initialState = {
   paging: { page: null, size: 10 },
   detail: false,
 }
-
 
 // /* middleware */
 
@@ -72,28 +71,29 @@ const getOneQuestionDB = (questionId) => {
 }
 
 const addQuestionDB = (title, content, uploadFile) => {
-  return async function (dispatch, getState, {history}) {
+  return async function (dispatch, getState, { history }) {
     const formData = new FormData()
     const question = {
-      title:title,
-      content:content,
+      title: title,
+      content: content,
     }
-    formData.append('thumNail', uploadFile)
-    formData.append('questionUploadRequestDto', new Blob([JSON.stringify(question)],{type: 'application/json'}))
-  
+
+    formData.append('thumbNail', uploadFile)
+    formData.append('dictQuestionUploadRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
+
     await dictQuestionApi
-    .writeQuestion(formData)
-    .then((response)=> {
-      const question =response.data.data
-      dispatch(addQuestion(question))
-      console.log(question)
-    })
-    .then(()=> {
-      history.push('/dict/question')
-    })
-    .catch((err)=>{
-      console.log('질문 작성하는데 문제가 발생했습니다', err.response)
-    })
+      .writeQuestion(formData)
+      .then((response) => {
+        const question = response.data.data
+        dispatch(addQuestion(question))
+        console.log(question)
+      })
+      .then(() => {
+        history.push('/dict/question')
+      })
+      .catch((err) => {
+        console.log('질문 작성하는데 문제가 발생했습니다', err.response)
+      })
   }
 }
 
@@ -106,7 +106,7 @@ const editQuestionDB = (questionId, title, uploadFile, content) => {
     }
 
     formData.append('thumbNail', uploadFile)
-    formData.append('boardUpdateRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
+    formData.append('dictQuestionUpdateRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
 
     await dictQuestionApi
       .editQuestion(questionId, formData)
@@ -114,12 +114,11 @@ const editQuestionDB = (questionId, title, uploadFile, content) => {
         console.log(response.data)
         const _question = { ...question, thumbNail: uploadFile }
         dispatch(editQuestion(questionId, _question))
-
-        history.push('/question')
+        history.replace(`/dict/question/detail/${questionId}`)
       })
       .catch((err) => {
         console.log('게시글 수정하는데 문제 발생', err.response)
-        history.push('/question') 
+        history.replace(`/dict/question/detail/${questionId}`)
       })
   }
 }
@@ -131,12 +130,12 @@ const delQuestionDB = (questionId) => {
       .then((res) => {
         console.log(res.data)
         dispatch(deleteQuestion(questionId))
-        history.push('/question')
+        history.replace('/dict/question')
       })
 
       .catch((err) => {
         console.log('게시물 삭제  실패', err)
-        history.push('/question')
+        history.replace('/dict/question')
       })
   }
 }
