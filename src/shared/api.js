@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { startsWith } from 'lodash'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
@@ -12,10 +13,9 @@ const instance = axios.create({
 
 /* Interceptor를 통한 Header 설정 */
 instance.interceptors.request.use((config) => {
-  const accessToken = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('token'))
-    .split('=')[1]
+  // const cookieList = document.cookie.split('=')
+  // const accessToken = cookieList.length === 2 ? cookieList[1] : cookieList[2]
+  const accessToken = localStorage.getItem('token')
   config.headers.common['authorization'] = `${accessToken}`
   return config
 })
@@ -30,7 +30,7 @@ export const userApi = {
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
   KakaoLogin: (code) => instance.get(`/api/user/kakao/callback?code=${code}`),
-  NaverLogin: (code, state) => instance.get(`/api/user/naver/callback?code=[code]&state=[state]`),
+  NaverLogin: (code, state) => instance.get(`/api/user/naver/callback?code=${code}&state=${state}`),
   GoogleLogin: () => instance.get(`/api/user/google/callback`),
 }
 
@@ -54,19 +54,18 @@ export const boardApi = {
   totalLength: () => instance.get('api/board/count/FREEBOARD'),
 }
 
-export const dictQuestionApi={
+export const dictQuestionApi = {
   // getQuestions: (currentPage, pageSize) => instance.get(`/api/dict/question?page=${pageSize} * currentPage - 1}&size=${pageSize}`),
   getQuestions: () => instance.get('/api/dict/question?page=0&size=10'),
   getOneQuestion: (questionId) => instance.get(`/api/dict/question/${questionId}`),
-  writeQuestion: (question)=> instance.post('/api/dict/question', question),
-  editQuestion: (questionId,content) => instance.put(`/api/dict/question/${questionId}`,content),
+  writeQuestion: (question) => instance.post('/api/dict/question', question),
+  editQuestion: (questionId, content) => instance.put(`/api/dict/question/${questionId}`, content),
   deleteQuestion: (questionId) => instance.delete(`/api/dict/question/${questionId}`),
-  curiousToo:(questionId)=> instance.get(`/api/dict/question/curiousToo/${questionId}`),
+  curiousToo: (questionId) => instance.get(`/api/dict/question/curiousToo/${questionId}`),
   selectQuestion: (commentId) => instance.get(`/api/dict/question/select/${commentId}`),
-  totalLength: ()=>instance.get('/api/dict/question/count'),
+  totalLength: () => instance.get('/api/dict/question/count'),
   //백엔드진행중
-  searchAlldict:(currentPage,pageSize) => instance.get(`/api/dict/search?q=’테스트’&page=${currentPage -1}&size=${pageSize}`),  
-
+  searchAlldict: (currentPage, pageSize) => instance.get(`/api/dict/search?q=’테스트’&page=${currentPage - 1}&size=${pageSize}`),
 }
 
 export const dictApi = {
@@ -83,6 +82,8 @@ export const dictApi = {
   tellMeTotalLength: () => instance.get('/api/count/dict'),
   tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
   dobleCheckDict: (dictName) => instance.post('/api/check/dict', { dictName: dictName }),
+  /* 추가 */
+  getDictStat: () => instance.get('/api/stat/dict'),
 }
 
 export const quizApi = {
@@ -96,9 +97,9 @@ export const mainApi = {
 }
 
 export const commentApi = {
-  addComment: (questionId, comment) => instance.post(`/api/dict/${questionId}/comment`,{ content: comment }),
+  addComment: (questionId, comment) => instance.post(`/api/dict/${questionId}/comment`, { content: comment }),
   deleteComment: (commentId) => instance.delete(`/api/dict/comment/${commentId}`),
-  likeComment: (commentId)=> instance.get(`/api/dict/comment/like/${commentId}`),
+  likeComment: (commentId) => instance.get(`/api/dict/comment/like/${commentId}`),
 }
 
 export const likeApi = {

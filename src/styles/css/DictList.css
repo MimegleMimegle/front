@@ -179,8 +179,8 @@
 }
 
 .OneDictionaryCardSection {
-  border-top: 0.5px solid rgb(200, 200, 200);
-  border-bottom: 0.5px solid rgb(200, 200, 200);
+  border-top: 0.5px solid #e5e5e5;
+  border-bottom: 0.5px solid #e5e5e5;
   margin-top: 10px;
   margin-bottom: 20px;
 
@@ -201,8 +201,9 @@
 
 .DictListTitle {
   color: rgba(1, 109, 173, 1);
-  height: fit-content;
   width: 100%;
+  height: fit-content;
+  padding: 15px 0 0 10px;
 
   font-family: 'Pretendard Variable';
   font-style: normal;
@@ -216,66 +217,58 @@
   font-size: 14px;
   width: 100%;
   height: fit-content;
-  padding: 8px 0 16px;
+  padding: 10px 0 20px 10px;
   word-break: keep-all;
 
   -webkit-appearance: none;
 }
 
-.DictWriteInfo {
+.DictWriterInfo {
+  width: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 0 0 10px 0;
+
+  -webkit-appearance: none;
+}
+
+.DictListWriterAndATInfo {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 0 0 0;
 
   -webkit-appearance: none;
 }
 
 .DictListFirstWriter {
   font-size: 12px;
-  padding: 0 8px 0 0;
+  padding: 0 15px 0 0;
   color: #878c92;
+  width: fit-content;
+  height: fit-content;
 
   -webkit-appearance: none;
 }
 
 .DictListCreatedAt {
-  font-size: 9px;
+  font-size: 12px;
   width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-end;
-  margin: 0 0 0 0;
-
-  -webkit-appearance: none;
-}
-
-.DictListLikeInfo {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  flex-direction: row;
-}
-
-.DictListLikeButton {
-  font-size: 8px;
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-start;
-  margin: 0 0 0 0;
-
+  color: #878c92;
 
   -webkit-appearance: none;
 }
 
 .DictListLikeCount {
-  font-size: 12px;
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-start;
-  margin: 0 0 0 3px;
+  font-size: 14px;
+  padding: 0 0 0 3px;
+  color: #878c92;
 
   -webkit-appearance: none;
 }

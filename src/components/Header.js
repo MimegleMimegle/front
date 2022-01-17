@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
-import { actionCreators as mypageAction } from '../redux/modules/mypage'
+import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
 import Grid from '../elements/Grid'
 import ProfileBottom from './ProfileBottom'
@@ -14,10 +14,9 @@ const Header = ({ type, children, location }) => {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.mypage.myProfile)
   const userId = localStorage.getItem('id')
-  const token = document.cookie
-  // .split('; ')
-  // .find((row) => row.startsWith('token'))
-  // .split('=')[1]
+  const token = localStorage.getItem('token')
+  // const cookieList = document.cookie.split('=')
+  // const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
 
   const documentRef = useRef(document)
@@ -26,8 +25,6 @@ const Header = ({ type, children, location }) => {
   const [showAlarm, setShowAlarm] = useState(false)
   const [hide, setHide] = useState(false)
   const [pageY, setPageY] = useState(0)
-  console.log(hide)
-  console.log(pageY)
 
   const handleShowProfile = () => {
     setShowProfile(!showProfile)
@@ -60,19 +57,19 @@ const Header = ({ type, children, location }) => {
 
   useEffect(() => {
     if (profile === null) {
-      dispatch(mypageAction.getUserProfileDB())
+      dispatch(mypageActions.getUserProfileDB())
     }
   }, [])
 
   useEffect(() => {
-    window.addEventListener('scroll', throttleScroll)
-    return () => window.removeEventListener('scroll', throttleScroll)
+    documentRef.current.addEventListener('scroll', throttleScroll)
+    return () => documentRef.current.removeEventListener('scroll', throttleScroll)
   }, [pageY])
 
   if (type === 'main') {
     return (
       <>
-        <NavHeader className={hide && 'hide'}>
+        <NavHeader className={hide && 'hide'} ref={documentRef}>
           <Grid flex_between height="100%">
             <div className="header-title">Memegle</div>
             <Grid flex_end height="100%">
@@ -97,7 +94,7 @@ const Header = ({ type, children, location }) => {
 
   return (
     <>
-      <NavHeader className={hide && 'hide'}>
+      <NavHeader className={hide && 'hide'} ref={documentRef}>
         <Grid flex_between height="100%">
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>

@@ -19,9 +19,9 @@ const AlarmModal = ({ onClose }) => {
 
 const Container = styled.div`
   position: absolute;
-  top: 68px;
+  top: 56px;
   right: 16px;
-  width: 60%;
+  width: 70%;
   height: fit-content;
   padding: 10px;
   border-radius: 10px;
@@ -30,7 +30,7 @@ const Container = styled.div`
   transition: 0.5s;
   z-index: 9999;
   .close-icon {
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
   }
 `

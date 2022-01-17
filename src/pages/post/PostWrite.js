@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { actionCreators as questionActions } from '../../redux/modules/dictquestion'
-import '../../components/Header'
+import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
+import { history } from '../../redux/ConfigureStore'
 
 const PostWrite = (props) => {
   const dispatch = useDispatch()
@@ -15,7 +16,6 @@ const PostWrite = (props) => {
   const [content, setContent] = useState('')
   const [thumbNail, setThumbNail] = useState(null)
 
-
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
   }
@@ -23,7 +23,6 @@ const PostWrite = (props) => {
   const onChangeContent = (e) => {
     setContent(e.target.value)
   }
-
 
   const handleTextareaResize = () => {
     const obj = textRef.current
@@ -56,9 +55,15 @@ const PostWrite = (props) => {
     dispatch(questionActions.addQuestionDB(title, content, uploadFile))
   }
 
+  console.log(fileInput.current.files[0])
+
   return (
     <>
-      {/* <Header type="PostWrite" location="밈+글 등록하기"></Header> */}
+      <Header>
+        <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
+        <h2 className="location">질문 수정하기</h2>
+        <div className="empty"></div>
+      </Header>
       <Container>
         <PWHeader>
           <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
@@ -74,7 +79,7 @@ const PostWrite = (props) => {
             onKeyUp={handleTextareaResize}
           ></textarea>
           <Preview>
-            <img src={thumbNail} className="thumbNail" alt=""/>
+            <img src={thumbNail} className="thumbNail" alt="" />
           </Preview>
           <UploadSection>
             <label htmlFor="file" className="upload-label">
@@ -94,22 +99,55 @@ const PostWrite = (props) => {
   )
 }
 
+const Header = styled.header`
+  width: 100%;
+  height: 56px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: ${({ theme }) => theme.colors.bg};
+  z-index: 1000;
+  .arrow-back-icon {
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .location {
+    font-family: 'YdestreetL';
+    font-style: normal;
+    font-weight: normal;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    cursor: default;
+  }
+  .empty {
+    width: 24px;
+    height: 100%;
+  }
+`
+
 const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 74px 0 0;
+  padding: 56px 0 0;
 `
 
 const PWHeader = styled.div`
+  border-top: 1px solid #444;
   border-bottom: 1px solid ${({ theme }) => theme.colors.line};
 
   .writetitle {
     width: 100%;
     border: none;
     padding: 16px;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-weight: 500;
     color: ${({ theme }) => theme.colors.black};
+    word-spacing: 1;
+    background-color: ${({ theme }) => theme.colors.bg};
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.grey};
@@ -120,19 +158,21 @@ const PWHeader = styled.div`
 const PWBody = styled.div`
   display: flex;
   flex-direction: column;
-  .plustfuction {
-    margin: 0px 15px 10px 15px;
-  }
+  border-bottom: 1px solid #444;
   .writedesc {
     width: 100%;
-    min-height: 10rem;
+    /* min-height: 10rem; */
     border: none;
     padding: 16px;
     resize: none;
     font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-weight: 300;
     color: ${({ theme }) => theme.colors.black};
     overflow-y: hidden;
-    line-height: 1.6;
+    word-spacing: 1;
+    background-color: ${({ theme }) => theme.colors.bg};
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.grey};
@@ -170,50 +210,6 @@ const UploadSection = styled.div`
     height: 1px;
     clip: rect(0, 0, 0, 0);
     border: 0;
-  }
-`
-
-const HashDivWrap = styled.div`
-  color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  padding: 10px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  letter-spacing: -0.5px;
-  border-top: 1px solid ${({ theme }) => theme.colors.line};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.black};
-
-  .hashWrapOutter {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px 0;
-  }
-
-  .hashWrapInner {
-    padding: 5px 7px 5px 0;
-    height: 24px;
-    color: ${({ theme }) => theme.colors.black};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    line-height: 24px;
-    cursor: pointer;
-  }
-
-  .hashInput {
-    width: 100%;
-    padding: 0;
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    display: inline-flex;
-    outline: none;
-    cursor: text;
-    line-height: 2rem;
-    min-width: 100%;
-    border: none;
-    &::placeholder {
-      font-size: ${({ theme }) => theme.fontSizes.base};
-    }
   }
 `
 
