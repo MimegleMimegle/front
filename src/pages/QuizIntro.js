@@ -18,29 +18,29 @@ const QuizIntro = (props) => {
   const [showModal, setShowModal] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [subject, setSubject] = React.useState('')
-  const [y2000, setY2000] = React.useState(false)
-  const [y2010, setY2010] = React.useState(false)
-  const [y2020, setY2020] = React.useState(false)
+  const [lv1, setLv1] = React.useState(false)
+  const [lv2, setLv2] = React.useState(false)
+  const [lv3, setLv3] = React.useState(false)
 
   const handleChangeSubjectY2000 = (e) => {
     setSubject(e.target.value)
-    setY2000(true)
-    setY2010(false)
-    setY2020(false)
+    setLv1(true)
+    setLv2(false)
+    setLv3(false)
   }
 
   const handleChangeSubjectY2010 = (e) => {
     setSubject(e.target.value)
-    setY2000(false)
-    setY2010(true)
-    setY2020(false)
+    setLv1(false)
+    setLv2(true)
+    setLv3(false)
   }
 
   const handleChangeSubjectY2020 = (e) => {
     setSubject(e.target.value)
-    setY2000(false)
-    setY2010(false)
-    setY2020(true)
+    setLv1(false)
+    setLv2(false)
+    setLv3(true)
   }
 
   const closeModal = () => {
@@ -91,17 +91,17 @@ const QuizIntro = (props) => {
                 <p className="subject-question">테스트하고 싶으신가요?</p>
               </div>
               <div className="subject-button-box">
-                <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="IMAGE" onClick={handleChangeSubjectY2000}>
+                <button className={`subject-button ${lv1 ? 'selected' : ''}`} value="lv1" onClick={handleChangeSubjectY2000}>
                   Lv. 밈기적
                 </button>
               </div>
               <div className="subject-button-box">
-                <button className={`subject-button ${y2010 ? 'selected' : ''}`} value="y2010" onClick={handleChangeSubjectY2010}>
+                <button className={`subject-button ${lv2 ? 'selected' : ''}`} value="lv2" onClick={handleChangeSubjectY2010}>
                   Lv. 밈잘알
                 </button>
               </div>
               <div className="subject-button-box">
-                <button className={`subject-button ${y2020 ? 'selected' : ''}`} value="y2020" onClick={handleChangeSubjectY2020}>
+                <button className={`subject-button ${lv3 ? 'selected' : ''}`} value="lv3" onClick={handleChangeSubjectY2020}>
                   Lv. 밈중독
                 </button>
               </div>

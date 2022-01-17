@@ -7,6 +7,7 @@ import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 import Grid from '../../elements/Grid'
 import DoubleCheckModal from '../modal/DoubleCheckModal'
 import Backdrop from '@mui/material/Backdrop'
+import AlertModal from '../../components/modal/AlertModal'
 import { IoCloseOutline } from 'react-icons/io5'
 import { MdPhotoCamera } from 'react-icons/md'
 
@@ -14,11 +15,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   const dispatch = useDispatch()
   const userId = localStorage.getItem('id')
 
-  const [imageFile, setImageFile] = useState(null)
+  const [imageFile, setImageFile] = useState()
   const [nickname, setNickname] = useState('')
-  const [isNickname, setIsNickname] = useState(false)
+  const [isValidNickname, setIsValidNickname] = useState()
   const [checkedNickname, setCheckedNickname] = useState(null)
   const [doubleCheck, setDoubleCheck] = useState(null)
+  const [doubleCheckAlert, setDoubleCheckAlert] = useState(false)
+  const [validAlert, setValidAlert] = useState(false)
 
   const fileInput = React.useRef('')
 
@@ -40,11 +43,14 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   const handleChangeNickname = (e) => {
     const nicknameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/
     const currentNickname = e.target.value
+    console.log(currentNickname)
     setNickname(currentNickname)
-    if (!nicknameRegExp.test(currentNickname)) {
-      setIsNickname(false)
-    } else {
-      setIsNickname(true)
+    if (currentNickname !== '' && nicknameRegExp.test(currentNickname)) {
+      setIsValidNickname(true)
+    } else if (currentNickname !== '' && !nicknameRegExp.test(currentNickname)) {
+      setIsValidNickname(false)
+    } else if (currentNickname === '') {
+      setIsValidNickname()
     }
   }
 
@@ -64,22 +70,36 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       })
   }
 
-  // case 1. 닉네임만 수정한 경우
-  // case 2. 프로필 이미지만 수정한 경우
-  // case 3. 둘 다 수정한 경우
-
   const _editProfile = async () => {
-    if (imageFile) {
+    if (nickname === '' && imageFile) {
       const uploadFile = fileInput.current.files[0]
       dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
+      setShowModal(false)
+      setImageFile()
+      setCheckedNickname(null)
     }
-    if (nickname !== '' && isNickname) {
-      dispatch(mypageActions.editNicknameDB(userId, nickname))
+    if (nickname !== '') {
+      if (nickname === checkedNickname && isValidNickname === true) {
+        dispatch(mypageActions.editNicknameDB(userId, nickname))
+        if (imageFile) {
+          const uploadFile = fileInput.current.files[0]
+          dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
+        }
+        setShowModal(false)
+        setImageFile()
+        setNickname('')
+        setIsValidNickname()
+        setCheckedNickname(null)
+      }
+      if (nickname !== checkedNickname) {
+        setDoubleCheckAlert(true)
+        setTimeout(() => setDoubleCheckAlert(false), 2000)
+      }
+      if (isValidNickname === false) {
+        setValidAlert(true)
+        setTimeout(() => setValidAlert(false), 2000)
+      }
     }
-    setShowModal(false)
-    setImageFile(null)
-    setNickname('')
-    setIsNickname(false)
   }
 
   window.addEventListener('keyup', (e) => {
@@ -116,7 +136,8 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
               <Grid flex_center>
                 <input
                   type="text"
-                  className="input-nickname"
+                  className={`input-nickname ${isValidNickname === false ? 'fail' : ''}`}
+                  maxLength={10}
                   onChange={handleChangeNickname}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
@@ -126,10 +147,10 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
                 />
                 <DoubleCheckButton onClick={checkNickname}>중복확인</DoubleCheckButton>
               </Grid>
-              <div style={{ padding: '10px 0' }}>
-                <p style={{ fontSize: '12px' }}>10자 이하로 입력해주세요.</p>
-                <p style={{ fontSize: '12px', color: '#878C92' }}>(한글, 영어, 대소문자, 숫자 사용 가능)</p>
-              </div>
+              <ValidationBox>
+                <p className="validation-length">10자 이하로 입력해주세요.</p>
+                <p className="validation-etc">(한글, 영어, 대소문자, 숫자 사용 가능)</p>
+              </ValidationBox>
             </div>
           </Grid>
         </ModalContainer>
@@ -144,6 +165,19 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
         <DoubleCheckModal type="exist-onlyConfirm" title="이미 등록된 닉네임입니다." question="다른 닉네임으로 시도해 보세요!" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
           <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
         </DoubleCheckModal>
+      )}
+      {doubleCheckAlert && (
+        <AlertModal showModal={doubleCheckAlert}>
+          <AlertText>먼저 중복확인 버튼을 클릭해주세요! 😉</AlertText>
+        </AlertModal>
+      )}
+      {validAlert && (
+        <AlertModal showModal={validAlert}>
+          <AlertText>
+            변경하려는 닉네임이 양식과 맞지 않는 것 같아요! <br />
+            다시 한 번 확인해주시겠어요? 🤔
+          </AlertText>
+        </AlertModal>
       )}
     </>
   )
@@ -205,6 +239,20 @@ const ModalContainer = styled.div`
     &:focus {
       border: 1px solid ${({ theme }) => theme.colors.black};
     }
+    &.fail {
+      border: 1px solid #e25c3d;
+    }
+  }
+`
+
+const ValidationBox = styled.div`
+  padding: 10px 0;
+  .validation-length {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+  }
+  .validation-etc {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    color: ${({ theme }) => theme.colors.grey};
   }
 `
 
@@ -235,6 +283,10 @@ const DoubleCheckButton = styled.button`
   font-weight: 700;
   margin: 0 0 0 12px;
   text-decoration: underline;
+`
+
+const AlertText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
 `
 
 export default EditProfile

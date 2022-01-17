@@ -2,59 +2,6 @@ import React from 'react'
 import { ResponsiveContainer, LineChart, Line, XAxis, CartesianGrid, Tooltip } from 'recharts'
 import styled from 'styled-components'
 
-const data = [
-  {
-    name: '토',
-    cnt: 10,
-  },
-  {
-    name: '일',
-    cnt: 19,
-  },
-  {
-    name: '월',
-    cnt: 10,
-  },
-  {
-    name: '화',
-    cnt: 34,
-  },
-  {
-    name: '수',
-    cnt: 10,
-  },
-  {
-    name: '목',
-    cnt: 8,
-  },
-  {
-    name: '오늘',
-    cnt: 22,
-  },
-]
-
-const getIntroOfPage = (label) => {
-  if (label === '토') {
-    return ''
-  }
-  if (label === '일') {
-    return ''
-  }
-  if (label === '월') {
-    return ''
-  }
-  if (label === '화') {
-    return ''
-  }
-  if (label === '수') {
-    return ''
-  }
-  if (label === '오늘') {
-    return ''
-  }
-  return ''
-}
-
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -63,7 +10,6 @@ const CustomTooltip = ({ active, payload, label }) => {
       </Container>
     )
   }
-
   return null
 }
 
@@ -72,7 +18,7 @@ const DictChart = ({ chartData }) => {
     <>
       <ResponsiveContainer maxWidth={400} maxHeight={240}>
         <LineChart
-          data={data}
+          data={chartData}
           margin={{
             top: 10,
             right: 0,
@@ -81,9 +27,9 @@ const DictChart = ({ chartData }) => {
           }}
         >
           <CartesianGrid stroke="#e5e5e5" strokeDasharray="3 3" />
-          <XAxis dataKey="name" fontSize="12px" fontWeight="500" padding={{ left: 10, right: 10 }} />
+          <XAxis dataKey="date" fontSize="12px" fontWeight="500" padding={{ left: 10, right: 10 }} />
           <Tooltip content={<CustomTooltip />} />
-          <Line type="linear" isAnimationActive={true} animationDuration={1500} dataKey="cnt" stroke="#6698FC" strokeWidth={2} activeDot={{ r: 8 }} />
+          <Line type="linear" isAnimationActive={true} animationDuration={1500} dataKey="count" stroke="#6698FC" strokeWidth={2} activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     </>

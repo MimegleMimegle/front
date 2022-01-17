@@ -152,7 +152,7 @@ const Main = (props) => {
         </div>
         {/* <div className="MainPagePopularBoardSection">
           <div className="MainPagePopularBoardText">핫 밈글</div>
-          {popularBoards.map((popularBoards) => (
+          {/* {popularBoards.map((popularBoards) => (
             <div className="MainPagePopularBoardList" key={popularBoards.id} onClick={() => history.push(`/post/detail/${popularBoards.boardId}`)}>
               <div onload="showCharacter()">
                 <img className="MainPagePopularBoardImage" src={popularBoards.thumbNail} />{' '}
@@ -162,7 +162,7 @@ const Main = (props) => {
                 <div className="MainPagePopularBoardWriter">{popularBoards.writer}</div>
               </div>
             </div>
-          ))}
+          ))} */}
           <div className="MainPageTagMoreButton_3">
             <div className="MainPageTagMoreButton_3rd" onClick={() => history.push('/post')}>
               <div className="MainPageTagMoreButton3">More</div>

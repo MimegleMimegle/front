@@ -190,7 +190,7 @@
 .OneDictionaryCardList {
   width: 100%;
   height: fit-content;
-  padding: 12px 24px 10px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -203,7 +203,6 @@
   color: rgba(1, 109, 173, 1);
   width: 100%;
   height: fit-content;
-  padding: 15px 0 0 10px;
 
   font-family: 'Pretendard Variable';
   font-style: normal;
@@ -217,20 +216,20 @@
   font-size: 14px;
   width: 100%;
   height: fit-content;
-  padding: 10px 0 20px 10px;
+  padding: 10px 0 20px;
   word-break: keep-all;
 
   -webkit-appearance: none;
 }
 
-.DictWriterInfo {
+.DictWriteInfo {
   width: 100%;
   height: fit-content;
   display: flex;
-  flex-direction: row;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0 10px 0;
 
   -webkit-appearance: none;
 }
