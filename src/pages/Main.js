@@ -163,15 +163,14 @@ const Main = (props) => {
               </div>
             </div>
           ))} */}
-          <div className="MainPageTagMoreButton_3">
-            <div className="MainPageTagMoreButton_3rd" onClick={() => history.push('/post')}>
-              <div className="MainPageTagMoreButton3">More</div>
-              <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
-              </svg>
-            </div>
+        <div className="MainPageTagMoreButton_3">
+          <div className="MainPageTagMoreButton_3rd" onClick={() => history.push('/post')}>
+            <div className="MainPageTagMoreButton3">More</div>
+            <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
+            </svg>
           </div>
-        </div> */}
+        </div>
       </div>
       <Footer />
       {showModal && (
