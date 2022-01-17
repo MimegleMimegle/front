@@ -11,8 +11,9 @@ import InfinityScroll from '../../shared/InfinityScroll'
 import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
+import FloatingButton from '../../components/FloatingButton'
 import CircularProgress from '@mui/material/CircularProgress'
-import { FaPlus } from 'react-icons/fa'
+import { GoPlus } from 'react-icons/go'
 
 const ImageList = (props) => {
   const dispatch = useDispatch()
@@ -43,6 +44,7 @@ const ImageList = (props) => {
 
   useEffect(() => {
     setLoading(true)
+    setTimeout(() => setLoading(false), 600)
     dispatch(imageActions.initImageList())
   }, [])
 
@@ -56,7 +58,6 @@ const ImageList = (props) => {
       .catch((error) => {
         console.log('명예의 전당 이미지 불러오기 문제 발생', error.response)
       })
-    setTimeout(() => setLoading(false), 400)
   }, [])
 
   return (
@@ -80,12 +81,6 @@ const ImageList = (props) => {
             <GeneralSection>
               <div className="title-border">
                 <Title>짤 방앗간</Title>
-                <FileUploader>
-                  <label htmlFor="file" className="upload-label">
-                    <FaPlus style={{ fontSize: '22px' }} />
-                  </label>
-                  <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
-                </FileUploader>
               </div>
               <Container>
                 <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
@@ -104,6 +99,14 @@ const ImageList = (props) => {
           </Grid>
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
+        <FloatingButton>
+          <FileUploader>
+            <label htmlFor="file" className="upload-label">
+              <GoPlus style={{ fontSize: '32px', color: '#FFF' }} />
+            </label>
+            <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+          </FileUploader>
+        </FloatingButton>
       </Wrapper>
       <Footer />
     </>
@@ -111,7 +114,7 @@ const ImageList = (props) => {
 }
 
 const FileUploader = styled.div`
-  padding: 0 5px 0 0;
+  /* padding: 0 5px 0 0; */
   .upload-label {
     height: 100%;
     display: flex;

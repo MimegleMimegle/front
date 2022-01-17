@@ -90,11 +90,13 @@ const OneImageCard = ({ image, type }) => {
 
 const ImageBox = styled.div`
   display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  border-radius: 10px;
+  /* border-radius: 8px; */
   width: 100%;
   margin-bottom: 7px;
 
@@ -104,7 +106,7 @@ const ImageBox = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
-    border-radius: 10px;
+    /* border-radius: 8px; */
     z-index: 100;
 
     transition: all 0.3s ease-in-out;
@@ -121,7 +123,7 @@ const ImageThumbnail = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10px;
+  /* border-radius: 8px; */
 `
 
 const Overlay = styled.div`

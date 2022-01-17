@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { mainApi } from '../shared/api'
 import { history } from '../redux/ConfigureStore'
+import { useDispatch, useSelector } from 'react-redux'
+import { actionCreators as userActions } from '../redux/modules/user'
+import styled from 'styled-components'
 
 import MainPageImageSlide from '../components/MainPageImageSlide'
 import PopularBoardCardSwiper from '../components/PopularBoardCardSwiper'
@@ -8,6 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import AlertModal from '../components/modal/AlertModal'
 
 import 'swiper/swiper.min.css'
 import 'swiper/components/lazy/lazy.min.css'
@@ -18,9 +22,27 @@ import '../styles/css/Main.css'
 const Main = (props) => {
   SwiperCore.use([Lazy, Autoplay, Keyboard, Pagination])
 
+  const dispatch = useDispatch()
+
+  const isFirst = useSelector((state) => state.user.is_first)
+  const nickname = localStorage.getItem('nickname')
+
   const [popularBoards, setPopularBoards] = useState([])
   const [popularImages, setPopularImages] = useState([])
   const [todayMemes, setTodayMemes] = useState([])
+
+  const [showModal, setShowModal] = useState(false)
+
+  const handleCloseModal = () => {
+    setTimeout(() => {
+      setShowModal(false)
+    }, 2500)
+  }
+
+  const handleShowModal = () => {
+    setShowModal(true)
+    handleCloseModal()
+  }
 
   const searchDictDB = async () => {
     let response = await mainApi.mainPage()
@@ -34,6 +56,13 @@ const Main = (props) => {
     console.log(popularImages)
     console.log(todayMemes)
   }
+
+  useEffect(() => {
+    if (isFirst) {
+      handleShowModal()
+    }
+    dispatch(userActions.initFirstLogin())
+  }, [])
 
   React.useEffect(() => {
     searchDictDB()
@@ -145,8 +174,23 @@ const Main = (props) => {
         </div>
       </div>
       <Footer />
+      {showModal && (
+        <AlertModal showModal={showModal}>
+          <WelcomeMessage>
+            <span className="username">{nickname}</span>님 만반잘부!
+          </WelcomeMessage>
+        </AlertModal>
+      )}
     </>
   )
 }
+
+const WelcomeMessage = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  .username {
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.blue};
+  }
+`
 
 export default Main
