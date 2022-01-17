@@ -5,6 +5,7 @@ import { actionCreators as questionActions } from '../../redux/modules/dictquest
 import styled from 'styled-components'
 import { dictQuestionApi } from '../../shared/api'
 import ConfirmModal from '../../components/modal/ConfirmModal'
+import AlertModal from '../../components/modal/AlertModal'
 import CommentTest from '../CommentTest'
 import Grid from '../../elements/Grid'
 import { ReactComponent as ViewIcon } from '../../styles/icons/조회_18dp.svg'
@@ -27,6 +28,19 @@ const PostDetail = (props) => {
   const [toggleModalChang, setToggleModalChang] = useState(false)
   const [createdAt, setCreatedAt] = useState('')
   const [showModal, setShowModal] = React.useState(false)
+
+  const [noChangeModal, setNoChangeModal] = useState(false)
+
+  const handleCloseNoChangeModal = () => {
+    setTimeout(()=> {
+      setNoChangeModal(false)
+    }, 1800)
+  }
+
+  const handleNoChangeModal = () => {
+    setNoChangeModal(true)
+    handleCloseNoChangeModal()
+  }
   console.log(question)
 
   const handleShowModal = (e) => {
@@ -70,7 +84,7 @@ const PostDetail = (props) => {
           setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 취소 문제 발생', error.response)
+          console.log('나도 궁금해요 취소 문제 발생', error.response.data.message)
         })
     } else {
       await dictQuestionApi
@@ -82,7 +96,7 @@ const PostDetail = (props) => {
           console.log(isCuriousToo)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 문제 발생', error.response)
+          console.log('나도 궁금해요 문제 발생', error.response)
         })
     }
   }
@@ -104,6 +118,8 @@ const PostDetail = (props) => {
         ) : null}
         {toggleModalChang && (
           <ModalChang>
+            {question.selectedComment ===0?
+            <>
             <Grid flex_end padding="5px 8px">
               <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
             </Grid>
@@ -122,6 +138,24 @@ const PostDetail = (props) => {
                 삭제하기
               </button>
             </div>
+            </> : <>
+            <Grid flex_end padding="5px 8px">
+              <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
+            </Grid>
+            <div className="button-box">
+              <button
+                className="button edit"
+                onClick={handleNoChangeModal}
+              >
+                수정하기
+              </button>
+            </div>
+            <div className="button-box">
+              <button className="button delete" onClick={handleNoChangeModal}>
+                삭제하기
+              </button>
+            </div>
+            </> }
           </ModalChang>
         )}
       </Header>
@@ -163,6 +197,12 @@ const PostDetail = (props) => {
       </PostWrap>
 
       <CommentTest question={question} />
+
+      {noChangeModal && (
+        <AlertModal showModal={noChangeModal}>
+            질문 답변 채택 후 수정 삭제가 불가능합니다.
+        </AlertModal>
+      )}
       {showModal && (
         <ConfirmModal question="밈글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
           <DeleteButton onClick={handleDeleteQuestion}>삭제</DeleteButton>

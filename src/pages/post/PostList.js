@@ -117,7 +117,6 @@ const Addbtn = styled.div`
   /* transform: translateX(-50%); */
   margin: 15px 0 30px 0;
   transition-duration: 0.2s;
-
   &:hover {
     left: calc(50%);
     transform: translate(4px, 10%);
