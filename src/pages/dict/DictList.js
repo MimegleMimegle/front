@@ -17,7 +17,7 @@ import Grid from '../../elements/Grid'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
-import {MdCheckBoxOutlineBlank, MdCheckBox} from "react-icons/md"
+import { MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
@@ -108,13 +108,15 @@ const DictList = (props) => {
                 <div className="OneDictionaryCardList" key={dict.id} onClick={() => history.push(`/dict/detail/${dict.dictId}`)}>
                   <div className="OneDictionaryCardList DictListTitle">{dict.title}</div>
                   <div className="OneDictionaryCardList DictListSummary">{dict.summary}</div>
-                  <div className="OneDictionaryCardList DictWriteInfo">
+                  <div className="OneDictionaryCardList DictWriterInfo">
                     <div className="OneDictionaryCardList DictListLikeInfo">
                       <div className="OneDictionaryCardList DictListLikeButton">{dict.like ? <FillBookMarkIcon /> : <EmptyBookMarkIcon />}</div>
                       <div className="OneDictionaryCardList DictListLikeCount">{dict.likeCount}</div>
                     </div>
-                    <div className="OneDictionaryCardList DictListFirstWriter">{dict.firstWriter}</div>
-                    <div className="OneDictionaryCardList DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
+                    <div className="OneDictionaryCardList DictListWriterAndATInfo">
+                      <div className="OneDictionaryCardList DictListFirstWriter">{dict.firstWriter}</div>
+                      <div className="OneDictionaryCardList DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
+                    </div>
                   </div>
                 </div>
               </div>

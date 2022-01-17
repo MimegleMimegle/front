@@ -44,7 +44,7 @@ const PopularBoardCardSwiper = (props) => {
           enabled: true,
         }}
         // centeredSlides={true}
-        slidesPerGroupSkip={0}
+        slidesPerGroupSkip={1}
         grabCursor={true}
         breakpoints={{
           769: {

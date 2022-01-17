@@ -12,8 +12,8 @@ export default function (Page, checkAuth) {
   const AuthCheck = (props) => {
     const dispatch = useDispatch()
     const token = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('token'))
+      // .split('; ')
+      // .find((row) => row.startsWith('token'))
       .split('=')[1]
     const username = localStorage.getItem('username')
     const isLoggedIn = username !== null && token !== undefined ? true : false
