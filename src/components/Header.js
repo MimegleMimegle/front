@@ -10,6 +10,17 @@ import AlarmModal from './modal/AlarmModal'
 import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
 import { BsBell, BsBellFill } from 'react-icons/bs'
 
+const throttle = (callback, waitTime) => {
+  let timerId = null
+  return (e) => {
+    if (timerId) return
+    timerId = setTimeout(() => {
+      callback.call(this, e)
+      timerId = null
+    }, waitTime)
+  }
+}
+
 const Header = ({ type, children, location }) => {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.mypage.myProfile)
@@ -18,10 +29,6 @@ const Header = ({ type, children, location }) => {
   // const cookieList = document.cookie.split('=')
   // const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
-
-  const documentRef = useRef(document)
-
-  console.log(profile)
 
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
@@ -36,24 +43,18 @@ const Header = ({ type, children, location }) => {
     setShowAlarm(!showAlarm)
   }
 
-  const throttle = (callback, waitTime) => {
-    let timerId = null
-    return (e) => {
-      if (timerId) return
-      timerId = setTimeout(() => {
-        callback.call(this, e)
-        timerId = null
-      }, waitTime)
+  const handleScroll = () => {
+    let nextScrollTop = window.pageYOffset || 0
+    if (nextScrollTop > pageY) {
+      setHide(true)
+      setPageY(nextScrollTop)
+    } else if (nextScrollTop < pageY) {
+      setHide(false)
+      setPageY(nextScrollTop)
     }
   }
-
-  const handleScroll = () => {
-    const { pageYOffset } = window
-    const deltaY = pageYOffset - pageY
-    const hide = pageYOffset !== 0 && deltaY >= 0
-    setHide(hide)
-    setPageY(pageYOffset)
-  }
+  console.log(hide)
+  console.log(pageY)
 
   const throttleScroll = throttle(handleScroll, 50)
 
@@ -64,14 +65,14 @@ const Header = ({ type, children, location }) => {
   }, [])
 
   useEffect(() => {
-    documentRef.current.addEventListener('scroll', throttleScroll)
-    return () => documentRef.current.removeEventListener('scroll', throttleScroll)
+    document.addEventListener('scroll', throttleScroll)
+    return () => document.removeEventListener('scroll', throttleScroll)
   }, [pageY])
 
   if (type === 'main') {
     return (
       <>
-        <NavHeader className={hide && 'hide'} ref={documentRef}>
+        <NavHeader className={hide && 'hide'}>
           <Grid flex_between height="100%">
             <div className="header-title">Memegle</div>
             <Grid flex_end height="100%">
@@ -96,7 +97,7 @@ const Header = ({ type, children, location }) => {
 
   return (
     <>
-      <NavHeader className={hide && 'hide'} ref={documentRef}>
+      <NavHeader className={hide && 'hide'}>
         <Grid flex_between height="100%">
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
@@ -133,7 +134,7 @@ const NavHeader = styled.nav`
   z-index: 1000;
   transition: 0.4s ease;
   &.hide {
-    transform: translateY(-60px);
+    transform: translateY(-56px);
   }
   .header-title {
     font-family: 'YdestreetB';

@@ -13,6 +13,7 @@ import OneQuiz from '../components/OneQuiz'
 import Footer from '../components/Footer'
 import { ReactComponent as GoBackIcon } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLinkIcon } from '../styles/icons/링크복사_24dp.svg'
+import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 
 const QuizResult = ({ quiz_list, category }) => {
   const dispatch = useDispatch()
@@ -70,6 +71,9 @@ const QuizResult = ({ quiz_list, category }) => {
   return (
     <>
       <Wrapper>
+        <Grid flex_center>
+          <h2 className="quiz-category">Lv. {category === 'lv1' ? '1' : category === 'lv2' ? '2' : '3'}</h2>
+        </Grid>
         <Grid flex_center column>
           <QuizResultBox>
             <div className="quiz-subject box-1">결과</div>
@@ -119,21 +123,15 @@ const QuizResult = ({ quiz_list, category }) => {
           </TextButtonContainer>
           <BottomPopup isOpen={showQuiz} onClose={() => setShowQuiz(false)} heightPixel={400}>
             <QuizContainer>
-              <div className="handle-box">
-                <Handler />
-              </div>
-
+              <CloseButtonBox>
+                <CloseIcon className="close-icon" onClick={() => setShowQuiz(false)} fill="#444" />
+              </CloseButtonBox>
               <div className="quiz-answer-box">
                 {quiz_list &&
                   quiz_list.map((quiz, index) => {
                     return <OneQuiz key={index} quiz={quiz} index={index} />
                   })}
               </div>
-              <CloseButtonBox>
-                <button className="close-button" onClick={() => setShowQuiz(false)}>
-                  닫기
-                </button>
-              </CloseButtonBox>
             </QuizContainer>
           </BottomPopup>
         </Grid>
@@ -154,6 +152,10 @@ const Wrapper = styled.div`
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
+  }
+  .quiz-category {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-weight: 600;
   }
 `
 
@@ -209,7 +211,7 @@ const QuizResultBox = styled.div`
     font-family: 'YdestreetB';
     font-style: normal;
     font-weight: normal;
-    padding: 16px 0 10px;
+    padding: 16px 0 6px;
   }
   .result-text__answerCnt {
     font-size: ${({ theme }) => theme.fontSizes.xl};
@@ -221,7 +223,7 @@ const QuizResultBox = styled.div`
 
 const QuizContainer = styled.div`
   position: relative;
-  padding: 5px 0 16px;
+  padding: 5px 0 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -232,20 +234,11 @@ const QuizContainer = styled.div`
   border-top-right-radius: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
   z-index: 10001;
-  .handle-box {
-    width: 100%;
-    height: 28px;
-    display: flex;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    justify-content: center;
-  }
   .quiz-answer-box {
-    padding: 0 20px 16px;
+    padding: 0 20px 24px;
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.line};
     &::-webkit-scrollbar {
       width: 8px;
     }
@@ -262,31 +255,13 @@ const CloseButtonBox = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 16px 0 0;
-  .close-button {
-    transition: color 0.3s ease-in-out;
+  justify-content: right;
+  padding: 10px 16px;
+  .close-icon {
     cursor: pointer;
-    width: 100px;
-    height: fit-content;
-    padding: 8px 0;
-    border-radius: 20px;
-    background-color: ${({ theme }) => theme.colors.blue};
-    color: #fff;
-    font-weight: 400;
-    transition: background-color 0.3s ease-in-out;
-    &:hover {
-      background-color: #4b83f4;
-    }
+    width: 30px;
+    height: 30px;
   }
-`
-
-const Handler = styled.div`
-  position: absolute;
-  width: 40px;
-  height: 5px;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.line};
 `
 
 const ResultButtonContainer = styled.div`
@@ -335,7 +310,7 @@ const ResultButtonContainer = styled.div`
 
 const TextButtonContainer = styled.div`
   width: 100%;
-  padding: 20px 0 0;
+  padding: 16px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;

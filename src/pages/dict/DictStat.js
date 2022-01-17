@@ -46,12 +46,11 @@ const DictStat = (props) => {
 
   return (
     <>
-      <Header location="밈 사전"></Header>
-
+      <Header location="오픈 밈사전"></Header>
       <Wrapper>
+        <DictNavBar />
         {!loading ? (
           <>
-            <DictNavBar />
             <RankSection>
               <div className="section-title">👑 열정적인 밈글러 top3</div>
               <StyledSwiper slidesPerView={2.16} spaceBetween={16} freeMode={true} lazy={true}>
@@ -120,7 +119,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   max-height: 100%;
   height: 100%;
-  padding: 84px 0 0;
+  padding: 56px 0 0;
+  display: flex;
+  flex-direction: column;
   .section-title {
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSizes.xxl};

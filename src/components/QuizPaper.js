@@ -79,6 +79,9 @@ const QuizPaper = (props) => {
       {!showResult ? (
         !loading ? (
           <Wrapper>
+            <Grid flex_center>
+              <h2 className="quiz-category">Lv. {category === 'lv1' ? '1' : category === 'lv2' ? '2' : '3'}</h2>
+            </Grid>
             <QuizTitle>
               <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
               <div className="question-number-box box-2"></div>
@@ -133,13 +136,9 @@ const Wrapper = styled.div`
   flex-shrink: 0;
   flex-basis: 360px;
   transition: all 0.1s ease-in-out;
-  .quiz-current {
-    font-family: 'Pretendard Variable';
-    font-style: normal;
-    font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    width: 100%;
-    text-align: center;
+  .quiz-category {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-weight: 600;
   }
 `
 
@@ -167,8 +166,9 @@ const QuizTitle = styled.div`
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-    text-align: center;
-    line-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: ${({ theme }) => theme.fontSizes.xxl};
     font-family: 'YdestreetB';
     font-style: normal;
@@ -211,7 +211,7 @@ const QuizBox = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.lg};
     font-weight: 400;
     border-bottom: 2px solid ${({ theme }) => theme.colors.black};
-    padding: 16px;
+    padding: 16px 36px;
     line-height: 1.3;
   }
 
