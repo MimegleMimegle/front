@@ -90,6 +90,8 @@ const OneImageCard = ({ image, type }) => {
 
 const ImageBox = styled.div`
   display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   position: relative;
   overflow: hidden;
   cursor: pointer;

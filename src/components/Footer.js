@@ -79,7 +79,7 @@ const NavBar = styled.nav`
   width: 100%;
   height: 70px;
   background-color: ${({ theme }) => theme.colors.yellow};
-  border-radius: 24px;
+  border-radius: 28px;
   border: 2px solid #111;
   padding: 4px 10px 0;
   z-index: 5000;

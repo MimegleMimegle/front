@@ -2,13 +2,11 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import Backdrop from '@mui/material/Backdrop'
 
-const AlertModal = ({ showModal, setShowModal, children }) => {
-  const handleOverlayClick = useCallback(() => setShowModal(false), [setShowModal])
-  const handleContentClick = useCallback((e) => e.stopPropagation(), [])
+const AlertModal = ({ showModal, children }) => {
   return (
     <>
       <Backdrop open={showModal} sx={{ zIndex: 10000 }}>
-        <Container onClick={handleContentClick}>{children}</Container>
+        <Container>{children}</Container>
       </Backdrop>
     </>
   )

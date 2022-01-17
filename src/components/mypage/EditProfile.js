@@ -17,7 +17,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   const [imageFile, setImageFile] = useState(null)
   const [nickname, setNickname] = useState('')
   const [isNickname, setIsNickname] = useState(false)
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false)
+  const [checkedNickname, setCheckedNickname] = useState(null)
   const [doubleCheck, setDoubleCheck] = useState(null)
 
   const fileInput = React.useRef('')
@@ -54,10 +54,9 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       .then((response) => {
         if (response.data.result === true) {
           setDoubleCheck(true)
-          setIsNicknameChecked(true)
+          setCheckedNickname(nickname)
         } else if (response.data.result === false) {
           setDoubleCheck(false)
-          setIsNicknameChecked(false)
         }
       })
       .catch((error) => {
@@ -74,14 +73,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       const uploadFile = fileInput.current.files[0]
       dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
     }
-    if (nickname !== '' && isNickname && isNicknameChecked) {
+    if (nickname !== '' && isNickname) {
       dispatch(mypageActions.editNicknameDB(userId, nickname))
     }
     setShowModal(false)
     setImageFile(null)
     setNickname('')
     setIsNickname(false)
-    setIsNicknameChecked(false)
   }
 
   window.addEventListener('keyup', (e) => {

@@ -114,12 +114,11 @@ const editQuestionDB = (questionId, title, uploadFile, content) => {
         console.log(response.data)
         const _question = { ...question, thumbNail: uploadFile }
         dispatch(editQuestion(questionId, _question))
-
-        history.push('/question')
+        history.replace(`/dict/question/detail/${questionId}`)
       })
       .catch((err) => {
         console.log('게시글 수정하는데 문제 발생', err.response)
-        history.push('/question')
+        history.replace(`/dict/question/detail/${questionId}`)
       })
   }
 }
@@ -131,12 +130,12 @@ const delQuestionDB = (questionId) => {
       .then((res) => {
         console.log(res.data)
         dispatch(deleteQuestion(questionId))
-        history.push('/question')
+        history.replace('/dict/question')
       })
 
       .catch((err) => {
         console.log('게시물 삭제  실패', err)
-        history.push('/question')
+        history.replace('/dict/question')
       })
   }
 }
