@@ -6,13 +6,12 @@ import { history } from '../redux/ConfigureStore'
 import { dictQuestionApi } from '../shared/api'
 import ConfirmModal from '../components/modal/ConfirmModal'
 import { ReactComponent as DustBinIcon } from '../styles/icons/delete_black_18dp.svg'
-import {BiBadge, BiBadgeCheck} from "react-icons/bi"
-
-
+import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
+import Grid from '../elements/Grid'
 
 const OneComment = (props) => {
   const dispatch = useDispatch()
-  
+
   const username = localStorage.getItem('username') // 현재 로그인 한 사람의 아이디
   const questionUser=props.username //질문작성자
   const commentWriterId = props.commentWriterId 
@@ -26,7 +25,6 @@ const OneComment = (props) => {
   const [isSelected, setIsSelected] = React.useState(props.isSelected)
   const [selectModal, setSelectModal] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
-  
 
   const handleClickIsSelected = async (e) => {
     if(props.isSelected === true){
@@ -41,9 +39,8 @@ const OneComment = (props) => {
           setIsSelected(true)
           console.log(isSelected)
           setSelectModal(false)
-
         })
-        .catch((error) => {    
+        .catch((error) => {
           console.log('질문채택 문제 발생', error.response)
           console.log(error.message)
         })
@@ -62,7 +59,6 @@ const OneComment = (props) => {
     setShowModal(!showModal)
   }
 
-  /* 삭제는 되는데 리프레쉬해야만 반영됨 -> 삭제할 건지 확인하는 모달 생성 후 확인 버튼 누르면 dispatch & history.push로 댓글 페이지로 돌아가게 하기? */
   const delComment = () => {
     dispatch(commentActions.delCommentDB(questionId, commentId))
     setShowModal(false)
@@ -74,14 +70,13 @@ const OneComment = (props) => {
         <div style={{ display: 'flex' }}>
           <Commentprofile src={props.profileImageUrl} alt="" />
           <div style={{ display: 'flex', flexDirection: 'column', margin: '0 0 0 16px' }}>
-            <div style={{ display: 'flex' }}>
+            <Grid flex_align>
               <UserName>{props.commentWriter}</UserName>
               <CreatedAt>{createdAt}</CreatedAt>
-            </div>
+            </Grid>
             <Content>{props.commentContent}</Content>
           </div>
         </div>
-
           
           {isSelected? 
         <text style={{ height: '100%', cursor:"pointer"}}onClick={handleClickIsSelected}><BiBadgeCheck/>채택완료</text> :null}
@@ -117,37 +112,25 @@ const Wrap = styled.div`
 `
 
 const Commentprofile = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   border-radius: 150px;
-  border: 1px solid #E5E5E5;
 `
 
 const UserName = styled.div`
   font-family: 'YdestreetL';
   font-style: normal;
   font-weight: normal;
-  font-size: 9px;
-  line-height: 12px;
-  padding: 0 8px 0 0;
-  display: flex;
-  align-items: center;
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  padding: 0 10px 0 0;
 `
 
 const CreatedAt = styled.div`
-  font-size: 9px;
-  line-height: 11px;
-  display: flex;
-  align-items: center;
-  
+  font-size: ${({ theme }) => theme.fontSizes.base};
 `
 const Content = styled.div`
-  font-size: 12px;
-  line-height: 14px;
-  display: flex;
-  align-items: center;
-  
-`;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+`
 
 const DeleteButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.lg};

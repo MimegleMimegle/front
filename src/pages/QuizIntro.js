@@ -8,12 +8,15 @@ import { mainApi } from '../shared/api'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import AlertModal from '../components/modal/AlertModal'
+import Grid from '../elements/Grid'
+import CircularProgress from '@mui/material/CircularProgress'
 import QuizIntroImage from '../styles/image/quiz_main_image2.gif'
 
 const QuizIntro = (props) => {
   const dispatch = useDispatch()
 
   const [showModal, setShowModal] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const [subject, setSubject] = React.useState('')
   const [y2000, setY2000] = React.useState(false)
   const [y2010, setY2010] = React.useState(false)
@@ -58,6 +61,11 @@ const QuizIntro = (props) => {
   }
 
   useEffect(() => {
+    setLoading(true)
+    setTimeout(() => setLoading(false), 500)
+  }, [])
+
+  useEffect(() => {
     async function submitVisitors() {
       try {
         const result = await mainApi.countVisitors()
@@ -72,39 +80,47 @@ const QuizIntro = (props) => {
     <>
       <Header type="QuizIntro" location="밈퀴즈" />
       <Wrapper>
-        <ImageSection>
-          <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-        </ImageSection>
-        <SubjectSection>
-          <div style={{ padding: '16px 0 10px' }}>
-            <p className="subject-question">어느 레벨의 밈을</p>
-            <p className="subject-question">테스트하고 싶으신가요?</p>
-          </div>
-          <div className="subject-button-box">
-            <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="IMAGE" onClick={handleChangeSubjectY2000}>
-              Lv. 밈기적
-            </button>
-          </div>
-          <div className="subject-button-box">
-            <button className={`subject-button ${y2010 ? 'selected' : ''}`} value="y2010" onClick={handleChangeSubjectY2010}>
-              Lv. 밈잘알
-            </button>
-          </div>
-          <div className="subject-button-box">
-            <button className={`subject-button ${y2020 ? 'selected' : ''}`} value="y2020" onClick={handleChangeSubjectY2020}>
-              Lv. 밈중독
-            </button>
-          </div>
-        </SubjectSection>
-        <div style={{ width: '100%', height: '6px' }}></div>
-        <ButtonSection>
-          <div className="start-button-box box1">
-            <button className="start-button" onClick={handleStartQuiz}>
-              시작!
-            </button>
-          </div>
-          <div className="start-button-box box2"></div>
-        </ButtonSection>
+        {!loading ? (
+          <>
+            <ImageSection>
+              <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </ImageSection>
+            <SubjectSection>
+              <div style={{ padding: '16px 0 10px' }}>
+                <p className="subject-question">어느 레벨의 밈을</p>
+                <p className="subject-question">테스트하고 싶으신가요?</p>
+              </div>
+              <div className="subject-button-box">
+                <button className={`subject-button ${y2000 ? 'selected' : ''}`} value="IMAGE" onClick={handleChangeSubjectY2000}>
+                  Lv. 밈기적
+                </button>
+              </div>
+              <div className="subject-button-box">
+                <button className={`subject-button ${y2010 ? 'selected' : ''}`} value="y2010" onClick={handleChangeSubjectY2010}>
+                  Lv. 밈잘알
+                </button>
+              </div>
+              <div className="subject-button-box">
+                <button className={`subject-button ${y2020 ? 'selected' : ''}`} value="y2020" onClick={handleChangeSubjectY2020}>
+                  Lv. 밈중독
+                </button>
+              </div>
+            </SubjectSection>
+            <div style={{ width: '100%', height: '6px' }}></div>
+            <ButtonSection>
+              <div className="start-button-box box1">
+                <button className="start-button" onClick={handleStartQuiz}>
+                  시작!
+                </button>
+              </div>
+              <div className="start-button-box box2"></div>
+            </ButtonSection>
+          </>
+        ) : (
+          <Grid flex_center height="100%">
+            <CircularProgress color="inherit" />
+          </Grid>
+        )}
       </Wrapper>
       <Footer />
       {showModal && (
@@ -119,13 +135,17 @@ const QuizIntro = (props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 60px 0 80px;
+  width: 100%;
+  height: 100%;
+  padding: 56px 0 80px;
 `
 
 const ImageSection = styled.div`
   width: 100%;
-  height: 100%;
+  height: fit-content;
   overflow: hidden;
+  border-top: 2px solid ${({ theme }) => theme.colors.black};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.black};
 `
 
 const SubjectSection = styled.div`
@@ -143,7 +163,7 @@ const SubjectSection = styled.div`
   }
   .subject-button-box {
     width: 100%;
-    padding: 12px 40px;
+    padding: 12px 48px;
     .subject-button {
       width: 100%;
       height: fit-content;

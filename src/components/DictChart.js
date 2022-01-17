@@ -67,7 +67,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null
 }
 
-const DictChart = (props) => {
+const DictChart = ({ chartData }) => {
   return (
     <>
       <ResponsiveContainer maxWidth={400} maxHeight={240}>
