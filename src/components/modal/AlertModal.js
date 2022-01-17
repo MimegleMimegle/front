@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Backdrop from '@mui/material/Backdrop'
 
@@ -20,7 +20,7 @@ const Container = styled.div`
   width: 320px;
   height: 100px;
   background-color: #fff;
-  padding: 20px 20px 12px;
+  padding: 20px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   display: flex;
