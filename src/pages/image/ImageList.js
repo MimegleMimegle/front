@@ -44,6 +44,7 @@ const ImageList = (props) => {
 
   useEffect(() => {
     setLoading(true)
+    setTimeout(() => setLoading(false), 600)
     dispatch(imageActions.initImageList())
   }, [])
 
@@ -57,7 +58,6 @@ const ImageList = (props) => {
       .catch((error) => {
         console.log('명예의 전당 이미지 불러오기 문제 발생', error.response)
       })
-    setTimeout(() => setLoading(false), 400)
   }, [])
 
   return (
