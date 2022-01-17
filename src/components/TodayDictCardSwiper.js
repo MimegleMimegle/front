@@ -23,7 +23,9 @@ const TodayDictCardSwiper = (props) => {
   const dispatch = useDispatch()
 
   const [todayDict, setTodayDict] = useState([])
-  const backColor = ['#ffe330', '#ff8e00', '#00a0ff']
+
+  const [color, setColor] = useState('')
+  const colors = ['yellow', 'coral', 'blue']
 
   React.useEffect(() => {
     getTodayDictList()
@@ -36,7 +38,6 @@ const TodayDictCardSwiper = (props) => {
   }
 
   console.log(todayDict)
-  console.log(backColor)
 
   return (
     <>
@@ -71,8 +72,10 @@ const TodayDictCardSwiper = (props) => {
                 <div className="TodayDictCard_Title">{todayDict.title}</div>
                 <div className="TodayDictCard_Summary">{todayDict.summary}</div>
               </div>
-              {backColor.map((s) => (
-                <div className="TodayDictCard_2" style={{ backgroundColor: backColor }}></div>
+              {colors.map((colors, index) => (
+                <div className="TodayDictCard_2" key={index}>
+                  <div id="area" backgroundColor={colors}></div>
+                </div>
               ))}
             </div>
           </SwiperSlide>

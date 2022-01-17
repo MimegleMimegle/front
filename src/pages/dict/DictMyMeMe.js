@@ -53,38 +53,17 @@ const DictMyMeMe = (props) => {
 
   return (
     <>
-      <Header location="오픈 밈사전">
-        <div
-          className="DictPageSearchButton"
-          onClick={() => {
-            showSearchBar()
-          }}
-        >
-          <SearchIcon style={{ margin: '0 5px 5px 0' }} />
-        </div>
-      </Header>
+      <Header location="오픈 밈사전"></Header>
       <div className="DictLayout">
         <div className="DictNavBarSection">
           <DictNavBar />
         </div>
-        <SearchBarSection>
-          <SearchPage />
-        </SearchBarSection>
-        {/* <div className="NewDictAddButtonSection">
-          <div className="NewDictAddButton_1" onClick={() => history.push('/dict/write')}>
-            밈 단어 등록
-          </div>
-          <div className="NewDictAddButton_2"></div>
-        </div> */}
         <div className="MyDictMemeGuide">
           <div className="MyDictMemeText">내가 스크랩한 목록</div>
           <div className="MyDictMemeDot" />
         </div>
         <div className="MyDictMemeSection">
           <div className="MyDictMemeList">
-            <DictMyScrapbook />
-          </div>
-          <div className="MyDictMemeList_2">
             <DictMyScrapbook />
           </div>
         </div>

@@ -150,7 +150,7 @@ const Main = (props) => {
             </div>
           </div>
         </div>
-        <div className="MainPagePopularBoardSection">
+        {/* <div className="MainPagePopularBoardSection">
           <div className="MainPagePopularBoardText">핫 밈글</div>
           {popularBoards.map((popularBoards) => (
             <div className="MainPagePopularBoardList" key={popularBoards.id} onClick={() => history.push(`/post/detail/${popularBoards.boardId}`)}>
@@ -171,7 +171,7 @@ const Main = (props) => {
               </svg>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
       {showModal && (
