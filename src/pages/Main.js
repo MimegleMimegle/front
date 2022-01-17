@@ -176,7 +176,7 @@ const Main = (props) => {
       {showModal && (
         <AlertModal showModal={showModal}>
           <WelcomeMessage>
-            <span className="username">{nickname}</span>님 만반잘부!
+            <span className="username">{nickname}</span>님 만반잘부! 🙋🏻
           </WelcomeMessage>
         </AlertModal>
       )}
