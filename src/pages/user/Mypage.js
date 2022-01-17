@@ -65,7 +65,7 @@ const Mypage = (props) => {
 
   React.useEffect(() => {
     setLoading(true)
-    setTimeout(() => setLoading(false), 600)
+    setTimeout(() => setLoading(false), 500)
   }, [])
 
   React.useEffect(() => {
