@@ -73,7 +73,7 @@ const ShareBottomSheet = (props) => {
           </div>
           {showModal && (
             <AlertModal showModal={showModal}>
-              <p>링크 복사 완료! 🤓</p>
+              <AlertText>링크 복사 완료! 🤓</AlertText>
             </AlertModal>
           )}
         </Container>
@@ -156,6 +156,15 @@ const ShareBody = styled.div`
       font-size: ${({ theme }) => theme.fontSizes.base};
     }
   }
+  .link-copy-button {
+    width: 52px;
+    height: 52px;
+    border-radius: 60px;
+    background-color: ${({ theme }) => theme.colors.line};
+  }
+`
+const AlertText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
 `
 
 export default ShareBottomSheet
