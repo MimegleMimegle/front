@@ -54,7 +54,9 @@ const MyPageOneImageCard = ({ image }) => {
             <EmptyHeart />
             <span style={{ fontSize: '12px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
           </Grid> */}
-          <DeleteIcon onClick={handleShowModal} style={{ cursor: 'pointer' }} />
+          <div className="delete-icon-box">
+            <DeleteIcon className="delete-icon" onClick={handleShowModal} />
+          </div>
         </Grid>
         {/* <DateSection>
           <p className="createdDate">{image && createdDate}</p>
@@ -74,8 +76,9 @@ const Wrapper = styled.div`
   max-width: 200px;
   width: 100%;
   height: fit-content;
-  margin-bottom: 16px;
+  margin: 10px 0 6px;
   /* border-radius: 8px; */
+  border: 2px solid ${({ theme }) => theme.colors.black};
   box-shadow: 0 4px 20px 4px hsl(0deg 0% 64% / 35%);
   display: flex;
   flex-direction: column;
@@ -84,6 +87,19 @@ const Wrapper = styled.div`
     color: ${({ theme }) => theme.colors.grey};
     text-align: right;
     padding: 3px 6px 5px;
+  }
+  .delete-icon-box {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 24px;
+    transition: background-color 0.3s ease-in-out;
+    &:hover {
+      background-color: #e9e9e9;
+    }
   }
 `
 
@@ -94,6 +110,7 @@ const ImageSection = styled.div`
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.black};
 `
 
 const Image = styled.img`
@@ -102,16 +119,6 @@ const Image = styled.img`
   object-fit: cover;
   /* border-top-right-radius: 8px; */
   /* border-top-left-radius: 8px; */
-`
-
-const DateSection = styled.div`
-  height: 100%;
-  .createdDate {
-    font-size: ${({ theme }) => theme.fontSizes.small};
-    color: ${({ theme }) => theme.colors.grey};
-    text-align: right;
-    padding: 3px 6px 5px;
-  }
 `
 
 const DeleteButton = styled.button`

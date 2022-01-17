@@ -11,9 +11,9 @@ import InfinityScroll from '../../shared/InfinityScroll'
 import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
-import FloatingButton from '../../components/FloatingButton'
+import SpeedDialButton from '../../components/SpeedDialButton'
 import CircularProgress from '@mui/material/CircularProgress'
-import { GoPlus } from 'react-icons/go'
+import { RiEditLine } from 'react-icons/ri'
 
 const ImageList = (props) => {
   const dispatch = useDispatch()
@@ -99,42 +99,36 @@ const ImageList = (props) => {
           </Grid>
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
-        <FloatingButton>
-          <FileUploader>
-            <label htmlFor="file" className="upload-label">
-              <GoPlus style={{ fontSize: '32px', color: '#FFF' }} />
-            </label>
-            <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
-          </FileUploader>
-        </FloatingButton>
+        <SpeedDialButton>
+          <FileInputLabel htmlFor="file" className="upload-label">
+            <RiEditLine size="28" fill="#FFFFFF" />
+          </FileInputLabel>
+          <FileInput type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+        </SpeedDialButton>
       </Wrapper>
       <Footer />
     </>
   )
 }
 
-const FileUploader = styled.div`
-  /* padding: 0 5px 0 0; */
-  .upload-label {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: color 0.2s ease-in-out;
-    &:hover {
-      color: ${({ theme }) => theme.colors.blue};
-    }
-  }
-  .upload-file {
-    position: absolute;
-    overflow: hidden;
-    padding: 0;
-    margin: -1px;
-    width: 1px;
-    height: 1px;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
+const FileInputLabel = styled.label`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`
+
+const FileInput = styled.input`
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 `
 
 const Wrapper = styled.div`
@@ -168,7 +162,7 @@ const PopularSection = styled.div`
 
 const GeneralSection = styled.div`
   width: 100%;
-  padding: 16px 16px 84px;
+  padding: 0 16px 90px;
 `
 
 const Container = styled.div`

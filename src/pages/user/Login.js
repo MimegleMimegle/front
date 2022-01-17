@@ -149,7 +149,6 @@ const Logo = styled.div`
   width: 40px;
   height: 40px;
   border: 2px solid #111;
-  /* cursor: pointer; */
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;

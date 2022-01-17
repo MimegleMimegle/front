@@ -111,7 +111,7 @@ const Mypage = (props) => {
               </Grid>
               <Grid flex_center>
                 <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
-                  밈글
+                  내질문
                 </button>
               </Grid>
               <Grid flex_center>
@@ -204,14 +204,11 @@ const UserProfile = styled.div`
       align-items: center;
       justify-content: center;
       .user-activity-info-subject {
-        font-size: ${({ theme }) => theme.fontSizes.xl};
-        font-family: 'YdestreetL';
-        font-style: normal;
-        font-weight: normal;
+        font-size: ${({ theme }) => theme.fontSizes.xxl};
+        font-weight: 500;
       }
       .user-activity-info-count {
-        padding-top: 2px;
-        font-size: ${({ theme }) => theme.fontSizes.lg};
+        font-size: ${({ theme }) => theme.fontSizes.xl};
       }
     }
   }
@@ -252,19 +249,23 @@ const Filter = styled.div`
   padding: 32px 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.line};
+  /* border-bottom: 1px solid ${({ theme }) => theme.colors.line}; */
 
   .filter-button {
+    width: 100%;
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
     font-size: ${({ theme }) => theme.fontSizes.xl};
-    color: ${({ theme }) => theme.colors.grey};
-    font-weight: 500;
-    padding: 0 0 10px;
-    border-bottom: 3px solid transparent;
+    color: #444;
+    padding: 0 0 12px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.line};
   }
   .filter-button-active {
+    padding: 0 0 10px;
     transition: all 0.2s ease-in-out;
-    border-bottom: 3px solid ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.black};
+    border-bottom: 3px solid ${({ theme }) => theme.colors.blue};
+    color: ${({ theme }) => theme.colors.blue};
   }
 `
 

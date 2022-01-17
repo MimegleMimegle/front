@@ -33,6 +33,7 @@ const ShareBottomSheet = (props) => {
     <>
       <BottomPopup isOpen={shareVisible} onClose={() => setShareVisible(false)} heightPixel={220}>
         <Container>
+          <Handler />
           <div className="share share-header">공유하기</div>
           <ShareBody>
             <div className="each-share-container">
@@ -90,26 +91,27 @@ const Container = styled.div`
   z-index: 10001;
   width: 100%;
   height: 220px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
 
   .share {
-    height: 100%;
+    /* height: 100%; */
+    padding: 10px 0;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .share-header {
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    font-weight: 500;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-weight: 400;
     cursor: default;
   }
   .share-footer {
     .share-footer__close-button {
-      font-size: ${({ theme }) => theme.fontSizes.lg};
-      font-weight: 500;
+      font-size: ${({ theme }) => theme.fontSizes.xl};
+      font-weight: 400;
       cursor: pointer;
       transition: color 0.3s ease-in-out;
       &:hover {
@@ -117,25 +119,13 @@ const Container = styled.div`
       }
     }
   }
-  .link-copied {
-    background-color: ${({ theme }) => theme.colors.black};
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
-    border-radius: 5px;
-    color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    margin-bottom: 10px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 7px 12px;
-    position: absolute;
-    width: auto;
-    min-width: 50px;
-    max-width: 300px;
-    word-wrap: break-word;
-    z-index: 9999;
-  }
+`
+
+const Handler = styled.div`
+  width: 40px;
+  height: 5px;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.line};
 `
 
 const ShareBody = styled.div`
@@ -160,6 +150,7 @@ const ShareBody = styled.div`
     width: 52px;
     height: 52px;
     border-radius: 60px;
+    margin: 0 0 8px;
     background-color: ${({ theme }) => theme.colors.line};
   }
 `
