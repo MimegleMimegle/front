@@ -117,11 +117,12 @@ const logInDB = (username, password) => {
         localStorage.setItem('username', res.data.data.username)
         localStorage.setItem('nickname', res.data.data.nickname)
         localStorage.setItem('id', res.data.data.userId)
+
         dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
         history.replace('/')
       })
       .catch((err) => {
-        console.log(err.response)
+        console.log(err)
         swal('잘못된 아이디나 비밀번호 입니다. 다시 확인해주세요!')
       })
   }

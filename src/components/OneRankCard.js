@@ -4,12 +4,10 @@ import styled from 'styled-components'
 import Grid from '../elements/Grid'
 
 const OneRankCard = ({ rank, index }) => {
-  console.log(index)
   return (
     <>
       <OneRankBox>
-        {/* <div className="rank">{index && index + 1}</div> */}
-        <div className="rank">{index && index === 0 ? '1' : index + 1}</div>
+        <div className="rank">{Number.isInteger(index) && index + 1}</div>
         <Grid flex_center column>
           <ProfileImage src={rank?.profileImage} />
           <div className="rank-nickname">{rank?.nickname}</div>

@@ -16,9 +16,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
 
   const [imageFile, setImageFile] = useState(null)
   const [nickname, setNickname] = useState('')
-  const [isNickname, setIsNickname] = useState(false)
+  const [isValidNickname, setIsValidNickname] = useState()
   const [checkedNickname, setCheckedNickname] = useState(null)
   const [doubleCheck, setDoubleCheck] = useState(null)
+  console.log(nickname)
+  console.log(isValidNickname)
+  console.log(checkedNickname)
+  console.log(doubleCheck)
 
   const fileInput = React.useRef('')
 
@@ -40,11 +44,14 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   const handleChangeNickname = (e) => {
     const nicknameRegExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/
     const currentNickname = e.target.value
+    console.log(currentNickname)
     setNickname(currentNickname)
-    if (!nicknameRegExp.test(currentNickname)) {
-      setIsNickname(false)
-    } else {
-      setIsNickname(true)
+    if (currentNickname !== '' && nicknameRegExp.test(currentNickname)) {
+      setIsValidNickname(true)
+    } else if (currentNickname !== '' && !nicknameRegExp.test(currentNickname)) {
+      setIsValidNickname(false)
+    } else if (currentNickname === '') {
+      setIsValidNickname()
     }
   }
 
@@ -73,13 +80,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       const uploadFile = fileInput.current.files[0]
       dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
     }
-    if (nickname !== '' && isNickname) {
+    if (nickname !== '' && isValidNickname) {
       dispatch(mypageActions.editNicknameDB(userId, nickname))
     }
     setShowModal(false)
     setImageFile(null)
     setNickname('')
-    setIsNickname(false)
+    setIsValidNickname()
   }
 
   window.addEventListener('keyup', (e) => {
@@ -117,6 +124,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
                 <input
                   type="text"
                   className="input-nickname"
+                  maxLength={10}
                   onChange={handleChangeNickname}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
@@ -126,10 +134,10 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
                 />
                 <DoubleCheckButton onClick={checkNickname}>중복확인</DoubleCheckButton>
               </Grid>
-              <div style={{ padding: '10px 0' }}>
-                <p style={{ fontSize: '12px' }}>10자 이하로 입력해주세요.</p>
-                <p style={{ fontSize: '12px', color: '#878C92' }}>(한글, 영어, 대소문자, 숫자 사용 가능)</p>
-              </div>
+              <ValidationBox>
+                <p className={`validation-length ${isValidNickname === false ? 'fail' : ''}`}>10자 이하로 입력해주세요.</p>
+                <p className={`validation-etc ${isValidNickname === false ? 'fail' : ''}`}>(한글, 영어, 대소문자, 숫자 사용 가능)</p>
+              </ValidationBox>
             </div>
           </Grid>
         </ModalContainer>
@@ -205,6 +213,20 @@ const ModalContainer = styled.div`
     &:focus {
       border: 1px solid ${({ theme }) => theme.colors.black};
     }
+  }
+`
+
+const ValidationBox = styled.div`
+  padding: 10px 0;
+  .validation-length {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+  }
+  .validation-etc {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    color: ${({ theme }) => theme.colors.grey};
+  }
+  .fail {
+    color: #e25c3d;
   }
 `
 

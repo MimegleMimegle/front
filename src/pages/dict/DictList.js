@@ -70,16 +70,16 @@ const DictList = (props) => {
       <div className="DictLayout">
         {/* <SearchBarSection>{show && <SearchPage />}</SearchBarSection> */}
 
-        <div className="DictPageSearchSection">
+        {/* <div className="DictPageSearchSection">
           <div
             className="DictPageSearchButton"
             onClick={() => {
               showSearchBar()
             }}
-          >
-            <SpeedDialButton />
-          </div>
-        </div>
+          > */}
+        <SpeedDialButton />
+        {/* </div>
+        </div> */}
         <div className="DictNavBarSection">
           <DictNavBar />
         </div>

@@ -39,12 +39,12 @@ const PopularBoardCardSwiper = (props) => {
     <>
       <Swiper
         slidesPerView={2}
-        spaceBetween={50}
+        spaceBetween={0}
         keyboard={{
           enabled: true,
         }}
         // centeredSlides={true}
-        slidesPerGroupSkip={0}
+        slidesPerGroupSkip={1}
         grabCursor={true}
         breakpoints={{
           769: {
