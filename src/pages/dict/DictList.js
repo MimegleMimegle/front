@@ -74,12 +74,6 @@ const DictList = (props) => {
         <SearchBarSection>
           <SearchPage />
         </SearchBarSection>
-        {/* <div className="NewDictAddButtonSection">
-          <div className="NewDictAddButton_1" onClick={() => history.push('/dict/write')}>
-            밈 단어 등록
-          </div>
-          <div className="NewDictAddButton_2"></div>
-        </div> */}
         <div className="TodayDictListGuide">
           <div className="TodayDictListText">오늘의 밈 카드</div>
           <div className="TodayDictListDot" />
