@@ -110,6 +110,8 @@ const PostDetail = (props) => {
           ) : null}
           {toggleModalChang && (
             <ModalChang>
+              {question.selectedComment===0?
+              <>
               <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
                 <button style={{ padding: '0', height: '100%' }} onClick={clickToggleModalChang}>
                   <IoCloseOutline style={{ fontSize: '18px' }} />
@@ -130,6 +132,7 @@ const PostDetail = (props) => {
                   삭제하기
                 </button>
               </div>
+              </>: null}
             </ModalChang>
           )}
         </Profile>
