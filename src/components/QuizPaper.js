@@ -190,7 +190,7 @@ const QuizTitle = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.xl};
     line-height: 22px;
     font-weight: 700;
-    background-image: linear-gradient(transparent 60%, #6698fc 40%);
+    /* background-image: linear-gradient(transparent 60%, #6698fc 40%); */
   }
   .quiz-image {
     max-width: 100%;

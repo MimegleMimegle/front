@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { startsWith } from 'lodash'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
@@ -12,10 +13,9 @@ const instance = axios.create({
 
 /* Interceptor를 통한 Header 설정 */
 instance.interceptors.request.use((config) => {
-  const accessToken = document.cookie
-    // .split('; ')
-    // .find((row) => row.startsWith('token'))
-    .split('=')[1]
+  // const cookieList = document.cookie.split('=')
+  // const accessToken = cookieList.length === 2 ? cookieList[1] : cookieList[2]
+  const accessToken = localStorage.getItem('token')
   config.headers.common['authorization'] = `${accessToken}`
   return config
 })
@@ -82,6 +82,8 @@ export const dictApi = {
   tellMeTotalLength: () => instance.get('/api/count/dict'),
   tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
   dobleCheckDict: (dictName) => instance.post('/api/check/dict', { dictName: dictName }),
+  /* 추가 */
+  getDictStat: () => instance.get('/api/stat/dict'),
 }
 
 export const quizApi = {

@@ -4,6 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import useScript from '../util/useScript'
 
 import BottomPopup from './BottomPopup'
+import AlertModal from './modal/AlertModal'
 import { ReactComponent as LinkCopyIcon } from '../styles/icons/링크복사_24dp.svg'
 import { KakaoShareButton } from '../shared/kakaoShare'
 import { KakaoImageShareButton } from '../shared/kakaoImageShare'
@@ -15,17 +16,17 @@ const ShareBottomSheet = (props) => {
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
   const quizIntroUrl = 'http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/quiz'
 
-  const [copied, setCopied] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
-  const closeCopied = () => {
+  const closeModal = () => {
     setTimeout(() => {
-      setCopied(false)
+      setShowModal(false)
     }, 2000)
   }
 
   const onCopy = () => {
-    setCopied(true)
-    closeCopied()
+    setShowModal(true)
+    closeModal()
   }
 
   return (
@@ -70,7 +71,11 @@ const ShareBottomSheet = (props) => {
               닫기
             </button>
           </div>
-          {copied ? <span className="link-copied">링크 복사 완료!</span> : null}
+          {showModal && (
+            <AlertModal showModal={showModal}>
+              <p>링크 복사 완료! 🤓</p>
+            </AlertModal>
+          )}
         </Container>
       </BottomPopup>
     </>
@@ -149,17 +154,6 @@ const ShareBody = styled.div`
     .each-share-container__text {
       color: ${({ theme }) => theme.colors.black};
       font-size: ${({ theme }) => theme.fontSizes.base};
-    }
-    .link-copy-button {
-      width: 52px;
-      height: 52px;
-      border-radius: 30px;
-      background-color: ${({ theme }) => theme.colors.line};
-      margin: 0 0 8px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
   }
 `
