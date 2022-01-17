@@ -5,38 +5,31 @@ import styled from 'styled-components'
 const data = [
   {
     name: '토',
-    pv: 10,
-    amt: 2400,
+    cnt: 10,
   },
   {
     name: '일',
-    pv: 19,
-    amt: 2210,
+    cnt: 19,
   },
   {
     name: '월',
-    pv: 10,
-    amt: 2290,
+    cnt: 10,
   },
   {
     name: '화',
-    pv: 34,
-    amt: 2000,
+    cnt: 34,
   },
   {
     name: '수',
-    pv: 10,
-    amt: 2181,
+    cnt: 10,
   },
   {
     name: '목',
-    pv: 8,
-    amt: 2500,
+    cnt: 8,
   },
   {
     name: '오늘',
-    pv: 22,
-    amt: 2100,
+    cnt: 22,
   },
 ]
 
@@ -77,10 +70,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 const DictChart = (props) => {
   return (
     <>
-      <ResponsiveContainer>
+      <ResponsiveContainer maxWidth={400} maxHeight={240}>
         <LineChart
-          width={400}
-          height={210}
           data={data}
           margin={{
             top: 10,
@@ -90,9 +81,9 @@ const DictChart = (props) => {
           }}
         >
           <CartesianGrid stroke="#e5e5e5" strokeDasharray="3 3" />
-          <XAxis dataKey="name" fontSize="12px" />
+          <XAxis dataKey="name" fontSize="12px" fontWeight="500" padding={{ left: 10, right: 10 }} />
           <Tooltip content={<CustomTooltip />} />
-          <Line type="monotone" isAnimationActive={true} animationDuration={1500} dataKey="pv" stroke="#6698FC" strokeWidth={2} activeDot={{ r: 8 }} />
+          <Line type="linear" isAnimationActive={true} animationDuration={1500} dataKey="cnt" stroke="#6698FC" strokeWidth={2} activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     </>

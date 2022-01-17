@@ -24,7 +24,6 @@ const OneRankCard = () => {
 const OneRankBox = styled.div`
   width: 160px;
   height: 160px;
-  margin-right: 16px;
   padding: 8px 12px;
   background-color: #fff;
   border-radius: 16px;
@@ -35,6 +34,7 @@ const OneRankBox = styled.div`
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSizes.xxl};
     /* color: ${({ theme }) => theme.colors.blue}; */
+    text-align: left;
   }
 
   .rank-nickname {
@@ -48,7 +48,7 @@ const OneRankBox = styled.div`
     text-align: center;
     .highlight {
       font-weight: 700;
-      background-image: linear-gradient(transparent 75%, #6698fc 25%);
+      background-image: linear-gradient(transparent 75%, #d5e3fe 25%);
     }
   }
 `

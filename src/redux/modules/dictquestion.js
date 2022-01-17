@@ -78,8 +78,9 @@ const addQuestionDB = (title, content, uploadFile) => {
       title:title,
       content:content,
     }
-    formData.append('thumNail', uploadFile)
-    formData.append('questionUploadRequestDto', new Blob([JSON.stringify(question)],{type: 'application/json'}))
+
+    formData.append('thumbNail', uploadFile)
+    formData.append('dictQuestionUploadRequestDto', new Blob([JSON.stringify(question)],{type: 'application/json'}))
   
     await dictQuestionApi
     .writeQuestion(formData)
@@ -93,6 +94,7 @@ const addQuestionDB = (title, content, uploadFile) => {
     })
     .catch((err)=>{
       console.log('질문 작성하는데 문제가 발생했습니다', err.response)
+      console.log(err.response.message)
     })
   }
 }
@@ -106,7 +108,7 @@ const editQuestionDB = (questionId, title, uploadFile, content) => {
     }
 
     formData.append('thumbNail', uploadFile)
-    formData.append('boardUpdateRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
+    formData.append('dictQuestionUpdateRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
 
     await dictQuestionApi
       .editQuestion(questionId, formData)
@@ -115,11 +117,11 @@ const editQuestionDB = (questionId, title, uploadFile, content) => {
         const _question = { ...question, thumbNail: uploadFile }
         dispatch(editQuestion(questionId, _question))
 
-        history.push('/question')
+        history.push('/dict/question')
       })
       .catch((err) => {
         console.log('게시글 수정하는데 문제 발생', err.response)
-        history.push('/question') 
+        history.push('/dict/question') 
       })
   }
 }
@@ -131,12 +133,11 @@ const delQuestionDB = (questionId) => {
       .then((res) => {
         console.log(res.data)
         dispatch(deleteQuestion(questionId))
-        history.push('/question')
+        history.push('/dict/question')
       })
 
-      .catch((err) => {
-        console.log('게시물 삭제  실패', err)
-        history.push('/question')
+      .catch((error) => {
+        console.log('게시물 삭제  실패', error)
       })
   }
 }

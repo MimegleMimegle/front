@@ -83,7 +83,7 @@ const QuizPaper = (props) => {
               <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
               <div className="question-number-box box-2"></div>
               <h2 className="title">{quiz ? quiz.question : null}</h2>
-              <Grid flex_center height="100%" overflow="hidden" margin="20px 0 0">
+              <Grid flex_center height="100%" overflow="hidden" margin="16px 0 0">
                 <img src={quiz?.quizImage} className="quiz-image" />
               </Grid>
             </QuizTitle>
@@ -147,9 +147,9 @@ const QuizTitle = styled.div`
   position: relative;
   width: 100%;
   height: auto;
-  padding: 54px 36px 20px;
+  padding: 48px 36px 20px;
   margin: 30px 0 0;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 2px solid ${({ theme }) => theme.colors.black};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,7 +159,7 @@ const QuizTitle = styled.div`
     width: 100px;
     height: 40px;
     position: absolute;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.white};
   }
   .box-1 {
@@ -184,14 +184,13 @@ const QuizTitle = styled.div`
   }
 
   .title {
-    width: 100%;
+    width: fit-content;
     height: fit-content;
     text-align: left;
     font-size: ${({ theme }) => theme.fontSizes.xl};
     line-height: 22px;
-    font-family: 'Pretendard Variable';
-    font-style: normal;
-    font-weight: 300;
+    font-weight: 700;
+    background-image: linear-gradient(transparent 60%, #6698fc 40%);
   }
   .quiz-image {
     max-width: 100%;
@@ -203,7 +202,7 @@ const QuizTitle = styled.div`
 const QuizBox = styled.div`
   position: relative;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 2px solid ${({ theme }) => theme.colors.black};
   margin: 20px 0 0;
   transition: background-color 0.1s ease-in-out;
 
@@ -211,7 +210,7 @@ const QuizBox = styled.div`
     width: 100%;
     height: 56px;
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.black};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.black};
     padding: 0;
   }
 
@@ -233,7 +232,7 @@ const ButtonSection = styled.div`
     width: 100px;
     height: 40px;
     position: absolute;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
     border-radius: 20px;
     background-color: ${({ theme }) => theme.colors.blue};
     .next-btn {

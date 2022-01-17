@@ -69,7 +69,7 @@ const PostDetail = (props) => {
           setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 취소 문제 발생', error.response)
+          console.log('나도 궁금해요 취소 문제 발생', error.response.data.message)
         })
     } else {
       await dictQuestionApi
@@ -81,7 +81,7 @@ const PostDetail = (props) => {
           console.log(isCuriousToo)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 문제 발생', error.response)
+          console.log('나도 궁금해요 문제 발생', error.response)
         })
     }
   }
@@ -110,6 +110,8 @@ const PostDetail = (props) => {
           ) : null}
           {toggleModalChang && (
             <ModalChang>
+              {question.selectedComment===0?
+              <>
               <div style={{ width: '100%', padding: '5px 5px', display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
                 <button style={{ padding: '0', height: '100%' }} onClick={clickToggleModalChang}>
                   <IoCloseOutline style={{ fontSize: '18px' }} />
@@ -130,6 +132,7 @@ const PostDetail = (props) => {
                   삭제하기
                 </button>
               </div>
+              </>: null}
             </ModalChang>
           )}
         </Profile>

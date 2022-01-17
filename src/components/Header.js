@@ -15,9 +15,9 @@ const Header = ({ type, children, location }) => {
   const profile = useSelector((state) => state.mypage.myProfile)
   const userId = localStorage.getItem('id')
   const token = document.cookie
-    // .split('; ')
-    // .find((row) => row.startsWith('token'))
-    // .split('=')[1]
+  // .split('; ')
+  // .find((row) => row.startsWith('token'))
+  // .split('=')[1]
   const isLogin = userId !== null && token !== undefined ? true : false
 
   const documentRef = useRef(document)
@@ -126,9 +126,9 @@ const NavHeader = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  padding: 6px 16px 0;
+  padding: 0 16px;
   width: 100%;
-  height: 60px;
+  height: 56px;
   background-color: ${({ theme }) => theme.colors.bg};
   border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid  #e5e5e5')};
   z-index: 1000;
@@ -144,7 +144,7 @@ const NavHeader = styled.nav`
     cursor: default;
   }
   .header-empty {
-    width: 72px;
+    width: 76px;
     height: 100%;
   }
   .header-location {
@@ -159,8 +159,8 @@ const NavHeader = styled.nav`
     align-items: center;
   }
   .header-bell-box {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 20px;
     background-color: transparent;
     cursor: pointer;
@@ -172,7 +172,7 @@ const NavHeader = styled.nav`
       background-color: #eeeeee;
     }
     .header-bell {
-      font-size: 18px;
+      font-size: 20px;
       &.shown {
         color: ${({ theme }) => theme.colors.blue};
       }
@@ -185,8 +185,8 @@ const NavHeader = styled.nav`
 
 const ProfileImage = styled.div`
   margin: 0 0 0 8px;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 20px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
