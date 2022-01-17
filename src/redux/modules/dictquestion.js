@@ -137,7 +137,6 @@ const delQuestionDB = (questionId) => {
 
       .catch((err) => {
         console.log('게시물 삭제  실패', err)
-        history.replace('/dict/question')
       })
   }
 }
