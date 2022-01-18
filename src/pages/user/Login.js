@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import '../../styles/css/Login.css'
 import styled from 'styled-components'
@@ -14,9 +14,15 @@ import googleColor from '../../styles/image/google_color.svg'
 import Footer from '../../components/Footer'
 import MemegleIcon from '../../styles/image/smileIcon_Yellow.png'
 import Grid from '../../elements/Grid'
+import AlertModal from '../../components/modal/AlertModal'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const Login = (props) => {
   const dispatch = useDispatch()
+
+  const loading = useSelector((state) => state.user.is_loading)
+  const loginFail = useSelector((state) => state.user.is_failure)
+  console.log(loginFail)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -26,6 +32,9 @@ const Login = (props) => {
 
   const [isUsername, setIsUsername] = useState('false')
   const [isPassword, setIsPassword] = useState('false')
+
+  const [showAlert, setShowAlert] = useState(false)
+  const [showFailAlert, setShowFailAlert] = useState(false)
 
   const onChangeUsername = (e) => {
     const emailRegex = /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/
@@ -57,11 +66,22 @@ const Login = (props) => {
 
   const login = () => {
     if (username === '' || password === '') {
-      swal('아이디, 비밀번호를 입력해주세요!')
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 2000)
       return
     }
     dispatch(userActions.logInDB(username, password))
   }
+
+  useEffect(() => {
+    if (loginFail) {
+      setShowFailAlert(true)
+      setTimeout(() => setShowFailAlert(false), 2000)
+      dispatch(userActions.failLogin(false))
+      dispatch(userActions.loading(false))
+    }
+  }, [loginFail])
+
   return (
     <>
       <Grid flex_center padding="40px 0 37px">
@@ -80,7 +100,6 @@ const Login = (props) => {
               아이디
             </label>
             <input className="IdInputBox" id="IdInput" placeholder="영어, 숫자 3~16자" maxLength="16" type="email" typeName="email" onChange={onChangeUsername} value={username} />
-            {username.length > 0 && <SpanUsername className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</SpanUsername>}
             <label className="PwdInputLabel" for="PwdInput">
               비밀번호
             </label>
@@ -99,7 +118,6 @@ const Login = (props) => {
                 }
               }}
             />
-            {password.length > 0 && <SpanPassword className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</SpanPassword>}
             <div
               className="MemegleButton_LoginSubmit"
               type="submit"
@@ -111,7 +129,9 @@ const Login = (props) => {
                 }
               }}
             >
-              <button className="MemegleButton_LoginSubmit Login1">로그인</button>
+              <button className="MemegleButton_LoginSubmit Login1" disabled={loading}>
+                {loading ? <CircularProgress size={16} sx={{ color: '#FFFFFF' }} /> : '로그인'}
+              </button>
               <div className="MemegleButton_LoginSubmit Login2"></div>
             </div>
           </div>
@@ -127,23 +147,20 @@ const Login = (props) => {
           {/* <img className="NaverLoginBtn" size="5" src={naver}></img> */}
         </div>
       </div>
+      <AlertModal showModal={showAlert}>
+        <AlertText>아이디와 비밀번호를 모두 입력해주세요!</AlertText>
+      </AlertModal>
+      <AlertModal showModal={showFailAlert}>
+        <AlertText>
+          아이디 또는 비밀번호가 잘못되었습니다.
+          <br />
+          다시 확인해주세요!
+        </AlertText>
+      </AlertModal>
       <Footer />
     </>
   )
 }
-
-const SpanUsername = styled.span`
-  font-size: 12px;
-  color: #ffa07a;
-  margin-top: -5px;
-  margin-bottom: -5px;
-`
-
-const SpanPassword = styled.span`
-  font-size: 12px;
-  color: #ffa07a;
-  margin-top: -15px;
-`
 
 const Logo = styled.div`
   width: 40px;
@@ -152,6 +169,10 @@ const Logo = styled.div`
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
+`
+
+const AlertText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
 `
 
 export default Login

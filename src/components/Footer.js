@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
 import Grid from '../elements/Grid'
+import AlertModal from './modal/AlertModal'
 import SmileIcon from '../styles/image/smileIcon_Blue.png'
 import { RiBookMarkLine, RiGamepadLine } from 'react-icons/ri'
 import { MdOutlinePhotoLibrary } from 'react-icons/md'
 import { CgProfile } from 'react-icons/cg'
 
 const Footer = (props) => {
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
+
+  const [showAlert, setShowAlert] = useState(false)
+
+  const handleClickMypage = () => {
+    if (!isLogin) {
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 2000)
+    }
+  }
   const activeStyle = {
     color: '#6698FC',
   }
@@ -50,7 +63,7 @@ const Footer = (props) => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/mypage" className="nav-link" activeStyle={activeStyle}>
+              <NavLink to={isLogin && '/mypage'} onClick={handleClickMypage} className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <CgProfile className="nav-icon" />
                   <div className="nav-link__text">MY</div>
@@ -60,6 +73,9 @@ const Footer = (props) => {
           </ul>
         </NavBar>
       </NavContainer>
+      <AlertModal showModal={showAlert}>
+        <AlertText>로그인 후 이용하실 수 있습니다!</AlertText>
+      </AlertModal>
     </>
   )
 }
@@ -101,6 +117,7 @@ const NavBar = styled.nav`
       align-items: center;
       justify-content: center;
       .nav-link {
+        width: 100%;
         .nav-icon {
           font-size: 24px;
         }
@@ -129,6 +146,9 @@ const Logo = styled.div`
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
+`
+const AlertText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
 `
 
 export default Footer
