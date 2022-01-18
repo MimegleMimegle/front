@@ -22,7 +22,6 @@ html, body, div, span, applet, object, iframe,
       font-weight: 400;
       font-size: 14px;
       line-height: 1.6;
-      color: #000;
     }
 
 *, *::before, *::after {
@@ -31,6 +30,7 @@ html, body, div, span, applet, object, iframe,
 
 body {
   background-color: #e5e5e5;
+  color: #000;
 }
 
 p, h1, h2, h3, h4 {
