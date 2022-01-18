@@ -28,9 +28,7 @@ const Header = ({ type, children, location }) => {
   const token = localStorage.getItem('token')
   // const cookieList = document.cookie.split('=')
   // const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
-  const isLogin = userId !== null && token !== undefined ? true : false
-
-  console.log(profile)
+  const isLogin = userId !== null && token !== null ? true : false
 
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
@@ -78,9 +76,11 @@ const Header = ({ type, children, location }) => {
           <Grid flex_between height="100%">
             <div className="header-title">Memegle</div>
             <Grid flex_end height="100%">
-              <div className="header-bell-box" onClick={handleShowModal}>
-                {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
-              </div>
+              {isLogin && (
+                <div className="header-bell-box" onClick={handleShowModal}>
+                  {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
+                </div>
+              )}
               {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
             </Grid>
           </Grid>
@@ -104,9 +104,11 @@ const Header = ({ type, children, location }) => {
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
           <div className="header-icon">
-            <div className="header-bell-box" onClick={handleShowModal}>
-              {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
-            </div>
+            {isLogin && (
+              <div className="header-bell-box" onClick={handleShowModal}>
+                {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
+              </div>
+            )}
             {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
           </div>
         </Grid>

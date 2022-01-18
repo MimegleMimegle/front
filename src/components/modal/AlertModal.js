@@ -28,4 +28,8 @@ const Container = styled.div`
   justify-content: center;
 `
 
+const AlertText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+`
+
 export default AlertModal

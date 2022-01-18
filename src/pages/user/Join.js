@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import '../../styles/css/Join.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
@@ -13,9 +13,13 @@ import DoubleCheckModal from '../../components/modal/DoubleCheckModal'
 import Footer from '../../components/Footer'
 import MemegleIcon from '../../styles/image/smileIcon_Yellow.png'
 import Grid from '../../elements/Grid'
+import AlertModal from '../../components/modal/AlertModal'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const Join = () => {
   const dispatch = useDispatch()
+
+  const loading = useSelector((state) => state.user.is_loading)
 
   //이름, 이메일, 비밀번호, 비밀번호 확인
   const [username, setUsername] = React.useState('')
@@ -40,6 +44,8 @@ const Join = () => {
   const [isNicknameChecked, setIsNicknameChecked] = useState(false)
   const [doubleCheck, setDoubleCheck] = useState(null)
   console.log(doubleCheck)
+
+  const [showAlert, setShowAlert] = useState(false)
 
   // 유저네임 유효성 검사
   const onChangeUsername = (e) => {
@@ -141,7 +147,8 @@ const Join = () => {
 
   const join = () => {
     if (username === '' || nickname === '' || password === '' || passwordCheck === '') {
-      swal('빈칸을 모두 입력해주세요!')
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 2000)
       return
     }
     dispatch(userActions.joinDB(username, nickname, password, passwordCheck))
@@ -249,7 +256,9 @@ const Join = () => {
                 }
               }}
             >
-              <button className="MemegleButton_JoinSubmit Join1">회원가입</button>
+              <button className="MemegleButton_JoinSubmit Join1" disabled={loading}>
+                {loading ? <CircularProgress size={16} sx={{ color: '#FFFFFF' }} /> : '회원가입'}
+              </button>
               <div className="MemegleButton_JoinSubmit Join2"></div>
             </div>
           </div>
@@ -267,6 +276,9 @@ const Join = () => {
           <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
         </DoubleCheckModal>
       )}
+      <AlertModal showModal={showAlert}>
+        <AlertText>아이디와 비밀번호를 모두 입력해주세요!</AlertText>
+      </AlertModal>
     </>
   )
 }
@@ -314,6 +326,10 @@ const Logo = styled.div`
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
+`
+
+const AlertText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
 `
 
 export default Join
