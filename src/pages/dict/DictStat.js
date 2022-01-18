@@ -81,7 +81,7 @@ const DictStat = (props) => {
               <Grid flex_center column>
                 <Grid>
                   <span className="section-title">답변을 기다리고 있어요!</span>
-                  <StyledSwiper slidesPerView={2.45} spaceBetween={16} freeMode={true} lazy={true}>
+                  <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
                     {remainedQuestion &&
                       remainedQuestion.map((question, index) => {
                         return (
@@ -94,7 +94,7 @@ const DictStat = (props) => {
                 </Grid>
                 <Grid>
                   <span className="section-title">따끈따끈한 답변이 등록됐어요!</span>
-                  <StyledSwiper slidesPerView={2.45} spaceBetween={16} freeMode={true} lazy={true}>
+                  <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
                     {completedQuestion &&
                       completedQuestion.map((question, index) => {
                         return (
@@ -148,12 +148,12 @@ const StyledSwiper = styled(Swiper)`
   height: fit-content;
   padding: 16px 0 40px;
   border-radius: 10px;
-  cursor: grabbing;
+  /* cursor: grabbing; */
   &::-webkit-scrollbar {
     display: none;
   }
   .swiper-slide {
-    width: fit-content !important;
+    width: 160px !important;
     background-color: transparent !important;
   }
 `
