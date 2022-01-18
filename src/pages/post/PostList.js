@@ -29,7 +29,6 @@ const PostList = (props) => {
 
   const getQuestionListDB = async () => {
     let response = await dictQuestionApi.getQuestions(pageSize, currentPage)
-    // let response = await dictQuestionApi.getQuestions()
     let totalLength = await dictQuestionApi.totalLength()
     setQuestion(response.data.data)
     setTotalCount(totalLength.data.data)
