@@ -19,7 +19,10 @@ html, body, div, span, applet, object, iframe,
     time, mark, audio, video, input, button {
       font-family: 'Pretendard Variable';
       font-style: normal;
-      font-weight: 300;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #000;
     }
 
 *, *::before, *::after {
@@ -27,14 +30,7 @@ html, body, div, span, applet, object, iframe,
 }
 
 body {
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-weight: 300;
   background-color: #e5e5e5;
-  color: #333;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.6;
 }
 
 p, h1, h2, h3, h4 {

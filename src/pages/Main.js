@@ -81,7 +81,7 @@ const Main = (props) => {
 
   return (
     <>
-      <Header type="main" />
+      <Header location="Memegle" />
       <div className="MainPageLayout">
         <div className="MainPageCarouselSection">
           <div className="MainPageCarouselText">

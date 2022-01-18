@@ -8,20 +8,27 @@ import Grid from '../elements/Grid'
 import ProfileBottom from './ProfileBottom'
 import AlarmModal from './modal/AlarmModal'
 import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
-import { BsBell, BsBellFill } from 'react-icons/bs'
+import { FaRegBell, FaBell } from 'react-icons/fa'
 
-const Header = ({ type, children, location }) => {
+const throttle = (callback, waitTime) => {
+  let timerId = null
+  return (e) => {
+    if (timerId) return
+    timerId = setTimeout(() => {
+      callback.call(this, e)
+      timerId = null
+    }, waitTime)
+  }
+}
+
+const Header = ({ children, location }) => {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.mypage.myProfile)
   const userId = localStorage.getItem('id')
   const token = localStorage.getItem('token')
   // const cookieList = document.cookie.split('=')
   // const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
-  const isLogin = userId !== null && token !== undefined ? true : false
-
-  const documentRef = useRef(document)
-
-  console.log(profile)
+  const isLogin = userId !== null && token !== null ? true : false
 
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
@@ -36,23 +43,15 @@ const Header = ({ type, children, location }) => {
     setShowAlarm(!showAlarm)
   }
 
-  const throttle = (callback, waitTime) => {
-    let timerId = null
-    return (e) => {
-      if (timerId) return
-      timerId = setTimeout(() => {
-        callback.call(this, e)
-        timerId = null
-      }, waitTime)
-    }
-  }
-
   const handleScroll = () => {
-    const { pageYOffset } = window
-    const deltaY = pageYOffset - pageY
-    const hide = pageYOffset !== 0 && deltaY >= 0
-    setHide(hide)
-    setPageY(pageYOffset)
+    let nextScrollTop = window.pageYOffset || 0
+    if (nextScrollTop > pageY) {
+      setHide(true)
+      setPageY(nextScrollTop)
+    } else if (nextScrollTop < pageY) {
+      setHide(false)
+      setPageY(nextScrollTop)
+    }
   }
 
   const throttleScroll = throttle(handleScroll, 50)
@@ -64,59 +63,28 @@ const Header = ({ type, children, location }) => {
   }, [])
 
   useEffect(() => {
-    documentRef.current.addEventListener('scroll', throttleScroll)
-    return () => documentRef.current.removeEventListener('scroll', throttleScroll)
+    document.addEventListener('scroll', throttleScroll)
+    return () => document.removeEventListener('scroll', throttleScroll)
   }, [pageY])
-
-  if (type === 'main') {
-    return (
-      <>
-        <NavHeader className={hide && 'hide'} ref={documentRef}>
-          <Grid flex_between height="100%">
-            <div className="header-title">Memegle</div>
-            <Grid flex_end height="100%">
-              <div className="header-bell-box" onClick={handleShowModal}>
-                {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
-              </div>
-              {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
-            </Grid>
-          </Grid>
-        </NavHeader>
-        <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
-        {showAlarm && (
-          <AlarmModal
-            onClose={() => {
-              setShowAlarm(false)
-            }}
-          />
-        )}
-      </>
-    )
-  }
 
   return (
     <>
-      <NavHeader className={hide && 'hide'} ref={documentRef}>
+      <NavHeader className={hide && 'hide'}>
         <Grid flex_between height="100%">
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
           <div className="header-icon">
-            <div className="header-bell-box" onClick={handleShowModal}>
-              {showAlarm ? <BsBellFill className="header-bell shown" /> : <BsBell className="header-bell hidden" />}
-            </div>
+            {isLogin && (
+              <div className="header-bell-box" onClick={handleShowModal}>
+                {showAlarm ? <FaBell className="header-bell shown" /> : <FaRegBell className="header-bell hidden" />}
+              </div>
+            )}
             {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
           </div>
         </Grid>
       </NavHeader>
-
       <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
-      {showAlarm && (
-        <AlarmModal
-          onClose={() => {
-            setShowAlarm(false)
-          }}
-        />
-      )}
+      {showAlarm && <AlarmModal showAlarm={showAlarm} setShowAlarm={setShowAlarm} profile={profile} />}
     </>
   )
 }
@@ -133,24 +101,17 @@ const NavHeader = styled.nav`
   z-index: 1000;
   transition: 0.4s ease;
   &.hide {
-    transform: translateY(-60px);
-  }
-  .header-title {
-    font-family: 'YdestreetB';
-    font-style: normal;
-    font-weight: normal;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-    cursor: default;
+    transform: translateY(-56px);
   }
   .header-empty {
-    width: 76px;
+    width: 80px;
     height: 100%;
   }
   .header-location {
-    font-family: 'YdestreetL';
+    font-family: 'YdestreetB';
     font-style: normal;
     font-weight: normal;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
     cursor: default;
   }
   .header-icon {
