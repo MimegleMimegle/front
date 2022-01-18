@@ -30,6 +30,8 @@ const Header = ({ type, children, location }) => {
   // const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
 
+  console.log(profile)
+
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
   const [hide, setHide] = useState(false)

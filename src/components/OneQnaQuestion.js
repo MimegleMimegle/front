@@ -31,7 +31,7 @@ const Container = styled.div`
   height: 142px;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: zoom-in;
   .qna-question-title {
     width: 100%;
     font-weight: 500;
