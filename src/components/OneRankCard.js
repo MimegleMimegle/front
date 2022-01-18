@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import Grid from '../elements/Grid'
 
-const OneRankCard = ({ rank, index }) => {
+const OneRankCard = ({ rank, index, first }) => {
   return (
     <>
       <OneRankBox>

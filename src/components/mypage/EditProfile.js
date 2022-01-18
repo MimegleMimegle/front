@@ -55,19 +55,26 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   }
 
   const checkNickname = async () => {
-    await userApi
-      .checkNickname(nickname)
-      .then((response) => {
-        if (response.data.result === true) {
-          setDoubleCheck(true)
-          setCheckedNickname(nickname)
-        } else if (response.data.result === false) {
-          setDoubleCheck(false)
-        }
-      })
-      .catch((error) => {
-        console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
-      })
+    if (nickname !== '') {
+      if (isValidNickname) {
+        await userApi
+          .checkNickname(nickname)
+          .then((response) => {
+            if (response.data.result === true) {
+              setDoubleCheck(true)
+              setCheckedNickname(nickname)
+            } else if (response.data.result === false) {
+              setDoubleCheck(false)
+            }
+          })
+          .catch((error) => {
+            console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
+          })
+      } else if (!isValidNickname) {
+        setValidAlert(true)
+        setTimeout(() => setValidAlert(false), 2000)
+      }
+    }
   }
 
   const _editProfile = async () => {
@@ -93,12 +100,12 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       }
       if (nickname !== checkedNickname) {
         setDoubleCheckAlert(true)
-        setTimeout(() => setDoubleCheckAlert(false), 3000)
+        setTimeout(() => setDoubleCheckAlert(false), 2000)
       }
-      if (isValidNickname === false) {
+      if (!isValidNickname) {
         setDoubleCheckAlert(false)
         setValidAlert(true)
-        setTimeout(() => setValidAlert(false), 3000)
+        setTimeout(() => setValidAlert(false), 2000)
       }
     }
   }
@@ -179,7 +186,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       {validAlert && (
         <AlertModal showModal={validAlert}>
           <AlertText>
-            변경하려는 닉네임이 양식과 맞지 않습니다! <br />
+            입력한 닉네임이 양식과 맞지 않습니다! <br />
             다시 한 번 확인해주시겠어요? 🤔
           </AlertText>
         </AlertModal>
