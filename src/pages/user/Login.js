@@ -22,7 +22,6 @@ const Login = (props) => {
 
   const loading = useSelector((state) => state.user.is_loading)
   const loginFail = useSelector((state) => state.user.is_failure)
-  console.log(loginFail)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -96,11 +95,11 @@ const Login = (props) => {
             <div className="LoginButton_login">로그인</div>
           </div>
           <div className="LoginOrJoinInputs_login">
-            <label className="IdInputLabel" for="IdInput">
+            <label className="IdInputLabel" htmlFor="IdInput">
               아이디
             </label>
-            <input className="IdInputBox" id="IdInput" placeholder="영어, 숫자 3~16자" maxLength="16" type="email" typeName="email" onChange={onChangeUsername} value={username} />
-            <label className="PwdInputLabel" for="PwdInput">
+            <input className="IdInputBox" id="IdInput" placeholder="영어, 숫자 3~16자" maxLength="16" type="email" onChange={onChangeUsername} value={username} />
+            <label className="PwdInputLabel" htmlFor="PwdInput">
               비밀번호
             </label>
             <input
@@ -109,7 +108,6 @@ const Login = (props) => {
               placeholder="영어 대소문자, 숫자, 특수문자 6~16자"
               maxLength="16"
               type="password"
-              typeName="password"
               onChange={onChangePassword}
               value={password}
               onKeyPress={(e) => {

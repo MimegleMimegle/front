@@ -6,7 +6,9 @@ const AlertModal = ({ showModal, children }) => {
   return (
     <>
       <Backdrop open={showModal} sx={{ zIndex: 10000 }}>
-        <Container>{children}</Container>
+        <Container>
+          <AlertText>{children}</AlertText>
+        </Container>
       </Backdrop>
     </>
   )
@@ -17,10 +19,10 @@ const Container = styled.div`
   top: 40%;
   left: 50%;
   transform: translate(-50%, -40%);
-  width: 320px;
-  height: 100px;
+  width: 340px;
+  height: 130px;
   background-color: #fff;
-  padding: 20px;
+  padding: 24px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   display: flex;
