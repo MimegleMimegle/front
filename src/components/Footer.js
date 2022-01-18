@@ -21,6 +21,7 @@ const Footer = (props) => {
       setShowAlert(true)
       setTimeout(() => setShowAlert(false), 2000)
     }
+    return
   }
   const activeStyle = {
     color: '#6698FC',

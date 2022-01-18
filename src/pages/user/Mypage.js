@@ -83,7 +83,7 @@ const Mypage = (props) => {
             <UserProfile>
               <ProfileImage src={my && my.profileImageUrl} />
               <div className="profile-info box-1">
-                <div style={{ padding: '50px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ padding: '60px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div className="user-nickname">{my && my.nickname}</div>
                   <button onClick={handleEditProfile}>
                     <AiOutlineEdit fontSize="22px" />
@@ -171,11 +171,11 @@ const Wrapper = styled.div`
 
 const UserProfile = styled.div`
   position: relative;
-  max-height: 160px;
+  max-height: 190px;
   padding: 0 20px;
   width: 100%;
   height: 100%;
-  margin: 60px 0 0;
+  margin: 70px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -186,19 +186,19 @@ const UserProfile = styled.div`
 
   .profile-info {
     width: calc(100% - 40px);
-    max-height: 160px;
+    max-height: 180px;
     height: 100%;
     border: 2px solid ${({ theme }) => theme.colors.black};
     position: absolute;
 
     .user-nickname {
-      padding: 0 5px;
+      padding: 0 5px 0 0;
       font-size: ${({ theme }) => theme.fontSizes.xl};
       font-weight: 700;
     }
 
     .user-activity-info {
-      padding: 5px 20px;
+      padding: 0 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -230,11 +230,11 @@ const UserProfile = styled.div`
 
 const ProfileImage = styled.div`
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border: 2px solid ${({ theme }) => theme.colors.black};
-  border-radius: 40px;
-  top: -40px;
+  border-radius: 100px;
+  top: -50px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
@@ -249,7 +249,6 @@ const Filter = styled.div`
   padding: 32px 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  /* border-bottom: 1px solid ${({ theme }) => theme.colors.line}; */
 
   .filter-button {
     width: 100%;
@@ -257,7 +256,6 @@ const Filter = styled.div`
     font-style: normal;
     font-weight: normal;
     font-size: ${({ theme }) => theme.fontSizes.xl};
-    color: #444;
     padding: 0 0 12px;
     border-bottom: 1px solid ${({ theme }) => theme.colors.line};
   }
@@ -271,7 +269,7 @@ const Filter = styled.div`
 
 const UserActivity = styled.div`
   width: 100%;
-  padding: 24px 0 0;
+  padding: 24px 0 90px;
   .my-masonry-grid {
     display: -webkit-box; /* Not needed if autoprefixing */
     display: -ms-flexbox; /* Not needed if autoprefixing */
@@ -287,7 +285,7 @@ const UserActivity = styled.div`
 
 const MyImageList = styled.div`
   width: 100%;
-  padding: 0 16px 84px;
+  padding: 0 16px;
 `
 
 export default Mypage
