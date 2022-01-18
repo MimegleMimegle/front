@@ -1,43 +1,74 @@
 import React from 'react'
 import styled from 'styled-components'
 import { history } from '../redux/ConfigureStore'
+import Grid from '../elements/Grid'
 
-const OneQnaQuestion = ({ question }) => {
+const OneQnaQuestion = ({ question, index }) => {
+  const styles = {
+    index: index,
+  }
+
   return (
     <>
-      <Container onClick={() => history.push(`/dict/question/detail/${question?.questionId}`)}>
-        <ProfileImage src={question?.profileImage} />
-        <div className="qna-question-title">{question?.title}</div>
+      <Container {...styles} onClick={() => history.push(`/dict/question/detail/${question?.questionId}`)}>
+        <div className="question-box box1">
+          <Grid flex_center height="100%">
+            <div className="qna-question-title">{question?.title}</div>
+          </Grid>
+          <Grid flex_center padding="10px 0 0">
+            <ProfileImage src={question?.profileImage} />
+          </Grid>
+        </div>
+        <div className="question-box box2"></div>
       </Container>
     </>
   )
 }
 
 const Container = styled.div`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 16px;
-  border-radius: 30px;
-  background-color: #fafafa;
-  box-shadow: 0 4px 20px 4px hsl(0deg 0% 64% / 30%);
+  position: relative;
+  width: 150px;
+  height: 142px;
   display: flex;
   align-items: center;
   cursor: pointer;
   .qna-question-title {
+    width: 100%;
     font-weight: 500;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    padding: 0 0 0 10px;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+  }
+  .question-box {
+    width: 150px;
+    height: 142px;
+    border-radius: 10px;
+    position: absolute;
+    border: 2px solid ${({ theme }) => theme.colors.black};
+  }
+  .box1 {
+    background-color: ${({ theme }) => theme.colors.white};
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .box2 {
+    top: 4px;
+    left: 4px;
+    background-color: ${(props) => (props.index === 0 ? '#FFD400' : props.index === 1 ? '#F97D39' : '#6698FC')};
   }
 `
 
 const ProfileImage = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 30px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
   background-color: ${({ theme }) => theme.colors.white};
+  border: 2px solid black;
 `
 
 export default OneQnaQuestion
