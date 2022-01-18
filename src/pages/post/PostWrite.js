@@ -54,9 +54,7 @@ const PostWrite = (props) => {
     const uploadFile = thumbNail ? fileInput.current.files[0] : ''
     dispatch(questionActions.addQuestionDB(title, content, uploadFile))
   }
-
-  console.log(fileInput.current.files[0])
-
+ 
   return (
     <>
       <Header>

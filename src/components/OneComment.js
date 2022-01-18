@@ -5,6 +5,7 @@ import { actionCreators as commentActions } from '../redux/modules/comment'
 import { history } from '../redux/ConfigureStore'
 import { dictQuestionApi } from '../shared/api'
 import ConfirmModal from '../components/modal/ConfirmModal'
+import AlertModal from '../components/modal/AlertModal'
 import { ReactComponent as DustBinIcon } from '../styles/icons/delete_black_18dp.svg'
 import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
 import Grid from '../elements/Grid'
@@ -20,11 +21,23 @@ const OneComment = (props) => {
   const createdAt = props.createdAt.split('T')[0] + ' ' + props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]
 
   console.log(props)
-  console.log(questionUser,username,commentWriterId)
+
 
   const [isSelected, setIsSelected] = React.useState(props.isSelected)
   const [selectModal, setSelectModal] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
+  const [alreadySelectModal, setAlreadySelectModal] = React.useState(false)
+
+  const handleCloseAlreadySelectModal = () => {
+    setTimeout(()=> {
+      setAlreadySelectModal(false)
+    }, 1800)
+  }
+
+  const handleAlreadySelectModal = () => {
+    setAlreadySelectModal(true)
+    handleCloseAlreadySelectModal()
+  }
 
   const handleClickIsSelected = async (e) => {
     if(props.isSelected === true){
@@ -80,7 +93,7 @@ const OneComment = (props) => {
           
           {isSelected? 
         <text style={{ height: '100%', cursor:"pointer"}}onClick={handleClickIsSelected}><BiBadgeCheck/>채택완료</text> :null}
-          {!isSelected && username!== commentWriterId && username===questionUser?
+          {!isSelected && username!== commentWriterId && username===questionUser &&  props.selectedComment===0? 
         <text style={{ height: '100%', cursor:"pointer"}} onClick={handleSelectModal} >
             <BiBadge />채택하기
         </text>  : null}
@@ -90,11 +103,16 @@ const OneComment = (props) => {
           </ConfirmModal>
         )}
 
-        {commentWriterId === username ? (
+        {props.selectedComment!==commentId && commentWriterId === username? (
           <button style={{ height: '100%' }} onClick={handleShowModal}>
             <DustBinIcon />
           </button>
         ) : null}
+        {alreadySelectModal && (
+        <AlertModal showModal={alreadySelectModal}>
+            답변 채택 후 변경할 수 없습니다.
+        </AlertModal>
+      )}
         {showModal && (
           <ConfirmModal question="댓글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
             <DeleteButton onClick={delComment}>삭제</DeleteButton>

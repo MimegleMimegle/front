@@ -66,7 +66,7 @@ const DictList = (props) => {
             }}
           > */}
         <SpeedDialButton />
-        {/* </div>
+        </div>
         </div> */}
         <div className="DictNavBarSection">
           <DictNavBar />
