@@ -171,7 +171,6 @@ const Main = (props) => {
               </svg>
             </div>
           </div>
-        </div> */}
       </div>
       <Footer />
       {showModal && (

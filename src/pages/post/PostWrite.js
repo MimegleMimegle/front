@@ -59,7 +59,7 @@ const PostWrite = (props) => {
     <>
       <Header>
         <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
-        <h2 className="location">질문 수정하기</h2>
+        <h2 className="location">질문</h2>
         <div className="empty"></div>
       </Header>
       <Container>
@@ -219,12 +219,13 @@ const PWFooter = styled.div`
     position: absolute;
     width: 100px;
     height: 40px;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
   }
   .btn-1 {
     left: 50%;
     transform: translateX(-50%);
-    background-color: ${({ theme }) => theme.colors.blue};
+    background-color:#00A0FF;
+    /* ${({ theme }) => theme.colors.blue}; */
     font-size: ${({ theme }) => theme.fontSizes.xl};
     font-weight: 700;
     z-index: 100;

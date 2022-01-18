@@ -42,8 +42,10 @@ const PostList = (props) => {
         <>
           <Container>
             <Wrap>
+              <div style={{height: '17px'}}/>
               <DictNavBar />
-              <Empty>
+
+              {/* <Empty>
                 <Addbtn
                   onClick={() => {
                     history.push('/dict/question/write')
@@ -52,7 +54,8 @@ const PostList = (props) => {
                   질문등록
                 </Addbtn>
                 <AddbtnShadow />
-              </Empty>
+              </Empty> */}
+
 
               {question &&
                 question.map((question, index) => {
@@ -94,9 +97,9 @@ const Wrap = styled.div`
 
 const Empty = styled.div`
   border-bottom: 1px solid #e5e5e5;
-  position: relative;
-  display: flex;
-  justify-content: center;
+  /* position: relative; */
+  /* display: flex; */
+  /* justify-content: center; */
 `
 
 const Addbtn = styled.div`
