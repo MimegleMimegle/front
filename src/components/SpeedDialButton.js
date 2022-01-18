@@ -1,22 +1,21 @@
 import React from 'react'
-import Box from '@mui/material/Box'
-import SpeedDial from '@mui/material/SpeedDial'
-import SpeedDialIcon from '@mui/material/SpeedDialIcon'
-import SpeedDialAction from '@mui/material/SpeedDialAction'
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined'
-import SaveIcon from '@mui/icons-material/Save'
-import PrintIcon from '@mui/icons-material/Print'
-import ShareIcon from '@mui/icons-material/Share'
-import SearchIcon from '@mui/icons-material/Search'
+import '../styles/css/SpeedDialButton.css'
+import { history } from '../redux/ConfigureStore'
+import { ReactComponent as DictPageAddButton } from '../styles/icons/추가_18dp.svg'
 
-export default function SpeedDialButton() {
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
+const SpeedDialButton = (props) => {
   return (
-    <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
-      <SpeedDial ariaLabel="SpeedDial controlled open example" sx={{ position: 'absolute', bottom: 16, right: 16 }} icon={<SearchIcon />} onClose={handleClose} onOpen={handleOpen}></SpeedDial>
-    </Box>
+    <>
+      <div
+        className="DictPageAddButton"
+        onClick={() => {
+          history.push('/dict/write')
+        }}
+      >
+        <DictPageAddButton width="30px" height="30px" fill="#FFFFFF" />
+      </div>
+    </>
   )
 }
+
+export default SpeedDialButton

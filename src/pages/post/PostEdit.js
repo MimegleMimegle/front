@@ -69,7 +69,6 @@ const PostEdit = (props) => {
   }
 
   console.log(post.thumbNail)
-  console.log(fileInput.current.files[0])
 
   const editQuestion = () => {
     if (title === '' || content === '') {
@@ -77,21 +76,14 @@ const PostEdit = (props) => {
       return
     }
 
-    
-    if (fileInput.current.files.length !==0){
-      const uploadFile = fileInput.current.files[0]
-      dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
-    } else if(post.thumbNail !== ""){
+
+    if (fileInput.current.files.length === 0) {
       const uploadFile = post.thumbNail
       dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
+    } else {
+      const uploadFile = fileInput.current.files[0]
+      dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
     }
-    // if (fileInput.current.files.length === 0) {
-    //   const uploadFile = post.thumbNail
-    //   dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
-    // } else {
-    //   const uploadFile = fileInput.current.files[0]
-    //   dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
-    // }
   }
 
   return (

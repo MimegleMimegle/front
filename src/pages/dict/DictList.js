@@ -17,7 +17,6 @@ import Grid from '../../elements/Grid'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
-import { MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
@@ -57,29 +56,18 @@ const DictList = (props) => {
 
   return (
     <>
-      <Header location="오픈 밈사전">
-        <div
-          className="DictPageSearchButton"
-          onClick={() => {
-            showSearchBar()
-          }}
-        >
-          <SearchIcon style={{ margin: '0 5px 5px 0' }} />
-        </div>
-      </Header>
+      <Header location="오픈 밈사전"></Header>
       <div className="DictLayout">
-        {/* <SearchBarSection>{show && <SearchPage />}</SearchBarSection> */}
-
         <div className="DictPageSearchSection">
           <div
             className="DictPageSearchButton"
             onClick={() => {
               showSearchBar()
             }}
-          >
-            <SpeedDialButton />
-          </div>
+          > */}
+        <SpeedDialButton />
         </div>
+        </div> */}
         <div className="DictNavBarSection">
           <DictNavBar />
         </div>
