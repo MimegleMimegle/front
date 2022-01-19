@@ -37,14 +37,16 @@ const PostList = (props) => {
 
   return (
     <>
+      <Header location="밈 사전" />
+      {!loading ? (
+        <>
+          <Container>
+            <Wrap>
+              <div style={{height: '17px'}}/>
+               <DictNavBar />
+              <div className='curious'>궁금해요!</div>
+
               {/* <Empty>
-      <Header location="오픈 밈사전" />
-      <Container>
-        <Wrap>
-          <DictNavBar />
-          {!loading ? (
-            <>
-              <Empty>
                 <Addbtn
                   onClick={() => {
                     history.push('/dict/question/write')
@@ -62,15 +64,14 @@ const PostList = (props) => {
                 })}
 
               <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-            </>
-          ) : (
-            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CircularProgress color="inherit" />
-            </div>
-          )}
-        </Wrap>
-      </Container>
-
+            </Wrap>
+          </Container>
+        </>
+      ) : (
+        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <CircularProgress color="inherit" />
+        </div>
+      )}
       <Footer />
     </>
   )
@@ -80,7 +81,6 @@ export default PostList
 
 const Container = styled.div`
   padding: 56px 0 0;
-  height: 100%;
   position: relative;
 `
 
@@ -93,8 +93,17 @@ const SearchPostDiv = styled.div`
 const Wrap = styled.div`
   /* position: absolute; */
   width: 100%;
-  height: 100%;
   padding: 0 0 80px;
+  .curious {
+    font-family: 'YdestreetL';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    margin:24px 16px 16px 16px;
+  }
 `
 
 const Empty = styled.div`

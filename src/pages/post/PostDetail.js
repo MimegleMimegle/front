@@ -161,7 +161,9 @@ const PostDetail = (props) => {
       </Header>
       <PostWrap>
         <Grid flex_align>
-          <UserProfile src={question.profileImageUrl} alt="" />
+          {/* <UserProfile src={question.profileImageUrl} alt="" /> */}
+          <CuriousQ>Q</CuriousQ>
+
           <div>
             <Title>{question.title}</Title>
             <div className="profile-box">
@@ -239,6 +241,21 @@ const PostWrap = styled.div`
     align-items: center;
     width: 100%;
   }
+`
+const CuriousQ = styled.div`
+  background: #FF8E00;
+  width: 40px;
+  height:40px;
+  border: 2px solid black;
+  border-radius:150px;
+  font-family:'YdestreetB';
+  font-syled: normal;
+  font-weigt:bold;
+  line-height:26px;
+  font-size:20px;
+  padding:7px 11px 7px 9px;
+  margin: 0 12px;
+
 `
 
 const UserProfile = styled.img`
