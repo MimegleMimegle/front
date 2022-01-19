@@ -32,7 +32,7 @@ const Footer = (props) => {
         <NavBar>
           <ul className="nav-list">
             <li className="nav-item">
-              <NavLink to="/dict" className="nav-link" activeStyle={activeStyle} activeClassName="active">
+              <NavLink to="/dict" className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <RiBookMarkLine className="nav-icon" />
                   <div className="nav-link__text">밈사전</div>
@@ -119,9 +119,6 @@ const NavBar = styled.nav`
       justify-content: center;
       .nav-link {
         width: 100%;
-        &.active {
-          color: ${({ theme }) => theme.colors.blue} !important;
-        }
         .nav-icon {
           font-size: 24px;
         }
