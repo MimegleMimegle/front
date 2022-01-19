@@ -102,7 +102,7 @@ const NavHeader = styled.nav`
   padding: 0 16px;
   width: 100%;
   height: 56px;
-  background-color: ${({ theme }) => theme.colors.bg};
+  background-color: ${({ theme }) => theme.colors.white};
   border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid  #e5e5e5')};
   z-index: 1000;
   transition: 0.4s ease;

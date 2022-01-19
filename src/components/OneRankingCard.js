@@ -27,7 +27,7 @@ const OneRankingCard = ({ rank, index, first }) => {
 }
 
 const Container = styled.div`
-  width: ${(props) => (props.first ? '110px' : '80px')};
+  width: ${(props) => (props.first ? '120px' : '120px')};
   height: 160px;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@ const Container = styled.div`
   justify-content: end;
   .nickname {
     font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-size: ${({ theme }) => theme.fontSizes.base};
     padding: 10px 0 2px;
   }
   .count {
