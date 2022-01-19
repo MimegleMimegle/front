@@ -42,7 +42,6 @@ const PostList = (props) => {
         <>
           <Container>
             <Wrap>
-              <div style={{height: '17px'}}/>
                <DictNavBar />
               <div className='curious'>궁금해요!</div>
 
