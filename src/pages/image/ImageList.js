@@ -5,6 +5,7 @@ import { imageApi } from '../../shared/api'
 import { actionCreators as imageActions } from '../../redux/modules/image'
 
 import Grid from '../../elements/Grid'
+import Title from '../../elements/Title'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import InfinityScroll from '../../shared/InfinityScroll'
@@ -67,9 +68,7 @@ const ImageList = (props) => {
         {!loading ? (
           <>
             <PopularSection>
-              <div className="title-border">
-                <Title>명예의 밈짤</Title>
-              </div>
+              <Title>명예의 밈짤</Title>
               <Container>
                 <PopularGridLayout>
                   {bestImageList.map((image) => {
@@ -79,9 +78,7 @@ const ImageList = (props) => {
               </Container>
             </PopularSection>
             <GeneralSection>
-              <div className="title-border">
-                <Title>짤 방앗간</Title>
-              </div>
+              <Title>짤 방앗간</Title>
               <Container>
                 <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
                   <Masonry breakpointCols={3} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
@@ -137,22 +134,6 @@ const Wrapper = styled.div`
   max-height: 100%;
   height: 100%;
   padding: 60px 0 0;
-  .title-border {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.line};
-    padding-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-`
-
-const Title = styled.span`
-  font-size: ${({ theme }) => theme.fontSizes.xxl};
-  line-height: normal;
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-  background-image: linear-gradient(transparent 60%, #ffe330 40%);
 `
 
 const PopularSection = styled.div`
@@ -166,7 +147,7 @@ const GeneralSection = styled.div`
 `
 
 const Container = styled.div`
-  padding: 24px 0 0;
+  padding: 20px 0 0;
   .my-masonry-grid {
     display: -webkit-box; /* Not needed if autoprefixing */
     display: -ms-flexbox; /* Not needed if autoprefixing */

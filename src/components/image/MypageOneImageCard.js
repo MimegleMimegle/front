@@ -14,8 +14,6 @@ const MyPageOneImageCard = ({ image }) => {
 
   const [showModal, setShowModal] = React.useState(false)
 
-  console.log(image)
-
   const handleShowModal = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -42,8 +40,6 @@ const MyPageOneImageCard = ({ image }) => {
     <>
       <Wrapper
         onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
           history.push(`/image/detail/${image.boardId}`)
         }}
       >
@@ -52,20 +48,16 @@ const MyPageOneImageCard = ({ image }) => {
             <Image src={image && image.thumbNail} />
           </ImageBox>
           <div className="delete-icon-box">
-            <DeleteIcon className="delete-icon" onClick={handleShowModal} />
+            <DeleteIcon className="delete-icon" fill="#878C92" onClick={handleShowModal} />
           </div>
         </ImageSection>
-
-        <Grid flex_between padding="5px 0 0">
+        <Grid flex_between padding="8px 8px 0 0">
           <Grid flex_align>
-            <EmptyHeart />
-            <span style={{ fontSize: '12px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
+            <EmptyHeart fill="#878C92" />
+            <span className="like-count">{image && image.likeCnt}</span>
           </Grid>
           <p className="createdDate">{image && createdDate}</p>
         </Grid>
-        {/* <DateSection>
-          <p className="createdDate">{image && createdDate}</p>
-        </DateSection> */}
       </Wrapper>
       {showModal && (
         <ConfirmModal question="밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
@@ -82,21 +74,21 @@ const Wrapper = styled.div`
   width: 100%;
   height: fit-content;
   margin: 10px 0 6px;
-  padding: 10px 5px 10px 10px;
+  padding: 10px 2px 10px 10px;
   border: 2px solid ${({ theme }) => theme.colors.black};
   box-shadow: 0 4px 20px 4px hsl(0deg 0% 64% / 35%);
   display: flex;
   flex-direction: column;
   .createdDate {
     width: 100%;
-    font-size: ${({ theme }) => theme.fontSizes.small};
+    font-size: ${({ theme }) => theme.fontSizes.base};
     color: ${({ theme }) => theme.colors.grey};
     text-align: right;
   }
   .delete-icon-box {
     margin: 0 0 0 5px;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,10 +98,11 @@ const Wrapper = styled.div`
     &:hover {
       background-color: #e9e9e9;
     }
-    .delete-icon {
-      width: 20px;
-      height: 20px;
-    }
+  }
+  .like-count {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    padding: 0 0 0 4px;
+    color: ${({ theme }) => theme.colors.grey};
   }
 `
 

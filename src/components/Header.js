@@ -7,6 +7,7 @@ import { actionCreators as mypageActions } from '../redux/modules/mypage'
 import Grid from '../elements/Grid'
 import ProfileBottom from './ProfileBottom'
 import AlarmModal from './modal/AlarmModal'
+import AlertModal from './modal/AlertModal'
 import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
 import { FaRegBell, FaBell } from 'react-icons/fa'
 
@@ -32,6 +33,7 @@ const Header = ({ children, location }) => {
 
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
   const [hide, setHide] = useState(false)
   const [pageY, setPageY] = useState(0)
 
@@ -39,22 +41,27 @@ const Header = ({ children, location }) => {
     setShowProfile(!showProfile)
   }
 
-  const handleShowModal = () => {
-    setShowAlarm(!showAlarm)
-  }
-
-  const handleScroll = () => {
-    let nextScrollTop = window.pageYOffset || 0
-    if (nextScrollTop > pageY) {
-      setHide(true)
-      setPageY(nextScrollTop)
-    } else if (nextScrollTop < pageY) {
-      setHide(false)
-      setPageY(nextScrollTop)
+  const handleShowAlarm = () => {
+    if (isLogin) {
+      setShowAlarm(!showAlarm)
+    } else {
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 2000)
     }
   }
 
-  const throttleScroll = throttle(handleScroll, 50)
+  // const handleScroll = () => {
+  //   let nextScrollTop = window.pageYOffset || 0
+  //   if (nextScrollTop > pageY) {
+  //     setHide(true)
+  //     setPageY(nextScrollTop)
+  //   } else if (nextScrollTop < pageY) {
+  //     setHide(false)
+  //     setPageY(nextScrollTop)
+  //   }
+  // }
+
+  // const throttleScroll = throttle(handleScroll, 50)
 
   useEffect(() => {
     if (profile === null) {
@@ -62,10 +69,10 @@ const Header = ({ children, location }) => {
     }
   }, [])
 
-  useEffect(() => {
-    document.addEventListener('scroll', throttleScroll)
-    return () => document.removeEventListener('scroll', throttleScroll)
-  }, [pageY])
+  // useEffect(() => {
+  //   document.addEventListener('scroll', throttleScroll)
+  //   return () => document.removeEventListener('scroll', throttleScroll)
+  // }, [pageY])
 
   return (
     <>
@@ -74,7 +81,7 @@ const Header = ({ children, location }) => {
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
           <div className="header-icon">
-            <div className="header-bell-box" onClick={handleShowModal}>
+            <div className="header-bell-box" onClick={handleShowAlarm}>
               {showAlarm ? <FaBell className="header-bell shown" /> : <FaRegBell className="header-bell hidden" />}
             </div>
             {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
@@ -82,6 +89,7 @@ const Header = ({ children, location }) => {
         </Grid>
       </NavHeader>
       <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
+      <AlertModal showModal={showAlert}>로그인 후 이용하실 수 있습니다!</AlertModal>
       {showAlarm && <AlarmModal showAlarm={showAlarm} setShowAlarm={setShowAlarm} profile={profile} />}
     </>
   )
@@ -98,9 +106,9 @@ const NavHeader = styled.nav`
   border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid  #e5e5e5')};
   z-index: 1000;
   transition: 0.4s ease;
-  &.hide {
+  /* &.hide {
     transform: translateY(-56px);
-  }
+  } */
   .header-empty {
     width: 80px;
     height: 100%;

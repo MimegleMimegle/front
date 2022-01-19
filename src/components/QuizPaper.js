@@ -155,14 +155,14 @@ const QuizTitle = styled.div`
   justify-content: center;
 
   .question-number-box {
-    width: 100px;
-    height: 40px;
+    width: 120px;
+    height: 48px;
     position: absolute;
     border: 2px solid ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.white};
   }
   .box-1 {
-    top: -20px;
+    top: -28px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
@@ -177,7 +177,7 @@ const QuizTitle = styled.div`
   }
 
   .box-2 {
-    top: -16px;
+    top: -24px;
     left: calc(50%);
     transform: translateX(calc(-50% + 4px));
     background-color: ${({ theme }) => theme.colors.white};
@@ -188,8 +188,6 @@ const QuizTitle = styled.div`
     height: fit-content;
     text-align: left;
     font-size: ${({ theme }) => theme.fontSizes.xl};
-    font-weight: 400;
-    line-height: 24px;
   }
   .quiz-image {
     max-width: 100%;
@@ -209,7 +207,6 @@ const QuizBox = styled.div`
     width: 100%;
     height: fit-content;
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    font-weight: 400;
     border-bottom: 2px solid ${({ theme }) => theme.colors.black};
     padding: 16px 36px;
     line-height: 1.3;
@@ -230,17 +227,17 @@ const ButtonSection = styled.div`
   width: 100%;
   margin: 20px 0 0;
   .next-btn-box {
-    width: 100px;
-    height: 40px;
+    width: 120px;
+    height: 48px;
     position: absolute;
     border: 2px solid ${({ theme }) => theme.colors.black};
-    border-radius: 20px;
+    border-radius: 48px;
     background-color: ${({ theme }) => theme.colors.blue};
     .next-btn {
       width: 100%;
       height: 100%;
       padding: 0;
-      border-radius: 20px;
+      border-radius: 48px;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
       font-family: 'YdestreetB';
       font-style: normal;
