@@ -74,11 +74,9 @@ const Header = ({ children, location }) => {
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
           <div className="header-icon">
-            {isLogin && (
-              <div className="header-bell-box" onClick={handleShowModal}>
-                {showAlarm ? <FaBell className="header-bell shown" /> : <FaRegBell className="header-bell hidden" />}
-              </div>
-            )}
+            <div className="header-bell-box" onClick={handleShowModal}>
+              {showAlarm ? <FaBell className="header-bell shown" /> : <FaRegBell className="header-bell hidden" />}
+            </div>
             {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
           </div>
         </Grid>
