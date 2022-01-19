@@ -18,7 +18,7 @@ const CommentTest = ({ question }) => {
   const cookieList = document.cookie.split('=')
   const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
-
+  console.log(question)
   const onChangeComment = (e) => {
     setComment(e.target.value)
     console.log(e.target.value)
@@ -58,7 +58,7 @@ const CommentTest = ({ question }) => {
       </CommentWrite>
       {comment_list
         ? comment_list.map((c) => {
-            return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} />
+            return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
           })
         : null}
     </>

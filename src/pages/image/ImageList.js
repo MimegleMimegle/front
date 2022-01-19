@@ -5,15 +5,16 @@ import { imageApi } from '../../shared/api'
 import { actionCreators as imageActions } from '../../redux/modules/image'
 
 import Grid from '../../elements/Grid'
+import Title from '../../elements/Title'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import InfinityScroll from '../../shared/InfinityScroll'
 import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
-import FloatingButton from '../../components/FloatingButton'
+import SpeedDialButton from '../../components/SpeedDialButton'
 import CircularProgress from '@mui/material/CircularProgress'
-import { GoPlus } from 'react-icons/go'
+import { RiEditLine } from 'react-icons/ri'
 
 const ImageList = (props) => {
   const dispatch = useDispatch()
@@ -67,9 +68,7 @@ const ImageList = (props) => {
         {!loading ? (
           <>
             <PopularSection>
-              <div className="title-border">
-                <Title>명예의 밈짤</Title>
-              </div>
+              <Title>명예의 밈짤</Title>
               <Container>
                 <PopularGridLayout>
                   {bestImageList.map((image) => {
@@ -79,9 +78,7 @@ const ImageList = (props) => {
               </Container>
             </PopularSection>
             <GeneralSection>
-              <div className="title-border">
-                <Title>짤 방앗간</Title>
-              </div>
+              <Title>짤 방앗간</Title>
               <Container>
                 <InfinityScroll callNext={getImageList} paging={{ next: image_data.has_next }}>
                   <Masonry breakpointCols={3} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
@@ -99,42 +96,36 @@ const ImageList = (props) => {
           </Grid>
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
-        <FloatingButton>
-          <FileUploader>
-            <label htmlFor="file" className="upload-label">
-              <GoPlus style={{ fontSize: '32px', color: '#FFF' }} />
-            </label>
-            <input type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
-          </FileUploader>
-        </FloatingButton>
+        <SpeedDialButton>
+          <FileInputLabel htmlFor="file" className="upload-label">
+            <RiEditLine size="28" fill="#FFFFFF" />
+          </FileInputLabel>
+          <FileInput type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+        </SpeedDialButton>
       </Wrapper>
       <Footer />
     </>
   )
 }
 
-const FileUploader = styled.div`
-  /* padding: 0 5px 0 0; */
-  .upload-label {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: color 0.2s ease-in-out;
-    &:hover {
-      color: ${({ theme }) => theme.colors.blue};
-    }
-  }
-  .upload-file {
-    position: absolute;
-    overflow: hidden;
-    padding: 0;
-    margin: -1px;
-    width: 1px;
-    height: 1px;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
+const FileInputLabel = styled.label`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`
+
+const FileInput = styled.input`
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 `
 
 const Wrapper = styled.div`
@@ -143,22 +134,6 @@ const Wrapper = styled.div`
   max-height: 100%;
   height: 100%;
   padding: 60px 0 0;
-  .title-border {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.line};
-    padding-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-`
-
-const Title = styled.span`
-  font-size: ${({ theme }) => theme.fontSizes.xxl};
-  line-height: normal;
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-  background-image: linear-gradient(transparent 60%, #ffe330 40%);
 `
 
 const PopularSection = styled.div`
@@ -168,11 +143,11 @@ const PopularSection = styled.div`
 
 const GeneralSection = styled.div`
   width: 100%;
-  padding: 16px 16px 84px;
+  padding: 0 16px 90px;
 `
 
 const Container = styled.div`
-  padding: 24px 0 0;
+  padding: 20px 0 0;
   .my-masonry-grid {
     display: -webkit-box; /* Not needed if autoprefixing */
     display: -ms-flexbox; /* Not needed if autoprefixing */

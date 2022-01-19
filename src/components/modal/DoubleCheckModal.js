@@ -23,9 +23,7 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
             <div className="title-box">{title}</div>
             <div className="question-box">{question}</div>
           </div>
-          <div className="confirm-box">
-            <div className="confirm-button">{children}</div>
-          </div>
+          <div className="confirm-box">{children}</div>
         </Container>
       </Backdrop>
     )
@@ -40,12 +38,10 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
             <div className="question-box">{question}</div>
           </div>
           <div className="confirm-box">
-            <div>
-              <button className="cancel-button" onClick={() => setDoubleCheck(null)}>
-                취소
-              </button>
-            </div>
-            <div className="confirm-button">{children}</div>
+            <button className="cancel-button" onClick={() => setDoubleCheck(null)}>
+              취소
+            </button>
+            <div>{children}</div>
           </div>
         </Container>
       </Backdrop>
@@ -59,9 +55,7 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
             <div className="title-box">{title}</div>
             <div className="question-box">{question}</div>
           </div>
-          <div className="confirm-box">
-            <div className="confirm-button">{children}</div>
-          </div>
+          <div className="confirm-box">{children}</div>
         </Container>
       </Backdrop>
     </>
@@ -73,10 +67,10 @@ const Container = styled.div`
   top: 40%;
   left: 50%;
   transform: translate(-50%, -40%);
-  width: 320px;
-  height: 100px;
+  width: 340px;
+  height: 130px;
   background-color: #fff;
-  padding: 20px 20px 12px;
+  padding: 24px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   display: flex;
@@ -84,16 +78,14 @@ const Container = styled.div`
   justify-content: space-between;
   .title-box {
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    color: ${({ theme }) => theme.colors.black};
   }
   .question-box {
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    color: ${({ theme }) => theme.colors.black};
   }
   .confirm-box {
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: flex-end;
     gap: 24px;
     .cancel-button {
       font-size: ${({ theme }) => theme.fontSizes.lg};
