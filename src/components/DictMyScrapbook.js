@@ -1,101 +1,95 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../styles/css/DictMyScrapbook.css'
+import swal from 'sweetalert'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
-import Typography from '@mui/material/Typography'
+import { useDispatch, useSelector } from 'react-redux'
+import { history } from '../redux/ConfigureStore'
+import { likeApi } from '../shared/api'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { ReactComponent as EmptyBookMarkIcon } from '../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as DictLinkCopyIcon } from '../styles/icons/링크복사_24dp.svg'
+import { dictApi } from '../shared/api'
 
-export default function DictMyScrapbook() {
+const DictMyScrapbook = (props) => {
+  const dispatch = useDispatch()
+
   const [expanded, setExpanded] = React.useState(false)
+  const [scrapList, setScrapList] = React.useState([])
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
 
+  const DictMySrcapListDB = async (userId) => {
+    let response = await dictApi.dictMyScrapList(userId)
+
+    setScrapList(response.data.data)
+    console.log(response)
+    console.log(response.data.data)
+  }
+
+  React.useEffect((userId) => {
+    DictMySrcapListDB(userId)
+  }, [])
+
+  const currentUrl = window.location.href
+
+  const [copyLink, setCopyLink] = useState(false)
+
+  const closeCopied = () => {
+    setTimeout(() => {
+      setCopyLink(false)
+    }, 2000)
+  }
+
+  const handleCopy = () => {
+    setCopyLink(true)
+    closeCopied()
+    swal('링크가 복사되었습니다.', { timer: 1500 })
+  }
+
   return (
     <>
-      <div className="DictMyScrapbook">
-        <Accordion sx={{ backgroundColor: 'white' }} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header">
-            <div className={expanded === 'panel1' ? 'DictMyScrapTitle activeTitle' : 'DictMyScrapTitle'}>단어</div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className="DictMyScrapSummarySection">
-              <div className="DictMyScrapSummaryText">한줄설명</div>
-              <div className="DictMyScrapSummary">한줄설명입니다</div>
-            </div>
-            <div className="DictMyScrapDescriptionSection">
-              <div className="DictMyScrapDescriptionText">상세설명</div>
-              <div className="DictMyScrapDescription">상세설명입니다</div>
-            </div>
-            <div className="DictMyScrapInfoSection">
-              <div className="DictMyScrapInfo">
-                <FillBookMarkIcon fill="#878C92" />
-                <div className="DictMyScrapCount">스크랩</div>
+      {scrapList.map((scrapList) => (
+        <div className="DictMyScrapbook" key={scrapList.id}>
+          <Accordion sx={{ backgroundColor: 'white' }} expanded={expanded === `panel${scrapList.dictId}`} onChange={handleChange(`panel${scrapList.dictId}`)}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header">
+              <div className={expanded === `panel${scrapList.dictId}` ? 'DictMyScrapTitle activeTitle' : 'DictMyScrapTitle'}>{scrapList.title}</div>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div
+                onClick={() => {
+                  history.push(`/dict/detail/${scrapList.dictId}`)
+                }}
+              >
+                <div className="DictMyScrapSummarySection">
+                  <div className="DictMyScrapSummaryText">한줄설명</div>
+                  <div className="DictMyScrapSummary">{scrapList.summary}</div>
+                </div>
+                <div className="DictMyScrapDescriptionSection">
+                  <div className="DictMyScrapDescriptionText">상세설명</div>
+                  <div className="DictMyScrapDescription">{scrapList.meaning}</div>
+                </div>
               </div>
-              <div className="DictLinkCopyButton">
-                <DictLinkCopyIcon fill="#878C92" />
+              <div className="DictMyScrapInfoSection">
+                <div className="DictMyScrapInfo">
+                  <FillBookMarkIcon fill="#878C92" />
+                  <div className="DictMyScrapCount">스크랩</div>
+                </div>
+                <CopyToClipboard className="DictLinkCopyButton" onCopy={handleCopy} text={currentUrl}>
+                  <DictLinkCopyIcon fill="#878C92" />
+                </CopyToClipboard>
               </div>
-            </div>
-          </AccordionDetails>
-        </Accordion>
-      </div>
-      <div className="DictMyScrapbook">
-        <Accordion sx={{ backgroundColor: 'white' }} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
-            <div className={expanded === 'panel2' ? 'DictMyScrapTitle activeTitle' : 'DictMyScrapTitle'}>단어</div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className="DictMyScrapSummarySection">
-              <div className="DictMyScrapSummaryText">한줄설명</div>
-              <div className="DictMyScrapSummary">한줄설명입니다</div>
-            </div>
-            <div className="DictMyScrapDescriptionSection">
-              <div className="DictMyScrapDescriptionText">상세설명</div>
-              <div className="DictMyScrapDescription">상세설명입니다</div>
-            </div>
-            <div className="DictMyScrapInfoSection">
-              <div className="DictMyScrapInfo">
-                <FillBookMarkIcon fill="#878C92" />
-                <div className="DictMyScrapCount">스크랩</div>
-              </div>
-              <div className="DictLinkCopyButton">
-                <DictLinkCopyIcon fill="#878C92" />
-              </div>
-            </div>
-          </AccordionDetails>
-        </Accordion>
-      </div>
-      <div className="DictMyScrapbook">
-        <Accordion sx={{ backgroundColor: 'white' }} expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3bh-content" id="panel3bh-header">
-            <div className={expanded === 'panel3' ? 'DictMyScrapTitle activeTitle' : 'DictMyScrapTitle'}>단어</div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className="DictMyScrapSummarySection">
-              <div className="DictMyScrapSummaryText">한줄설명</div>
-              <div className="DictMyScrapSummary">한줄설명입니다</div>
-            </div>
-            <div className="DictMyScrapDescriptionSection">
-              <div className="DictMyScrapDescriptionText">상세설명</div>
-              <div className="DictMyScrapDescription">상세설명입니다</div>
-            </div>
-            <div className="DictMyScrapInfoSection">
-              <div className="DictMyScrapInfo">
-                <FillBookMarkIcon fill="#878C92" />
-                <div className="DictMyScrapCount">스크랩</div>
-              </div>
-              <div className="DictLinkCopyButton">
-                <DictLinkCopyIcon fill="#878C92" />
-              </div>
-            </div>
-          </AccordionDetails>
-        </Accordion>
-      </div>
+            </AccordionDetails>
+          </Accordion>
+        </div>
+      ))}
     </>
   )
 }
+
+export default DictMyScrapbook

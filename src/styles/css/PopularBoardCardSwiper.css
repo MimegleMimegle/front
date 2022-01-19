@@ -1,7 +1,18 @@
+.popularBoardCardSwiper {
+  background-color: #fbfafa;
+  width: fit-content;
+  height: fit-content;
+
+  -webkit-appearance: none;
+}
+
 .PopularBoardCard {
   position: relative;
   width: 100%;
   height: 300px;
+  background-color: #fbfafa;
+
+  -webkit-appearance: none;
 }
 
 .PopularBoardCard_1 {
@@ -9,7 +20,7 @@
   border-radius: 0 0 0 0;
   top: 0px;
   left: 0px;
-  background-color: white;
+  background-color: #fbfafa;
   width: 180px;
   height: 240px;
   margin: 10px;
@@ -17,6 +28,8 @@
   object-fit: cover;
 
   z-index: 2;
+
+  -webkit-appearance: none;
 }
 .PopularBoardCard_1:hover {
   cursor: pointer;
@@ -33,17 +46,21 @@
   position: absolute;
 
   z-index: 1;
+
+  -webkit-appearance: none;
 }
 
 .PopularBoardCard_Image {
   width: fit-content;
   height: fit-content;
+
+  -webkit-appearance: none;
 }
 
 .swiper-slide {
   text-align: center;
   font-size: 16px;
-  background: white;
+  background-color: none;
   /* Center slide text vertically */
   display: -webkit-box;
   display: -ms-flexbox;
@@ -59,6 +76,7 @@
   align-items: center;
 
   width: 100px;
+  -webkit-appearance: none;
 }
 
 .swiper-slide img {
@@ -66,4 +84,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+
+  -webkit-appearance: none;
 }

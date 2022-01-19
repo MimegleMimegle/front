@@ -74,7 +74,7 @@ const Container = styled.div`
   width: 100%;
   height: fit-content;
   /* border-bottom: 1px solid grey; */
-  background-color: white;
+  background-color: #fbfafa;
   padding: 0px 0px;
   box-sizing: border-box;
 `
@@ -82,8 +82,8 @@ const Container = styled.div`
 //글자를 입력하면 RemoveIcon이 나오게 되고 누르면 input의 value값이 사라집니다
 const RemoveIcon = styled.span`
   ${horizontalCenter}
-  right: 10px;
-  width: 40px;
+  right: 30px;
+  width: 25px;
   height: 20px;
   background-position: -389px -29px;
   display: inline-block;

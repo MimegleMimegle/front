@@ -40,7 +40,6 @@ const Container = styled.div`
   .question-box {
     width: 150px;
     height: 142px;
-    border-radius: 10px;
     position: absolute;
     border: 2px solid ${({ theme }) => theme.colors.black};
   }
@@ -54,9 +53,9 @@ const Container = styled.div`
     padding: 10px;
   }
   .box2 {
-    top: 4px;
-    left: 4px;
-    background-color: ${(props) => (props.index === 0 ? '#FFD400' : props.index === 1 ? '#F97D39' : '#6698FC')};
+    top: 6px;
+    left: 6px;
+    background-color: ${(props) => (props.index === 0 ? '#FFD400' : props.index === 1 ? '#F97D39' : props.index === 2 ? '#6698FC' : '#7b7b7b')};
   }
 `
 

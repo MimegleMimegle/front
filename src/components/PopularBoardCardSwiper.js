@@ -38,8 +38,8 @@ const PopularBoardCardSwiper = (props) => {
   return (
     <>
       <Swiper
-        slidesPerView={4}
-        spaceBetween={0}
+        slidesPerView={3}
+        spaceBetween={10}
         keyboard={{
           enabled: true,
         }}
@@ -59,7 +59,7 @@ const PopularBoardCardSwiper = (props) => {
         }}
         freeMode={false}
         loop={false}
-        className="mySwiper"
+        className="popularBoardCardSwiper"
       >
         {popularImages.map((popularImages) => (
           <SwiperSlide>

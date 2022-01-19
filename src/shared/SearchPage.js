@@ -56,7 +56,7 @@ const SearchBarPage = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 10px;
-  background-color: white;
+  background-color: #fbfafa;
   position: relative;
   overflow: auto;
 `

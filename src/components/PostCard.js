@@ -55,16 +55,20 @@ const PostCard = ({ question }) => {
       <FullWrap>
         <Wrap questionList={question} onClick={onC}>
           <Grid flex_align>
-            <UserImg src={question.profileImageUrl} alt="" />
+            <CuriousQ>Q</CuriousQ>
+            {/* <UserImg src={question.profileImageUrl} alt="" /> */}
             <div className="profile-box">
-              <Writer>{question.writer}</Writer>
-              <div className="created-date">
+            <Title>{question && question.title}</Title>
+
+              {/* <Writer>{question.writer}</Writer> */}
+              {/* <div className="created-date">
                 <CreatedAt>{question.createdAt.split('T')[0]}</CreatedAt>
                 <CreatedAt>{hour.split(':')[0] + ':' + hour.split(':')[1]}</CreatedAt>
-              </div>
+              </div> */}
             </div>
           </Grid>
-          <Title>{question && question.title}</Title>
+          <Content>{question&&question.content}</Content>
+          {/* <Title>{question && question.title}</Title> */}
           <Icon>
             <IconBox>
               <ViewIcon fill="#333" />
@@ -78,14 +82,14 @@ const PostCard = ({ question }) => {
               <CommentIcon fill="#333" />
               <Number>{question && question.commentCnt}</Number>
             </IconBox>
-            <IconBox>{question.isComplete ? <BiBadgeCheck size="20" /> : <BiBadge size="20" />}</IconBox>
+            {/* <IconBox>{question.isComplete ? <BiBadgeCheck size="20" /> : <BiBadge size="20" />}</IconBox> */}
           </Icon>
         </Wrap>
-        {question.thumbNail ? (
+        {/* {question.thumbNail ? (
           <ThumbNailContainer>
             <ThumbNail className="uploadimg" src={question && question.thumbNail} alt="" />
           </ThumbNailContainer>
-        ) : null}
+        ) : null} */}
       </FullWrap>
     </>
   )
@@ -97,7 +101,10 @@ const FullWrap = styled.div`
   padding: 16px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #e5e5e5;
+  border:2px solid black;
+  margin: 16px;
+  width: 398px;
+  height: 170px;
 `
 
 const Wrap = styled.div`
@@ -114,6 +121,21 @@ const Wrap = styled.div`
       display: flex;
     }
   }
+`
+
+const CuriousQ = styled.div`
+  background: #FF8E00;
+  width: 40px;
+  height:40px;
+  border: 2px solid black;
+  border-radius:150px;
+  font-family:'YdestreetB';
+  font-syled: normal;
+  font-weigt:bold;
+  line-height:26px;
+  font-size:20px;
+  padding:7px 11px 7px 9px;
+
 `
 
 const UserImg = styled.div`
@@ -138,11 +160,25 @@ const CreatedAt = styled.div`
   margin: 0 5px 0 0;
 `
 
-const Title = styled.h2`
-  width: 100%;
-  padding: 16px 0 10px;
+const Title = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-weight: 500;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  margin: 0 12px;
+`
+
+const Content = styled.div`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  margin:16px 0;
 `
 
 const Icon = styled.div`

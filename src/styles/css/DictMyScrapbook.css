@@ -17,6 +17,7 @@
   height: 100%;
   margin-bottom: 10px;
 
+  background-color: white;
   border: 2px solid #000000;
 }
 
@@ -89,7 +90,7 @@
 }
 
 .DictMyScrapDescription {
-  width: 250px;
+  width: 200px;
   height: fit-content;
   overflow-wrap: break-word;
   display: flex;

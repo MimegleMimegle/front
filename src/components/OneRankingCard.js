@@ -18,8 +18,8 @@ const OneRankingCard = ({ rank, index, first }) => {
         </div>
         <p className="nickname">{rank?.nickname}</p>
         <Grid flex_center>
-          <AiOutlineThunderbolt />
-          <span className="count">{rank?.postCount}</span>
+          {/* <AiOutlineThunderbolt /> */}
+          <span className="count">쳌 {rank?.postCount}</span>
         </Grid>
       </Container>
     </>
@@ -27,20 +27,24 @@ const OneRankingCard = ({ rank, index, first }) => {
 }
 
 const Container = styled.div`
-  width: ${(props) => (props.first ? '110px' : '80px')};
+  max-width: ${(props) => (props.first ? '120px' : '120px')};
+  min-width: ${(props) => (props.first ? '120px' : '120px')};
+  width: 100%;
   height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: end;
   .nickname {
-    font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    padding: 10px 0 2px;
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    padding: 20px 0 5px;
   }
   .count {
     font-size: ${({ theme }) => theme.fontSizes.base};
-    font-weight: 500;
+    font-weight: 700;
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
   }
 `
 
