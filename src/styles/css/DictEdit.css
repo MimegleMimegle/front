@@ -58,12 +58,14 @@
   flex-direction: row;
   width: 100%;
   height: fit-content;
-  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  border-top: 2px solid #e5e5e5;
+  border-bottom: 2px solid #e5e5e5;
+  background-color: white;
   padding: 15px 0 15px 20px;
 }
 
 .DictCardEditInputTitleGuideText {
-  width: 60px;
+  width: 70px;
   height: 25px;
   display: flex;
   align-self: flex-start;
@@ -71,8 +73,8 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .DictCardEditInputTitle {
@@ -96,12 +98,13 @@
   align-items: center;
   width: 100%;
   height: fit-content;
-  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  border-bottom: 2px solid #e5e5e5;
+  background-color: white;
   padding: 20px 0 20px 20px;
 }
 
 .DictCardEditInputSummaryGuideText {
-  width: 60px;
+  width: 70px;
   height: 25px;
   display: flex;
   align-self: flex-start;
@@ -109,8 +112,8 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .DictCardEditInputSummary {
@@ -135,12 +138,13 @@
   flex-direction: row;
   width: 100%;
   height: fit-content;
-  border-bottom: 0.5px solid rgba(128, 128, 128, 0.3);
+  border-bottom: 2px solid #e5e5e5;
+  background-color: white;
   padding: 20px 0 20px 20px;
 }
 
 .DictCardEditInputContentGuideText {
-  width: 60px;
+  width: 70px;
   height: 25px;
   display: flex;
   align-self: flex-start;
@@ -148,8 +152,8 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .DictCardEditInputContent {
