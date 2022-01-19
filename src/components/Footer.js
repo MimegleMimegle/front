@@ -24,7 +24,7 @@ const Footer = (props) => {
     return
   }
   const activeStyle = {
-    color: '#6698FC',
+    color: '#00A0FF',
   }
   return (
     <>
@@ -97,7 +97,7 @@ const NavBar = styled.nav`
   height: 70px;
   background-color: ${({ theme }) => theme.colors.yellow};
   border-radius: 28px;
-  border: 2px solid #111;
+  border: 2px solid #000;
   padding: 4px 10px 0;
   z-index: 5000;
 
