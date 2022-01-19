@@ -2,13 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { actionCreators as commentActions } from '../redux/modules/comment'
-import { history } from '../redux/ConfigureStore'
+import { ReactComponent as EmptyHeartIcon } from '../styles/icons/하트 비활성_24dp.svg'
+import { ReactComponent as FullHeartIcon } from '../styles/icons/하트 활성_24dp.svg'
 import { dictQuestionApi } from '../shared/api'
 import ConfirmModal from '../components/modal/ConfirmModal'
 import AlertModal from '../components/modal/AlertModal'
 import { ReactComponent as DustBinIcon } from '../styles/icons/delete_black_18dp.svg'
 import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
 import Grid from '../elements/Grid'
+import { commentApi } from '../shared/api'
 
 const OneComment = (props) => {
   const dispatch = useDispatch()
@@ -22,11 +24,13 @@ const OneComment = (props) => {
 
   console.log(props)
 
-
+  const [isLiked, setIsLiked] = React.useState(props.isLike)
+  const [likeCount, setLikeCount] = React.useState(props.likeCount)
   const [isSelected, setIsSelected] = React.useState(props.isSelected)
   const [selectModal, setSelectModal] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [alreadySelectModal, setAlreadySelectModal] = React.useState(false)
+
 
   const handleCloseAlreadySelectModal = () => {
     setTimeout(()=> {
@@ -37,6 +41,32 @@ const OneComment = (props) => {
   const handleAlreadySelectModal = () => {
     setAlreadySelectModal(true)
     handleCloseAlreadySelectModal()
+  }
+
+  const handleClickLike = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isLiked) {
+      await commentApi
+        .likeComment(commentId)
+        .then((response) => {
+          setIsLiked(false)
+          setLikeCount(likeCount - 1)
+        })
+        .catch((error) => {
+          console.log('답변 좋아요 취소 문제 발생', error.response)
+        })
+    } else {
+      await commentApi
+        .likeComment(commentId)
+        .then((response) => {
+          setIsLiked(true)
+          setLikeCount(likeCount + 1)
+        })
+        .catch((error) => {
+          console.log('답변 좋아요 문제 발생', error.response)
+        })
+    }
   }
 
   const handleClickIsSelected = async (e) => {
@@ -83,11 +113,8 @@ const OneComment = (props) => {
         <div style={{ display: 'flex' }}>
           <Commentprofile src={props.profileImageUrl} alt="" />
           <div style={{ display: 'flex', flexDirection: 'column', margin: '0 0 0 16px' }}>
-            <Grid flex_align>
-              <UserName>{props.commentWriter}</UserName>
-              <CreatedAt>{createdAt}</CreatedAt>
-            </Grid>
-            <Content>{props.commentContent}</Content>
+            <UserName>{props.commentWriter}</UserName>
+            <CreatedAt>{createdAt}</CreatedAt>
           </div>
         </div>
           
@@ -102,7 +129,6 @@ const OneComment = (props) => {
             <DeleteButton onClick={handleClickIsSelected}>채택</DeleteButton>
           </ConfirmModal>
         )}
-
         {props.selectedComment!==commentId && commentWriterId === username? (
           <button style={{ height: '100%' }} onClick={handleShowModal}>
             <DustBinIcon />
@@ -112,27 +138,33 @@ const OneComment = (props) => {
         <AlertModal showModal={alreadySelectModal}>
             답변 채택 후 변경할 수 없습니다.
         </AlertModal>
-      )}
-        {showModal && (
+        )}
+      </Wrap>
+      <Content>{props.commentContent}</Content>
+      <IconBox>
+            {isLiked ? <FullHeartIcon fill="#333" onClick={handleClickLike} /> : <EmptyHeartIcon fill="#333" onClick={handleClickLike} />}
+            <Number className="like-count">{likeCount}</Number>
+      </IconBox>
+      {showModal && (
           <ConfirmModal question="댓글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
             <DeleteButton onClick={delComment}>삭제</DeleteButton>
           </ConfirmModal>
         )}
-      </Wrap>
     </>
   )
 }
 
 const Wrap = styled.div`
-  padding: 0 16px 16px;
   display: flex;
   justify-content: space-between;
 `
 
 const Commentprofile = styled.img`
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   border-radius: 150px;
+  border: 2px solid black;
+  margin: 20px 0 20px 20px
 `
 
 const UserName = styled.div`
@@ -148,6 +180,16 @@ const CreatedAt = styled.div`
 `
 const Content = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lg};
+`
+const IconBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin:16px 0;
+`
+const Number = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: #333;
+  margin: 0 9.5px 0 5px;
 `
 
 const DeleteButton = styled.button`
