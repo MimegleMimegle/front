@@ -11,11 +11,12 @@ import Grid from '../../elements/Grid'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import ImageWrapper from '../../components/image/ImageWrapper'
 import ShareBottomSheet from '../../components/ShareBottomSheet'
-import { MdShare } from 'react-icons/md'
-import { HiOutlineHeart } from 'react-icons/hi'
-import { HiHeart } from 'react-icons/hi'
-import { IoCloseOutline } from 'react-icons/io5'
-import { MdOutlineDelete } from 'react-icons/md'
+
+import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
+import { ReactComponent as DeleteIcon } from '../../styles/icons/delete_black_18dp.svg'
+import { ReactComponent as ShareIcon } from '../../styles/icons/공유_24dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/하트 비활성_24dp.svg'
+import { ReactComponent as FullHeartIcon } from '../../styles/icons/하트 활성_24dp.svg'
 
 const ImageDetail = (props) => {
   const dispatch = useDispatch()
@@ -103,17 +104,15 @@ const ImageDetail = (props) => {
   return (
     <>
       <ImageWrapper>
-        <Grid flex_between padding="0 10px">
-          <button
+        <Grid flex_between padding="0 16px">
+          <CloseIcon
+            className="icon"
             onClick={() => {
               history.goBack()
             }}
-            style={{ padding: '0' }}
-          >
-            <IoCloseOutline style={{ fontSize: '24px' }} />
-          </button>
+          />
         </Grid>
-        <Grid flex_between padding="10px">
+        <Grid flex_between padding="16px">
           <Grid flex_align>
             <ProfileImage src={imageData.profileImageUrl} />
             <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'column' }}>
@@ -122,21 +121,15 @@ const ImageDetail = (props) => {
             </div>
           </Grid>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button onClick={handleShareVisible}>
-              <MdShare style={{ fontSize: '20px' }} />
-            </button>
-            {imageData && profile && imageData.writer === profile.nickname && (
-              <button onClick={handleShowModal}>
-                <MdOutlineDelete style={{ fontSize: '22px' }} />
-              </button>
-            )}
+            <ShareIcon className="icon" onClick={handleShareVisible} style={{ margin: '0 16px 0 0' }} />
+            {imageData && profile && imageData.writer === profile.nickname && <DeleteIcon className="icon" width="24px" height="24px" onClick={handleShowModal} />}
           </div>
         </Grid>
-        <Grid flex_align height="70%" overflow="hidden">
+        <Grid height="fit-content" overflow="hidden">
           <img src={imageData.thumbNail} style={{ width: '100%', objectFit: 'cover' }} />
         </Grid>
-        <Grid flex_align padding="5px 10px 0">
-          <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
+        <Grid flex_align padding="16px">
+          {isLiked ? <FullHeartIcon className="icon" onClick={handleClickLike} /> : <EmptyHeartIcon className="icon" onClick={handleClickLike} />}
           <ImageLikeCount>{likeCount}</ImageLikeCount>
         </Grid>
         <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />
@@ -163,9 +156,7 @@ const ProfileImage = styled.div`
 `
 
 const ImageWriter = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
 `
 const ImageCreatedAt = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.small};
@@ -174,6 +165,7 @@ const ImageCreatedAt = styled.p`
 const ImageLikeCount = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.white};
+  padding: 0 0 0 5px;
 `
 
 const DeleteButton = styled.button`

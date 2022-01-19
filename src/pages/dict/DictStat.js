@@ -13,6 +13,7 @@ import OneRankingCard from '../../components/OneRankingCard'
 import DictChart from '../../components/DictChart'
 import OneQnaQuestion from '../../components/OneQnaQuestion'
 import Grid from '../../elements/Grid'
+import Title from '../../elements/Title'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import 'swiper/swiper.min.css'
@@ -53,7 +54,7 @@ const DictStat = (props) => {
         {!loading ? (
           <>
             <RankSection>
-              <span className="section-title">열정적인 밈글러 top3</span>
+              <Title>열정적인 밈글러 top3</Title>
               <Grid flex_around padding="24px 0 0">
                 <OneRankingCard rank={rankList[1]} index={1} />
                 <OneRankingCard rank={rankList[0]} index={0} first />
@@ -61,7 +62,7 @@ const DictStat = (props) => {
               </Grid>
             </RankSection>
             <ChartSection>
-              <span className="section-title">위클리 리포트</span>
+              <Title>위클리 리포트</Title>
               <Grid padding="16px 0 0">
                 <div className="chart-container">
                   <DictChart chartData={chartData} />
@@ -80,7 +81,7 @@ const DictStat = (props) => {
             <QNASection>
               <Grid flex_center column>
                 <Grid>
-                  <span className="section-title">답변을 기다리고 있어요!</span>
+                  <Title>답변을 기다리고 있어요!</Title>
                   <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
                     {remainedQuestion &&
                       remainedQuestion.map((question, index) => {
@@ -93,7 +94,7 @@ const DictStat = (props) => {
                   </StyledSwiper>
                 </Grid>
                 <Grid>
-                  <span className="section-title">따끈따끈한 답변이 등록됐어요!</span>
+                  <Title>따끈따끈한 답변이 등록됐어요!</Title>
                   <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
                     {completedQuestion &&
                       completedQuestion.map((question, index) => {
@@ -127,15 +128,6 @@ const Wrapper = styled.div`
   padding: 56px 0 0;
   display: flex;
   flex-direction: column;
-  .section-title {
-    width: fit-content;
-    font-family: 'YdestreetB';
-    font-style: normal;
-    font-weight: normal;
-    font-size: ${({ theme }) => theme.fontSizes.xxl};
-    line-height: normal;
-    background-image: linear-gradient(transparent 70%, #ffe330 30%);
-  }
 `
 const RankSection = styled.section`
   display: flex;
