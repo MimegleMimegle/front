@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { userApi } from '../../shared/api'
@@ -55,19 +55,26 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   }
 
   const checkNickname = async () => {
-    await userApi
-      .checkNickname(nickname)
-      .then((response) => {
-        if (response.data.result === true) {
-          setDoubleCheck(true)
-          setCheckedNickname(nickname)
-        } else if (response.data.result === false) {
-          setDoubleCheck(false)
-        }
-      })
-      .catch((error) => {
-        console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
-      })
+    if (nickname !== '') {
+      if (isValidNickname) {
+        await userApi
+          .checkNickname(nickname)
+          .then((response) => {
+            if (response.data.result === true) {
+              setDoubleCheck(true)
+              setCheckedNickname(nickname)
+            } else if (response.data.result === false) {
+              setDoubleCheck(false)
+            }
+          })
+          .catch((error) => {
+            console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
+          })
+      } else if (!isValidNickname) {
+        setValidAlert(true)
+        setTimeout(() => setValidAlert(false), 2000)
+      }
+    }
   }
 
   const _editProfile = async () => {
@@ -95,7 +102,8 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
         setDoubleCheckAlert(true)
         setTimeout(() => setDoubleCheckAlert(false), 2000)
       }
-      if (isValidNickname === false) {
+      if (!isValidNickname) {
+        setDoubleCheckAlert(false)
         setValidAlert(true)
         setTimeout(() => setValidAlert(false), 2000)
       }
@@ -108,10 +116,13 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
     }
   })
 
+  const handleOverlayClick = useCallback(() => setShowModal(false), [setShowModal])
+  const handleContentClick = useCallback((e) => e.stopPropagation(), [])
+
   return (
     <>
-      <Backdrop open={showModal} sx={{ zIndex: '10000' }}>
-        <ModalContainer>
+      <Backdrop open={showModal} sx={{ zIndex: '10000' }} onClick={handleOverlayClick}>
+        <ModalContainer onClick={handleContentClick}>
           <Grid flex_center column position="relative">
             <Grid flex_between padding="8px 10px 0 4px">
               <button
@@ -119,7 +130,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
                   setShowModal(false)
                 }}
               >
-                <IoCloseOutline style={{ fontSize: '28px' }} />
+                <IoCloseOutline style={{ fontSize: '26px' }} />
               </button>
               <button className="submit-button" onClick={_editProfile}>
                 완료
@@ -128,16 +139,17 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
             <ProfileImagePreview src={imageFile ? imageFile : my.profileImageUrl} />
             <div className="file">
               <label htmlFor="file" className="upload-label">
-                <MdPhotoCamera style={{ fontSize: '20px', marginTop: '4px' }} />
+                <MdPhotoCamera style={{ fontSize: '20px' }} />
               </label>
               <input type="file" id="file" className="upload-file" ref={fileInput} onChange={handleChangeFile} accept="image/jpeg, image/jpg, image/png" />
             </div>
-            <div style={{ padding: '20px 0 0' }}>
-              <Grid flex_center>
+            <Grid flex_center column>
+              <Grid flex_center padding="32px 0 16px">
                 <input
                   type="text"
                   className={`input-nickname ${isValidNickname === false ? 'fail' : ''}`}
                   maxLength={10}
+                  placeholder="닉네임을 입력해주세요"
                   onChange={handleChangeNickname}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
@@ -147,11 +159,9 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
                 />
                 <DoubleCheckButton onClick={checkNickname}>중복확인</DoubleCheckButton>
               </Grid>
-              <ValidationBox>
-                <p className="validation-length">10자 이하로 입력해주세요.</p>
-                <p className="validation-etc">(한글, 영어, 대소문자, 숫자 사용 가능)</p>
-              </ValidationBox>
-            </div>
+              <p className="validation-length">10자 이하로 입력해주세요.</p>
+              <p className="validation-etc">(한글, 영어, 대소문자, 숫자 사용 가능)</p>
+            </Grid>
           </Grid>
         </ModalContainer>
       </Backdrop>
@@ -166,17 +176,11 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
           <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
         </DoubleCheckModal>
       )}
-      {doubleCheckAlert && (
-        <AlertModal showModal={doubleCheckAlert}>
-          <AlertText>먼저 중복확인 버튼을 클릭해주세요! 😉</AlertText>
-        </AlertModal>
-      )}
+      {doubleCheckAlert && <AlertModal showModal={doubleCheckAlert}>먼저 중복확인 버튼을 클릭해주세요!</AlertModal>}
       {validAlert && (
         <AlertModal showModal={validAlert}>
-          <AlertText>
-            변경하려는 닉네임이 양식과 맞지 않는 것 같아요! <br />
-            다시 한 번 확인해주시겠어요? 🤔
-          </AlertText>
+          입력한 닉네임이 양식과 맞지 않습니다! <br />
+          다시 한 번 확인해주시겠어요?
         </AlertModal>
       )}
     </>
@@ -187,18 +191,17 @@ const ModalContainer = styled.div`
   max-width: 360px;
   min-width: 280px;
   width: 100%;
-  height: 170px;
+  height: 200px;
   background-color: ${({ theme }) => theme.colors.white};
   position: absolute;
-  top: 110px;
+  top: 30%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -30%);
   display: flex;
   flex-direction: column;
   align-items: center;
   .submit-button {
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    font-weight: 500;
     color: ${({ theme }) => theme.colors.grey};
     transition: color 0.3s ease-in-out;
     &:hover {
@@ -209,16 +212,18 @@ const ModalContainer = styled.div`
     .upload-label {
       display: inline-block;
       position: absolute;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       top: 15px;
-      left: 60%;
-      transform: translateX(-60%);
+      left: 63%;
+      transform: translateX(-63%);
       overflow: hidden;
       border: 1px solid ${({ theme }) => theme.colors.black};
       border-radius: 20px;
       background-color: ${({ theme }) => theme.colors.white};
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
     }
     .upload-file {
@@ -243,10 +248,6 @@ const ModalContainer = styled.div`
       border: 1px solid #e25c3d;
     }
   }
-`
-
-const ValidationBox = styled.div`
-  padding: 10px 0;
   .validation-length {
     font-size: ${({ theme }) => theme.fontSizes.base};
   }
@@ -258,13 +259,13 @@ const ValidationBox = styled.div`
 
 const ProfileImagePreview = styled.div`
   position: absolute;
-  top: -40px;
+  top: -50px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
-  border-radius: 40px;
+  width: 100px;
+  height: 100px;
+  border: 2px solid ${({ theme }) => theme.colors.black};
+  border-radius: 100px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
@@ -277,16 +278,10 @@ const ConfirmButton = styled.button`
 `
 
 const DoubleCheckButton = styled.button`
-  font-size: ${({ theme }) => theme.fontSizes.small};
-  font-family: 'Pretendard Variable';
-  font-style: normal;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   font-weight: 700;
   margin: 0 0 0 12px;
   text-decoration: underline;
-`
-
-const AlertText = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
 `
 
 export default EditProfile

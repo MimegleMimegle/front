@@ -37,15 +37,14 @@ const PostList = (props) => {
 
   return (
     <>
-      <Header location="밈 사전" />
-      {!loading ? (
-        <>
-          <Container>
-            <Wrap>
-              <div style={{height: '17px'}}/>
-              <DictNavBar />
-
               {/* <Empty>
+      <Header location="오픈 밈사전" />
+      <Container>
+        <Wrap>
+          <DictNavBar />
+          {!loading ? (
+            <>
+              <Empty>
                 <Addbtn
                   onClick={() => {
                     history.push('/dict/question/write')
@@ -63,14 +62,15 @@ const PostList = (props) => {
                 })}
 
               <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-            </Wrap>
-          </Container>
-        </>
-      ) : (
-        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <CircularProgress color="inherit" />
-        </div>
-      )}
+            </>
+          ) : (
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <CircularProgress color="inherit" />
+            </div>
+          )}
+        </Wrap>
+      </Container>
+
       <Footer />
     </>
   )
@@ -80,6 +80,7 @@ export default PostList
 
 const Container = styled.div`
   padding: 56px 0 0;
+  height: 100%;
   position: relative;
 `
 
@@ -92,6 +93,7 @@ const SearchPostDiv = styled.div`
 const Wrap = styled.div`
   /* position: absolute; */
   width: 100%;
+  height: 100%;
   padding: 0 0 80px;
 `
 

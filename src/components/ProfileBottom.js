@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
+import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 
 import Grid from '../elements/Grid'
 import BottomPopup from './BottomPopup'
@@ -29,12 +30,12 @@ const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
 
   return (
     <>
-      <BottomPopup isOpen={showProfile} onClose={() => setShowProfile(false)} heightPixel={200}>
+      <BottomPopup isOpen={showProfile} onClose={() => setShowProfile(false)} heightPixel={220}>
         <Container>
-          <Grid flex_center>
-            <Handler />
-          </Grid>
-          <Grid flex_center column padding="16px 0 10px" borderBottom="1px solid #e5e5e5">
+          <CloseButtonBox>
+            <CloseIcon className="close-icon" onClick={() => setShowProfile(false)} fill="#444" />
+          </CloseButtonBox>
+          <Grid flex_center column padding="0 0 10px" borderBottom="1px solid #e5e5e5">
             <ProfileImage src={profile?.profileImage} />
             <Nickname>{profile?.nickname}</Nickname>
           </Grid>
@@ -64,11 +65,10 @@ const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
 }
 
 const Container = styled.div`
-  padding: 5px 0 0;
   width: 100%;
-  height: 200px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  height: 220px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
   z-index: 10001;
@@ -78,11 +78,17 @@ const Container = styled.div`
   justify-content: center;
 `
 
-const Handler = styled.div`
-  width: 40px;
-  height: 5px;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.line};
+const CloseButtonBox = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding: 10px 16px;
+  .close-icon {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+  }
 `
 
 const ProfileImage = styled.div`
@@ -107,7 +113,7 @@ const Button = styled.button`
   width: 100px;
   height: auto;
   font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-weight: 500;
+  font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: center;

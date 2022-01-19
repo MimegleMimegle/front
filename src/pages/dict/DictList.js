@@ -17,6 +17,7 @@ import Grid from '../../elements/Grid'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import { RiEditLine } from 'react-icons/ri'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
@@ -64,22 +65,14 @@ const DictList = (props) => {
             onClick={() => {
               showSearchBar()
             }}
-          > */}
-        <SpeedDialButton />
+          ></div>
         </div>
-        </div> */}
         <div className="DictNavBarSection">
           <DictNavBar />
         </div>
         <SearchBarSection>
           <SearchPage />
         </SearchBarSection>
-        {/* <div className="NewDictAddButtonSection">
-          <div className="NewDictAddButton_1" onClick={() => history.push('/dict/write')}>
-            밈 단어 등록
-          </div>
-          <div className="NewDictAddButton_2"></div>
-        </div> */}
         <div className="TodayDictListGuide">
           <div className="TodayDictListText">오늘의 밈 카드</div>
           <div className="TodayDictListDot" />
@@ -114,6 +107,9 @@ const DictList = (props) => {
         </div>
       </div>
       <Footer />
+      <SpeedDialButton _onClick={() => history.push('/dict/write')}>
+        <RiEditLine size="28" fill="#FFFFFF" />
+      </SpeedDialButton>
     </>
   )
 }

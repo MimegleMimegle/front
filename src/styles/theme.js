@@ -5,20 +5,20 @@ const pixelToRem = (size) => `${size / 16}rem`
 
 // font size를 객체로 반환해주자.
 const fontSizes = {
-  small: pixelToRem(9),
-  base: pixelToRem(12),
-  lg: pixelToRem(14),
-  xl: pixelToRem(16),
-  xxl: pixelToRem(18),
+  small: pixelToRem(12),
+  base: pixelToRem(14),
+  lg: pixelToRem(16),
+  xl: pixelToRem(18),
+  xxl: pixelToRem(22),
 }
 
 // 자주 사용하는 색을 객체로 만들자.
 const colors = {
   black: '#000000',
   white: '#FFFFFF',
-  yellow: '#FFD400',
-  blue: '#6698FC',
-  orange: '#F97D39',
+  yellow: '#FFE330',
+  blue: '#00A0FF',
+  orange: '#FF8E00',
   grey: '#878C92',
   line: '#E5E5E5',
   bg: '#FBFAFA',

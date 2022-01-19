@@ -14,6 +14,8 @@ const MyPageOneImageCard = ({ image }) => {
 
   const [showModal, setShowModal] = React.useState(false)
 
+  console.log(image)
+
   const handleShowModal = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -46,15 +48,20 @@ const MyPageOneImageCard = ({ image }) => {
         }}
       >
         <ImageSection>
-          <Image src={image && image.thumbNail} />
+          <ImageBox>
+            <Image src={image && image.thumbNail} />
+          </ImageBox>
+          <div className="delete-icon-box">
+            <DeleteIcon className="delete-icon" onClick={handleShowModal} />
+          </div>
         </ImageSection>
-        <Grid flex_between padding="6px">
-          <p className="createdDate">{image && createdDate}</p>
-          {/* <Grid flex_align>
+
+        <Grid flex_between padding="5px 0 0">
+          <Grid flex_align>
             <EmptyHeart />
             <span style={{ fontSize: '12px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
-          </Grid> */}
-          <DeleteIcon onClick={handleShowModal} style={{ cursor: 'pointer' }} />
+          </Grid>
+          <p className="createdDate">{image && createdDate}</p>
         </Grid>
         {/* <DateSection>
           <p className="createdDate">{image && createdDate}</p>
@@ -71,47 +78,61 @@ const MyPageOneImageCard = ({ image }) => {
 
 const Wrapper = styled.div`
   position: relative;
-  max-width: 200px;
+  max-width: 220px;
   width: 100%;
   height: fit-content;
-  margin-bottom: 16px;
-  /* border-radius: 8px; */
+  margin: 10px 0 6px;
+  padding: 10px 5px 10px 10px;
+  border: 2px solid ${({ theme }) => theme.colors.black};
   box-shadow: 0 4px 20px 4px hsl(0deg 0% 64% / 35%);
   display: flex;
   flex-direction: column;
   .createdDate {
+    width: 100%;
     font-size: ${({ theme }) => theme.fontSizes.small};
     color: ${({ theme }) => theme.colors.grey};
     text-align: right;
-    padding: 3px 6px 5px;
+  }
+  .delete-icon-box {
+    margin: 0 0 0 5px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 24px;
+    transition: background-color 0.3s ease-in-out;
+    &:hover {
+      background-color: #e9e9e9;
+    }
+    .delete-icon {
+      width: 20px;
+      height: 20px;
+    }
   }
 `
 
-const ImageSection = styled.div`
+const ImageSection = styled.section`
   display: flex;
   width: 100%;
+  height: fit-content;
+`
+
+const ImageBox = styled.div`
+  display: flex;
+  width: calc(100% - 33px);
   height: fit-content;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  border: 2px solid ${({ theme }) => theme.colors.black};
 `
 
 const Image = styled.img`
   width: 100%;
-  height: 100%;
+  height: fit-content;
   object-fit: cover;
-  /* border-top-right-radius: 8px; */
-  /* border-top-left-radius: 8px; */
-`
-
-const DateSection = styled.div`
-  height: 100%;
-  .createdDate {
-    font-size: ${({ theme }) => theme.fontSizes.small};
-    color: ${({ theme }) => theme.colors.grey};
-    text-align: right;
-    padding: 3px 6px 5px;
-  }
 `
 
 const DeleteButton = styled.button`

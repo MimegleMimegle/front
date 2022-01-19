@@ -79,6 +79,9 @@ const QuizPaper = (props) => {
       {!showResult ? (
         !loading ? (
           <Wrapper>
+            <Grid flex_center>
+              <h2 className="quiz-category">Lv. {category === 'lv1' ? '1' : category === 'lv2' ? '2' : '3'}</h2>
+            </Grid>
             <QuizTitle>
               <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
               <div className="question-number-box box-2"></div>
@@ -125,7 +128,7 @@ const QuizPaper = (props) => {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 32px 0 20px;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -133,13 +136,9 @@ const Wrapper = styled.div`
   flex-shrink: 0;
   flex-basis: 360px;
   transition: all 0.1s ease-in-out;
-  .quiz-current {
-    font-family: 'Pretendard Variable';
-    font-style: normal;
-    font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    width: 100%;
-    text-align: center;
+  .quiz-category {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-weight: 600;
   }
 `
 
@@ -167,8 +166,9 @@ const QuizTitle = styled.div`
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-    text-align: center;
-    line-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: ${({ theme }) => theme.fontSizes.xxl};
     font-family: 'YdestreetB';
     font-style: normal;
@@ -184,13 +184,12 @@ const QuizTitle = styled.div`
   }
 
   .title {
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     text-align: left;
     font-size: ${({ theme }) => theme.fontSizes.xl};
-    line-height: 22px;
-    font-weight: 700;
-    /* background-image: linear-gradient(transparent 60%, #6698fc 40%); */
+    font-weight: 400;
+    line-height: 24px;
   }
   .quiz-image {
     max-width: 100%;
@@ -208,10 +207,12 @@ const QuizBox = styled.div`
 
   .answer-btn {
     width: 100%;
-    height: 56px;
+    height: fit-content;
     font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-weight: 400;
     border-bottom: 2px solid ${({ theme }) => theme.colors.black};
-    padding: 0;
+    padding: 16px 36px;
+    line-height: 1.3;
   }
 
   .btn-4 {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ResponsiveContainer, LineChart, Line, XAxis, CartesianGrid, Tooltip } from 'recharts'
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import styled from 'styled-components'
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -28,6 +28,7 @@ const DictChart = ({ chartData }) => {
         >
           <CartesianGrid stroke="#e5e5e5" strokeDasharray="3 3" />
           <XAxis dataKey="date" fontSize="12px" fontWeight="500" padding={{ left: 10, right: 10 }} />
+          <YAxis fontSize="12px" fontWeight="500" width={20} />
           <Tooltip content={<CustomTooltip />} />
           <Line type="linear" isAnimationActive={true} animationDuration={1500} dataKey="count" stroke="#6698FC" strokeWidth={2} activeDot={{ r: 8 }} />
         </LineChart>
