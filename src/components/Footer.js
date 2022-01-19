@@ -1,16 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
 import Grid from '../elements/Grid'
+import AlertModal from './modal/AlertModal'
 import SmileIcon from '../styles/image/smileIcon_Blue.png'
 import { RiBookMarkLine, RiGamepadLine } from 'react-icons/ri'
 import { MdOutlinePhotoLibrary } from 'react-icons/md'
 import { CgProfile } from 'react-icons/cg'
 
 const Footer = (props) => {
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
+
+  const [showAlert, setShowAlert] = useState(false)
+
+  const handleClickMypage = () => {
+    if (!isLogin) {
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 2000)
+    }
+    return
+  }
   const activeStyle = {
-    color: '#6698FC',
+    color: '#00A0FF',
   }
   return (
     <>
@@ -37,7 +51,7 @@ const Footer = (props) => {
               <NavLink to="/" exact className="nav-link fixed" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <Logo src={SmileIcon} />
-                  <div className="nav-link__text">홈</div>
+                  {/* <div className="nav-link__text">홈</div> */}
                 </Grid>
               </NavLink>
             </li>
@@ -50,7 +64,7 @@ const Footer = (props) => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/mypage" className="nav-link" activeStyle={activeStyle}>
+              <NavLink to={isLogin && '/mypage'} onClick={handleClickMypage} className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
                   <CgProfile className="nav-icon" />
                   <div className="nav-link__text">MY</div>
@@ -60,6 +74,9 @@ const Footer = (props) => {
           </ul>
         </NavBar>
       </NavContainer>
+      <AlertModal showModal={showAlert}>
+        <AlertText>로그인 후 이용하실 수 있습니다!</AlertText>
+      </AlertModal>
     </>
   )
 }
@@ -80,7 +97,7 @@ const NavBar = styled.nav`
   height: 70px;
   background-color: ${({ theme }) => theme.colors.yellow};
   border-radius: 28px;
-  border: 2px solid #111;
+  border: 2px solid #000;
   padding: 4px 10px 0;
   z-index: 5000;
 
@@ -101,6 +118,7 @@ const NavBar = styled.nav`
       align-items: center;
       justify-content: center;
       .nav-link {
+        width: 100%;
         .nav-icon {
           font-size: 24px;
         }
@@ -110,7 +128,7 @@ const NavBar = styled.nav`
           color: ${({ theme }) => theme.colors.black};
         }
         .nav-link__text {
-          font-size: ${({ theme }) => theme.fontSizes.base};
+          font-size: ${({ theme }) => theme.fontSizes.small};
           font-family: 'YdestreetB';
           font-style: normal;
           font-weight: normal;
@@ -122,13 +140,16 @@ const NavBar = styled.nav`
 `
 
 const Logo = styled.div`
-  width: 26px;
-  height: 26px;
+  width: 40px;
+  height: 40px;
   border: 2px solid #111;
   cursor: pointer;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
+`
+const AlertText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
 `
 
 export default Footer
