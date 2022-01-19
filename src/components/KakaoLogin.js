@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class KakaoLogin extends Component {
+class KakaoButton extends Component {
   componentDidMount() {
     // Kakao sdk import
     const kakaoScript = document.createElement('script')
@@ -9,7 +9,7 @@ class KakaoLogin extends Component {
 
     // Kakao sdk 스크립트 로드 완료시
     kakaoScript.onload = () => {
-      window.Kakao.init('Kakao API KEY')
+      window.Kakao.init('96a19735de948eb6ddb3bfcc34fb2f78')
       window.Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',
         success: (auth) => {
@@ -32,8 +32,8 @@ class KakaoLogin extends Component {
     }
   }
   render() {
-    return <button type="button" id="kakao-login-btn"></button>
+    return <button type="submit" id="kakao-login-btn"></button>
   }
 }
 
-export default KakaoLogin
+export default KakaoButton

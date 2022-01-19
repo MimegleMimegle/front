@@ -6,8 +6,9 @@ import styled from 'styled-components'
 import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
 import KaKaoLogin from 'react-kakao-login'
+import KakaoButton from '../../components/KakaoLogin'
 import GoogleButton from '../../components/GoogleLogin'
-import NaverLogin from '../../components/NaverLogin'
+import NaverButton from '../../components/NaverLogin'
 import kakaotalk from '../../styles/image/kakaotalk.svg'
 import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
@@ -80,7 +81,6 @@ const Login = (props) => {
               아이디
             </label>
             <input className="IdInputBox" id="IdInput" placeholder="영어, 숫자 3~16자" maxLength="16" type="email" typeName="email" onChange={onChangeUsername} value={username} />
-            {username.length > 0 && <SpanUsername className={`message ${isUsername ? 'success' : 'error'}`}>{usernameMessage}</SpanUsername>}
             <label className="PwdInputLabel" for="PwdInput">
               비밀번호
             </label>
@@ -99,7 +99,6 @@ const Login = (props) => {
                 }
               }}
             />
-            {password.length > 0 && <SpanPassword className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</SpanPassword>}
             <div
               className="MemegleButton_LoginSubmit"
               type="submit"
@@ -116,34 +115,17 @@ const Login = (props) => {
             </div>
           </div>
         </div>
-        <div className="SocialLoginHR">또는</div>
+        {/* <div className="SocialLoginHR">또는</div>
         <div className="SocialLoginBtns">
-          <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
-            <img className="KakaoLoginBtn" size="5" src={kakaotalk}></img>
-          </a>
+          <KakaoButton />
           <GoogleButton />
-          {/* <img className="GoogleLoginBtn" size="5" src={googleColor}></img> */}
-          <NaverLogin />
-          {/* <img className="NaverLoginBtn" size="5" src={naver}></img> */}
-        </div>
+          <NaverButton />
+        </div> */}
       </div>
       <Footer />
     </>
   )
 }
-
-const SpanUsername = styled.span`
-  font-size: 12px;
-  color: #ffa07a;
-  margin-top: -5px;
-  margin-bottom: -5px;
-`
-
-const SpanPassword = styled.span`
-  font-size: 12px;
-  color: #ffa07a;
-  margin-top: -15px;
-`
 
 const Logo = styled.div`
   width: 40px;

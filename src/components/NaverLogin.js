@@ -1,57 +1,80 @@
-import React, { Component, useEffect } from 'react'
-import ReactDOM from 'react-dom'
+// import React, { useEffect } from 'react'
+// import styled from 'styled-components'
+// import { userApi } from '../shared/api'
+// import { ReactComponent as NaverLogo } from '../styles/image/naver.svg'
 
-const _clientId = process.env.REACT_APP_NAVER_API_KEY
+// const NaverButton = (props) => {
+//   const href = window.location.href
+//   let _clientId = process.env.REACT_APP_NAVER_API_KEY
 
-class NaverLogin extends Component {
-  componentDidMount() {
-    // Naver sdk import
-    const naverScript = document.createElement('script')
-    naverScript.src = 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js'
-    naverScript.type = 'text/javascript'
-    document.head.appendChild(naverScript)
+//   function randomString() {
+//     const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'
+//     const stringLength = 6
+//     let randomstring = ''
+//     for (let i = 0; i < stringLength; i++) {
+//       const rnum = Math.floor(Math.random() * chars.length)
+//       randomstring += chars.substring(rnum, rnum + 1)
+//     }
+//     return randomstring
+//   }
+//   let newState = randomString()
 
-    // Naver sdk 스크립트 로드 완료시
-    naverScript.onload = () => {
-      const naverLogin = new window.naver.LoginWithNaverId({
-        clientId: _clientId,
-        callbackUrl: 'http://localhost:3000',
-        callbackHandle: true,
-        isPopup: true, // 로그인 팝업여부
-        loginButton: {
-          color: 'green', // 색상(white, green)
-          type: 1, // 버튼타입(1,2,3)
-          height: 50, // 배너 및 버튼 높이
-        },
-      })
+//   // console.log(newState)
 
-      naverLogin.init()
-      naverLogin.getLoginStatus((status) => {
-        if (status) {
-          const nickName = naverLogin.user.id()
-          const userName = naverLogin.user.email()
-          console.log('Naver 로그인 상태', naverLogin.user)
-          const { id, email } = naverLogin.user
-        } else {
-          console.log('Naver 비 로그인 상태')
-        }
-      })
-      naverLogin.logout(() => {
-        const button_area = document.getElementById('button_area')
-        button_area.innerHTML = "<button id='btn_logout'>로그아웃</button>"
+//   const naverLoginDB = (code, state) => {
+//     return function (dispatch, getState, { history }) {
+//       userApi
+//         .NaverLogin(code, state)
+//         .then((res) => {
+//           console.log(res) // 토큰이 넘어올 것임
 
-        const logout = document.getElementById('btn_logout')
-        logout.addEventListener('click', (e) => {
-          naverLogin.logout()
-          window.location.replace('http://localhost:3000')
-        }) // 네이버 로그인이 계속 유지되는 경우가 있다. 초기화시 로그아웃
-      })
-    }
-  }
+//           const ACCESS_TOKEN = res.data.accessToken
+//           localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
 
-  render() {
-    return <div id="naverIdLogin"></div>
-  }
+//           history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+//         })
+//         .catch((err) => {
+//           console.log('네이버로그인 에러', err)
+//           window.alert('로그인에 실패하였습니다.')
+//           history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
+//         })
+//     }
+//   }
+
+//   let params = new URL(document.location).searchParams
+//   let code = params.get('code')
+//   let state = params.get('state')
+
+//   return (
+//     <>
+//       <button
+//         onClick={() => {
+//           window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&state=${newState}&redirect_uri=http://localhost:3000/login`
+//         }}
+//       >
+//         <NaverLogo fill="#00C300" width="53px" height="53px" />
+//       </button>
+//     </>
+//   )
+// }
+
+// export default NaverButton
+
+import React from 'react'
+import NaverLogin from 'react-naver-login'
+import { ReactComponent as NaverLogo } from '../styles/image/naver.svg'
+
+const NaverButton = () => {
+  return (
+    <>
+      <NaverLogin
+        clientId="MqzRjEkh9y1dtldzuTse"
+        callbackUrl="http://localhost:3000/login"
+        render={(props) => <div onClick={props.onClick}>네이버 로그인</div>}
+        onSuccess={(naverUser) => console.log(naverUser)}
+        onFailure={() => console.error()}
+      />
+    </>
+  )
 }
-
-export default NaverLogin
+export default NaverButton

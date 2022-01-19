@@ -82,6 +82,7 @@ export const dictApi = {
   tellMeTotalLength: () => instance.get('/api/count/dict'),
   tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
   dobleCheckDict: (dictName) => instance.post('/api/check/dict', { dictName: dictName }),
+  dictMyScrapList: (userId) => instance.get('/api/myMeme/dict', { userId: userId }),
   /* 추가 */
   getDictStat: () => instance.get('/api/stat/dict'),
 }

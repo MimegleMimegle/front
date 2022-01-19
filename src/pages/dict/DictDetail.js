@@ -4,19 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
-import axios from 'axios'
 import { dictApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
-import { actionCreators as dictActions } from '../../redux/modules/dict'
-import { actionCreators as likeActions } from '../../redux/modules/like'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import swal from 'sweetalert'
-import { BiLike } from 'react-icons/bi'
 import 'moment'
 import 'moment/locale/ko'
 import moment from 'moment'
-import { push } from 'connected-react-router'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import SearchPage from '../../shared/SearchPage'
@@ -142,7 +137,7 @@ const DictDetail = (props) => {
           <div className="OneDictCardDetailInfoLikeAndCopyLink">
             <div className="OneDictCardDetailInfo">
               <div className="OneDictCardDetailInfoLike" onClick={handleClickLike}>
-                {like ? <FillBookMarkIcon /> : <EmptyBookMarkIcon />}
+                {like ? <FillBookMarkIcon fill="#878C92" /> : <EmptyBookMarkIcon fill="#878C92" />}
               </div>
               <div className="OneDictCardDetailInfoLikeCnt">{dict.likeCount}</div>
             </div>
