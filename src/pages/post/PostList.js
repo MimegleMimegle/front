@@ -29,7 +29,6 @@ const PostList = (props) => {
 
   const getQuestionListDB = async () => {
     let response = await dictQuestionApi.getQuestions(pageSize, currentPage)
-    // let response = await dictQuestionApi.getQuestions()
     let totalLength = await dictQuestionApi.totalLength()
     setQuestion(response.data.data)
     setTotalCount(totalLength.data.data)
@@ -43,8 +42,11 @@ const PostList = (props) => {
         <>
           <Container>
             <Wrap>
-              <DictNavBar />
-              <Empty>
+              <div style={{height: '17px'}}/>
+               <DictNavBar />
+              <div className='curious'>궁금해요!</div>
+
+              {/* <Empty>
                 <Addbtn
                   onClick={() => {
                     history.push('/dict/question/write')
@@ -53,7 +55,8 @@ const PostList = (props) => {
                   질문등록
                 </Addbtn>
                 <AddbtnShadow />
-              </Empty>
+              </Empty> */}
+
 
               {question &&
                 question.map((question, index) => {
@@ -91,13 +94,23 @@ const Wrap = styled.div`
   /* position: absolute; */
   width: 100%;
   padding: 0 0 80px;
+  .curious {
+    font-family: 'YdestreetL';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    margin:24px 16px 16px 16px;
+  }
 `
 
 const Empty = styled.div`
   border-bottom: 1px solid #e5e5e5;
-  position: relative;
-  display: flex;
-  justify-content: center;
+  /* position: relative; */
+  /* display: flex; */
+  /* justify-content: center; */
 `
 
 const Addbtn = styled.div`
@@ -117,7 +130,6 @@ const Addbtn = styled.div`
   /* transform: translateX(-50%); */
   margin: 15px 0 30px 0;
   transition-duration: 0.2s;
-
   &:hover {
     left: calc(50%);
     transform: translate(4px, 10%);

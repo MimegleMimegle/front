@@ -79,21 +79,22 @@ const addQuestionDB = (title, content, uploadFile) => {
     }
 
     formData.append('thumbNail', uploadFile)
-    formData.append('dictQuestionUploadRequestDto', new Blob([JSON.stringify(question)], { type: 'application/json' }))
-
+    formData.append('dictQuestionUploadRequestDto', new Blob([JSON.stringify(question)],{type: 'application/json'}))
+  
     await dictQuestionApi
-      .writeQuestion(formData)
-      .then((response) => {
-        const question = response.data.data
-        dispatch(addQuestion(question))
-        console.log(question)
-      })
-      .then(() => {
-        history.push('/dict/question')
-      })
-      .catch((err) => {
-        console.log('질문 작성하는데 문제가 발생했습니다', err.response)
-      })
+    .writeQuestion(formData)
+    .then((response)=> {
+      const question =response.data.data
+      dispatch(addQuestion(question))
+      console.log(question)
+    })
+    .then(()=> {
+      history.push('/dict/question')
+    })
+    .catch((err)=>{
+      console.log('질문 작성하는데 문제가 발생했습니다', err.response)
+      console.log(err.response.message)
+    })
   }
 }
 
@@ -114,6 +115,7 @@ const editQuestionDB = (questionId, title, uploadFile, content) => {
         console.log(response.data)
         const _question = { ...question, thumbNail: uploadFile }
         dispatch(editQuestion(questionId, _question))
+
         history.replace(`/dict/question/detail/${questionId}`)
       })
       .catch((err) => {
@@ -135,7 +137,6 @@ const delQuestionDB = (questionId) => {
 
       .catch((err) => {
         console.log('게시물 삭제  실패', err)
-        history.replace('/dict/question')
       })
   }
 }

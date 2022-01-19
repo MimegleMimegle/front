@@ -68,11 +68,15 @@ const PostEdit = (props) => {
     }
   }
 
+  console.log(post.thumbNail)
+
   const editQuestion = () => {
     if (title === '' || content === '') {
       window.alert('게시물을 모두 작성해주세요')
       return
     }
+
+
     if (fileInput.current.files.length === 0) {
       const uploadFile = post.thumbNail
       dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))

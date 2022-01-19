@@ -31,7 +31,7 @@ const ShareBottomSheet = (props) => {
 
   return (
     <>
-      <BottomPopup isOpen={shareVisible} onClose={() => setShareVisible(false)} heightPixel={220}>
+      <BottomPopup isOpen={shareVisible} onClose={() => setShareVisible(false)} heightPixel={200}>
         <Container>
           <div className="share share-header">공유하기</div>
           <ShareBody>
@@ -73,7 +73,7 @@ const ShareBottomSheet = (props) => {
           </div>
           {showModal && (
             <AlertModal showModal={showModal}>
-              <AlertText>링크 복사 완료! 🤓</AlertText>
+              <AlertText>링크 복사 완료!</AlertText>
             </AlertModal>
           )}
         </Container>
@@ -89,52 +89,30 @@ const Container = styled.div`
   justify-content: center;
   z-index: 10001;
   width: 100%;
-  height: 220px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  height: 200px;
+  border-radius: 20px 20px 0 0;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
 
   .share {
-    height: 100%;
+    padding: 10px 0;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .share-header {
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    font-weight: 500;
     cursor: default;
   }
   .share-footer {
     .share-footer__close-button {
       font-size: ${({ theme }) => theme.fontSizes.lg};
-      font-weight: 500;
       cursor: pointer;
       transition: color 0.3s ease-in-out;
       &:hover {
         color: ${({ theme }) => theme.colors.blue};
       }
     }
-  }
-  .link-copied {
-    background-color: ${({ theme }) => theme.colors.black};
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
-    border-radius: 5px;
-    color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    margin-bottom: 10px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 7px 12px;
-    position: absolute;
-    width: auto;
-    min-width: 50px;
-    max-width: 300px;
-    word-wrap: break-word;
-    z-index: 9999;
   }
 `
 
@@ -152,15 +130,18 @@ const ShareBody = styled.div`
     align-items: center;
     justify-content: center;
     .each-share-container__text {
-      color: ${({ theme }) => theme.colors.black};
-      font-size: ${({ theme }) => theme.fontSizes.base};
+      font-size: ${({ theme }) => theme.fontSizes.small};
     }
   }
   .link-copy-button {
     width: 52px;
     height: 52px;
     border-radius: 60px;
+    margin: 0 0 8px;
     background-color: ${({ theme }) => theme.colors.line};
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `
 const AlertText = styled.p`

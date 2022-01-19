@@ -55,14 +55,13 @@ export const boardApi = {
 }
 
 export const dictQuestionApi = {
-  // getQuestions: (currentPage, pageSize) => instance.get(`/api/dict/question?page=${pageSize} * currentPage - 1}&size=${pageSize}`),
-  getQuestions: () => instance.get('/api/dict/question?page=0&size=10'),
+  getQuestions: (pageSize, currentPage) => instance.get(`/api/dict/question?page=${currentPage - 1}&size=${pageSize}`),
   getOneQuestion: (questionId) => instance.get(`/api/dict/question/${questionId}`),
   writeQuestion: (question) => instance.post('/api/dict/question', question),
   editQuestion: (questionId, content) => instance.put(`/api/dict/question/${questionId}`, content),
   deleteQuestion: (questionId) => instance.delete(`/api/dict/question/${questionId}`),
   curiousToo: (questionId) => instance.get(`/api/dict/question/curiousToo/${questionId}`),
-  selectQuestion: (commentId) => instance.get(`/api/dict/question/select/${commentId}`),
+  selectQuestion: (commentId) => instance.get(`/api/dict/question/select/${commentId}`),  
   totalLength: () => instance.get('/api/dict/question/count'),
   //백엔드진행중
   searchAlldict: (currentPage, pageSize) => instance.get(`/api/dict/search?q=’테스트’&page=${currentPage - 1}&size=${pageSize}`),
