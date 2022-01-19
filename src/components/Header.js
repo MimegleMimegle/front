@@ -10,19 +10,9 @@ import AlarmModal from './modal/AlarmModal'
 import AlertModal from './modal/AlertModal'
 import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
 import { FaRegBell, FaBell } from 'react-icons/fa'
+import { ReactComponent as ArrowBackIcon } from '../styles/icons/arrow_back_ios_black_24dp.svg'
 
-const throttle = (callback, waitTime) => {
-  let timerId = null
-  return (e) => {
-    if (timerId) return
-    timerId = setTimeout(() => {
-      callback.call(this, e)
-      timerId = null
-    }, waitTime)
-  }
-}
-
-const Header = ({ children, location }) => {
+const Header = ({ children, location, type }) => {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.mypage.myProfile)
   const userId = localStorage.getItem('id')
@@ -34,8 +24,6 @@ const Header = ({ children, location }) => {
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
-  const [hide, setHide] = useState(false)
-  const [pageY, setPageY] = useState(0)
 
   const handleShowProfile = () => {
     setShowProfile(!showProfile)
@@ -50,33 +38,29 @@ const Header = ({ children, location }) => {
     }
   }
 
-  // const handleScroll = () => {
-  //   let nextScrollTop = window.pageYOffset || 0
-  //   if (nextScrollTop > pageY) {
-  //     setHide(true)
-  //     setPageY(nextScrollTop)
-  //   } else if (nextScrollTop < pageY) {
-  //     setHide(false)
-  //     setPageY(nextScrollTop)
-  //   }
-  // }
-
-  // const throttleScroll = throttle(handleScroll, 50)
-
   useEffect(() => {
     if (profile === null) {
       dispatch(mypageActions.getUserProfileDB())
     }
   }, [])
 
-  // useEffect(() => {
-  //   document.addEventListener('scroll', throttleScroll)
-  //   return () => document.removeEventListener('scroll', throttleScroll)
-  // }, [pageY])
+  if (type === 'goBack') {
+    return (
+      <>
+        <NavHeader>
+          <Grid flex_between height="100%">
+            <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
+            <div className="header-location">{location}</div>
+            <div className="header-back-empty"></div>
+          </Grid>
+        </NavHeader>
+      </>
+    )
+  }
 
   return (
     <>
-      <NavHeader className={hide && 'hide'}>
+      <NavHeader>
         <Grid flex_between height="100%">
           <div className="header-empty"></div>
           <div className="header-location">{location}</div>
@@ -103,12 +87,9 @@ const NavHeader = styled.nav`
   width: 100%;
   height: 56px;
   background-color: ${({ theme }) => theme.colors.white};
-  border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid  #e5e5e5')};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.line};
   z-index: 1000;
   transition: 0.4s ease;
-  /* &.hide {
-    transform: translateY(-56px);
-  } */
   .header-empty {
     width: 80px;
     height: 100%;
@@ -146,6 +127,13 @@ const NavHeader = styled.nav`
         color: #333;
       }
     }
+  }
+  .arrow-back-icon {
+    cursor: pointer;
+  }
+  .header-back-empty {
+    width: 24px;
+    height: 100%;
   }
 `
 

@@ -55,7 +55,7 @@ const Container = styled.div`
   .box2 {
     top: 6px;
     left: 6px;
-    background-color: ${(props) => (props.index === 0 ? '#FFD400' : props.index === 1 ? '#F97D39' : props.index === 2 ? '#6698FC' : '#7b7b7b')};
+    background-color: ${(props) => (props.index === 0 ? '#FFE330' : props.index === 1 ? '#FF8E00' : props.index === 2 ? '#00A0FF' : '#7b7b7b')};
   }
 `
 

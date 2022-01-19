@@ -15,8 +15,7 @@
 .TodayDictCard {
   position: relative;
   width: 100%;
-  height: 180px;
-  background-color: #fbfafa;
+  height: 156px;
 }
 .TodayDictCard:hover {
   cursor: pointer;
@@ -24,7 +23,6 @@
 
 .TodayDictCard_1 {
   border: 2px solid black;
-  border-radius: 0 0 0 0;
   top: 0px;
   left: 0px;
   background-color: white;
@@ -32,10 +30,8 @@
   height: 150px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: flex-start;
-  padding: 10px 15px;
-  margin: 10px;
+  padding: 20px;
   position: absolute;
 
   z-index: 2;
@@ -44,10 +40,9 @@
 .TodayDictCard_2 {
   border: 2px solid black;
   /* border: none; */
-  border-radius: 0 0 0 0;
-  top: 16px;
-  left: 16px;
-  background-color: rgba(249, 125, 57, 1);
+  top: 6px;
+  left: 6px;
+  background-color: #ff8e00;
   width: 150px;
   height: 150px;
   position: absolute;
@@ -79,33 +74,30 @@
   word-break: keep-all;
   width: fit-content;
   height: fit-content;
-  margin: -25px 0 0 0;
 
-  font-size: 16px;
+  font-size: 1rem;
   font-family: 'YdestreetB';
   font-style: normal;
   font-weight: normal;
 }
 
 .TodayDictCard_Summary {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 0.875rem;
   text-align: left;
   word-break: keep-all;
   width: 100%;
   height: fit-content;
-  margin: -20px 0 0 0;
+  padding: 14px 0 0 0;
 }
 
-.swiper {
-  /* width: 100%;
-  height: 100%; */
+.swiper-container {
+  width: 100%;
+  height: fit-content;
 }
 
 .swiper-slide {
-  text-align: center;
-  font-size: 16px;
-  background: white;
+  width: 156px !important;
+  background-color: transparent !important;
   /* Center slide text vertically */
   display: -webkit-box;
   display: -ms-flexbox;

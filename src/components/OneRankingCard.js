@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Grid from '../elements/Grid'
-import { AiOutlineThunderbolt } from 'react-icons/ai'
+import { RiVipCrownLine } from 'react-icons/ri'
 
 const OneRankingCard = ({ rank, index, first }) => {
   const styles = { first: first, index: index }
@@ -11,9 +11,7 @@ const OneRankingCard = ({ rank, index, first }) => {
       <Container {...styles}>
         <div>
           <ProfileImage src={rank?.profileImage} {...styles}>
-            <div className="rank-box">
-              <p className="rank-text">{Number.isInteger(index) && index + 1}</p>
-            </div>
+            <div className="rank-box">{index === 0 ? <RiVipCrownLine size="20" /> : <p className="rank-text">{Number.isInteger(index) && index + 1}</p>}</div>
           </ProfileImage>
         </div>
         <p className="nickname">{rank?.nickname}</p>
@@ -63,7 +61,7 @@ const ProfileImage = styled.div`
     justify-content: center;
     position: absolute;
     right: -5px;
-    background-color: ${(props) => (props.index === 0 ? '#FFD400' : props.index === 1 ? '#F97D39' : '#6698FC')};
+    background-color: ${(props) => (props.index === 0 ? '#FFE330' : props.index === 1 ? '#FF8E00' : '#00A0FF')};
     width: ${(props) => (props.first ? '30px' : '20px')};
     height: ${(props) => (props.first ? '30px' : '20px')};
     border-radius: 30px;

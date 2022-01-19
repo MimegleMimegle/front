@@ -74,9 +74,7 @@ const Footer = (props) => {
           </ul>
         </NavBar>
       </NavContainer>
-      <AlertModal showModal={showAlert}>
-        <AlertText>로그인 후 이용하실 수 있습니다!</AlertText>
-      </AlertModal>
+      <AlertModal showModal={showAlert}>로그인 후 이용하실 수 있습니다!</AlertModal>
     </>
   )
 }
