@@ -8,11 +8,13 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import DictNavBar from '../../components/DictNavBar'
 import SearchPost from '../../components/SearchPost'
+import SpeedDialButton from '../../components/SpeedDialButton'
 import '../../index.css'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
+import { RiEditLine } from 'react-icons/ri'
 
 const PostList = (props) => {
   const [question, setQuestion] = useState([])
@@ -29,7 +31,6 @@ const PostList = (props) => {
 
   const getQuestionListDB = async () => {
     let response = await dictQuestionApi.getQuestions(pageSize, currentPage)
-    // let response = await dictQuestionApi.getQuestions()
     let totalLength = await dictQuestionApi.totalLength()
     setQuestion(response.data.data)
     setTotalCount(totalLength.data.data)
@@ -44,17 +45,6 @@ const PostList = (props) => {
           <DictNavBar />
           {!loading ? (
             <>
-              <Empty>
-                <Addbtn
-                  onClick={() => {
-                    history.push('/dict/question/write')
-                  }}
-                >
-                  질문등록
-                </Addbtn>
-                <AddbtnShadow />
-              </Empty>
-
               {question &&
                 question.map((question, index) => {
                   return <PostCard question={question} key={question.questionId} />
@@ -71,6 +61,9 @@ const PostList = (props) => {
       </Container>
 
       <Footer />
+      <SpeedDialButton _onClick={() => history.push('/dict/question/write')}>
+        <RiEditLine size="28" fill="#FFFFFF" />
+      </SpeedDialButton>
     </>
   )
 }
@@ -98,9 +91,9 @@ const Wrap = styled.div`
 
 const Empty = styled.div`
   border-bottom: 1px solid #e5e5e5;
-  position: relative;
-  display: flex;
-  justify-content: center;
+  /* position: relative; */
+  /* display: flex; */
+  /* justify-content: center; */
 `
 
 const Addbtn = styled.div`
