@@ -6,7 +6,7 @@ const ImageWrapper = ({ children }) => {
   return (
     <>
       <Wrapper>
-        <Grid flex_center column height="100%">
+        <Grid flex_start column height="100%">
           {children}
         </Grid>
       </Wrapper>
@@ -20,10 +20,12 @@ const Wrapper = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
+  padding: 24px 0;
   background-color: ${({ theme }) => theme.colors.black};
-  z-index: 3000;
-  svg {
-    color: ${({ theme }) => theme.colors.white};
+  z-index: 10000;
+  .icon {
+    fill: #fff;
+    cursor: pointer;
   }
 `
 
