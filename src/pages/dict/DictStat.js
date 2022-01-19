@@ -55,28 +55,26 @@ const DictStat = (props) => {
           <>
             <RankSection>
               <Title>열정적인 밈글러 top3</Title>
-              <Grid flex_around padding="24px 0 0">
+              <div className="rank-container">
                 <OneRankingCard rank={rankList[1]} index={1} />
                 <OneRankingCard rank={rankList[0]} index={0} first />
                 <OneRankingCard rank={rankList[2]} index={2} />
-              </Grid>
+              </div>
             </RankSection>
             <ChartSection>
               <Title>위클리 리포트</Title>
-              <Grid padding="16px 0 0">
-                <div className="chart-container">
-                  <DictChart chartData={chartData} />
-                  <div className="updated-at">{nowTime} 기준</div>
-                  <Grid flex_center column>
-                    <p className="chart-text">
-                      <span className="highlight">오늘</span> 등록된 <span className="highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
-                    </p>
-                    <p className="chart-text">
-                      총 <span className="highlight border">{totalDict}</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
-                    </p>
-                  </Grid>
-                </div>
-              </Grid>
+              <div className="chart-container">
+                <DictChart chartData={chartData} />
+                <div className="updated-at">{nowTime} 기준</div>
+                <Grid flex_center column>
+                  <p className="chart-text">
+                    <span className="highlight">오늘</span> 등록된 <span className="highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
+                  </p>
+                  <p className="chart-text">
+                    총 <span className="highlight border">{totalDict}</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
+                  </p>
+                </Grid>
+              </div>
             </ChartSection>
             <QNASection>
               <Grid flex_center column>
@@ -133,6 +131,18 @@ const RankSection = styled.section`
   display: flex;
   flex-direction: column;
   padding: 24px 16px 40px;
+  .rank-container {
+    max-width: 400px;
+    width: 100%;
+    height: fit-content;
+    background-color: #fff;
+    box-shadow: 0 4px 35px 4px hsl(0deg 0% 64% / 25%);
+    border: 2px solid ${({ theme }) => theme.colors.line};
+    padding: 24px 0;
+    margin: 16px 0 0;
+    display: flex;
+    justify-content: space-around;
+  }
 `
 
 const StyledSwiper = styled(Swiper)`
@@ -158,7 +168,9 @@ const ChartSection = styled.section`
     background-color: #fff;
     height: 360px;
     padding: 20px;
+    margin: 16px 0 0;
     box-shadow: 0 4px 35px 4px hsl(0deg 0% 64% / 25%);
+    border: 2px solid ${({ theme }) => theme.colors.line};
     display: flex;
     flex-direction: column;
     align-items: center;

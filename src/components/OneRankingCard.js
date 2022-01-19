@@ -46,8 +46,8 @@ const Container = styled.div`
 
 const ProfileImage = styled.div`
   position: relative;
-  width: ${(props) => (props.first ? '100px' : '70px')};
-  height: ${(props) => (props.first ? '100px' : '70px')};
+  width: ${(props) => (props.first ? '90px' : '60px')};
+  height: ${(props) => (props.first ? '90px' : '60px')};
   border-radius: 100px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
