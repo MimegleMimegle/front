@@ -42,8 +42,8 @@ const TodayDictCardSwiper = (props) => {
   return (
     <>
       <Swiper
-        slidesPerView={3}
-        spaceBetween={100}
+        slidesPerView="auto"
+        spaceBetween={16}
         keyboard={{
           enabled: true,
         }}

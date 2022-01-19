@@ -8,7 +8,6 @@ import { dictApi } from '../../shared/api'
 import DictNavBar from '../../components/DictNavBar'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import OneRankCard from '../../components/OneRankCard'
 import OneRankingCard from '../../components/OneRankingCard'
 import DictChart from '../../components/DictChart'
 import OneQnaQuestion from '../../components/OneQnaQuestion'
@@ -43,7 +42,7 @@ const DictStat = (props) => {
       }
     }
     getStat()
-    setTimeout(() => setLoading(false), 500)
+    setTimeout(() => setLoading(false), 400)
   }, [])
 
   return (
@@ -144,6 +143,7 @@ const RankSection = styled.section`
     padding: 20px 0;
     margin: 16px 0 0;
     display: flex;
+    align-items: flex-end;
     justify-content: space-around;
   }
   .rank-info {
@@ -163,12 +163,11 @@ const StyledSwiper = styled(Swiper)`
   width: 100%;
   height: fit-content;
   padding: 16px 0 46px;
-  border-radius: 10px;
   &::-webkit-scrollbar {
     display: none;
   }
   .swiper-slide {
-    width: 160px !important;
+    width: 170px !important;
     background-color: transparent !important;
   }
 `

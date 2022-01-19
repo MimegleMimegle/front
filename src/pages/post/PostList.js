@@ -8,11 +8,14 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import DictNavBar from '../../components/DictNavBar'
 import SearchPost from '../../components/SearchPost'
+import SpeedDialButton from '../../components/SpeedDialButton'
+import Grid from '../../elements/Grid'
 import '../../index.css'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
+import { RiEditLine } from 'react-icons/ri'
 
 const PostList = (props) => {
   const [question, setQuestion] = useState([])
@@ -38,13 +41,13 @@ const PostList = (props) => {
   return (
     <>
       <Header location="밈 사전" />
-      {!loading ? (
-        <>
-          <Container>
-            <Wrap>
-              <div style={{height: '17px'}}/>
-               <DictNavBar />
-              <div className='curious'>궁금해요!</div>
+
+      <Container>
+        <Wrap>
+          <DictNavBar />
+          {!loading ? (
+            <>
+              <div className="curious">궁금해요!</div>
 
               {/* <Empty>
                 <Addbtn
@@ -57,22 +60,24 @@ const PostList = (props) => {
                 <AddbtnShadow />
               </Empty> */}
 
-
               {question &&
                 question.map((question, index) => {
                   return <PostCard question={question} key={question.questionId} />
                 })}
 
               <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-            </Wrap>
-          </Container>
-        </>
-      ) : (
-        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <CircularProgress color="inherit" />
-        </div>
-      )}
+            </>
+          ) : (
+            <Grid flex_center height="100%">
+              <CircularProgress color="inherit" />
+            </Grid>
+          )}
+        </Wrap>
+      </Container>
       <Footer />
+      <SpeedDialButton _onClick={() => history.push('/dict/question/write')}>
+        <RiEditLine size="28" fill="#FFFFFF" />
+      </SpeedDialButton>
     </>
   )
 }
@@ -81,11 +86,13 @@ export default PostList
 
 const Container = styled.div`
   padding: 56px 0 0;
+  height: 100%;
   position: relative;
 `
 
 const SearchPostDiv = styled.div`
   width: 100%;
+  height: 100%;
   position: absolute;
   z-index: 5;
 `
@@ -93,6 +100,7 @@ const SearchPostDiv = styled.div`
 const Wrap = styled.div`
   /* position: absolute; */
   width: 100%;
+  height: 100%;
   padding: 0 0 80px;
   .curious {
     font-family: 'YdestreetL';
@@ -102,7 +110,7 @@ const Wrap = styled.div`
     line-height: 29px;
     display: flex;
     align-items: center;
-    margin:24px 16px 16px 16px;
+    margin: 24px 16px 16px 16px;
   }
 `
 

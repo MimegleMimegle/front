@@ -14,6 +14,8 @@ import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Grid from '../../elements/Grid'
+import Title from '../../elements/Title'
+import OneDictionaryCard from '../../components/OneDictionaryCard'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
@@ -59,48 +61,23 @@ const DictList = (props) => {
     <>
       <Header location="오픈 밈사전"></Header>
       <div className="DictLayout">
-        <div className="DictPageSearchSection">
-          <div
-            className="DictPageSearchButton"
-            onClick={() => {
-              showSearchBar()
-            }}
-          ></div>
-        </div>
-        <div className="DictNavBarSection">
-          <DictNavBar />
-        </div>
+        <DictNavBar />
         <SearchBarSection>
           <SearchPage />
         </SearchBarSection>
-        <div className="TodayDictListGuide">
-          <div className="TodayDictListText">오늘의 밈 카드</div>
-          <div className="TodayDictListDot" />
+        <div className="TitleBox">
+          <Title>오늘의 밈 카드</Title>
         </div>
-        <TodayDictCardSwiper />
+        <Grid padding="10px 16px 16px">
+          <TodayDictCardSwiper />
+        </Grid>
         <div className="DictListPagination">
-          <div className="DictListGuide">
-            <div className="DictListText">밈 목록</div>
-            <div className="DictListDot" />
+          <div className="TitleBox">
+            <Title>밈 목록</Title>
           </div>
           <div className="DictList">
             {dict.map((dict) => (
-              <div className="OneDictionaryCardSection">
-                <div className="OneDictionaryCardList" key={dict.id} onClick={() => history.push(`/dict/detail/${dict.dictId}`)}>
-                  <div className="DictListTitle">{dict.title}</div>
-                  <div className="DictListSummary">{dict.summary}</div>
-                  <div className="DictWriteInfo">
-                    <Grid flex_align>
-                      {dict.like ? <FillBookMarkIcon fill="#878c92" /> : <EmptyBookMarkIcon fill="#878c92" />}
-                      <div className="DictListLikeCount">{dict.likeCount}</div>
-                    </Grid>
-                    <Grid flex_end>
-                      <div className="DictListFirstWriter">{dict.firstWriter}</div>
-                      <div className="DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
-                    </Grid>
-                  </div>
-                </div>
-              </div>
+              <OneDictionaryCard key={dict.id} dict={dict} />
             ))}
           </div>
           <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
@@ -120,10 +97,7 @@ const SearchBarSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  font-family: 'YdestreetL';
-  font-style: normal;
-  font-weight: normal;
+  padding: 24px 16px 16px;
 `
 
 export default DictList

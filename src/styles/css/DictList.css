@@ -35,21 +35,6 @@
   display: none;
 }
 
-.DictPageSearchSection {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 73%;
-  left: 77%;
-}
-
-.DictPageSearchButton {
-  position: relative;
-  width: fit-content;
-  height: fit-content;
-
-  z-index: 100;
-}
 .DictPageSearchButton:hover {
   cursor: pointer;
 }
@@ -101,175 +86,22 @@
   z-index: -1;
 }
 
-.DictNavBarSection {
-  width: 100%;
-  height: fit-content;
-  margin: 0 0 0 0;
-  display: flex;
-  align-items: center;
-}
-
-.TodayDictListGuide {
+.TitleBox {
   width: fit-content;
   height: fit-content;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-}
-
-.TodayDictListText {
-  margin: 20px 0 0 10px;
-  width: fit-content;
-  height: fit-content;
-  line-height: normal;
-  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
-
-  font-size: 18px;
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-}
-
-.TodayDictListDot {
-  width: 5px;
-  height: 5px;
-  background-color: #ffd400;
-  margin: 0 0 3px 1px;
+  padding: 20px 16px 10px;
 }
 
 .DictListPagination {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 4px;
   margin-bottom: 120px;
 }
-
-.DictListGuide {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-}
-
-.DictListText {
-  margin: 0 0 10px 10px;
-  width: fit-content;
-  height: fit-content;
-  line-height: normal;
-  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
-
-  font-size: 18px;
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-}
-
-.DictListDot {
-  width: 5px;
-  height: 5px;
-  background-color: #ffd400;
-  margin: 0 0 12px 1px;
-}
-
 .DictList {
   width: 100%;
   height: 100%;
-}
-
-.OneDictionaryCardSection {
-  border-top: 2px solid #e5e5e5;
-  border-bottom: 2px solid #e5e5e5;
-  margin-top: 10px;
-  margin-bottom: 20px;
-
-  -webkit-appearance: none;
-}
-
-.OneDictionaryCardList {
-  width: 100%;
-  height: fit-content;
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  background-color: #fff;
-
-  -webkit-appearance: none;
-}
-
-.DictListTitle {
-  color: rgba(1, 109, 173, 1);
-  width: 100%;
-  height: fit-content;
-
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-size: 18px;
-  font-weight: 700;
-
-  -webkit-appearance: none;
-}
-
-.DictListSummary {
-  font-size: 14px;
-  width: 100%;
-  height: fit-content;
-  padding: 10px 0 20px;
-  word-break: keep-all;
-
-  -webkit-appearance: none;
-}
-
-.DictWriteInfo {
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  align-items: center;
-  justify-content: space-between;
-
-  -webkit-appearance: none;
-}
-
-.DictListWriterAndATInfo {
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 0 0 0;
-
-  -webkit-appearance: none;
-}
-
-.DictListFirstWriter {
-  font-size: 12px;
-  padding: 0 15px 0 0;
-  color: #878c92;
-  width: fit-content;
-  height: fit-content;
-
-  -webkit-appearance: none;
-}
-
-.DictListCreatedAt {
-  font-size: 12px;
-  width: fit-content;
-  color: #878c92;
-
-  -webkit-appearance: none;
-}
-
-.DictListLikeCount {
-  font-size: 14px;
-  padding: 0 0 0 3px;
-  color: #878c92;
-
-  -webkit-appearance: none;
 }
 
 .rc-pagination {

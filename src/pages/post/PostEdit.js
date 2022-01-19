@@ -6,6 +6,7 @@ import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { dictQuestionApi } from '../../shared/api'
 import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
 import { history } from '../../redux/ConfigureStore'
+import Header from '../../components/Header'
 
 const PostEdit = (props) => {
   const dispatch = useDispatch()
@@ -76,7 +77,6 @@ const PostEdit = (props) => {
       return
     }
 
-
     if (fileInput.current.files.length === 0) {
       const uploadFile = post.thumbNail
       dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
@@ -89,11 +89,7 @@ const PostEdit = (props) => {
   return (
     <>
       <>
-        <Header>
-          <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
-          <h2 className="location">질문 수정하기</h2>
-          <div className="empty"></div>
-        </Header>
+        <Header type="goBack" location="질문 수정" />
         <Container>
           <PWHeader>
             <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
@@ -130,35 +126,6 @@ const PostEdit = (props) => {
   )
 }
 
-const Header = styled.header`
-  width: 100%;
-  height: 56px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.bg};
-  z-index: 1000;
-  .arrow-back-icon {
-    cursor: pointer;
-    font-size: 20px;
-  }
-  .location {
-    font-family: 'YdestreetL';
-    font-style: normal;
-    font-weight: normal;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-    cursor: default;
-  }
-  .empty {
-    width: 24px;
-    height: 100%;
-  }
-`
-
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -167,7 +134,6 @@ const Container = styled.div`
 `
 
 const PWHeader = styled.div`
-  border-top: 1px solid #444;
   border-bottom: 1px solid ${({ theme }) => theme.colors.line};
 
   .writetitle {
