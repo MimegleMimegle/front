@@ -86,23 +86,23 @@ const QuizIntro = (props) => {
               <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </ImageSection>
             <SubjectSection>
-              <div style={{ padding: '16px 0 10px' }}>
+              <div style={{ padding: '20px 0 10px' }}>
                 <p className="subject-question">어느 레벨의 밈을</p>
                 <p className="subject-question">테스트하고 싶으신가요?</p>
               </div>
               <div className="subject-button-box">
                 <button className={`subject-button ${lv1 ? 'selected' : ''}`} value="lv1" onClick={handleChangeSubjectY2000}>
-                  Lv. 밈기적
+                  Lv. 1
                 </button>
               </div>
               <div className="subject-button-box">
                 <button className={`subject-button ${lv2 ? 'selected' : ''}`} value="lv2" onClick={handleChangeSubjectY2010}>
-                  Lv. 밈잘알
+                  Lv. 2
                 </button>
               </div>
               <div className="subject-button-box">
                 <button className={`subject-button ${lv3 ? 'selected' : ''}`} value="lv3" onClick={handleChangeSubjectY2020}>
-                  Lv. 밈중독
+                  Lv. 3
                 </button>
               </div>
             </SubjectSection>
@@ -159,7 +159,6 @@ const SubjectSection = styled.div`
     font-family: 'YdestreetL';
     font-style: normal;
     font-weight: normal;
-    text-align: center;
   }
   .subject-button-box {
     width: 100%;
@@ -186,17 +185,17 @@ const ButtonSection = styled.div`
   position: relative;
   width: 100%;
   .start-button-box {
-    width: 100px;
-    height: 40px;
+    width: 120px;
+    height: 48px;
     position: absolute;
     border: 2px solid ${({ theme }) => theme.colors.black};
-    border-radius: 20px;
+    border-radius: 48px;
     background-color: ${({ theme }) => theme.colors.blue};
     .start-button {
       width: 100%;
       height: 100%;
       padding: 0;
-      border-radius: 20px;
+      border-radius: 48px;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
       font-family: 'YdestreetB';
       font-style: normal;

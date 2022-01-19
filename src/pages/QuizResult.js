@@ -93,7 +93,7 @@ const QuizResult = ({ quiz_list, category }) => {
             <div className="resultButtonBox box2"></div>
           </ResultButtonContainer>
           <TextButtonContainer>
-            <Grid flex_center padding="16px 0">
+            <Grid flex_center padding="12px 0">
               <div className="circle-button-box">
                 <div
                   className="circle-button btn-1"
@@ -109,7 +109,7 @@ const QuizResult = ({ quiz_list, category }) => {
                 다른 테스트 하러 가기
               </button>
             </Grid>
-            <Grid flex_center padding="16px 0">
+            <Grid flex_center padding="12px 0">
               <div className="circle-button-box">
                 <div className="circle-button btn-1" onClick={handleShareVisible}>
                   <CopyLinkIcon />
@@ -124,7 +124,7 @@ const QuizResult = ({ quiz_list, category }) => {
           <BottomPopup isOpen={showQuiz} onClose={() => setShowQuiz(false)} heightPixel={400}>
             <QuizContainer>
               <CloseButtonBox>
-                <CloseIcon className="close-icon" onClick={() => setShowQuiz(false)} fill="#444" />
+                <CloseIcon className="close-icon" onClick={() => setShowQuiz(false)} fill="#333" />
               </CloseButtonBox>
               <div className="quiz-answer-box">
                 {quiz_list &&
@@ -170,8 +170,8 @@ const QuizResultBox = styled.div`
   justify-content: center;
 
   .quiz-subject {
-    width: 100px;
-    height: 40px;
+    width: 120px;
+    height: 48px;
     position: absolute;
     border: 2px solid ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.white};
@@ -182,18 +182,19 @@ const QuizResultBox = styled.div`
   }
 
   .box-1 {
-    top: -20px;
+    top: -28px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-    text-align: center;
-    line-height: 40px;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
     background-color: ${({ theme }) => theme.colors.yellow};
   }
 
   .box-2 {
-    top: -16px;
+    top: -24px;
     left: calc(50%);
     transform: translateX(calc(-50% + 4px));
     background-color: ${({ theme }) => theme.colors.white};
@@ -271,15 +272,16 @@ const ResultButtonContainer = styled.div`
   position: relative;
 
   .resultButtonBox {
-    width: 130px;
-    height: 40px;
+    width: 162px;
+    height: 52px;
     position: absolute;
     border: 2px solid ${({ theme }) => theme.colors.black};
-    border-radius: 20px;
+    border-radius: 52px;
     background-color: ${({ theme }) => theme.colors.white};
     .resultButton {
       width: 100%;
       height: 100%;
+      border-radius: 52px;
       font-size: ${({ theme }) => theme.fontSizes.xxl};
       font-family: 'YdestreetB';
       font-style: normal;
@@ -310,7 +312,7 @@ const ResultButtonContainer = styled.div`
 
 const TextButtonContainer = styled.div`
   width: 100%;
-  padding: 16px 0 0;
+  padding: 30px 24px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
