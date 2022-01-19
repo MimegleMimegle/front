@@ -28,8 +28,7 @@ export default function GoogleButton({ onSocial }) {
 
   return (
     <div>
-      <GoogleLogin clientId={clientId} onSuccess={onSuccess} onFailure={onFailure} />
-      {/* <GoogleLogin clientId={clientId} responseType={'id_token'} onSuccess={onSuccess} onFailure={onFailure} /> */}
+      <GoogleLogin clientId={clientId} responseType={'id_token'} onSuccess={onSuccess} onFailure={onFailure} />
     </div>
   )
 }
