@@ -51,6 +51,12 @@ const StyledNavLink = styled(NavLink)`
     text-decoration: none;
     color: #000;
   }
+  .DictNavItem {
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-weight: normal;
+  }
 `
 
 export default DictNavBar
