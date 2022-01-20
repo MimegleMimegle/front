@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import ReactGA from 'react-ga'
 import './App.css'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
@@ -35,6 +36,14 @@ import {
 import MobileFrame from './components/MobileFrame'
 
 function App() {
+  useEffect(() => {
+    ReactGA.initialize('user id')
+    history.listen((location) => {
+      ReactGA.set({ page: location.pathname }) // Update the user's current page
+      ReactGA.pageview(location.pathname) // Record a pageview for the given page
+    })
+    // ReactGA.pageview(window.location.pathname + window.location.search);
+  }, [])
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -70,5 +79,14 @@ function App() {
     </>
   )
 }
+
+ReactGA.event({
+  category: 'User',
+  action: 'Created an Account',
+})
+ReactGA.exception({
+  description: 'An error ocurred',
+  fatal: true,
+})
 
 export default App

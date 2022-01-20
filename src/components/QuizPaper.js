@@ -129,6 +129,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 20px 0;
+  margin: 0 0 20px;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -225,7 +226,7 @@ const QuizBox = styled.div`
 const ButtonSection = styled.div`
   position: relative;
   width: 100%;
-  margin: 20px 0 0;
+  margin: 20px 0 20px;
   .next-btn-box {
     width: 120px;
     height: 48px;

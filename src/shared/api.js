@@ -39,6 +39,7 @@ export const mypageApi = {
   getProfileInfo: () => instance.get('/api/userInfo'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
   editNickname: (nickname) => instance.post('/api/user/nickname', { nickname: nickname }),
+  checkAlarm: () => instance.get('/api/alarm/read'),
 }
 
 export const boardApi = {
