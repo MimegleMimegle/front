@@ -8,12 +8,14 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import DictNavBar from '../../components/DictNavBar'
 import SearchPost from '../../components/SearchPost'
+
 import '../../index.css'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
 import { RiEditLine } from 'react-icons/ri'
+import SpeedDialButton from '../../components/SpeedDialButton'
 
 
 const PostList = (props) => {
@@ -61,8 +63,9 @@ const PostList = (props) => {
         </div>
       )}
       <Footer />
-      <RiEditLine size="28" fill="#FFFFFF" />
-
+      <SpeedDialButton _onClick={() => history.push('/dict/question/write')}>
+        <RiEditLine size="28" fill="#FFFFFF" />
+      </SpeedDialButton>
     </>
   )
 }
