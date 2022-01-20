@@ -83,7 +83,7 @@ const QuizIntro = (props) => {
         {!loading ? (
           <>
             <ImageSection>
-              <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={QuizIntroImage} style={{ width: '100%', objectFit: 'cover' }} />
             </ImageSection>
             <SubjectSection>
               <div style={{ padding: '20px 0 10px' }}>
@@ -138,6 +138,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: fit-content;
   padding: 56px 0 0;
+  margin: 0 0 80px;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -150,6 +151,9 @@ const Wrapper = styled.div`
 const ImageSection = styled.div`
   width: 100%;
   height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   border-top: 2px solid ${({ theme }) => theme.colors.black};
   border-bottom: 2px solid ${({ theme }) => theme.colors.black};

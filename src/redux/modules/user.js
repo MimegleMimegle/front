@@ -207,6 +207,7 @@ export default handleActions(
     [FAIL_LOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.is_failure = action.payload.is_failure
+        draft.is_loading = false
       }),
   },
   initialState
