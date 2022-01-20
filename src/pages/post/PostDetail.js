@@ -11,7 +11,7 @@ import Grid from '../../elements/Grid'
 import { ReactComponent as ViewIcon } from '../../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/하트 비활성_24dp.svg'
 import { ReactComponent as FullHeartIcon } from '../../styles/icons/하트 활성_24dp.svg'
-import { ReactComponent as CommentIcon } from '../../styles/icons/댓글_18dp.svg'
+import { ReactComponent as ICuriousToo} from '../../styles/icons/quiz_black_24dp.svg'
 import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
 import { IoCloseOutline } from 'react-icons/io5'
 import { BsThreeDotsVertical } from 'react-icons/bs'
@@ -110,8 +110,13 @@ const PostDetail = (props) => {
   return (
     <>
       <Header>
-        <ArrowBackIcon className="icon" onClick={() => history.goBack()} />
-        {username === question.username ? <BsThreeDotsVertical className="icon" size="24" onClick={clickToggleModalChang} /> : null}
+        <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
+        <HeaderQuestion>질문</HeaderQuestion>
+        {username === question.username ? (
+          <button style={{ padding: '5px 5px 0' }} onClick={clickToggleModalChang}>
+            <BsThreeDotsVertical size="20" />
+          </button>
+        ) : (<div></div>)}
         {toggleModalChang && (
           <ModalChang>
             {question.selectedComment === 0 ? (
@@ -156,10 +161,8 @@ const PostDetail = (props) => {
         )}
       </Header>
       <PostWrap>
-        <Grid flex_align>
-          {/* <UserProfile src={question.profileImageUrl} alt="" /> */}
+        <Grid flex_align padding="5px 0 0 20px">
           <CuriousQ>Q</CuriousQ>
-
           <div>
             <Title>{question.title}</Title>
             <div className="profile-box">
@@ -174,25 +177,21 @@ const PostDetail = (props) => {
           <ImageBox>
             <ContentImg src={question ? question.thumbNail : null} alt="" />
           </ImageBox>
+          <div className='views'>조회 {question.views}회</div>
         </Middle>
 
         <ViewLikeComment>
-          <div className="icon-box">
-            <ViewIcon fill="#333" />
-            <span className="icon-box__text">{question.views}</span>
-          </div>
-          <div className="icon-box">
             {isCuriousToo ? (
-              <FullHeartIcon fill="#333" className="heart-icon" onClick={handleClickCuriousToo} />
+              <div className='icon-box'onClick={handleClickCuriousToo}>
+              <ICuriousToo sty fill='#00A0FF'/>
+              <div style={{color:'#00A0FF'}} className='icon-box__text'>나도 궁금해요 {curiousTooCnt}</div>
+            </div>
             ) : (
-              <EmptyHeartIcon fill="#333" className="heart-icon" onClick={handleClickCuriousToo} />
+              <div className='icon-box' onClick={handleClickCuriousToo}>
+              <ICuriousToo fill="#333" className="heart-icon"/>
+              <div className='icon-box__text'>나도 궁금해요 {curiousTooCnt} </div>
+              </div>
             )}
-            <span className="icon-box__text">{curiousTooCnt}</span>
-          </div>
-          <div className="icon-box">
-            <CommentIcon fill="#333" />
-            <span className="icon-box__text">{question.commentCnt ? question.commentCnt : 0}</span>
-          </div>
         </ViewLikeComment>
       </PostWrap>
 
@@ -214,20 +213,33 @@ const Header = styled.header`
   position: absolute;
   left: 0;
   top: 0;
-  padding: 0 16px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 1px solid ${({ theme }) => theme.colors.line};
   z-index: 1000;
-  .icon {
+  margin: 0 0 24px 0;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 0 15px 0 #e5e5e5;
+  .arrow-back-icon {
     cursor: pointer;
   }
 `
 
+const HeaderQuestion = styled.div`
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+`
+
 const PostWrap = styled.div`
-  padding: 70px 16px 0;
+  padding: 70px 0px 0;
   .profile-box {
     display: flex;
     align-items: center;
@@ -242,21 +254,14 @@ const CuriousQ = styled.div`
   border-radius: 150px;
   font-family: 'YdestreetB';
   font-syled: normal;
-  font-weigt: bold;
-  line-height: 26px;
-  font-size: 20px;
-  padding: 7px 11px 7px 9px;
-  margin: 0 12px;
+  font-weigt:bold;
+  line-height:26px;
+  font-size:20px;
+  padding:7px 11px 7px 9px;
+  margin: 0 12px 0 0;
 `
 
-const UserProfile = styled.img`
-  border-radius: 150px;
-  width: 36px;
-  height: 36px;
-  margin: 0 10px 0 0;
-`
 const Writer = styled.div`
-  /* width: 100%; */
   font-size: 12px;
   font-family: 'YdestreetL';
   font-style: normal;
@@ -265,9 +270,17 @@ const Writer = styled.div`
 `
 
 const Middle = styled.div`
-  padding: 16px 14px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  .views {
+    font-style: normal;
+    font-weight: normal; 
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+  }
 `
 
 const Title = styled.div`
@@ -291,29 +304,36 @@ const ImageBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 0;
+  padding: 20px 12px;
 `
 
 const ContentImg = styled.img`
   width: 100%;
   object-fit: cover;
+  margin:
 `
 
 const ViewLikeComment = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 0 16px;
   .icon-box {
     display: flex;
     align-items: center;
     padding: 0 10px 0 0;
-    color: #333;
-    .heart-icon {
-      cursor: pointer;
-    }
+    cursor: pointer;
+    padding: 0 138px 33px;
+
     .icon-box__text {
       font-size: ${({ theme }) => theme.fontSizes.lg};
-      padding: 0 0 0 5px;
+      font-family: 'YdestreetL';
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 21px;
+      display: flex;
+      align-items: center;
+      padding: 0 0 0 12px;
+
     }
   }
 `

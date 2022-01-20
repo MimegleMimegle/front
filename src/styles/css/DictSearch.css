@@ -45,6 +45,7 @@
   font-weight: normal;
 }
 
+
 .DictSearchNoResult {
   width: 100%;
   height: fit-content;
@@ -58,6 +59,7 @@
   height: fit-content;
   display: flex;
   justify-content: center;
+  padding: 15px;
 
   font-family: 'YdestreetB';
   font-style: normal;

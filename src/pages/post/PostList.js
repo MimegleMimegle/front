@@ -55,25 +55,12 @@ const PostList = (props) => {
   return (
     <>
       <Header location="밈 사전" />
-
       <Container>
         <Wrap>
           <DictNavBar />
           {!loading ? (
             <>
               <div className="curious">궁금해요!</div>
-
-              {/* <Empty>
-                <Addbtn
-                  onClick={() => {
-                    history.push('/dict/question/write')
-                  }}
-                >
-                  질문등록
-                </Addbtn>
-                <AddbtnShadow />
-              </Empty> */}
-
               {question &&
                 question.map((question, index) => {
                   return <PostCard question={question} key={question.questionId} />

@@ -75,7 +75,7 @@ const DictMyScrapbook = (props) => {
                   <div className="DictMyScrapCount">스크랩</div>
                 </div>
                 <CopyToClipboard className="DictLinkCopyButton" onCopy={handleCopy} text={currentUrl}>
-                  <DictLinkCopyIcon fill="#878C92" />
+                  <DictLinkCopyIcon fill="#878C92" width="24px" height="24px" />
                 </CopyToClipboard>
               </div>
             </AccordionDetails>

@@ -204,4 +204,5 @@ const ThumbNail = styled.img`
 const IconBox = styled.div`
   display: flex;
   align-items: center;
+  margin:16px 0;
 `
