@@ -46,7 +46,7 @@ const CommentTest = ({ question }) => {
           <img className="commentImg" src={isLogin ? now_profile && now_profile.profileImage : MemegleLogo} alt="" />
           <input
             className="writebox"
-            placeholder="댓글을 입력해주세요"
+            placeholder="답변을 남겨주세요!"
             type="text"
             value={comment}
             onChange={onChangeComment}
@@ -64,20 +64,23 @@ const CommentTest = ({ question }) => {
             return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
           })
         : null}
+        <div style={{width:'100%', height:'63px'}}></div>
     </>
   )
 }
 
 const CommentWrite = styled.div`
+  position : fixed;
+  bottom : 0;
   width: 100%;
-  padding: 12px 16px;
+  padding: 20px;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 2px solid black;
+  background: #FCFCFC;
 `
 const ImgInput = styled.div`
   width: 100%;
@@ -87,15 +90,15 @@ const ImgInput = styled.div`
   align-items: center;
 
   .commentImg {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: 150px;
-    margin: 0 16px 0 0;
+    border: 2px solid black;
   }
   .writebox {
     border: none;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    padding: 0;
+    font-size: 16px;
+    padding:0 20px;    
     background-color: ${({ theme }) => theme.colors.bg};
     width: 100%;
     &::placeholder {
