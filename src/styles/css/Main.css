@@ -15,7 +15,7 @@
 .MainPageLayout {
   width: 100%;
   height: 100%;
-  margin: 10px 0 100px 0;
+  margin: 10px 0 80px 0;
   padding: 74px 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -64,10 +64,10 @@
 }
 
 .swiper-wrapper {
-  width: fit-content;
+  width: 100%;
 }
 
-.swiper-slide {
+.main-swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -100,7 +100,7 @@
   z-index: 10;
 }
 
-.swiper-slide img {
+.main-swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
@@ -354,7 +354,7 @@
   align-items: center;
   position: relative;
 
-  margin: 20px 0 0 0;
+  margin: 50px 0 0;
 }
 
 .MainPageAddButtonSectionHr {

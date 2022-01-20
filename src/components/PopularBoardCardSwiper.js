@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { history } from '../redux/ConfigureStore'
@@ -38,20 +39,20 @@ const PopularBoardCardSwiper = (props) => {
   return (
     <>
       <Swiper
-        slidesPerView={2}
-        spaceBetween={10}
+        slidesPerView="auto"
+        spaceBetween={8}
         keyboard={{
           enabled: true,
         }}
         // centeredSlides={true}
         slidesPerGroupSkip={1}
         grabCursor={true}
-        breakpoints={{
-          769: {
-            slidesPerView: 2,
-            slidesPerGroup: 2,
-          },
-        }}
+        // breakpoints={{
+        //   769: {
+        //     slidesPerView: 2,
+        //     slidesPerGroup: 2,
+        //   },
+        // }}
         scrollbar={false}
         autoplay={{
           delay: 5000,
@@ -61,13 +62,13 @@ const PopularBoardCardSwiper = (props) => {
         loop={false}
         className="popularBoardCardSwiper"
       >
-        {popularImages.map((popularImages) => (
-          <SwiperSlide>
+        {popularImages.map((popularImages, index) => (
+          <SwiperSlide className="popular-swiper-slide">
             <div className="PopularBoardCard">
               <div className="PopularBoardCard_1" key={popularImages.id} onClick={() => history.push(`/image/detail/${popularImages.boardId}`)}>
                 <img className="PopularBoardCard_Image" src={popularImages.imageUrl}></img>
               </div>
-              <div className="PopularBoardCard_2"></div>
+              <PopularBoardCardBack index={index} />
             </div>
           </SwiperSlide>
         ))}
@@ -75,5 +76,19 @@ const PopularBoardCardSwiper = (props) => {
     </>
   )
 }
+
+const PopularBoardCardBack = styled.div`
+  border: 2px solid black;
+  top: 8px;
+  left: 8px;
+  background-color: ${(props) => (props.index % 3 === 0 ? '#FFE330' : props.index % 3 === 1 ? '#FF8E00' : '#00A0FF')};
+  width: 180px;
+  height: 240px;
+  position: absolute;
+
+  z-index: 1;
+
+  -webkit-appearance: none;
+`
 
 export default PopularBoardCardSwiper

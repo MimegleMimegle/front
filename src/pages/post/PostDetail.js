@@ -32,7 +32,7 @@ const PostDetail = (props) => {
   const [noChangeModal, setNoChangeModal] = useState(false)
 
   const handleCloseNoChangeModal = () => {
-    setTimeout(()=> {
+    setTimeout(() => {
       setNoChangeModal(false)
     }, 1800)
   }
@@ -119,44 +119,44 @@ const PostDetail = (props) => {
         ) : (<div></div>)}
         {toggleModalChang && (
           <ModalChang>
-            {question.selectedComment ===0?
-            <>
-            <Grid flex_end padding="5px 8px">
-              <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
-            </Grid>
-            <div className="button-box">
-              <button
-                className="button edit"
-                onClick={() => {
-                  history.push(`/dict/question/edit/${questionId}`)
-                }}
-              >
-                수정하기
-              </button>
-            </div>
-            <div className="button-box">
-              <button className="button delete" onClick={handleShowModal}>
-                삭제하기
-              </button>
-            </div>
-            </> : <>
-            <Grid flex_end padding="5px 8px">
-              <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
-            </Grid>
-            <div className="button-box">
-              <button
-                className="button edit"
-                onClick={handleNoChangeModal}
-              >
-                수정하기
-              </button>
-            </div>
-            <div className="button-box">
-              <button className="button delete" onClick={handleNoChangeModal}>
-                삭제하기
-              </button>
-            </div>
-            </> }
+            {question.selectedComment === 0 ? (
+              <>
+                <Grid flex_end padding="5px 8px">
+                  <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
+                </Grid>
+                <div className="button-box">
+                  <button
+                    className="button edit"
+                    onClick={() => {
+                      history.push(`/dict/question/edit/${questionId}`)
+                    }}
+                  >
+                    수정하기
+                  </button>
+                </div>
+                <div className="button-box">
+                  <button className="button delete" onClick={handleShowModal}>
+                    삭제하기
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Grid flex_end padding="5px 8px">
+                  <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
+                </Grid>
+                <div className="button-box">
+                  <button className="button edit" onClick={handleNoChangeModal}>
+                    수정하기
+                  </button>
+                </div>
+                <div className="button-box">
+                  <button className="button delete" onClick={handleNoChangeModal}>
+                    삭제하기
+                  </button>
+                </div>
+              </>
+            )}
           </ModalChang>
         )}
       </Header>
@@ -167,7 +167,7 @@ const PostDetail = (props) => {
             <Title>{question.title}</Title>
             <div className="profile-box">
               <Writer>{question.writer}</Writer>
-              <div style={{ fontSize: '12px'}}>{question && createdAt}</div>
+              <div style={{ fontSize: '12px' }}>{question && createdAt}</div>
             </div>
           </div>
         </Grid>
@@ -197,11 +197,7 @@ const PostDetail = (props) => {
 
       <CommentTest question={question} />
 
-      {noChangeModal && (
-        <AlertModal showModal={noChangeModal}>
-            질문 답변 채택 후 수정 삭제가 불가능합니다.
-        </AlertModal>
-      )}
+      {noChangeModal && <AlertModal showModal={noChangeModal}>질문 답변 채택 후 수정 삭제가 불가능합니다.</AlertModal>}
       {showModal && (
         <ConfirmModal question="밈글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
           <DeleteButton onClick={handleDeleteQuestion}>삭제</DeleteButton>
@@ -221,14 +217,14 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.bg};
+  background-color: ${({ theme }) => theme.colors.white};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.line};
   z-index: 1000;
   margin: 0 0 24px 0;
   border-bottom: 1px solid #e5e5e5;
   box-shadow: 0 0 15px 0 #e5e5e5;
   .arrow-back-icon {
     cursor: pointer;
-    font-size: 20px;
   }
 `
 
@@ -251,19 +247,18 @@ const PostWrap = styled.div`
   }
 `
 const CuriousQ = styled.div`
-  background: #FF8E00;
+  background: #ff8e00;
   width: 40px;
-  height:40px;
+  height: 40px;
   border: 2px solid black;
-  border-radius:150px;
-  font-family:'YdestreetB';
+  border-radius: 150px;
+  font-family: 'YdestreetB';
   font-syled: normal;
   font-weigt:bold;
   line-height:26px;
   font-size:20px;
   padding:7px 11px 7px 9px;
   margin: 0 12px 0 0;
-
 `
 
 const Writer = styled.div`
