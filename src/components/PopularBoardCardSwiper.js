@@ -38,7 +38,7 @@ const PopularBoardCardSwiper = (props) => {
   return (
     <>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={2}
         spaceBetween={10}
         keyboard={{
           enabled: true,
