@@ -13,6 +13,7 @@ import { ReactComponent as EmptyBookMarkIcon } from '../styles/icons/북마크 �
 import { ReactComponent as FillBookMarkIcon } from '../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as DictLinkCopyIcon } from '../styles/icons/링크복사_24dp.svg'
 import { dictApi } from '../shared/api'
+import AlertModal from './modal/AlertModal'
 
 const DictMyScrapbook = (props) => {
   const dispatch = useDispatch()
@@ -40,16 +41,9 @@ const DictMyScrapbook = (props) => {
 
   const [copyLink, setCopyLink] = useState(false)
 
-  const closeCopied = () => {
-    setTimeout(() => {
-      setCopyLink(false)
-    }, 2000)
-  }
-
   const handleCopy = () => {
     setCopyLink(true)
-    closeCopied()
-    swal('링크가 복사되었습니다.', { timer: 1500 })
+    setTimeout(() => setCopyLink(false), 2000)
   }
 
   return (
@@ -81,13 +75,14 @@ const DictMyScrapbook = (props) => {
                   <div className="DictMyScrapCount">스크랩</div>
                 </div>
                 <CopyToClipboard className="DictLinkCopyButton" onCopy={handleCopy} text={currentUrl}>
-                  <DictLinkCopyIcon fill="#878C92" />
+                  <DictLinkCopyIcon fill="#878C92" width="24px" height="24px" />
                 </CopyToClipboard>
               </div>
             </AccordionDetails>
           </Accordion>
         </div>
       ))}
+      <AlertModal showModal={copyLink}>링크 복사 완료!</AlertModal>
     </>
   )
 }

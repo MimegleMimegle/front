@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Grid from '../elements/Grid'
-import { AiOutlineThunderbolt } from 'react-icons/ai'
+import { RiVipCrownLine } from 'react-icons/ri'
 
 const OneRankingCard = ({ rank, index, first }) => {
   const styles = { first: first, index: index }
@@ -11,15 +11,13 @@ const OneRankingCard = ({ rank, index, first }) => {
       <Container {...styles}>
         <div>
           <ProfileImage src={rank?.profileImage} {...styles}>
-            <div className="rank-box">
-              <p className="rank-text">{Number.isInteger(index) && index + 1}</p>
-            </div>
+            <div className="rank-box">{index === 0 ? <RiVipCrownLine size="20" /> : <p className="rank-text">{Number.isInteger(index) && index + 1}</p>}</div>
           </ProfileImage>
         </div>
         <p className="nickname">{rank?.nickname}</p>
         <Grid flex_center>
-          <AiOutlineThunderbolt />
-          <span className="count">{rank?.postCount}</span>
+          {/* <AiOutlineThunderbolt /> */}
+          <span className="count">쳌 {rank?.postCount}</span>
         </Grid>
       </Container>
     </>
@@ -27,20 +25,24 @@ const OneRankingCard = ({ rank, index, first }) => {
 }
 
 const Container = styled.div`
-  width: ${(props) => (props.first ? '110px' : '80px')};
+  max-width: ${(props) => (props.first ? '120px' : '120px')};
+  min-width: ${(props) => (props.first ? '120px' : '120px')};
+  width: 100%;
   height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: end;
   .nickname {
-    font-weight: 700;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    padding: 10px 0 2px;
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    padding: 20px 0 5px;
   }
   .count {
     font-size: ${({ theme }) => theme.fontSizes.base};
-    font-weight: 500;
+    font-weight: 700;
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
   }
 `
 
@@ -59,7 +61,7 @@ const ProfileImage = styled.div`
     justify-content: center;
     position: absolute;
     right: -5px;
-    background-color: ${(props) => (props.index === 0 ? '#FFD400' : props.index === 1 ? '#F97D39' : '#6698FC')};
+    background-color: ${(props) => (props.index === 0 ? '#FFE330' : props.index === 1 ? '#FF8E00' : '#00A0FF')};
     width: ${(props) => (props.first ? '30px' : '20px')};
     height: ${(props) => (props.first ? '30px' : '20px')};
     border-radius: 30px;

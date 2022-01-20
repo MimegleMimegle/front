@@ -8,7 +8,6 @@ import { dictApi } from '../../shared/api'
 import DictNavBar from '../../components/DictNavBar'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import OneRankCard from '../../components/OneRankCard'
 import OneRankingCard from '../../components/OneRankingCard'
 import DictChart from '../../components/DictChart'
 import OneQnaQuestion from '../../components/OneQnaQuestion'
@@ -43,7 +42,7 @@ const DictStat = (props) => {
       }
     }
     getStat()
-    setTimeout(() => setLoading(false), 500)
+    setTimeout(() => setLoading(false), 400)
   }, [])
 
   return (
@@ -60,18 +59,21 @@ const DictStat = (props) => {
                 <OneRankingCard rank={rankList[0]} index={0} first />
                 <OneRankingCard rank={rankList[2]} index={2} />
               </div>
+              <div className="rank-info">
+                <span className="yde-icon-check">쳌</span>단어 등록 개수 기준
+              </div>
             </RankSection>
             <ChartSection>
               <Title>위클리 리포트</Title>
               <div className="chart-container">
                 <DictChart chartData={chartData} />
                 <div className="updated-at">{nowTime} 기준</div>
-                <Grid flex_center column>
+                <Grid flex_center column padding="16px 0 0">
                   <p className="chart-text">
-                    <span className="highlight">오늘</span> 등록된 <span className="highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
+                    <span className="chart-highlight">오늘</span> 등록된 <span className="chart-highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
                   </p>
                   <p className="chart-text">
-                    총 <span className="highlight border">{totalDict}</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
+                    총 <span className="chart-highlight border">{totalDict}</span>개의 <span className="chart-highlight">밈 단어</span>가 등록되었어요!
                   </p>
                 </Grid>
               </div>
@@ -85,7 +87,7 @@ const DictStat = (props) => {
                       remainedQuestion.map((question, index) => {
                         return (
                           <SwiperSlide key={`question-id-${question.questionId}`}>
-                            <OneQnaQuestion question={question} index={index} />
+                            <OneQnaQuestion question={question} />
                           </SwiperSlide>
                         )
                       })}
@@ -138,24 +140,34 @@ const RankSection = styled.section`
     background-color: #fff;
     box-shadow: 0 4px 35px 4px hsl(0deg 0% 64% / 25%);
     border: 2px solid ${({ theme }) => theme.colors.line};
-    padding: 24px 0;
+    padding: 20px 0;
     margin: 16px 0 0;
     display: flex;
+    align-items: flex-end;
     justify-content: space-around;
+  }
+  .rank-info {
+    font-size: ${({ theme }) => theme.fontSizes.small};
+    font-weight: 700;
+    color: #c4c4c4;
+    text-align: right;
+    .yde-icon-check {
+      font-family: 'YdestreetB';
+      font-style: normal;
+      font-weight: normal;
+    }
   }
 `
 
 const StyledSwiper = styled(Swiper)`
   width: 100%;
   height: fit-content;
-  padding: 16px 0 40px;
-  border-radius: 10px;
-  /* cursor: grabbing; */
+  padding: 16px 0 46px;
   &::-webkit-scrollbar {
     display: none;
   }
   .swiper-slide {
-    width: 160px !important;
+    width: 170px !important;
     background-color: transparent !important;
   }
 `
@@ -184,7 +196,7 @@ const ChartSection = styled.section`
       font-size: ${({ theme }) => theme.fontSizes.lg};
     }
     font-size: ${({ theme }) => theme.fontSizes.xl};
-    .highlight {
+    .chart-highlight {
       font-weight: 700;
     }
     .border {

@@ -14,6 +14,9 @@ import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Grid from '../../elements/Grid'
+import Title from '../../elements/Title'
+import OneDictionaryCard from '../../components/OneDictionaryCard'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
@@ -21,6 +24,10 @@ import { RiEditLine } from 'react-icons/ri'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
+
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
 
   const [show, setShow] = useState(false)
 
@@ -30,6 +37,8 @@ const DictList = (props) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const [like, setLike] = useState(false)
+
+  const [showModal, setShowModal] = useState(false)
 
   React.useEffect(() => {
     getDictListDB()
@@ -55,61 +64,47 @@ const DictList = (props) => {
     }
   }
 
+  const handleClickWrite = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    } else {
+      history.push('/dict/write')
+    }
+  }
+
   return (
     <>
       <Header location="오픈 밈사전"></Header>
       <div className="DictLayout">
-        <div className="DictPageSearchSection">
-          <div
-            className="DictPageSearchButton"
-            onClick={() => {
-              showSearchBar()
-            }}
-          ></div>
-        </div>
-        <div className="DictNavBarSection">
-          <DictNavBar />
-        </div>
+        <DictNavBar />
         <SearchBarSection>
           <SearchPage />
         </SearchBarSection>
-        <div className="TodayDictListGuide">
-          <div className="TodayDictListText">오늘의 밈 카드</div>
-          <div className="TodayDictListDot" />
+        <div className="TitleBox">
+          <Title>오늘의 밈 카드</Title>
         </div>
-        <TodayDictCardSwiper />
+        <Grid padding="10px 16px 16px">
+          <TodayDictCardSwiper />
+        </Grid>
         <div className="DictListPagination">
-          <div className="DictListGuide">
-            <div className="DictListText">밈 목록</div>
-            <div className="DictListDot" />
+          <div className="TitleBox">
+            <Title>밈 목록</Title>
           </div>
           <div className="DictList">
             {dict.map((dict) => (
-              <div className="OneDictionaryCardSection">
-                <div className="OneDictionaryCardList" key={dict.id} onClick={() => history.push(`/dict/detail/${dict.dictId}`)}>
-                  <div className="DictListTitle">{dict.title}</div>
-                  <div className="DictListSummary">{dict.summary}</div>
-                  <div className="DictWriteInfo">
-                    <Grid flex_align>
-                      {dict.like ? <FillBookMarkIcon fill="#878c92" /> : <EmptyBookMarkIcon fill="#878c92" />}
-                      <div className="DictListLikeCount">{dict.likeCount}</div>
-                    </Grid>
-                    <Grid flex_end>
-                      <div className="DictListFirstWriter">{dict.firstWriter}</div>
-                      <div className="DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
-                    </Grid>
-                  </div>
-                </div>
-              </div>
+              <OneDictionaryCard key={dict.id} dict={dict} />
             ))}
           </div>
           <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
         </div>
       </div>
       <Footer />
-      <SpeedDialButton _onClick={() => history.push('/dict/write')}>
+      <SpeedDialButton _onClick={handleClickWrite}>
         <RiEditLine size="28" fill="#FFFFFF" />
       </SpeedDialButton>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
@@ -120,10 +115,12 @@ const SearchBarSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px 16px 16px;
+`
 
-  font-family: 'YdestreetL';
-  font-style: normal;
-  font-weight: normal;
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default DictList

@@ -75,14 +75,12 @@ const Container = styled.div`
   height: fit-content;
   /* border-bottom: 1px solid grey; */
   background-color: #fbfafa;
-  padding: 0px 0px;
-  box-sizing: border-box;
 `
 
 //글자를 입력하면 RemoveIcon이 나오게 되고 누르면 input의 value값이 사라집니다
 const RemoveIcon = styled.span`
   ${horizontalCenter}
-  right: 30px;
+  right: 16px;
   width: 25px;
   height: 20px;
   background-position: -389px -29px;
@@ -103,15 +101,14 @@ const InputContainer = styled.div`
 `
 
 const Input = styled.input`
-  width: 90%;
+  width: 100%;
   height: 44px;
   background-color: #e5e5e5;
   font-weight: 500;
   font-size: 14px;
-  box-sizing: border-box;
   border: none;
   border-radius: 8px;
-  padding: 15px 0 15px 20px;
+  padding: 13px 16px;
   ${({ active }) =>
     active &&
     `
@@ -121,6 +118,7 @@ const Input = styled.input`
     font-family: 'YdestreetL';
     font-style: normal;
     font-weight: normal;
+    font-size: ${({ theme }) => theme.fontSizes.base};
   }
 `
 
