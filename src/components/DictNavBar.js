@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import '../styles/css/DictNavBar.css'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { history } from '../redux/ConfigureStore'
 import ConfirmModal from './modal/ConfirmModal'
 

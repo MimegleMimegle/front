@@ -10,6 +10,7 @@
   width: 100%;
   border-bottom: 1px solid #e5e5e5;
   background-color: #fff;
+  z-index: 1003;
 }
 
 /* nav태그 아래의 자식들을 수평정렬하기 위한 설정 */

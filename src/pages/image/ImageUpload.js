@@ -7,7 +7,6 @@ import { actionCreators as imageActions } from '../../redux/modules/image'
 import Grid from '../../elements/Grid'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import ImageWrapper from '../../components/image/ImageWrapper'
-import { IoCloseOutline } from 'react-icons/io5'
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 
 const ImageUpload = ({ preview, fileInput }) => {

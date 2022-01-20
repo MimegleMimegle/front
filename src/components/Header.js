@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as mypageActions } from '../redux/modules/mypage'
+import { mypageApi } from '../shared/api'
 
 import Grid from '../elements/Grid'
 import ProfileBottom from './ProfileBottom'
@@ -20,18 +21,26 @@ const Header = ({ children, location, type }) => {
   // const cookieList = document.cookie.split('=')
   // const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== null ? true : false
+  const alarmList = profile?.alarm?.length > 5 ? profile?.alarm.slice(0, 5) : profile?.alarm
 
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [alarmUpdated, setAlarmUpdated] = useState(false)
 
   const handleShowProfile = () => {
     setShowProfile(!showProfile)
   }
 
-  const handleShowAlarm = () => {
+  const handleShowAlarm = async () => {
     if (isLogin) {
       setShowAlarm(!showAlarm)
+      try {
+        const { result } = await mypageApi.checkAlarm()
+        console.log(result)
+      } catch (error) {
+        console.log(error.response)
+      }
     } else {
       setShowModal(true)
     }
@@ -41,7 +50,19 @@ const Header = ({ children, location, type }) => {
     if (profile === null) {
       dispatch(mypageActions.getUserProfileDB())
     }
-  }, [handleShowAlarm, showAlarm])
+  }, [showAlarm])
+
+  useEffect(() => {
+    if (alarmList?.length > 0) {
+      alarmList.forEach((alarm) => {
+        if (alarm.checked === false) {
+          setAlarmUpdated(true)
+        } else {
+          setAlarmUpdated(false)
+        }
+      })
+    }
+  }, [showAlarm])
 
   if (type === 'goBack') {
     return (
@@ -67,7 +88,7 @@ const Header = ({ children, location, type }) => {
             <div className="header-bell-box" onClick={handleShowAlarm}>
               {showAlarm ? (
                 <FaBell className="header-bell shown" />
-              ) : profile && profile.alarm.length > 0 ? (
+              ) : alarmUpdated ? (
                 <>
                   <UpdateCircle />
                   <FaRegBell className="header-bell hidden" />
@@ -84,7 +105,7 @@ const Header = ({ children, location, type }) => {
       <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
         <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
       </ConfirmModal>
-      {showAlarm && <AlarmModal showAlarm={showAlarm} setShowAlarm={setShowAlarm} profile={profile} />}
+      {showAlarm && <AlarmModal showAlarm={showAlarm} setShowAlarm={setShowAlarm} alarmList={alarmList} />}
     </>
   )
 }
@@ -150,8 +171,8 @@ const NavHeader = styled.nav`
 `
 
 const UpdateCircle = styled.span`
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.blue};
   position: absolute;

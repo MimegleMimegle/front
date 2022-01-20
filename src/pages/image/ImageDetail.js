@@ -125,8 +125,8 @@ const ImageDetail = (props) => {
             {imageData && profile && imageData.writer === profile.nickname && <DeleteIcon className="icon" width="24px" height="24px" style={{ margin: '0 0 0 16px' }} onClick={handleShowModal} />}
           </div>
         </Grid>
-        <Grid height="fit-content" overflow="hidden">
-          <img src={imageData.thumbNail} style={{ width: '100%', objectFit: 'cover' }} />
+        <Grid flex_center height="fit-content" overflow="hidden">
+          <img src={imageData.thumbNail} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </Grid>
         <Grid flex_align padding="10px 16px 16px">
           {isLiked ? <FullHeartIcon className="icon" onClick={handleClickLike} /> : <EmptyHeartIcon className="icon" onClick={handleClickLike} />}

@@ -78,12 +78,12 @@ const QuizIntro = (props) => {
 
   return (
     <>
-      <Header type="QuizIntro" location="밈퀴즈" />
       <Wrapper>
+        <Header type="QuizIntro" location="밈퀴즈" />
         {!loading ? (
           <>
             <ImageSection>
-              <img src={QuizIntroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={QuizIntroImage} style={{ width: '100%', objectFit: 'cover' }} />
             </ImageSection>
             <SubjectSection>
               <div style={{ padding: '20px 0 10px' }}>
@@ -121,8 +121,8 @@ const QuizIntro = (props) => {
             <CircularProgress color="inherit" />
           </Grid>
         )}
+        <Footer />
       </Wrapper>
-      <Footer />
       {showModal && (
         <AlertModal showModal={showModal}>
           <p>퀴즈 주제를 선택해주세요! 🤓</p>
@@ -136,13 +136,24 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-  padding: 56px 0 80px;
+  height: fit-content;
+  padding: 56px 0 0;
+  margin: 0 0 80px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const ImageSection = styled.div`
   width: 100%;
   height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   border-top: 2px solid ${({ theme }) => theme.colors.black};
   border-bottom: 2px solid ${({ theme }) => theme.colors.black};
@@ -184,6 +195,8 @@ const SubjectSection = styled.div`
 const ButtonSection = styled.div`
   position: relative;
   width: 100%;
+  height: 100%;
+  margin: 0 0 90px;
   .start-button-box {
     width: 120px;
     height: 48px;
