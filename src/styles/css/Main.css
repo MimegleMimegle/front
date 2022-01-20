@@ -350,11 +350,11 @@
   height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   position: relative;
 
-  margin: 50px 0 70px 0;
+  margin: 20px 0 0 0;
 }
 
 .MainPageAddButtonSectionHr {
@@ -378,8 +378,12 @@
 }
 
 .MainPageAddButtonGuideText {
-  font-size: 16px;
   margin: 50px 0 0 0;
   width: fit-content;
   height: 50px;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 400;
 }
