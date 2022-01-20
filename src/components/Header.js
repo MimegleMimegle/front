@@ -10,8 +10,8 @@ import ProfileBottom from './ProfileBottom'
 import AlarmModal from './modal/AlarmModal'
 import ConfirmModal from './modal/ConfirmModal'
 import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
-import { FaRegBell, FaBell } from 'react-icons/fa'
 import { ReactComponent as ArrowBackIcon } from '../styles/icons/arrow_back_ios_black_24dp.svg'
+import { ReactComponent as BellIcon } from '../styles/icons/notification.svg'
 
 const Header = ({ children, location, type }) => {
   const dispatch = useDispatch()
@@ -87,14 +87,14 @@ const Header = ({ children, location, type }) => {
           <div className="header-icon">
             <div className="header-bell-box" onClick={handleShowAlarm}>
               {showAlarm ? (
-                <FaBell className="header-bell shown" />
+                <BellIcon className="shown" />
               ) : alarmUpdated ? (
                 <>
                   <UpdateCircle />
-                  <FaRegBell className="header-bell hidden" />
+                  <BellIcon className="hidden" />
                 </>
               ) : (
-                <FaRegBell className="header-bell hidden" />
+                <BellIcon className="hidden" />
               )}
             </div>
             {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
@@ -151,22 +151,20 @@ const NavHeader = styled.nav`
     &:hover {
       background-color: #e9e9e9;
     }
-    .header-bell {
-      font-size: 20px;
-      &.shown {
-        color: ${({ theme }) => theme.colors.blue};
-      }
-      &.hidden {
-        color: #000;
-      }
-    }
   }
+
   .arrow-back-icon {
     cursor: pointer;
   }
   .header-back-empty {
     width: 24px;
     height: 100%;
+  }
+  .shown {
+    fill: ${({ theme }) => theme.colors.blue};
+  }
+  .hidden {
+    fill: #000;
   }
 `
 

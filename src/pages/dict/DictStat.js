@@ -132,7 +132,7 @@ const Wrapper = styled.div`
 const RankSection = styled.section`
   display: flex;
   flex-direction: column;
-  padding: 24px 16px 40px;
+  padding: 24px 16px 36px;
   .rank-container {
     max-width: 400px;
     width: 100%;
@@ -162,7 +162,7 @@ const RankSection = styled.section`
 const StyledSwiper = styled(Swiper)`
   width: 100%;
   height: fit-content;
-  padding: 16px 0 46px;
+  padding: 16px 0 54px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -175,7 +175,7 @@ const StyledSwiper = styled(Swiper)`
 const ChartSection = styled.section`
   display: flex;
   flex-direction: column;
-  padding: 0 16px 40px;
+  padding: 0 16px 48px;
   .chart-container {
     background-color: #fff;
     height: 360px;

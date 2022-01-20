@@ -9,6 +9,10 @@ import SmileIcon from '../styles/image/smileIcon_Blue.png'
 import { RiBookMarkLine, RiGamepadLine } from 'react-icons/ri'
 import { MdOutlinePhotoLibrary } from 'react-icons/md'
 import { CgProfile } from 'react-icons/cg'
+import { ReactComponent as DictIcon } from '../styles/icons/Dockbar_dictionary.svg'
+import { ReactComponent as MyPageIcon } from '../styles/icons/Dockbar_mypage.svg'
+import { ReactComponent as QuizIcon } from '../styles/icons/Dockbar_quiz.svg'
+import { ReactComponent as ZzalbangIcon } from '../styles/icons/Dockbar_zzalbang.svg'
 
 const Footer = (props) => {
   const userId = localStorage.getItem('id')
@@ -25,6 +29,7 @@ const Footer = (props) => {
   }
   const activeStyle = {
     color: '#00A0FF',
+    fill: '#00A0FF',
   }
   return (
     <>
@@ -34,7 +39,7 @@ const Footer = (props) => {
             <li className="nav-item">
               <NavLink to="/dict" className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
-                  <RiBookMarkLine className="nav-icon" />
+                  <DictIcon className="nav-icon" />
                   <div className="nav-link__text">밈사전</div>
                 </Grid>
               </NavLink>
@@ -42,7 +47,7 @@ const Footer = (props) => {
             <li className="nav-item">
               <NavLink to="/image" className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
-                  <MdOutlinePhotoLibrary className="nav-icon" />
+                  <ZzalbangIcon className="nav-icon" />
                   <div className="nav-link__text">밈짤방</div>
                 </Grid>
               </NavLink>
@@ -58,7 +63,7 @@ const Footer = (props) => {
             <li className="nav-item">
               <NavLink to="/quiz" className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
-                  <RiGamepadLine className="nav-icon" />
+                  <QuizIcon className="nav-icon" />
                   <div className="nav-link__text">밈퀴즈</div>
                 </Grid>
               </NavLink>
@@ -66,7 +71,7 @@ const Footer = (props) => {
             <li className="nav-item">
               <NavLink to={isLogin && '/mypage'} onClick={handleClickMypage} className="nav-link" activeStyle={activeStyle}>
                 <Grid flex_center column>
-                  <CgProfile className="nav-icon" />
+                  <MyPageIcon className="nav-icon" />
                   <div className="nav-link__text">MY</div>
                 </Grid>
               </NavLink>
@@ -120,7 +125,6 @@ const NavBar = styled.nav`
       .nav-link {
         width: 100%;
         .nav-icon {
-          font-size: 24px;
         }
         &:visited,
         &:link {

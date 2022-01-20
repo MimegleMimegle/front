@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { startsWith } from 'lodash'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
-  baseURL: 'http://54.180.150.230',
+  baseURL: 'http://13.209.99.193',
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-type': 'application/json; charset=UTF-8',

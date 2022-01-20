@@ -7,6 +7,7 @@ import { dictQuestionApi } from '../../shared/api'
 import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
 import { history } from '../../redux/ConfigureStore'
 import Header from '../../components/Header'
+import AlertModal from '../../components/modal/AlertModal'
 
 const PostEdit = (props) => {
   const dispatch = useDispatch()
@@ -20,12 +21,14 @@ const PostEdit = (props) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [thumbNail, setThumbNail] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
 
   const getOneQuestionDB = async () => {
     await dictQuestionApi
       .getOneQuestion(questionId)
       .then((response) => {
         const _question = response.data.data
+        console.log(_question)
         setPost(response.data.data)
         setTitle(_question.title)
         setContent(_question.content)
@@ -70,15 +73,19 @@ const PostEdit = (props) => {
   }
 
   console.log(post.thumbNail)
+  console.log(thumbNail)
+  console.log(fileInput.current.files)
 
   const editQuestion = () => {
     if (title === '' || content === '') {
-      window.alert('게시물을 모두 작성해주세요')
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 2000)
       return
     }
 
     if (fileInput.current.files.length === 0) {
-      const uploadFile = post.thumbNail
+      const uploadFile = post && post.thumbNail
+      console.log(post.thumbNail)
       dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
     } else {
       const uploadFile = fileInput.current.files[0]
@@ -121,6 +128,7 @@ const PostEdit = (props) => {
             <div className="postbtn btn-2"></div>
           </PWFooter>
         </Container>
+        <AlertModal showModal={showAlert}>제목과 본문을 모두 작성해 주세요!</AlertModal>
       </>
     </>
   )
