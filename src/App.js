@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ReactGA from 'react-ga'
-import './App.css'
+import style from './App.css'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { history } from './redux/ConfigureStore'
