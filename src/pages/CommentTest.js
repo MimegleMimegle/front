@@ -6,7 +6,7 @@ import OneComment from '../components/OneComment'
 import { MdOutlineSend } from 'react-icons/md'
 import styled from 'styled-components'
 import MemegleLogo from '../styles/image/smileIcon_Yellow.png'
-
+import { commentApi } from '../shared/api'
 const CommentTest = ({ question }) => {
   const dispatch = useDispatch()
   // const questionId = question.questionId
@@ -18,6 +18,7 @@ const CommentTest = ({ question }) => {
   const cookieList = document.cookie.split('=')
   const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
+  const commentId = question.commentId
   console.log(question)
   const onChangeComment = (e) => {
     setComment(e.target.value)
@@ -29,6 +30,8 @@ const CommentTest = ({ question }) => {
     setComment('')
     console.log(question.questionId)
   }
+
+  
 
   React.useEffect(() => {
     if (now_profile === null) {
@@ -68,7 +71,6 @@ const CommentTest = ({ question }) => {
 const CommentWrite = styled.div`
   width: 100%;
   padding: 12px 16px;
-  margin: 0 0 16px;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
