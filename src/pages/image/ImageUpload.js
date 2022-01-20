@@ -8,6 +8,7 @@ import Grid from '../../elements/Grid'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import ImageWrapper from '../../components/image/ImageWrapper'
 import { IoCloseOutline } from 'react-icons/io5'
+import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 
 const ImageUpload = ({ preview, fileInput }) => {
   const dispatch = useDispatch()
@@ -29,18 +30,17 @@ const ImageUpload = ({ preview, fileInput }) => {
   return (
     <>
       <ImageWrapper>
-        <Grid flex_between padding="0 15px 0 10px">
-          <button
+        <Grid flex_between padding="0 16px 16px">
+          <CloseIcon
+            className="icon"
             onClick={() => {
               history.go('/image')
             }}
-          >
-            <IoCloseOutline style={{ fontSize: '24px', color: '#FFF' }} />
-          </button>
+          />
           <UploadButton onClick={handleShowModal}>등록</UploadButton>
         </Grid>
-        <Grid flex_align height="80%">
-          <img src={preview} style={{ width: '100%', maxHeight: '100%', objectFit: 'cover' }} />
+        <Grid height="fit-conent" overflow="hidden">
+          <img src={preview} style={{ width: '100%', objectFit: 'cover' }} />
         </Grid>
       </ImageWrapper>
       {showModal && (

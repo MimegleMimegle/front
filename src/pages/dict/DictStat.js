@@ -13,6 +13,7 @@ import OneRankingCard from '../../components/OneRankingCard'
 import DictChart from '../../components/DictChart'
 import OneQnaQuestion from '../../components/OneQnaQuestion'
 import Grid from '../../elements/Grid'
+import Title from '../../elements/Title'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import 'swiper/swiper.min.css'
@@ -53,34 +54,32 @@ const DictStat = (props) => {
         {!loading ? (
           <>
             <RankSection>
-              <span className="section-title">열정적인 밈글러 top3</span>
-              <Grid flex_around padding="24px 0 0">
+              <Title>열정적인 밈글러 top3</Title>
+              <div className="rank-container">
                 <OneRankingCard rank={rankList[1]} index={1} />
                 <OneRankingCard rank={rankList[0]} index={0} first />
                 <OneRankingCard rank={rankList[2]} index={2} />
-              </Grid>
+              </div>
             </RankSection>
             <ChartSection>
-              <span className="section-title">위클리 리포트</span>
-              <Grid padding="16px 0 0">
-                <div className="chart-container">
-                  <DictChart chartData={chartData} />
-                  <div className="updated-at">{nowTime} 기준</div>
-                  <Grid flex_center column>
-                    <p className="chart-text">
-                      <span className="highlight">오늘</span> 등록된 <span className="highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
-                    </p>
-                    <p className="chart-text">
-                      총 <span className="highlight border">{totalDict}</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
-                    </p>
-                  </Grid>
-                </div>
-              </Grid>
+              <Title>위클리 리포트</Title>
+              <div className="chart-container">
+                <DictChart chartData={chartData} />
+                <div className="updated-at">{nowTime} 기준</div>
+                <Grid flex_center column>
+                  <p className="chart-text">
+                    <span className="highlight">오늘</span> 등록된 <span className="highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
+                  </p>
+                  <p className="chart-text">
+                    총 <span className="highlight border">{totalDict}</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
+                  </p>
+                </Grid>
+              </div>
             </ChartSection>
             <QNASection>
               <Grid flex_center column>
                 <Grid>
-                  <span className="section-title">답변을 기다리고 있어요!</span>
+                  <Title>답변을 기다리고 있어요!</Title>
                   <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
                     {remainedQuestion &&
                       remainedQuestion.map((question, index) => {
@@ -93,7 +92,7 @@ const DictStat = (props) => {
                   </StyledSwiper>
                 </Grid>
                 <Grid>
-                  <span className="section-title">따끈따끈한 답변이 등록됐어요!</span>
+                  <Title>따끈따끈한 답변이 등록됐어요!</Title>
                   <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
                     {completedQuestion &&
                       completedQuestion.map((question, index) => {
@@ -127,20 +126,23 @@ const Wrapper = styled.div`
   padding: 56px 0 0;
   display: flex;
   flex-direction: column;
-  .section-title {
-    width: fit-content;
-    font-family: 'YdestreetB';
-    font-style: normal;
-    font-weight: normal;
-    font-size: ${({ theme }) => theme.fontSizes.xxl};
-    line-height: normal;
-    background-image: linear-gradient(transparent 70%, #ffe330 30%);
-  }
 `
 const RankSection = styled.section`
   display: flex;
   flex-direction: column;
   padding: 24px 16px 40px;
+  .rank-container {
+    max-width: 400px;
+    width: 100%;
+    height: fit-content;
+    background-color: #fff;
+    box-shadow: 0 4px 35px 4px hsl(0deg 0% 64% / 25%);
+    border: 2px solid ${({ theme }) => theme.colors.line};
+    padding: 24px 0;
+    margin: 16px 0 0;
+    display: flex;
+    justify-content: space-around;
+  }
 `
 
 const StyledSwiper = styled(Swiper)`
@@ -166,7 +168,9 @@ const ChartSection = styled.section`
     background-color: #fff;
     height: 360px;
     padding: 20px;
+    margin: 16px 0 0;
     box-shadow: 0 4px 35px 4px hsl(0deg 0% 64% / 25%);
+    border: 2px solid ${({ theme }) => theme.colors.line};
     display: flex;
     flex-direction: column;
     align-items: center;

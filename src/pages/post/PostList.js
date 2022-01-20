@@ -13,6 +13,8 @@ import '../../index.css'
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
+import { RiEditLine } from 'react-icons/ri'
+
 
 const PostList = (props) => {
   const [question, setQuestion] = useState([])
@@ -42,22 +44,8 @@ const PostList = (props) => {
         <>
           <Container>
             <Wrap>
-              <div style={{height: '17px'}}/>
                <DictNavBar />
               <div className='curious'>궁금해요!</div>
-
-              {/* <Empty>
-                <Addbtn
-                  onClick={() => {
-                    history.push('/dict/question/write')
-                  }}
-                >
-                  질문등록
-                </Addbtn>
-                <AddbtnShadow />
-              </Empty> */}
-
-
               {question &&
                 question.map((question, index) => {
                   return <PostCard question={question} key={question.questionId} />
@@ -73,6 +61,8 @@ const PostList = (props) => {
         </div>
       )}
       <Footer />
+      <RiEditLine size="28" fill="#FFFFFF" />
+
     </>
   )
 }
