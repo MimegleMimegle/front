@@ -25,11 +25,11 @@ const KakaoImageShareButton = (props) => {
         objectType: 'feed',
         content: {
           title: '세상의 모든 밈, 밈글밈글',
-          description: '사전. 근데 이제 신조어를 곁들인.',
+          description: '사전. 근데 이제 신조어를 곁들인..',
           imageUrl: thumbNail, // process.env.FETCH_URL + '/logo.png' 절대경로여야함
           link: {
-            mobileWebUrl: thumbNail,
-            webUrl: thumbNail,
+            mobileWebUrl: imageDetaillUrl,
+            webUrl: imageDetaillUrl,
           },
         },
         social: {
