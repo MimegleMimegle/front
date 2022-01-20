@@ -124,11 +124,14 @@ const OneComment = (props) => {
             <SelectText onClick={handleClickIsSelected}>채택</SelectText>
           </Select> :null}
           {!isSelected && username!== commentWriterId && username===questionUser &&  props.selectedComment===0? 
-          <Select>
-        <SelectText onClick={handleSelectModal} >
-            <IoMdCheckmarkCircleOutline size='27px'/>채택
-        </SelectText>
-        </Select>  : null}
+          <Select onClick={handleSelectModal}>
+          <IoMdCheckmarkCircleOutline size='27px'/>
+        <SelectText >채택</SelectText>
+        </Select>  : <Select>
+        <IoMdCheckmarkCircleOutline size='27px'/>
+        <SelectText>채택</SelectText>
+        </Select>
+}
         {selectModal && (
           <ConfirmModal question="채택 후 변경이 불가합니다. 이 답변을 채택하시겠습니까?" showModal={selectModal} handleShowModal={handleSelectModal} setShowModal={setSelectModal}>
             <DeleteButton onClick={handleClickIsSelected}>채택</DeleteButton>
@@ -202,6 +205,7 @@ const Select = styled.div`
   height: 83px;
   background: #00A0FF;
   padding: 11px 24px;
+  cursor: pointer;
 `
 const SelectText =  styled.div`
 font-family: 'YdestreetL';
