@@ -135,12 +135,12 @@ const Login = (props) => {
             </div>
           </div>
         </div>
-        <div className="SocialLoginHR">또는</div>
+        {/* <div className="SocialLoginHR">또는</div>
         <div className="SocialLoginBtns">
           <KakaoButton />
           <GoogleButton />
           <NaverButton />
-        </div>
+        </div> */}
       </div>
       <AlertModal showModal={showAlert}>
         <AlertText>아이디와 비밀번호를 모두 입력해주세요!</AlertText>
