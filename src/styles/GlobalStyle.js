@@ -29,7 +29,6 @@ html, body, div, span, applet, object, iframe,
 }
 
 body {
-  background-color: #e5e5e5;
   color: #000;
 }
 

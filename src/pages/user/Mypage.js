@@ -11,7 +11,6 @@ import EditProfile from '../../components/mypage/EditProfile'
 import PostCard from '../../components/PostCard'
 import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
 import OneDictionaryCard from '../../components/OneDictionaryCard'
-import { AiOutlineEdit } from 'react-icons/ai'
 import Grid from '../../elements/Grid'
 import CircularProgress from '@mui/material/CircularProgress'
 import { ReactComponent as EditIcon } from '../../styles/icons/edit.svg'
@@ -91,11 +90,11 @@ const Mypage = (props) => {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div className="user-activity-info">
                     <div className="user-activity-info-subject">단어장</div>
-                    <div className="user-activity-info-count">{my && my.dictCount}</div>
+                    <div className="user-activity-info-count">{my && my.dictCount > 0 ? my.dictCount : 0}</div>
                   </div>
                   <div className="user-activity-info">
                     <div className="user-activity-info-subject">게시글</div>
-                    <div className="user-activity-info-count">{my && my.postCount}</div>
+                    <div className="user-activity-info-count">{my && my.postCount > 0 ? my.postCount : 0}</div>
                   </div>
                 </div>
               </div>
