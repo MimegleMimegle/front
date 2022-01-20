@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Grid = (props) => {
-  const { flex_center, flex_between, flex_align, flex_end, flex_around, flex_start, column, width, height, padding, margin, overflow, borderBottom, position, children, _onClick } = props
+  const { flex_center, flex_between, flex_align, flex_end, flex_around, flex_start, flex, column, width, height, padding, margin, overflow, borderBottom, position, children, _onClick } = props
   const styles = {
     flex_center: flex_center,
     flex_between: flex_between,
@@ -10,6 +10,7 @@ const Grid = (props) => {
     flex_end: flex_end,
     flex_start: flex_start,
     flex_around: flex_around,
+    flex: flex,
     column: column,
     width: width,
     height: height,
@@ -35,6 +36,7 @@ Grid.defaultProps = {
   flex_end: false,
   flex_around: false,
   flex_start: false,
+  flex: false,
   column: false,
   children: null,
   width: '100%',
@@ -62,6 +64,7 @@ const GridBox = styled.div`
   ${(props) => (props.flex_end ? `display: flex; align-items: center; justify-content: flex-end;` : '')}
   ${(props) => (props.flex_start ? `display: flex; align-items: center; justify-content: start;` : '')}
   ${(props) => (props.flex_around ? `display: flex; align-items: center; justify-content: space-around;` : '')}
+  ${(props) => (props.flex ? `display: flex;` : '')}
   -webkit-appearance:none;
 `
 

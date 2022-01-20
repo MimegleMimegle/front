@@ -11,6 +11,7 @@ import OneDictionaryCard from '../../components/OneDictionaryCard'
 import PostCard from '../../components/PostCard'
 import Title from '../../elements/Title'
 import Grid from '../../elements/Grid'
+import Footer from '../../components/Footer'
 
 const DictSearch = (props) => {
   const dispatch = useDispatch()
@@ -127,6 +128,7 @@ const DictSearch = (props) => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   )
 }

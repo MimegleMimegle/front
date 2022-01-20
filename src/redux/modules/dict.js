@@ -137,8 +137,7 @@ const editDictDB = (dictId, summary, content) => {
     dictApi
       .editDict(dictId, summary, content)
       .then((res) => {
-        swal('', '단어가 수정되었습니다.', 'success')
-        history.push('/dict')
+        history.push(`/dict/detail/${dictId}`)
       })
       .catch((err) => {
         if (err.res) {
@@ -157,7 +156,6 @@ const deleteDictDB = (dictId) => {
     dictApi
       .deleteDict(dictId)
       .then((res) => {
-        swal('', '삭제요청이 완료되었습니다.', 'success')
         history.push('/dict')
       })
       .catch((err) => {

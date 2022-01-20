@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, TextareaHTMLAttributes } from 'react'
 import '../../styles/css/DictWrite.css'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
@@ -168,8 +169,8 @@ const DictWrite = (props) => {
         </DoubleCheckModal>
       )}
       {showModal && (
-        <ConfirmModal question="작성하신 밈단어를 게시하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
-          <button onClick={addDict}>게시</button>
+        <ConfirmModal question="작성하신 단어를 게시하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+          <AddDictButton onClick={addDict}>게시</AddDictButton>
         </ConfirmModal>
       )}
       <AlertModal showModal={showInputAlert}>먼저 단어를 입력해주세요!</AlertModal>
@@ -177,5 +178,10 @@ const DictWrite = (props) => {
     </>
   )
 }
+
+const AddDictButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
+`
 
 export default DictWrite

@@ -184,6 +184,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = null
         draft.is_login = false
+        draft.is_loading = false
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {

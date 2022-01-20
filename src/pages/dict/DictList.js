@@ -16,6 +16,7 @@ import Footer from '../../components/Footer'
 import Grid from '../../elements/Grid'
 import Title from '../../elements/Title'
 import OneDictionaryCard from '../../components/OneDictionaryCard'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
@@ -23,6 +24,10 @@ import { RiEditLine } from 'react-icons/ri'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
+
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
 
   const [show, setShow] = useState(false)
 
@@ -32,6 +37,8 @@ const DictList = (props) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const [like, setLike] = useState(false)
+
+  const [showModal, setShowModal] = useState(false)
 
   React.useEffect(() => {
     getDictListDB()
@@ -54,6 +61,14 @@ const DictList = (props) => {
       setShow(true)
     } else {
       setShow(false)
+    }
+  }
+
+  const handleClickWrite = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    } else {
+      history.push('/dict/write')
     }
   }
 
@@ -84,9 +99,12 @@ const DictList = (props) => {
         </div>
       </div>
       <Footer />
-      <SpeedDialButton _onClick={() => history.push('/dict/write')}>
+      <SpeedDialButton _onClick={handleClickWrite}>
         <RiEditLine size="28" fill="#FFFFFF" />
       </SpeedDialButton>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
@@ -98,6 +116,11 @@ const SearchBarSection = styled.div`
   justify-content: center;
   align-items: center;
   padding: 24px 16px 16px;
+`
+
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default DictList

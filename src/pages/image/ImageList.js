@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { imageApi } from '../../shared/api'
 import { actionCreators as imageActions } from '../../redux/modules/image'
+import { history } from '../../redux/ConfigureStore'
 
 import Grid from '../../elements/Grid'
 import Title from '../../elements/Title'
@@ -12,6 +13,7 @@ import InfinityScroll from '../../shared/InfinityScroll'
 import Masonry from 'react-masonry-css'
 import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 import SpeedDialButton from '../../components/SpeedDialButton'
 import CircularProgress from '@mui/material/CircularProgress'
 import { RiEditLine } from 'react-icons/ri'
@@ -21,12 +23,23 @@ const ImageList = (props) => {
   const fileInput = useRef('')
   const image_data = useSelector((state) => state.image)
 
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
+
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
   const [bestImageList, setBestImageList] = useState([])
+  const [showModal, setShowModal] = useState(false)
 
   const getImageList = () => {
     dispatch(imageActions.getImageListDB(image_data.page))
+  }
+
+  const handleClickWrite = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    }
   }
 
   const handleChangeFile = (e) => {
@@ -96,14 +109,23 @@ const ImageList = (props) => {
           </Grid>
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
-        <SpeedDialButton>
-          <FileInputLabel htmlFor="file" className="upload-label">
+        <SpeedDialButton _onClick={handleClickWrite}>
+          {isLogin ? (
+            <>
+              <FileInputLabel htmlFor="file" className="upload-label">
+                <RiEditLine size="28" fill="#FFFFFF" />
+              </FileInputLabel>
+              <FileInput type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+            </>
+          ) : (
             <RiEditLine size="28" fill="#FFFFFF" />
-          </FileInputLabel>
-          <FileInput type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+          )}
         </SpeedDialButton>
       </Wrapper>
       <Footer />
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
@@ -181,6 +203,11 @@ const PopularGridLayout = styled.div`
       grid-row: 2 / 3;
     }
   }
+`
+
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default ImageList

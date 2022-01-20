@@ -14,7 +14,7 @@ const OneDictionaryCard = ({ dict }) => {
         <DictSummary>{dict?.summary}</DictSummary>
         <Grid flex_between height="fit-content">
           <Grid flex_align>
-            {dict?.like ? <FillBookMarkIcon fill="#878c92" /> : <EmptyBookMarkIcon fill="#878c92" />}
+            {dict?.like ? <FillBookMarkIcon className="icon" fill="#878c92" /> : <EmptyBookMarkIcon className="icon" fill="#878c92" />}
             <DictLikeCount>{dict?.likeCount}</DictLikeCount>
           </Grid>
           <Grid flex_end>
@@ -40,6 +40,9 @@ const Container = styled.div`
   background-color: #fff;
   -webkit-appearance: none;
   cursor: zoom-in;
+  .icon {
+    cursor: pointer;
+  }
 `
 
 const DictTitle = styled.div`
