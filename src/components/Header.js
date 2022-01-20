@@ -7,7 +7,7 @@ import { actionCreators as mypageActions } from '../redux/modules/mypage'
 import Grid from '../elements/Grid'
 import ProfileBottom from './ProfileBottom'
 import AlarmModal from './modal/AlarmModal'
-import AlertModal from './modal/AlertModal'
+import ConfirmModal from './modal/ConfirmModal'
 import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
 import { FaRegBell, FaBell } from 'react-icons/fa'
 import { ReactComponent as ArrowBackIcon } from '../styles/icons/arrow_back_ios_black_24dp.svg'
@@ -23,7 +23,7 @@ const Header = ({ children, location, type }) => {
 
   const [showProfile, setShowProfile] = useState(false)
   const [showAlarm, setShowAlarm] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const handleShowProfile = () => {
     setShowProfile(!showProfile)
@@ -33,8 +33,7 @@ const Header = ({ children, location, type }) => {
     if (isLogin) {
       setShowAlarm(!showAlarm)
     } else {
-      setShowAlert(true)
-      setTimeout(() => setShowAlert(false), 2000)
+      setShowModal(true)
     }
   }
 
@@ -42,7 +41,7 @@ const Header = ({ children, location, type }) => {
     if (profile === null) {
       dispatch(mypageActions.getUserProfileDB())
     }
-  }, [])
+  }, [handleShowAlarm, showAlarm])
 
   if (type === 'goBack') {
     return (
@@ -66,14 +65,25 @@ const Header = ({ children, location, type }) => {
           <div className="header-location">{location}</div>
           <div className="header-icon">
             <div className="header-bell-box" onClick={handleShowAlarm}>
-              {showAlarm ? <FaBell className="header-bell shown" /> : <FaRegBell className="header-bell hidden" />}
+              {showAlarm ? (
+                <FaBell className="header-bell shown" />
+              ) : profile && profile.alarm.length > 0 ? (
+                <>
+                  <UpdateCircle />
+                  <FaRegBell className="header-bell hidden" />
+                </>
+              ) : (
+                <FaRegBell className="header-bell hidden" />
+              )}
             </div>
             {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
           </div>
         </Grid>
       </NavHeader>
       <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
-      <AlertModal showModal={showAlert}>로그인 후 이용하실 수 있습니다!</AlertModal>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
       {showAlarm && <AlarmModal showAlarm={showAlarm} setShowAlarm={setShowAlarm} profile={profile} />}
     </>
   )
@@ -90,8 +100,9 @@ const NavHeader = styled.nav`
   border-bottom: 1px solid ${({ theme }) => theme.colors.line};
   z-index: 1000;
   transition: 0.4s ease;
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.08);
   .header-empty {
-    width: 80px;
+    width: 76px;
     height: 100%;
   }
   .header-location {
@@ -114,6 +125,7 @@ const NavHeader = styled.nav`
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     transition: background-color 0.3s ease-in-out;
     &:hover {
       background-color: #e9e9e9;
@@ -124,7 +136,7 @@ const NavHeader = styled.nav`
         color: ${({ theme }) => theme.colors.blue};
       }
       &.hidden {
-        color: #333;
+        color: #000;
       }
     }
   }
@@ -137,16 +149,30 @@ const NavHeader = styled.nav`
   }
 `
 
+const UpdateCircle = styled.span`
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.blue};
+  position: absolute;
+  top: 8px;
+  right: 8px;
+`
+
 const ProfileImage = styled.div`
   margin: 0 0 0 8px;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 20px;
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.white};
+`
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default Header

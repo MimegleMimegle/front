@@ -27,7 +27,7 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
 }
 .activeTitle {
@@ -37,7 +37,7 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
 }
 
@@ -54,12 +54,12 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
 .DictMyScrapSummary {
-  width: 250px;
+  width: fit-content;
   height: fit-content;
   overflow-wrap: break-word;
   display: flex;
@@ -67,7 +67,7 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
@@ -85,12 +85,12 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
 .DictMyScrapDescription {
-  width: 200px;
+  width: fit-content;
   height: fit-content;
   overflow-wrap: break-word;
   display: flex;
@@ -98,7 +98,7 @@
 
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
@@ -116,12 +116,12 @@
   flex-direction: row;
   width: fit-content;
   height: fit-content;
-  align-self: center;
+  align-items: center;
 
   color: #878c92;
   font-family: 'Pretendard Variable';
   font-style: normal;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 .DictMyScrapInfo:hover {
@@ -129,6 +129,8 @@
 }
 
 .DictMyScrapCount {
+  font-size: 0.875rem;
+  font-weight: 300;
   margin: -2px 0 0 5px;
   width: fit-content;
   height: fit-content;
@@ -137,8 +139,6 @@
 .DictLinkCopyButton {
   width: fit-content;
   height: fit-content;
-  display: flex;
-  align-items: center;
 }
 
 .DictLinkCopyButton:hover {

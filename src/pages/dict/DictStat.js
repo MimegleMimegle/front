@@ -70,10 +70,10 @@ const DictStat = (props) => {
                 <div className="updated-at">{nowTime} 기준</div>
                 <Grid flex_center column padding="16px 0 0">
                   <p className="chart-text">
-                    <span className="highlight">오늘</span> 등록된 <span className="highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
+                    <span className="chart-highlight">오늘</span> 등록된 <span className="chart-highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
                   </p>
                   <p className="chart-text">
-                    총 <span className="highlight border">{totalDict}</span>개의 <span className="highlight">밈 단어</span>가 등록되었어요!
+                    총 <span className="chart-highlight border">{totalDict}</span>개의 <span className="chart-highlight">밈 단어</span>가 등록되었어요!
                   </p>
                 </Grid>
               </div>
@@ -196,7 +196,7 @@ const ChartSection = styled.section`
       font-size: ${({ theme }) => theme.fontSizes.lg};
     }
     font-size: ${({ theme }) => theme.fontSizes.xl};
-    .highlight {
+    .chart-highlight {
       font-weight: 700;
     }
     .border {

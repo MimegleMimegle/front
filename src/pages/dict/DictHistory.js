@@ -8,9 +8,14 @@ import { dictApi } from '../../shared/api'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import SearchPage from '../../shared/SearchPage'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 
 const DictEditHistory = (props) => {
   const dispatch = useDispatch()
+
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
 
   const [show, setShow] = useState(false)
 
@@ -18,6 +23,8 @@ const DictEditHistory = (props) => {
   const [isDict, setIsDict] = useState([])
   const [dictHistory, setDictHistory] = useState([])
   const [firstCreatedAt, setFirstCreatedAt] = useState('')
+
+  const [showModal, setShowModal] = useState(false)
 
   console.log(dictId)
 
@@ -45,6 +52,14 @@ const DictEditHistory = (props) => {
     }
   }
 
+  const handleClickEdit = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    } else {
+      history.push(`/dict/edit/${dictId}`)
+    }
+  }
+
   return (
     <>
       <Header type="goBack" location="오픈 밈사전" />
@@ -54,35 +69,33 @@ const DictEditHistory = (props) => {
         <div className="DictHistoryListSection">
           {dictHistory.map((dictId) => (
             <div className="DictHistoryList" key={dictId.id}>
-              <div className="DictHistoryList DictWriterInfo">
-                <img className="DictHistoryList DictWriterProfileImage" src={dictId.writerProfileImage} />
-                <div className="DictHistoryList DictWriter">{dictId.writer} 님의 편집 내역</div>
+              <div className="DictWriterInfo">
+                <img className="DictWriterProfileImage" src={dictId.writerProfileImage} />
+                <div className="DictWriter">{dictId.writer} 님의 편집 내역</div>
               </div>
-              <div className="DictHistoryList DictHistoryCreatedAt">편집일 : {dictId.createdAt.split('T', 1)}</div>
+              <div className="DictHistoryCreatedAt">편집일 : {dictId.createdAt.split('T', 1)}</div>
             </div>
           ))}
           <div className="DictHistoryList">
-            <div className="DictHistoryList DictHistoryFirstWriterInfo">
-              <img className="DictHistoryList DictFirstWriterProfileImage" src={isDict.firstWriterProfileImage} />
-              <div className="DictHistoryList DictHistoryFirstWriter">{isDict.firstWriter} 님의 단어 등록</div>
+            <div className="DictHistoryFirstWriterInfo">
+              <img className="DictFirstWriterProfileImage" src={isDict.firstWriterProfileImage} />
+              <div className="DictHistoryFirstWriter">{isDict.firstWriter} 님의 단어 등록</div>
             </div>
-            <div className="DictHistoryList DictHistoryFirstCreatedAt">등록일 : {firstCreatedAt}</div>
+            <div className="DictHistoryFirstCreatedAt">등록일 : {firstCreatedAt}</div>
           </div>
         </div>
         <div className="DictHistoryModifiedDictGuideTextAndButton">
           <div className="DictHistoryModifiedDictGuideText">직접 단어의 뜻을 업데이트 할 수 있어요!</div>
-          <div
-            className="DictHistoryModifiedButton"
-            onClick={() => {
-              history.push(`/dict/edit/${dictId}`)
-            }}
-          >
+          <div className="DictHistoryModifiedButton" onClick={handleClickEdit}>
             <div className="DictHistoryModifiedButton_1">편집하기</div>
             <div className="DictHistoryModifiedButton_2"></div>
           </div>
         </div>
       </div>
       <Footer />
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
@@ -93,6 +106,11 @@ const SearchBarSection = styled.div`
   width: 100%;
   height: fit-content;
   z-index: 5;
+`
+
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default DictEditHistory

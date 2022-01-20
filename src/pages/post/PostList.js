@@ -11,6 +11,7 @@ import SearchPost from '../../components/SearchPost'
 import SpeedDialButton from '../../components/SpeedDialButton'
 import Grid from '../../elements/Grid'
 import '../../index.css'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
@@ -18,11 +19,16 @@ import { CircularProgress } from '@mui/material'
 import { RiEditLine } from 'react-icons/ri'
 
 const PostList = (props) => {
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
+
   const [question, setQuestion] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -36,6 +42,14 @@ const PostList = (props) => {
     setQuestion(response.data.data)
     setTotalCount(totalLength.data.data)
     console.log(response.data.data)
+  }
+
+  const handleClickWrite = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    } else {
+      history.push('/dict/question/write')
+    }
   }
 
   return (
@@ -75,9 +89,12 @@ const PostList = (props) => {
         </Wrap>
       </Container>
       <Footer />
-      <SpeedDialButton _onClick={() => history.push('/dict/question/write')}>
+      <SpeedDialButton _onClick={handleClickWrite}>
         <RiEditLine size="28" fill="#FFFFFF" />
       </SpeedDialButton>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
@@ -154,4 +171,8 @@ const AddbtnShadow = styled.div`
   border: 1px solid black;
   position: absolute;
   z-index: -1;
+`
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `

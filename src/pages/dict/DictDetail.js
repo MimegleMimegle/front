@@ -17,9 +17,14 @@ import Footer from '../../components/Footer'
 import Grid from '../../elements/Grid'
 import { ReactComponent as CopyIcon } from '../../styles/icons/링크복사_24dp.svg'
 import AlertModal from '../../components/modal/AlertModal'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 
 const DictDetail = (props) => {
   const dispatch = useDispatch()
+
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
 
   const [show, setShow] = useState(false)
 
@@ -29,6 +34,8 @@ const DictDetail = (props) => {
 
   const [createdAt, setCreatedAt] = useState('')
   const [modifiedAt, setModifiedAt] = useState('')
+
+  const [showModal, setShowModal] = useState(false)
 
   const getDictDetailDB = async () => {
     await dictApi
@@ -92,6 +99,14 @@ const DictDetail = (props) => {
     setTimeout(() => setCopyLink(false), 2000)
   }
 
+  const handleClickEdit = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    } else {
+      history.push(`/dict/edit/${dictId}`)
+    }
+  }
+
   React.useEffect(() => {
     getDictDetailDB()
   }, [])
@@ -103,19 +118,21 @@ const DictDetail = (props) => {
       <div className="OneDictCardDetailPageLayout">
         <Grid flex_start column padding="20px">
           <Grid flex_align padding="0 0 36px">
-            <div className="OneDictCardDetailInfoTitle_Guide">밈 단어</div>
-            <div className="OneDictCardDetailInfoTitle_Vertical" />
-            <div className="OneDictCardDetailInfoTitle_DictData">{dict.title}</div>
+            <div className="OneDictCardDetailInfo_Guide">밈 단어</div>
+            <div className="OneDictCardDetailInfo_Vertical" />
+            <div className="OneDictCardDetailInfo_DictData">{dict.title}</div>
           </Grid>
           <Grid flex_align padding="0 0 36px">
-            <div className="OneDictCardDetailInfoSummary_Guide">한줄설명</div>
-            <div className="OneDictCardDetailInfoSummary_Vertical" />
-            <div className="OneDictCardDetailInfoSummary_DictData">{dict.summary}</div>
+            <div className="OneDictCardDetailInfo_Guide">한줄설명</div>
+            <div className="OneDictCardDetailInfo_Vertical" />
+            <div className="OneDictCardDetailInfo_DictData">{dict.summary}</div>
           </Grid>
-          <Grid flex_align padding="0 0 36px">
-            <div className="OneDictCardDetailInfoContent_Guide">상세설명</div>
-            <div className="OneDictCardDetailInfoContent_Vertical" />
-            <div className="OneDictCardDetailInfoContent_DictData">{dict.meaning}</div>
+          <Grid flex padding="0 0 36px">
+            <div style={{ display: 'flex', alignItems: 'flex_start', height: 'fit-content' }}>
+              <div className="OneDictCardDetailInfo_Guide">상세설명</div>
+              <div className="OneDictCardDetailInfo_Vertical" />
+            </div>
+            <div className="OneDictCardDetailInfo_DictData">{dict.meaning}</div>
           </Grid>
           <Grid flex_between>
             <Grid flex_align>
@@ -145,20 +162,15 @@ const DictDetail = (props) => {
           </div>
         </div>
         <Grid flex_center column padding="32px 0">
-          <p>다른 유저들이 이전에 작성한 내용을 확인하거나</p>
-          <p>직접 편집할 수 있어요!</p>
+          <p className="OneDictCardDetailInfoText">다른 유저들이 이전에 작성한 내용을 확인하거나</p>
+          <p className="OneDictCardDetailInfoText">직접 편집할 수 있어요!</p>
         </Grid>
         <div className="OneDictCardDetailInfoModifiedAndHistoryButton">
           <div className="OneDictCardDetailInfoModifiedHistoryButton" onClick={() => history.push(`/dict/history/${dictId}`)}>
             <div className="OneDictCardDetailInfoModifiedHistoryButton_1">편집 기록</div>
             <div className="OneDictCardDetailInfoModifiedHistoryButton_2"></div>
           </div>
-          <div
-            className="OneDictCardDetailInfoModifiedButton"
-            onClick={() => {
-              history.push(`/dict/edit/${dictId}`)
-            }}
-          >
+          <div className="OneDictCardDetailInfoModifiedButton" onClick={handleClickEdit}>
             <div className="OneDictCardDetailInfoModifiedButton_1">편집하기</div>
             <div className="OneDictCardDetailInfoModifiedButton_2"></div>
           </div>
@@ -166,6 +178,9 @@ const DictDetail = (props) => {
       </div>
       <Footer />
       <AlertModal showModal={copyLink}>링크 복사 완료!</AlertModal>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
@@ -176,6 +191,11 @@ const SearchBarSection = styled.div`
   width: 100%;
   height: fit-content;
   z-index: 5;
+`
+
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default DictDetail

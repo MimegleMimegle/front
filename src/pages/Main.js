@@ -12,6 +12,8 @@ import SwiperCore, { Lazy, Autoplay, Keyboard, Pagination } from 'swiper'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import AlertModal from '../components/modal/AlertModal'
+import Grid from '../elements/Grid'
+import { ReactComponent as PlusIcon } from '../styles/icons/추가_18dp.svg'
 
 import 'swiper/swiper.min.css'
 import 'swiper/components/lazy/lazy.min.css'
@@ -116,6 +118,7 @@ const Main = (props) => {
               onClick={() => {
                 history.push('/quiz')
               }}
+              className="main-swiper-slide"
             >
               <MainPageImageSlide />
             </SwiperSlide>
@@ -148,7 +151,9 @@ const Main = (props) => {
         </div>
         <div className="MainPageTopPostSection">
           <div className="MainPageTopPostText">명예의 밈글</div>
-          <PopularBoardCardSwiper />
+          <Grid padding="16px 16px 0  ">
+            <PopularBoardCardSwiper />
+          </Grid>
           {/* <div className="MainPageTagMoreButton_2">
             <div className="MainPageTagMoreButton_2nd" onClick={() => history.push('/image')}>
               <div className="MainPageTagMoreButton2">More</div>
@@ -160,8 +165,10 @@ const Main = (props) => {
         </div>
         <div className="MainPageAddButtonSection">
           <div className="MainPageAddButtonSectionHr"></div>
-          <div className="MainPageAddButton">+</div>
-          <div className="MainPageAddButtonGuideText">나도 추가하러 가보자</div>
+          <div className="MainPageAddButton">
+            <PlusIcon width="24px" height="24px" />
+          </div>
+          <div className="MainPageAddButtonGuideText">나도 추가하러 가보자!</div>
         </div>
       </div>
       <Footer />

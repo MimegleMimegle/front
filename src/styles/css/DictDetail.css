@@ -41,70 +41,28 @@
   display: none;
 }
 
-.OneDictCardDetailInfoTitle_Guide {
-  width: 50px;
+.OneDictCardDetailInfo_Guide {
+  max-width: 50px;
+  min-width: 50px;
   height: fit-content;
   font-size: 1rem;
   font-weight: 600;
 }
 
-.OneDictCardDetailInfoTitle_Vertical {
+.OneDictCardDetailInfo_Vertical {
   width: 1px;
   height: 16px;
   background-color: #c4c4c4;
   margin: 0 10px;
 }
 
-.OneDictCardDetailInfoTitle_DictData {
+.OneDictCardDetailInfo_DictData {
   word-wrap: break-word;
   word-break: keep-all;
   width: fit-content;
   height: fit-content;
   font-size: 0.875rem;
-}
-
-.OneDictCardDetailInfoSummary_Guide {
-  width: 50px;
-  height: fit-content;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.OneDictCardDetailInfoSummary_Vertical {
-  width: 1px;
-  height: 16px;
-  background-color: #c4c4c4;
-  margin: 0 10px;
-}
-
-.OneDictCardDetailInfoSummary_DictData {
-  word-wrap: break-word;
-  word-break: keep-all;
-  width: fit-content;
-  height: fit-content;
-  font-size: 0.875rem;
-}
-
-.OneDictCardDetailInfoContent_Guide {
-  width: 50px;
-  height: fit-content;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.OneDictCardDetailInfoContent_Vertical {
-  width: 1px;
-  height: 16px;
-  background-color: #c4c4c4;
-  margin: 0 10px;
-}
-
-.OneDictCardDetailInfoContent_DictData {
-  word-wrap: break-word;
-  word-break: keep-all;
-  width: fit-content;
-  height: fit-content;
-  font-size: 0.875rem;
+  display: flex;
 }
 
 .OneDictCardDetailInfoLikeCnt {
@@ -139,7 +97,6 @@
 .OneDictCardDetailInfoFirstWriterProfileImage {
   width: 30px;
   height: 30px;
-  border: 2px solid #000;
   border-radius: 50px;
   background-color: white;
   background-repeat: no-repeat;
@@ -176,7 +133,6 @@
 .OneDictCardDetailInfoRecentWriterProfileImage {
   width: 30px;
   height: 30px;
-  border: 2px solid #000;
   border-radius: 50px;
   background-color: white;
   background-repeat: no-repeat;
@@ -296,4 +252,11 @@
 
 .icon {
   cursor: pointer;
+}
+
+.OneDictCardDetailInfoText {
+  font-size: 0.875rem;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
 }

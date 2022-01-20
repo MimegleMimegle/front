@@ -95,7 +95,7 @@
   height: fit-content;
 }
 
-.swiper-slide {
+.dict-swiper-slide {
   width: 156px !important;
   background-color: transparent !important;
   /* Center slide text vertically */

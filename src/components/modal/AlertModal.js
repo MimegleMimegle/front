@@ -19,7 +19,9 @@ const Container = styled.div`
   top: 40%;
   left: 50%;
   transform: translate(-50%, -40%);
-  width: 340px;
+  max-width: 300px;
+  min-width: 280px;
+  width: 100%;
   height: 130px;
   background-color: #fff;
   padding: 24px;
