@@ -7,6 +7,8 @@ import { MdOutlineSend } from 'react-icons/md'
 import styled from 'styled-components'
 import MemegleLogo from '../styles/image/smileIcon_Yellow.png'
 import { commentApi } from '../shared/api'
+
+
 const CommentTest = ({ question }) => {
   const dispatch = useDispatch()
   // const questionId = question.questionId
@@ -18,7 +20,7 @@ const CommentTest = ({ question }) => {
   const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
   const commentId = question.commentId
-  
+
   const onChangeComment = (e) => {
     setComment(e.target.value)
     console.log(e.target.value)
@@ -29,7 +31,14 @@ const CommentTest = ({ question }) => {
     setComment('')
     console.log(question.questionId)
   }
-
+  
+  comment_list&&comment_list.sort((a,b)=>{
+    if(a.isSelected && !b.isSelected){
+      return -1;
+    } else if (!a.isSelected && b.isSelected){
+      return 1;
+    } return 0;
+  })
   
 
   React.useEffect(() => {
@@ -37,6 +46,7 @@ const CommentTest = ({ question }) => {
       dispatch(mypageActions.getUserProfileDB())
     }
   }, [])
+
 
   return (
     <>
@@ -58,17 +68,12 @@ const CommentTest = ({ question }) => {
         </ImgInput>
         <MdOutlineSend style={{ fontSize: '24px', cursor: 'pointer', width: 'fit-content' }} onClick={addComment} />
       </CommentWrite>
-      {/* {comment_list.filter(v=>v.isSelected===true)} */}
       {comment_list
         ? comment_list.map((c) => {
             return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
           })
         : null}
-      {/* {comment_list
-        ? comment_list.map((c) => {
-            return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
-          })
-        : null} */}
+      
         <div style={{width:'100%', height:'63px'}}></div>
     </>
   )

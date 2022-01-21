@@ -81,6 +81,8 @@ const OneComment = (props) => {
           setIsSelected(true)
           console.log(isSelected)
           setSelectModal(false)
+          window.location.reload();
+
         })
         .catch((error) => {
           console.log('질문채택 문제 발생', error.response)
@@ -93,7 +95,6 @@ const OneComment = (props) => {
     e.preventDefault()
     e.stopPropagation()
     setSelectModal(!selectModal)
-    window.location.reload();
   }
 
   const handleShowModal = (e) => {
@@ -207,7 +208,7 @@ const CreatedAt = styled.div`
 const Select = styled.div`
   width: 80px;
   height: 83px;
-  background: #00A0FF;
+  background: #C4C4C4;
   padding: 11px 24px;
   cursor: pointer;
 `
