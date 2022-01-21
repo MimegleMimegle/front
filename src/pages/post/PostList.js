@@ -7,7 +7,6 @@ import { dictQuestionApi } from '../../shared/api'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import DictNavBar from '../../components/DictNavBar'
-import SearchPost from '../../components/SearchPost'
 import SpeedDialButton from '../../components/SpeedDialButton'
 import Grid from '../../elements/Grid'
 import '../../index.css'
@@ -60,10 +59,10 @@ const PostList = (props) => {
           <DictNavBar />
           {!loading ? (
             <>
-            <CuriousHelp>
-              <div className="curious">궁금해요!</div>
-              <div className="wait">답변을 기다리고 있어요~</div>
-            </CuriousHelp>
+              <CuriousHelp>
+                <div className="curious">궁금해요!</div>
+                <div className="wait">답변을 기다리고 있어요~</div>
+              </CuriousHelp>
               {question &&
                 question.map((question, index) => {
                   return <PostCard question={question} key={question.questionId} />
@@ -102,9 +101,8 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 0 80px;
-  
 `
-const CuriousHelp =styled.div`
+const CuriousHelp = styled.div`
   display: flex;
   margin: 25px 0 16px 16px;
   .curious {
@@ -116,7 +114,7 @@ const CuriousHelp =styled.div`
     display: flex;
     align-items: center;
   }
-  .wait{
+  .wait {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
