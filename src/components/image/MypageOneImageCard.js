@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
 
+import Grid from '../../elements/Grid'
 import ConfirmModal from '../modal/ConfirmModal'
 import { ReactComponent as DeleteIcon } from '../../styles/icons/delete_black_18dp.svg'
 import { ReactComponent as EmptyHeart } from '../../styles/icons/좋아요 비활성_18dp.svg'
@@ -39,33 +40,27 @@ const MyPageOneImageCard = ({ image }) => {
     <>
       <Wrapper
         onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
           history.push(`/image/detail/${image.boardId}`)
         }}
       >
-        <div className="container">
-          <ImageSection>
+        <ImageSection>
+          <ImageBox>
             <Image src={image && image.thumbNail} />
-            <div>
-              <button style={{ padding: '0 0 0 5px' }} onClick={handleShowModal}>
-                <DeleteIcon />
-              </button>
-            </div>
-          </ImageSection>
-          <LikeSection>
-            <button style={{ padding: '0 0 0 2px' }}>
-              <EmptyHeart />
-            </button>
-            <span style={{ fontSize: '9px', paddingLeft: '4px' }}>{image && image.likeCnt}</span>
-          </LikeSection>
-          <DateSection>
-            <p className="createdDate">{image && createdDate}</p>
-          </DateSection>
-        </div>
+          </ImageBox>
+          <div className="delete-icon-box">
+            <DeleteIcon className="delete-icon" fill="#878C92" onClick={handleShowModal} />
+          </div>
+        </ImageSection>
+        <Grid flex_between padding="8px 8px 0 0">
+          <Grid flex_align>
+            <EmptyHeart fill="#878C92" />
+            <span className="like-count">{image && image.likeCnt}</span>
+          </Grid>
+          <p className="createdDate">{image && createdDate}</p>
+        </Grid>
       </Wrapper>
       {showModal && (
-        <ConfirmModal question="이 밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+        <ConfirmModal question="밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
           <DeleteButton onClick={handleDeleteImage}>삭제</DeleteButton>
         </ConfirmModal>
       )}
@@ -75,51 +70,62 @@ const MyPageOneImageCard = ({ image }) => {
 
 const Wrapper = styled.div`
   position: relative;
-  max-width: 200px;
+  max-width: 220px;
   width: 100%;
-  max-height: 260px;
-  height: 100%;
-  padding: 8px 5px 8px 8px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
-  .container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-`
-
-const ImageSection = styled.div`
+  height: fit-content;
+  margin: 10px 0 6px;
+  padding: 10px 2px 10px 10px;
+  border: 2px solid ${({ theme }) => theme.colors.black};
+  box-shadow: 0 4px 20px 4px hsl(0deg 0% 64% / 35%);
   display: flex;
-  width: 100%;
-  height: 100%;
-`
-
-const Image = styled.div`
-  max-width: 150px;
-  width: 100%;
-  padding-top: 90%;
-  height: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.black};
-  background-image: url('${(props) => props.src}');
-  background-size: cover;
-  background-position: center;
-`
-
-const LikeSection = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 4px 0 0;
-`
-
-const DateSection = styled.div`
-  height: 100%;
+  flex-direction: column;
   .createdDate {
-    font-size: ${({ theme }) => theme.fontSizes.small};
+    width: 100%;
+    font-size: ${({ theme }) => theme.fontSizes.base};
     color: ${({ theme }) => theme.colors.grey};
     text-align: right;
-    padding: 7px 0 0 0;
   }
+  .delete-icon-box {
+    margin: 0 0 0 5px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 24px;
+    transition: background-color 0.3s ease-in-out;
+    &:hover {
+      background-color: #e9e9e9;
+    }
+  }
+  .like-count {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    padding: 0 0 0 4px;
+    color: ${({ theme }) => theme.colors.grey};
+  }
+`
+
+const ImageSection = styled.section`
+  display: flex;
+  width: 100%;
+  height: fit-content;
+`
+
+const ImageBox = styled.div`
+  display: flex;
+  width: calc(100% - 33px);
+  height: fit-content;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid ${({ theme }) => theme.colors.black};
+`
+
+const Image = styled.img`
+  width: 100%;
+  height: fit-content;
+  object-fit: cover;
 `
 
 const DeleteButton = styled.button`

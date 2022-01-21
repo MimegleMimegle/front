@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { history } from '../../redux/ConfigureStore'
 import { imageApi } from '../../shared/api'
-import { userApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
+import { actionCreators as mypageActions } from '../../redux/modules/mypage'
 
+import Grid from '../../elements/Grid'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import ImageWrapper from '../../components/image/ImageWrapper'
 import ShareBottomSheet from '../../components/ShareBottomSheet'
-import { MdShare } from 'react-icons/md'
-import { HiOutlineHeart } from 'react-icons/hi'
-import { HiHeart } from 'react-icons/hi'
-import { IoCloseOutline } from 'react-icons/io5'
-import { MdOutlineDelete } from 'react-icons/md'
+
+import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
+import { ReactComponent as DeleteIcon } from '../../styles/icons/delete_black_18dp.svg'
+import { ReactComponent as ShareIcon } from '../../styles/icons/공유_24dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/하트 비활성_24dp.svg'
+import { ReactComponent as FullHeartIcon } from '../../styles/icons/하트 활성_24dp.svg'
 
 const ImageDetail = (props) => {
+  const dispatch = useDispatch()
   const boardId = useParams().imageId
+  const profile = useSelector((state) => state.mypage.myProfile)
 
   const [imageData, setImageData] = useState('')
   const [likeCount, setLikeCount] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
-  const [profile, setProfile] = useState(null)
   const [createdAt, setCreatedAt] = useState('')
   const [thumbNail, setThumbNail] = useState('')
   const [shareVisible, setShareVisible] = useState(false)
@@ -46,7 +50,6 @@ const ImageDetail = (props) => {
       await likeApi
         .likeBoard(boardId)
         .then((response) => {
-          console.log(response.data)
           setIsLiked(false)
           setLikeCount(likeCount - 1)
         })
@@ -57,7 +60,6 @@ const ImageDetail = (props) => {
       await likeApi
         .likeBoard(boardId)
         .then((response) => {
-          console.log(response.data)
           setIsLiked(true)
           setLikeCount(likeCount + 1)
         })
@@ -72,9 +74,7 @@ const ImageDetail = (props) => {
     e.stopPropagation()
     await imageApi
       .deleteImage(boardId)
-      .then((response) => {
-        console.log(response.data)
-      })
+      .then((response) => {})
       .then(() => {
         window.location.replace('/image')
       })
@@ -98,56 +98,41 @@ const ImageDetail = (props) => {
       .catch((error) => {
         console.log('상세 이미지를 불러오는 데 문제가 발생했습니다.', error.response)
       })
-    userApi
-      .getProfileInfo()
-      .then((response) => {
-        setProfile(response.data.data)
-      })
-      .catch((error) => {
-        console.log('프로필 정보 문제 발생', error.response)
-      })
+    dispatch(mypageActions.getUserProfileDB())
   }, [])
 
   return (
     <>
       <ImageWrapper>
-        <div style={{ width: '100%', padding: '0 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <button
+        <Grid flex_between padding="0 16px">
+          <CloseIcon
+            className="icon"
             onClick={() => {
-              history.replace('/image')
+              history.goBack()
             }}
-            style={{ padding: '0' }}
-          >
-            <IoCloseOutline style={{ fontSize: '24px' }} />
-          </button>
-        </div>
-        <div style={{ width: '100%', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+          />
+        </Grid>
+        <Grid flex_between padding="16px">
+          <Grid flex_align>
             <ProfileImage src={imageData.profileImageUrl} />
             <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'column' }}>
               <ImageWriter>{imageData.writer}</ImageWriter>
               <ImageCreatedAt>{createdAt}</ImageCreatedAt>
             </div>
-          </div>
+          </Grid>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button onClick={handleShareVisible}>
-              <MdShare style={{ fontSize: '20px' }} />
-            </button>
-            {imageData && profile && imageData.writer === profile.nickname && (
-              <button onClick={handleShowModal}>
-                <MdOutlineDelete style={{ fontSize: '22px' }} />
-              </button>
-            )}
+            <ShareIcon className="icon" onClick={handleShareVisible} />
+            {imageData && profile && imageData.writer === profile.nickname && <DeleteIcon className="icon" width="24px" height="24px" style={{ margin: '0 0 0 16px' }} onClick={handleShowModal} />}
           </div>
-        </div>
-        <div style={{ width: '100%', height: '70%', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
+        </Grid>
+        <Grid height="fit-content" overflow="hidden">
           <img src={imageData.thumbNail} style={{ width: '100%', objectFit: 'cover' }} />
-        </div>
-        <div style={{ width: '100%', padding: '5px 10px 0', display: 'flex', alignItems: 'center' }}>
-          <button>{isLiked ? <HiHeart style={{ fontSize: '20px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '20px' }} onClick={handleClickLike} />}</button>
+        </Grid>
+        <Grid flex_align padding="10px 16px 16px">
+          {isLiked ? <FullHeartIcon className="icon" onClick={handleClickLike} /> : <EmptyHeartIcon className="icon" onClick={handleClickLike} />}
           <ImageLikeCount>{likeCount}</ImageLikeCount>
-        </div>
-        {shareVisible && <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />}
+        </Grid>
+        <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />
       </ImageWrapper>
       {showModal && (
         <ConfirmModal question="밈짤을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
@@ -171,9 +156,7 @@ const ProfileImage = styled.div`
 `
 
 const ImageWriter = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
 `
 const ImageCreatedAt = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.small};
@@ -182,6 +165,7 @@ const ImageCreatedAt = styled.p`
 const ImageLikeCount = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.white};
+  padding: 0 0 0 5px;
 `
 
 const DeleteButton = styled.button`

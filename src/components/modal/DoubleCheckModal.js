@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import Backdrop from '@mui/material/Backdrop'
 
@@ -12,17 +12,18 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
     }
   })
 
+  const handleOverlayClick = useCallback(() => setDoubleCheck(null), [setDoubleCheck])
+  const handleContentClick = useCallback((e) => e.stopPropagation(), [])
+
   if (type === 'exist-onlyConfirm') {
     return (
-      <Backdrop open={!doubleCheck} sx={{ zIndex: 10000 }}>
-        <Container>
+      <Backdrop open={!doubleCheck} sx={{ zIndex: 10000 }} onClick={handleOverlayClick}>
+        <Container onClick={handleContentClick}>
           <div>
             <div className="title-box">{title}</div>
             <div className="question-box">{question}</div>
           </div>
-          <div className="confirm-box">
-            <div className="confirm-button">{children}</div>
-          </div>
+          <div className="confirm-box">{children}</div>
         </Container>
       </Backdrop>
     )
@@ -37,12 +38,10 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
             <div className="question-box">{question}</div>
           </div>
           <div className="confirm-box">
-            <div>
-              <button className="cancel-button" onClick={() => setDoubleCheck(null)}>
-                취소
-              </button>
-            </div>
-            <div className="confirm-button">{children}</div>
+            <button className="cancel-button" onClick={() => setDoubleCheck(null)}>
+              취소
+            </button>
+            <div>{children}</div>
           </div>
         </Container>
       </Backdrop>
@@ -50,15 +49,13 @@ const DoubleCheckModal = ({ type, doubleCheck, setDoubleCheck, title, question, 
   }
   return (
     <>
-      <Backdrop open={doubleCheck} sx={{ zIndex: 10000 }}>
-        <Container>
+      <Backdrop open={doubleCheck} sx={{ zIndex: 10000 }} onClick={handleOverlayClick}>
+        <Container onClick={handleContentClick}>
           <div>
             <div className="title-box">{title}</div>
             <div className="question-box">{question}</div>
           </div>
-          <div className="confirm-box">
-            <div className="confirm-button">{children}</div>
-          </div>
+          <div className="confirm-box">{children}</div>
         </Container>
       </Backdrop>
     </>
@@ -70,10 +67,12 @@ const Container = styled.div`
   top: 40%;
   left: 50%;
   transform: translate(-50%, -40%);
-  width: 320px;
-  height: 100px;
+  max-width: 300px;
+  min-width: 280px;
+  width: 100%;
+  height: 130px;
   background-color: #fff;
-  padding: 20px 20px 12px;
+  padding: 24px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   display: flex;
@@ -81,16 +80,14 @@ const Container = styled.div`
   justify-content: space-between;
   .title-box {
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    color: ${({ theme }) => theme.colors.black};
   }
   .question-box {
     font-size: ${({ theme }) => theme.fontSizes.lg};
-    color: ${({ theme }) => theme.colors.black};
   }
   .confirm-box {
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: flex-end;
     gap: 24px;
     .cancel-button {
       font-size: ${({ theme }) => theme.fontSizes.lg};

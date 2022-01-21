@@ -8,17 +8,29 @@ import { actionCreators as dictActions } from '../../redux/modules/dict'
 import Pagination from 'rc-pagination'
 import SearchPage from '../../shared/SearchPage'
 import { dictApi } from '../../shared/api'
+import DictNavBar from '../../components/DictNavBar'
+import SpeedDialButton from '../../components/SpeedDialButton'
 import TodayDictCardSwiper from '../../components/TodayDictCardSwiper'
 import Header from '../../components/Header'
-import { ReactComponent as EmptyLikeIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
-import { ReactComponent as FillLikeIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
+import Footer from '../../components/Footer'
+import Grid from '../../elements/Grid'
+import Title from '../../elements/Title'
+import OneDictionaryCard from '../../components/OneDictionaryCard'
+import ConfirmModal from '../../components/modal/ConfirmModal'
+import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
+import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import { RiEditLine } from 'react-icons/ri'
 
 const DictList = (props) => {
   const dispatch = useDispatch()
 
-  const [show, setShow] = useState(false)
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
 
+  const [show, setShow] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [dict, setDict] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
@@ -26,7 +38,11 @@ const DictList = (props) => {
 
   const [like, setLike] = useState(false)
 
+  const [showModal, setShowModal] = useState(false)
+
   React.useEffect(() => {
+    setLoading(true)
+    setTimeout(() => setLoading(false), 600)
     getDictListDB()
   }, [currentPage])
 
@@ -50,59 +66,63 @@ const DictList = (props) => {
     }
   }
 
+  const handleClickWrite = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    } else {
+      history.push('/dict/write')
+    }
+  }
+
   return (
     <>
-      <Header type="DictList" location="오픈 밈사전">
-        <div
-          className="DictPageSearchButton"
-          onClick={() => {
-            showSearchBar()
-          }}
-        >
-          <SearchIcon style={{ margin: '0 5px 5px 0' }} />
-        </div>
-      </Header>
+      <Header location="오픈 밈사전"></Header>
       <div className="DictLayout">
-        <SearchBarSection>{show && <SearchPage />}</SearchBarSection>
-        <div className="NewDictAddButtonSection">
-          <div className="NewDictAddButton_1" onClick={() => history.push('/dict/write')}>
-            밈 단어 등록
-          </div>
-          <div className="NewDictAddButton_2"></div>
+        <DictNavBar />
+        <SearchBarSection>
+          <SearchPage />
+        </SearchBarSection>
+        <div className="TitleBox">
+          <Title>오늘의 밈 카드</Title>
         </div>
-        <div className="TodayDictListText">오늘의 밈 카드</div>
-        <hr className="TodayDictListHr" />
-        <TodayDictCardSwiper />
+        <Grid padding="10px 16px 16px">
+          <TodayDictCardSwiper />
+        </Grid>
         <div className="DictListPagination">
-          <div className="DictListText">밈 목록</div>
+          <div className="TitleBox">
+            <Title>밈 목록</Title>
+          </div>
           <div className="DictList">
             {dict.map((dict) => (
-              <div className="OneDictionaryCardSection">
-                <div className="OneDictionaryCardList" key={dict.id} onClick={() => history.push(`/dict/detail/${dict.dictId}`)}>
-                  <div className="OneDictionaryCardList DictListTitle">{dict.title}</div>
-                  <div className="OneDictionaryCardList DictListSummary">{dict.summary}</div>
-                  <div className="OneDictionaryCardList DictWriteInfo">
-                    <div className="OneDictionaryCardList DictListLikeButton">{dict.like ? <FillLikeIcon /> : <EmptyLikeIcon />}</div>
-                    <div className="OneDictionaryCardList DictListLikeCount">{dict.likeCount}</div>
-                    <div className="OneDictionaryCardList DictListFirstWriter">{dict.firstWriter}</div>
-                    <div className="OneDictionaryCardList DictListCreatedAt">{dict.createdAt.split('T', 1)}</div>
-                  </div>
-                </div>
-              </div>
+              <OneDictionaryCard key={dict.id} dict={dict} />
             ))}
           </div>
           <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
         </div>
       </div>
+      <Footer />
+      <SpeedDialButton _onClick={handleClickWrite}>
+        <RiEditLine size="28" fill="#FFFFFF" />
+      </SpeedDialButton>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
 
 const SearchBarSection = styled.div`
-  position: absolute;
   width: 100%;
   height: fit-content;
-  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px 16px;
+`
+
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default DictList

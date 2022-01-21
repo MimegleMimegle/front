@@ -11,82 +11,112 @@ const { Kakao } = window
 const LOG_OUT = 'LOG_OUT'
 const GET_USER = 'GET_USER'
 const SET_USER = 'SET_USER'
-const GET_PROFILE_INFO = 'GET_PROFILE_INFO'
 const SET_LOGIN = 'SET_LOGIN'
+const INIT_FIRST_LOGIN = 'SET_FIRST_LOGIN'
+const LOADING = 'LOADING'
+const FAIL_LOGIN = 'FAIL_LOGIN'
 
 // const logIn = createAction(LOG_IN, (user) => ({ user }))
 const logOut = createAction(LOG_OUT, (user) => ({ user }))
 const getUser = createAction(GET_USER, (user) => ({ user }))
 const setUser = createAction(SET_USER, (user) => ({ user }))
-const getProfileInfo = createAction(GET_PROFILE_INFO, (profile) => ({ profile }))
 const setLogin = createAction(SET_LOGIN, (user_info) => ({ user_info }))
+const initFirstLogin = createAction(INIT_FIRST_LOGIN, (init) => ({ init }))
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
+const failLogin = createAction(FAIL_LOGIN, (is_failure) => ({ is_failure }))
 
 const initialState = {
   user: null,
   is_login: false,
-  profile: null,
   user_info: null,
+  is_first: false,
+  is_loading: false,
+  is_failure: false,
 }
 
 //middleware
-const kakaoLogin = (code) => {
+const kakaoLoginDB = (code) => {
   return function (dispatch, getState, { history }) {
     userApi
       .KakaoLogin(code)
-      .then((res) => {
-        console.log(res) // 토큰이 넘어올 것임
-
+      .then(async (res) => {
+        console.log(res)
         const ACCESS_TOKEN = res.data.accessToken
+        const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
+        const REFRESH_TOKEN = res.data.refreshToken
 
-        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
+        await setCookie('is_login', REFRESH_TOKEN)
 
-        history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        await localStorage.setItem('token', res.data.data.token)
+        await localStorage.setItem('username', res.data.data.username)
+        await localStorage.setItem('nickname', res.data.data.nickname)
+        await localStorage.setItem('id', res.data.data.userId)
+
+        dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
+
+        await history.replace('/')
       })
       .catch((err) => {
         console.log('카카오로그인 에러', err)
-        window.alert('로그인에 실패하였습니다.')
+        // window.alert('로그인에 실패하였습니다.')
         history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
       })
   }
 }
 
-const naverLogin = (code, state) => {
+const naverLoginDB = (code, state) => {
   return function (dispatch, getState, { history }) {
     userApi
-      .NaverLogin(code)
-      .then((res) => {
-        console.log(res) // 토큰이 넘어올 것임
-
+      .NaverLogin(code, state)
+      .then(async (res) => {
+        console.log(res)
         const ACCESS_TOKEN = res.data.accessToken
+        const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
+        const REFRESH_TOKEN = res.data.refreshToken
 
-        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
+        await setCookie('is_login', REFRESH_TOKEN)
 
-        history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        await localStorage.setItem('token', res.headers.authorization)
+        await localStorage.setItem('username', res.data.data.username)
+        await localStorage.setItem('nickname', res.data.data.nickname)
+        await localStorage.setItem('id', res.data.data.userId)
+
+        dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
+
+        await history.replace('/')
       })
       .catch((err) => {
         console.log('네이버로그인 에러', err)
-        window.alert('로그인에 실패하였습니다.')
+        // window.alert('로그인에 실패하였습니다.')
         history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
       })
   }
 }
 
-const googleLogin = () => {
+const googleLoginDB = (code) => {
   return function (dispatch, getState, { history }) {
     userApi
-      .GoogleLogin()
-      .then((res) => {
-        console.log(res) // 토큰이 넘어올 것임
-
+      .GoogleLogin(code)
+      .then(async (res) => {
         const ACCESS_TOKEN = res.data.accessToken
+        const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
+        const REFRESH_TOKEN = res.data.refreshToken
+        console.log(res)
 
-        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
+        await setCookie('is_login', REFRESH_TOKEN)
 
-        history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        await localStorage.setItem('token', res.data.data.token)
+        await localStorage.setItem('username', res.data.data.username)
+        await localStorage.setItem('nickname', res.data.data.nickname)
+        await localStorage.setItem('id', res.data.data.userId)
+
+        dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
+
+        await history.replace('/')
       })
       .catch((err) => {
         console.log('구글로그인 에러', err)
-        window.alert('로그인에 실패하였습니다.')
+        // window.alert('로그인에 실패하였습니다.')
         history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
       })
   }
@@ -94,11 +124,11 @@ const googleLogin = () => {
 
 const joinDB = (username, nickname, password, passwordCheck) => {
   return function (dispatch, getState, { history }) {
+    dispatch(loading(true))
     userApi
       .join(username, nickname, password, passwordCheck)
       .then((res) => {
         history.push('/login')
-        swal('회원가입을 축하드립니다! 로그인 후 이용하실 수 있어요')
       })
       .catch((err) => {
         swal('이미 등록된 사용자 입니다! 아이디 또는 닉네임을 변경해주세요')
@@ -108,32 +138,35 @@ const joinDB = (username, nickname, password, passwordCheck) => {
 
 const logInDB = (username, password) => {
   return function (dispatch, getState, { history }) {
+    dispatch(loading(true))
     userApi
       .login(username, password)
       .then((res) => {
         console.log(res)
-        setCookie('token', res.headers.authorization, 3)
+        // setCookie('token', res.headers.authorization, 3)
+        localStorage.setItem('token', res.headers.authorization)
         localStorage.setItem('username', res.data.data.username)
         localStorage.setItem('nickname', res.data.data.nickname)
         localStorage.setItem('id', res.data.data.userId)
+
         dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
         history.replace('/')
       })
       .catch((err) => {
-        swal('잘못된 아이디나 비밀번호 입니다. 다시 확인해주세요!')
+        console.log(err)
+        dispatch(failLogin(true))
       })
   }
 }
 
 const logOutDB = () => {
   return function (dispatch, getState, { history }) {
-    deleteCookie('token')
+    // deleteCookie('token')
+    localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('nickname')
     localStorage.removeItem('id')
     dispatch(logOut())
-
-    history.replace('/')
   }
 }
 
@@ -146,20 +179,6 @@ const loginCheckDB = () => {
     } else {
       dispatch(logOut())
     }
-  }
-}
-
-const getProfileInfoDB = () => {
-  return async function (dispatch, getState, { history }) {
-    await userApi
-      .getProfileInfo()
-      .then((response) => {
-        const profile = response.data.data
-        dispatch(getProfileInfo(profile))
-      })
-      .catch((error) => {
-        console.log('프로필 정보를 불러오는 데 문제가 발생했습니다.', error.response)
-      })
   }
 }
 
@@ -181,24 +200,37 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = action.payload.user
         draft.is_login = true
+        draft.is_first = true
+        draft.is_loading = false
+        draft.is_failure = false
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         draft.user = null
         draft.is_login = false
+        draft.is_loading = false
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {
         draft.user = action.payload.user
         draft.is_login = true
-      }),
-    [GET_PROFILE_INFO]: (state, action) =>
-      produce(state, (draft) => {
-        draft.profile = action.payload.profile
+        draft.is_loading = false
       }),
     [SET_LOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.user_info = action.payload.user_info
+      }),
+    [INIT_FIRST_LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_first = false
+      }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading
+      }),
+    [FAIL_LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_failure = action.payload.is_failure
       }),
   },
   initialState
@@ -212,13 +244,14 @@ const actionCreators = {
   logInDB,
   logOutDB,
   loginCheckDB,
-  kakaoLogin,
-  naverLogin,
-  googleLogin,
-  getProfileInfo,
-  getProfileInfoDB,
+  kakaoLoginDB,
+  naverLoginDB,
+  googleLoginDB,
   setLogin,
   SetLogin,
+  initFirstLogin,
+  loading,
+  failLogin,
 }
 
 export { actionCreators }

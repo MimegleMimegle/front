@@ -13,8 +13,9 @@
 }
 
 .DictSearchPageLayout {
-  padding: 74px 0 0;
+  padding: 56px 0 0;
   width: 100%;
+  height: fit-content;
   /* border: 3px solid cornflowerblue; */
   overflow-x: hidden;
   overflow-y: scroll;
@@ -29,10 +30,10 @@
 .DictSearchListSection {
   width: 100%;
   height: 100%;
-  border-top: 0.5px solid rgb(200, 200, 200);
-  border-bottom: 0.5px solid rgb(200, 200, 200);
-  margin-top: 10px;
-  margin-bottom: 20px;
+  border-top: 2px solid #e5e5e5;
+  border-bottom: 2px solid #e5e5e5;
+  background-color: white;
+  margin: 0 0 20px;
 }
 
 .DictSearchResultText {
@@ -40,131 +41,30 @@
 
   font-family: 'YdestreetB';
   font-style: normal;
-  font-size: 16px;
+  font-size: 1.125rem;
   font-weight: normal;
 }
 
-.DictSearchLists {
-  width: 100%;
-  height: 100%;
-  border-top: 0.5px solid rgb(200, 200, 200);
-  border-bottom: 0.5px solid rgb(200, 200, 200);
-  margin-top: 10px;
-  margin-bottom: 20px;
-
-  -webkit-appearance: none;
-}
-
-.DictSearchList {
-  width: 100%;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-  -webkit-appearance: none;
-}
-
-.SearchDictListTitle {
-  font-size: 18px;
-  font-weight: bold;
-  margin-left: 30px;
-  margin-top: 10px;
-  color: rgba(1, 109, 173, 1);
-
-  -webkit-appearance: none;
-}
-
-.SearchDictListSummary {
-  font-size: 12px;
-  margin-left: 30px;
-  margin-top: -15px;
-  width: 300px;
-  word-break: keep-all;
-
-  -webkit-appearance: none;
-}
-
-.SearchDictWriteInfo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  -webkit-appearance: none;
-}
-
-.SearchDictListFirstWriter {
-  font-size: 9px;
-  height: fit-content;
-  display: flex;
-  align-items: flex-end;
-  margin: 0 0 0 120px;
-
-  -webkit-appearance: none;
-}
-
-.SearchDictListCreatedAt {
-  font-size: 9px;
-  height: fit-content;
-  display: flex;
-  align-items: flex-end;
-  margin: 0 20px 0 0;
-
-  -webkit-appearance: none;
-}
-
-.SearchDictListLikeButton {
-  font-size: 8px;
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-start;
-  margin: 0px 0px 0px 20px;
-
-  -webkit-appearance: none;
-}
-
-.SearchDictListLikeCount {
-  font-size: 12px;
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-start;
-  margin: 0 0 0 5px;
-
-  -webkit-appearance: none;
-}
 
 .DictSearchNoResult {
   width: 100%;
-  height: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  height: fit-content;
   padding: 15px;
 
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .DictSearchNoResultAddDictGuideText {
   width: 100%;
-  height: 50px;
+  height: fit-content;
   display: flex;
   justify-content: center;
+  padding: 15px;
 
   font-family: 'YdestreetB';
   font-style: normal;
-  font-size: 14px;
+  font-size: 1.125rem;
   font-weight: normal;
-}
-
-.DictSearchNoResult_AddDictButtonSection {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  margin: 0 0 0 0;
-  padding: 0px 30px 20px 30px;
 }
 
 .DictSearchNoResult_AddDictButton {
@@ -175,9 +75,9 @@
 }
 
 .DictSearchNoResult_AddDictButton_1 {
-  width: 88px;
-  height: 26px;
-  border: 1px solid black;
+  width: 110px;
+  height: 35px;
+  border: 2px solid black;
   background-color: rgba(0, 160, 255, 1);
   border-radius: 30px;
   display: flex;
@@ -186,21 +86,19 @@
 
   font-family: 'YdestreetB';
   font-style: normal;
-  font-size: 12px;
+  font-size: 0.875rem;
   font-weight: normal;
 
   z-index: 2;
 }
 
 .DictSearchNoResult_AddDictButton_2 {
-  border: 1px solid black;
-  border-radius: 0 0 0 0;
+  width: 110px;
+  height: 35px;
+  border: 2px solid black;
   top: 4px;
   left: 4px;
   background-color: white;
-  width: 88px;
-  height: 26px;
-  border: 1px solid black;
   border-radius: 30px;
   position: absolute;
 

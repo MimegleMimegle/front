@@ -6,16 +6,16 @@ import { boardApi } from '../shared/api'
 
 const HashTag = (props) => {
   const history = useHistory();
-  const search = props.hashtag
-  console.log(search)
+  const hashTag = props.hashtag
+
   const clickHashTag = () => {
     boardApi
-      .searchPost(search)
+      .searchPost(hashTag)
       .then((response) => {
         console.log(response.data)
         props.setFilteredPosts(response.data.data)
         history.push({
-          pathname:`/post/search/${search}`,
+          pathname:`/post/search/${hashTag}`,
           })
       })
       .catch((error) => {
@@ -29,7 +29,7 @@ const HashTag = (props) => {
 
   return (
     <>
-      <HashTagButton onClick={clickHashTag}># {search}</HashTagButton>
+      <HashTagButton onClick={clickHashTag}># {hashTag}</HashTagButton>
     </>
   )
 }

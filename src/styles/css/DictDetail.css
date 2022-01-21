@@ -19,12 +19,20 @@
   src: url('../fonts/Pretendard-Medium.woff') format('woff'), url('../fonts/Pretendard-Medium.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Pretendard-Bold.woff') format('woff'), url('../fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
 .OneDictCardDetailPageLayout {
-  padding: 74px 0 0;
+  margin: 80px 0 0;
+  padding: 0 0 40px;
   width: 100%;
   height: fit-content;
-  /* border: 3px solid cornflowerblue; */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   justify-self: space-around;
   overflow-x: hidden;
@@ -32,190 +40,53 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   scroll-behavior: smooth;
+  border-top: 2px solid #e5e5e5;
+  border-bottom: 2px solid #e5e5e5;
+  background-color: #fff;
 }
+
 .OneDictCardDetailPageLayout::-webkit-scrollbar {
   display: none;
 }
 
-.OneDictCardDetailInfoSection {
-  /* border-top: 1px solid grey; */
-  width: 100%;
-}
-
-.OneDictCardDetailInfoTitle {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  font-size: 16px;
-  font-weight: 500;
-  margin: 30px 20px 20px 20px;
-  width: 320px;
-  height: 25px;
-  position: relative;
-}
-
-.OneDictCardDetailInfoTitle_Guide {
-  width: 60px;
+.OneDictCardDetailInfo_Guide {
+  max-width: 50px;
+  min-width: 50px;
   height: fit-content;
-  word-wrap: break-word;
-  word-break: keep-all;
-
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-.OneDictCardDetailInfoTitle_Vertical {
+.OneDictCardDetailInfo_Vertical {
   width: 1px;
   height: 16px;
-  border: 1px solid rgb(164, 164, 164);
-  margin: 4px 10px 0 10px;
+  background-color: #c4c4c4;
+  margin: 0 10px;
 }
 
-.OneDictCardDetailInfoTitle_DictData {
-  width: 240px;
-  height: 25px;
-
-  font-size: 14px;
-}
-
-.OneDictCardDetailInfoSummary {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  font-size: 16px;
-  font-weight: 500;
-  margin: 30px 0 0 20px;
-  width: 320px;
-  height: 30px;
-  position: relative;
-  top: -10px;
-}
-
-.OneDictCardDetailInfoSummary_Guide {
-  width: 60px;
-  height: fit-content;
-
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.OneDictCardDetailInfoSummary_Vertical {
-  width: 1px;
-  height: 16px;
-  border: 1px solid rgb(164, 164, 164);
-  margin: 4px 10px 0 10px;
-}
-
-.OneDictCardDetailInfoSummary_DictData {
-  width: 240px;
-  height: fit-content;
+.OneDictCardDetailInfo_DictData {
   word-wrap: break-word;
   word-break: keep-all;
-
-  font-size: 14px;
-}
-
-.OneDictCardDetailInfoContent {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  font-size: 16px;
-  font-weight: 500;
-  margin: 40px 0 0px 20px;
-  width: 320px;
+  width: fit-content;
   height: fit-content;
-  position: relative;
-  top: -30px;
-}
-
-.OneDictCardDetailInfoContent_Guide {
-  width: 60px;
-  height: fit-content;
-
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.OneDictCardDetailInfoContent_Vertical {
-  width: 1px;
-  height: 16px;
-  border: 1px solid rgb(164, 164, 164);
-  margin: 4px 10px 0 10px;
-}
-
-.OneDictCardDetailInfoContent_DictData {
-  width: 240px;
-  height: fit-content;
-  word-wrap: break-word;
-  word-break: keep-all;
-
-  font-size: 14px;
-}
-
-.OneDictCardDetailInfoLikeAndCopyLink {
+  font-size: 0.875rem;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-
-  -webkit-appearance: none;
-}
-
-.OneDictCardDetailInfoLike {
-  font-size: 20px;
-  font-weight: 400;
-  margin: 0px 0 0 0;
-  display: flex;
-  align-self: center;
-
-  color: rgba(135, 140, 146, 1);
-
-  -webkit-appearance: none;
-}
-.OneDictCardDetailInfoLike:hover {
-  cursor: pointer;
 }
 
 .OneDictCardDetailInfoLikeCnt {
-  font-size: 14px;
-  font-weight: 500;
-  margin: 2px 0 0 -40px;
-  display: flex;
-  align-self: center;
+  font-size: 0.875rem;
+  margin: 0 0 0 5px;
 
   color: rgba(135, 140, 146, 1);
 
   -webkit-appearance: none;
-}
-
-.OneDictCardDetailInfoCopyLinkButton {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-self: center;
-  color: rgba(135, 140, 146, 1);
-  size: 24px;
-
-  margin: 10px 0 0 220px;
-
-  -webkit-appearance: none;
-}
-.OneDictCardDetailInfoCopyLinkButton:hover {
-  cursor: pointer;
 }
 
 .OneDictCardDetailInfoWriterAndAt {
   display: flex;
-  flex-direction: row;
+  align-items: center;
   border-top: 0.5px solid rgb(209, 209, 209);
   border-bottom: 0.5px solid rgb(209, 209, 209);
-  margin-top: 10px;
   width: 100%;
   height: fit-content;
 }
@@ -223,26 +94,22 @@
 .First {
   border: none;
   border-right: 1px solid rgb(209, 209, 209);
-  margin: 0px;
-  padding: 10px;
+  padding: 10px 10px 10px 20px;
 }
 
 .Recent {
   border: none;
-  margin: 0px;
-  padding: 10px;
+  padding: 10px 20px 10px 10px;
 }
 
 .OneDictCardDetailInfoFirstWriterProfileImage {
   width: 30px;
   height: 30px;
-  border: none;
   border-radius: 50px;
   background-color: white;
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 5px;
-  align-self: center;
 }
 
 .OneDictCardDetailInfoFirstWriterCreatedAt {
@@ -256,11 +123,11 @@
 }
 
 .OneDictCardDetailInfoFirstWriter {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .OneDictCardDetailInfoCreatedAt {
-  font-size: 9px;
+  font-size: 0.75rem;
   color: rgba(135, 140, 146, 1);
 }
 
@@ -274,13 +141,11 @@
 .OneDictCardDetailInfoRecentWriterProfileImage {
   width: 30px;
   height: 30px;
-  border: none;
   border-radius: 50px;
   background-color: white;
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 5px;
-  align-self: center;
 }
 
 .OneDictCardDetailInfoRecentWriterModifiedAt {
@@ -294,110 +159,112 @@
 }
 
 .OneDictCardDetailInfoRecentWriter {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .OneDictCardDetailInfoModifiedAt {
-  font-size: 9px;
+  font-size: 0.75rem;
   color: rgba(135, 140, 146, 1);
 }
 
-.OneDictCardDetailInfoModifiedGuideText {
-  font-size: 12px;
-  margin: 20px 0 0 95px;
-  width: 240px;
-  height: 50px;
-  display: flex;
-  justify-self: center;
-  align-self: center;
-  word-break: keep-all;
-}
-
 .OneDictCardDetailInfoModifiedAndHistoryButton {
+  width: 100%;
+  height: fit-content;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
-  margin: 0 0 0 0;
-  padding: 10px 30px 50px 30px;
+  justify-content: center;
+  left: 50%;
+  padding: 0 20px 40px;
 }
 
 .OneDictCardDetailInfoModifiedHistoryButton {
+  width: 100%;
+  height: 100%;
   position: relative;
-}
-.OneDictCardDetailInfoModifiedHistoryButton:hover {
-  cursor: pointer;
 }
 
 .OneDictCardDetailInfoModifiedHistoryButton_1 {
-  width: 88px;
-  height: 26px;
-  border: 1px solid black;
-  background-color: #faea59;
+  width: 110px;
+  height: 35px;
+  border: 2px solid black;
+  background-color: #ffe330;
   border-radius: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  left: 43.3%;
+  transform: translateX(-33.3%);
 
   font-family: 'YdestreetB';
   font-style: normal;
-  font-size: 12px;
+  font-size: 0.875rem;
   font-weight: normal;
+  cursor: pointer;
 
-  z-index: 2;
+  z-index: 100;
 }
 
 .OneDictCardDetailInfoModifiedHistoryButton_2 {
-  border: 1px solid black;
-  border-radius: 0 0 0 0;
+  width: 110px;
+  height: 35px;
+  border: 2px solid black;
   top: 4px;
-  left: 4px;
+  left: calc(43.3% + 4px);
+  transform: translateX(-33.3%);
   background-color: white;
-  width: 88px;
-  height: 26px;
-  border: 1px solid black;
   border-radius: 30px;
   position: absolute;
-
-  z-index: -1;
 }
 
 .OneDictCardDetailInfoModifiedButton {
+  width: 100%;
+  height: 100%;
   position: relative;
-}
-.OneDictCardDetailInfoModifiedButton:hover {
-  cursor: pointer;
 }
 
 .OneDictCardDetailInfoModifiedButton_1 {
-  width: 88px;
-  height: 26px;
-  border: 1px solid black;
-  background-color: rgba(0, 160, 255, 1);
+  width: 110px;
+  height: 35px;
+  border: 2px solid black;
+  background-color: #00a0ff;
   border-radius: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  left: 56.6%;
+  transform: translateX(-66.6%);
 
   font-family: 'YdestreetB';
   font-style: normal;
-  font-size: 12px;
+  font-size: 0.875rem;
   font-weight: normal;
+  cursor: pointer;
 
-  z-index: 2;
+  z-index: 100;
 }
 
 .OneDictCardDetailInfoModifiedButton_2 {
-  border: 1px solid black;
-  border-radius: 0 0 0 0;
+  width: 110px;
+  height: 35px;
+  border: 2px solid black;
   top: 4px;
-  left: 4px;
+  left: calc(56.6% + 4px);
+  transform: translateX(-66.6%);
   background-color: white;
-  width: 88px;
-  height: 26px;
-  border: 1px solid black;
   border-radius: 30px;
   position: absolute;
+  z-index: 0;
+}
 
-  z-index: -1;
+.icon {
+  cursor: pointer;
+}
+
+.OneDictCardDetailInfoText {
+  font-size: 0.875rem;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
 }

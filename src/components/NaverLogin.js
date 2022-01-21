@@ -1,57 +1,60 @@
-import React, { Component, useEffect } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import { ReactComponent as NaverLogo } from '../styles/image/naver.svg'
 
-const _clientId = process.env.REACT_APP_NAVER_API_KEY
+const NaverButton = (props) => {
+  let _clientId = process.env.REACT_APP_NAVER_API_KEY
+  let _callBack = process.env.REACT_APP_NAVER_CALLBACK_URL
 
-class NaverLogin extends Component {
-  componentDidMount() {
-    // Naver sdk import
-    const naverScript = document.createElement('script')
-    naverScript.src = 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js'
-    naverScript.type = 'text/javascript'
-    document.head.appendChild(naverScript)
-
-    // Naver sdk 스크립트 로드 완료시
-    naverScript.onload = () => {
-      const naverLogin = new window.naver.LoginWithNaverId({
-        clientId: _clientId,
-        callbackUrl: 'http://localhost:3000',
-        callbackHandle: true,
-        isPopup: true, // 로그인 팝업여부
-        loginButton: {
-          color: 'green', // 색상(white, green)
-          type: 1, // 버튼타입(1,2,3)
-          height: 50, // 배너 및 버튼 높이
-        },
-      })
-
-      naverLogin.init()
-      naverLogin.getLoginStatus((status) => {
-        if (status) {
-          const nickName = naverLogin.user.id()
-          const userName = naverLogin.user.email()
-          console.log('Naver 로그인 상태', naverLogin.user)
-          const { id, email } = naverLogin.user
-        } else {
-          console.log('Naver 비 로그인 상태')
-        }
-      })
-      naverLogin.logout(() => {
-        const button_area = document.getElementById('button_area')
-        button_area.innerHTML = "<button id='btn_logout'>로그아웃</button>"
-
-        const logout = document.getElementById('btn_logout')
-        logout.addEventListener('click', (e) => {
-          naverLogin.logout()
-          window.location.replace('http://localhost:3000')
-        }) // 네이버 로그인이 계속 유지되는 경우가 있다. 초기화시 로그아웃
-      })
+  function randomString() {
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'
+    const stringLength = 6
+    let randomstring = ''
+    for (let i = 0; i < stringLength; i++) {
+      const rnum = Math.floor(Math.random() * chars.length)
+      randomstring += chars.substring(rnum, rnum + 1)
     }
+    return randomstring
   }
+  let newState = randomString()
 
-  render() {
-    return <div id="naverIdLogin"></div>
-  }
+  return (
+    <>
+      <a
+        onClick={() => {
+          window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&redirect_uri=http://localhost:3000/redirect/naver&state=${newState}`
+          // window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&redirect_uri=https://memegle.xyz/redirect/naver&state=${newState}`
+        }}
+      >
+        <Background>
+          <WhiteBack>
+            <NaverLogo fill="#00C300" width="50px" height="50px" />
+          </WhiteBack>
+        </Background>
+      </a>
+    </>
+  )
 }
 
-export default NaverLogin
+const Background = styled.div`
+  width: 53px;
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 50px;
+  background-color: #00c300;
+  overflow: hidden;
+`
+
+const WhiteBack = styled.div`
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 35px;
+`
+
+export default NaverButton

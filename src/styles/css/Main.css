@@ -15,22 +15,59 @@
 .MainPageLayout {
   width: 100%;
   height: 100%;
-  margin: 0px 0 0 0;
+  margin: 10px 0 80px 0;
   padding: 74px 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .MainPageLayout::-webkit-scrollbar {
   display: none;
 }
 
-.swiper-wrapper {
-  width: fit-content;
+.MainPageCarouselSection {
+  width: 90%;
+  height: fit-content;
 }
 
-.swiper-slide {
+.MainPageCarouselText {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+
+.MainPageCarouselText_1 {
+  display: flex;
+  justify-self: flex-start;
+  margin: 0 10px 10px 0;
+  font-size: 18px;
+  font-weight: 700;
+  width: fit-content;
+  line-height: normal;
+  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+}
+
+.MainPageCarouselText_2 {
+  width: fit-content;
+  height: fit-content;
+  font-size: 14px;
+  margin: 2px 0 0 0;
+}
+
+.swiper-wrapper {
+  width: 100%;
+}
+
+.main-swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -63,7 +100,7 @@
   z-index: 10;
 }
 
-.swiper-slide img {
+.main-swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
@@ -94,7 +131,7 @@
   font-weight: 700;
   width: fit-content;
   line-height: normal;
-  background-image: linear-gradient(transparent 60%, #ffe330 40%);
+  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
 
   font-family: 'YdestreetB';
   font-style: normal;
@@ -106,10 +143,11 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  background-color: none;
 }
 
 .MainPageTag {
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 75px;
   background-color: white;
   width: fit-content;
@@ -151,10 +189,13 @@
 }
 
 .MainPageTopPostSection {
+  width: 100%;
+  margin: 0 0 20px 0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin-bottom: 10px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-self: center;
 }
 
 .MainPageTopPostText {
@@ -165,7 +206,7 @@
   font-weight: 700;
   width: fit-content;
   line-height: normal;
-  background-image: linear-gradient(transparent 60%, #ffe330 40%);
+  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
 
   font-family: 'YdestreetB';
   font-style: normal;
@@ -186,6 +227,8 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin-top: 20px;
+  margin-bottom: 50px;
   padding-right: 20px;
 }
 
@@ -226,7 +269,7 @@
   font-weight: 700;
   width: fit-content;
   line-height: normal;
-  background-image: linear-gradient(transparent 60%, #ffe330 40%);
+  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
 
   font-family: 'YdestreetB';
   font-style: normal;
@@ -302,4 +345,47 @@
   font-weight: normal;
 
   -webkit-appearance: none;
+}
+
+.MainPageAddButtonSection {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  margin: 50px 0 0;
+}
+
+.MainPageAddButtonSectionHr {
+  width: 100%;
+  height: 1px;
+  border: 1px solid black;
+}
+
+.MainPageAddButton {
+  width: 50px;
+  height: 50px;
+  border: 2px solid black;
+  border-radius: 50px;
+  background-color: #00a0ff;
+  font-size: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 80px;
+}
+
+.MainPageAddButtonGuideText {
+  margin: 50px 0 0 0;
+  width: fit-content;
+  height: 50px;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 400;
 }

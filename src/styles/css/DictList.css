@@ -22,7 +22,7 @@
 .DictLayout {
   width: 100%;
   /* border: 3px solid cornflowerblue; */
-  padding: 74px 0 0;
+  padding: 56px 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -35,12 +35,6 @@
   display: none;
 }
 
-.DictPageSearchButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2px 0px 0px;
-}
 .DictPageSearchButton:hover {
   cursor: pointer;
 }
@@ -53,8 +47,8 @@
 }
 
 .NewDictAddButton_1 {
-  border: 1px solid black;
-  background-color: rgba(0, 160, 255, 1);
+  border: 2px solid black;
+  background-color: rgba(102, 152, 252, 1);
   width: 280px;
   height: 40px;
   display: flex;
@@ -68,13 +62,16 @@
   font-family: 'YdestreetB';
   font-style: normal;
   font-weight: normal;
+  transition-duration: 0.2s;
 }
 .NewDictAddButton_1:hover {
   cursor: pointer;
+  left: calc(50%);
+  transform: translate(4px, 10%);
 }
 
 .NewDictAddButton_2 {
-  border: 1px solid black;
+  border: 2px solid black;
   background-color: white;
   width: 280px;
   height: 40px;
@@ -89,141 +86,22 @@
   z-index: -1;
 }
 
-.TodayDictListText {
-  margin-left: 10px;
+.TitleBox {
   width: fit-content;
-  line-height: normal;
-  background-image: linear-gradient(transparent 60%, #ffe330 40%);
-
-  font-size: 18px;
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-}
-
-.TodayDictListHr {
-  width: 95%;
-  border: 0px;
-  height: 1px;
-  background-color: rgb(193, 193, 193);
+  height: fit-content;
+  padding: 20px 16px 10px;
 }
 
 .DictListPagination {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin-top: 30px;
+  margin-top: 4px;
+  margin-bottom: 120px;
 }
-
-.DictListText {
-  display: flex;
-  align-self: flex-start;
-  margin: 0 0 10px 10px;
-  line-height: normal;
-  background-image: linear-gradient(transparent 60%, #ffe330 40%);
-
-  font-size: 18px;
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-}
-
 .DictList {
   width: 100%;
   height: 100%;
-}
-
-.OneDictionaryCardSection {
-  border-top: 0.5px solid rgb(200, 200, 200);
-  border-bottom: 0.5px solid rgb(200, 200, 200);
-  margin-top: 10px;
-  margin-bottom: 20px;
-
-  -webkit-appearance: none;
-}
-
-.OneDictionaryCardList {
-  width: 100%;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-  -webkit-appearance: none;
-}
-
-.DictListTitle {
-  margin-left: 30px;
-  margin-top: 10px;
-  color: rgba(1, 109, 173, 1);
-
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-size: 18px;
-  font-weight: 700;
-
-  -webkit-appearance: none;
-}
-
-.DictListSummary {
-  font-size: 12px;
-  margin-left: 30px;
-  margin-top: -15px;
-  width: 300px;
-  word-break: keep-all;
-
-  -webkit-appearance: none;
-}
-
-.DictWriteInfo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  -webkit-appearance: none;
-}
-
-.DictListFirstWriter {
-  font-size: 9px;
-  height: fit-content;
-  display: flex;
-  align-items: flex-end;
-  margin: 0 0 0 120px;
-
-  -webkit-appearance: none;
-}
-
-.DictListCreatedAt {
-  font-size: 9px;
-  height: fit-content;
-  display: flex;
-  align-items: flex-end;
-  margin: 0 20px 0 0;
-
-  -webkit-appearance: none;
-}
-
-.DictListLikeButton {
-  font-size: 8px;
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-start;
-  margin: 0px 0px 0px 20px;
-
-  -webkit-appearance: none;
-}
-
-.DictListLikeCount {
-  font-size: 12px;
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: flex-start;
-  margin: 0 0 0 5px;
-
-  -webkit-appearance: none;
 }
 
 .rc-pagination {

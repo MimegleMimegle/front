@@ -5,6 +5,7 @@ import { history } from '../redux/ConfigureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
 import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
+import Grid from '../elements/Grid'
 import SidebarItem from './SidebarItem'
 import ConfirmModal from './modal/ConfirmModal'
 import SmileIcon from '../styles/image/smileIcon_Yellow.png'
@@ -13,9 +14,9 @@ import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
   const dispatch = useDispatch()
   const my = useSelector((state) => state.mypage.myPageData)
-  const username = localStorage.getItem('username')
-  const nickname = localStorage.getItem('nickname')
-  const isLogin = username && nickname ? true : false
+  const userId = localStorage.getItem('id')
+  const token = document.cookie.split('=')[1]
+  const isLogin = userId !== null && token !== undefined ? true : false
 
   const [showModal, setShowModal] = React.useState(false)
 
@@ -63,15 +64,15 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
 
   React.useEffect(() => {
     if (my == null) {
-      dispatch(mypageActions.getUserInfoDB())
+      dispatch(mypageActions.getMypageDataDB())
     }
   }, [])
 
   return (
     <>
       <Wrapper className={`${showSidebar ? 'open' : ''}`}>
-        <div style={{ width: '100%', padding: '90px 10px 16px 16px', borderBottom: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+        <Grid flex_between padding="90px 10px 16px 16px" borderBottom="1px solid #111">
+          <Grid flex_align>
             {isLogin ? (
               <>
                 <ProfileImage src={my ? my.profileImageUrl : null} onClick={moveToMypage} />
@@ -85,16 +86,16 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
                 </p>
               </>
             )}
-          </div>
+          </Grid>
           <button
             onClick={() => {
               setShowSidebar(false)
             }}
             style={{ height: '100%', padding: '0', textAlign: 'right' }}
           >
-            <CloseIcon style={{ paddingTop: '2px' }} />
+            <CloseIcon style={{ paddingTop: '3px' }} />
           </button>
-        </div>
+        </Grid>
 
         {menu_list.map((menu, index) => {
           return <SidebarItem key={index} menu={menu} setShowSidebar={setShowSidebar} />
@@ -111,7 +112,7 @@ const Sidebar = ({ showSidebar, setShowSidebar, profileImgUrl }) => {
 }
 
 const Wrapper = styled.div`
-  width: 240px;
+  width: 60%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -123,7 +124,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: top;
-  z-index: 2000;
   visibility: hidden;
   opacity: 0;
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import '../../styles/css/Join.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
@@ -10,10 +10,16 @@ import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
 import styled from 'styled-components'
 import DoubleCheckModal from '../../components/modal/DoubleCheckModal'
-import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import MemegleIcon from '../../styles/image/smileIcon_Yellow.png'
+import Grid from '../../elements/Grid'
+import AlertModal from '../../components/modal/AlertModal'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const Join = () => {
   const dispatch = useDispatch()
+
+  const loading = useSelector((state) => state.user.is_loading)
 
   //이름, 이메일, 비밀번호, 비밀번호 확인
   const [username, setUsername] = React.useState('')
@@ -38,6 +44,8 @@ const Join = () => {
   const [isNicknameChecked, setIsNicknameChecked] = useState(false)
   const [doubleCheck, setDoubleCheck] = useState(null)
   console.log(doubleCheck)
+
+  const [showAlert, setShowAlert] = useState(false)
 
   // 유저네임 유효성 검사
   const onChangeUsername = (e) => {
@@ -139,7 +147,8 @@ const Join = () => {
 
   const join = () => {
     if (username === '' || nickname === '' || password === '' || passwordCheck === '') {
-      swal('빈칸을 모두 입력해주세요!')
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 2000)
       return
     }
     dispatch(userActions.joinDB(username, nickname, password, passwordCheck))
@@ -147,7 +156,9 @@ const Join = () => {
 
   return (
     <>
-      <Header type="Join" noBorder></Header>
+      <Grid flex_center padding="40px 0 37px">
+        <Logo src={MemegleIcon} />
+      </Grid>
       <div className="JoinPageLayout">
         <div className="MultiInputBoxLayout_join">
           <div className="LoginOrJoinButtons_join">
@@ -161,7 +172,20 @@ const Join = () => {
               아이디
             </label>
             <DoubleCheckBox>
-              <input className="JoinInputBox input1" id="UsernameInput_Join" maxLength="16" placeholder="영어, 숫자 3~16자" type="text" value={username} onChange={onChangeUsername} />
+              <input
+                className="JoinInputBox input1"
+                id="UsernameInput_Join"
+                maxLength="16"
+                placeholder="영어, 숫자 3~16자"
+                type="text"
+                value={username}
+                onChange={onChangeUsername}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    checkUsername()
+                  }
+                }}
+              />
               <button className="doubleCheckButton" onClick={checkUsername}>
                 중복확인
               </button>
@@ -180,6 +204,11 @@ const Join = () => {
                 type="text"
                 value={nickname}
                 onChange={onChangeNickname}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    checkNickname()
+                  }
+                }}
               />
               <button className="doubleCheckButton" onClick={checkNickname}>
                 중복확인
@@ -227,12 +256,15 @@ const Join = () => {
                 }
               }}
             >
-              <div className="MemegleButton_JoinSubmit Join1">회원가입</div>
+              <button className="MemegleButton_JoinSubmit Join1" disabled={loading}>
+                {loading ? <CircularProgress size={16} sx={{ color: '#FFFFFF' }} /> : '회원가입'}
+              </button>
               <div className="MemegleButton_JoinSubmit Join2"></div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
       {doubleCheck === null && null}
       {doubleCheck === true && (
         <DoubleCheckModal title="사용 가능합니다." doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
@@ -244,6 +276,9 @@ const Join = () => {
           <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
         </DoubleCheckModal>
       )}
+      <AlertModal showModal={showAlert}>
+        <AlertText>아이디와 비밀번호를 모두 입력해주세요!</AlertText>
+      </AlertModal>
     </>
   )
 }
@@ -283,17 +318,18 @@ const ConfirmButton = styled.button`
   color: ${({ theme }) => theme.colors.blue};
 `
 
-export default Join
+const Logo = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 2px solid #111;
+  /* cursor: pointer; */
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
+`
 
-{
-  /* <div className="SocialLoginHR_JoinPage">또는</div> */
-}
-{
-  /* <div className="SocialLoginBtns_JoinPage"> */
-}
-// <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
-// <img className="KakaoLoginBtn_JoinPage" size="50" src={kakaotalk}></img>
-// </a>
-// <img className="GoogleLoginBtn_JoinPage" size="50" src={googleColor}></img>
-// <img className="NaverLoginBtn_JoinPage" size="50" src={naver}></img>
-// </div>
+const AlertText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+`
+
+export default Join

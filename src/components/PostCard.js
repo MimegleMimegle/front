@@ -1,46 +1,48 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { dictQuestionApi } from '../shared/api'
 import { useHistory } from 'react-router'
 import '../index.css'
 import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
-import { ReactComponent as EmptyHeartIcon } from '../styles/icons/좋아요 비활성_18dp.svg'
-import { ReactComponent as FullHeartIcon } from '../styles/icons/좋아요 활성_18dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../styles/icons/하트 비활성_24dp.svg'
+import { ReactComponent as FullHeartIcon } from '../styles/icons/하트 활성_24dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
-import { likeApi } from '../shared/api'
+import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
+import Grid from '../elements/Grid'
 
-
-const PostCard = ({ post }) => {
+const PostCard = ({ question }) => {
   const history = useHistory()
-  const boardId = post.boardId
 
   const onC = () => {
-    history.push(`/post/detail/${post.boardId}`)
+    history.push(`/dict/question/detail/${question && question.questionId}`)
   }
-  const [likeCount, setLikeCount] = useState(post.likeCnt)
-  const [isLiked, setIsLiked] = useState(post.isLike)
-  const hour = post.createdAt.split('T')[1].split('.')[0]
-  console.log(isLiked)
-  const handleClickLike = async (e) => {
+  const [curiousTooCnt, setCuriousTooCnt] = useState(question.curiousTooCnt)
+  const [isCuriousToo, setIsCuriousToo] = useState(question.isCuriousToo)
+  const hour = question.createdAt.split('T')[1].split('.')[0]
+
+  const handleClickCuriousToo = async (e) => {
     e.preventDefault()
     e.stopPropagation()
-    if (isLiked) {
-      await likeApi
-        .likeBoard(post.boardId)
+    if (isCuriousToo) {
+      await dictQuestionApi
+        .curiousToo(question.questionId)
         .then((response) => {
           console.log(response.data)
-          setIsLiked(false)
-          setLikeCount(likeCount - 1)
+          setIsCuriousToo(false)
+          console.log(isCuriousToo)
+          setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
           console.log('이미지 좋아요 취소 문제 발생', error.response)
         })
     } else {
-      await likeApi
-        .likeBoard(post.boardId)
+      await dictQuestionApi
+        .curiousToo(question.questionId)
         .then((response) => {
           console.log(response.data)
-          setIsLiked(true)
-          setLikeCount(likeCount + 1)
+          setIsCuriousToo(true)
+          setCuriousTooCnt(curiousTooCnt + 1)
+          console.log(isCuriousToo)
         })
         .catch((error) => {
           console.log('이미지 좋아요 문제 발생', error.response)
@@ -51,42 +53,43 @@ const PostCard = ({ post }) => {
   return (
     <>
       <FullWrap>
-        <Wrap postList={post} onClick={onC}>
-          <UserInfo>
-            <UserImg src={post ? post.profileImageUrl : null} alt="" />
-            <div className="userinfo">
-              <Writer>{post ? post.writer : null}</Writer>
-              <div className="createdate">
-                <CreatedAt>{post ? post.createdAt.split('T')[0] : null}</CreatedAt>
-                <CreatedAt>{post ? hour.split(':')[0] + ':' + hour.split(':')[1] : null}</CreatedAt>
-              </div>
+        <Wrap questionList={question} onClick={onC}>
+          <Grid flex_align>
+            <CuriousQ>Q</CuriousQ>
+            {/* <UserImg src={question.profileImageUrl} alt="" /> */}
+            <div className="profile-box">
+            <Title>{question && question.title}</Title>
+
+              {/* <Writer>{question.writer}</Writer> */}
+              {/* <div className="created-date">
+                <CreatedAt>{question.createdAt.split('T')[0]}</CreatedAt>
+                <CreatedAt>{hour.split(':')[0] + ':' + hour.split(':')[1]}</CreatedAt>
+              </div> */}
             </div>
-          </UserInfo>
-          <Content>
-            <Title>{post ? post.title : null}</Title>
-            <HashTagHere>
-              {post.hashTags &&
-                post.hashTags.map((hashTag, index) => {
-                  return <pre key={index}> #{hashTag}</pre>
-                })}
-            </HashTagHere>
-          </Content>
+          </Grid>
+          <Content>{question&&question.content}</Content>
+          {/* <Title>{question && question.title}</Title> */}
           <Icon>
             <IconBox>
-              <ViewIcon />
-              <Number>{post ? post.views : null}</Number>
+              <ViewIcon fill="#333" />
+              <Number>{question && question.views}</Number>
             </IconBox>
             <IconBox>
-              {isLiked? < FullHeartIcon IcononClick={handleClickLike}/> :< EmptyHeartIcon onClick={handleClickLike}/>}
-              <Number className="like-count">{likeCount}</Number>
+              {isCuriousToo ? <FullHeartIcon fill="#333" onClick={handleClickCuriousToo} /> : <EmptyHeartIcon fill="#333" onClick={handleClickCuriousToo} />}
+              <Number className="like-count">{curiousTooCnt}</Number>
             </IconBox>
             <IconBox>
-              <CommentIcon />
-              <Number>{post ? post.commentCnt : null}</Number>
+              <CommentIcon fill="#333" />
+              <Number>{question && question.commentCnt}</Number>
             </IconBox>
+            {/* <IconBox>{question.isComplete ? <BiBadgeCheck size="20" /> : <BiBadge size="20" />}</IconBox> */}
           </Icon>
         </Wrap>
-        {post.thumbNail ? <ThumbNail className="uploadimg" src={post && post.thumbNail} alt="" /> : null}
+        {/* {question.thumbNail ? (
+          <ThumbNailContainer>
+            <ThumbNail className="uploadimg" src={question && question.thumbNail} alt="" />
+          </ThumbNailContainer>
+        ) : null} */}
       </FullWrap>
     </>
   )
@@ -95,105 +98,111 @@ const PostCard = ({ post }) => {
 export default PostCard
 
 const FullWrap = styled.div`
-  height: 133px;
   padding: 16px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #e5e5e5;
+  border:2px solid black;
+  margin: 16px;
+  width: 398px;
+  height: 170px;
 `
 
 const Wrap = styled.div`
+  width: 100%;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-`
-
-const UserInfo = styled.div`
-  display: flex;
-  height: 30px;
-  margin: 0 0 0 3px;
-  .createdate {
+  .profile-box {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    .created-date {
+      width: 100%;
+      display: flex;
+    }
   }
 `
 
-const UserImg = styled.img`
-  margin: 0 8px 0 0;
-  width: 28px;
-  height: 28px;
-  border: 1px solid #e5e5e5;
-  box-sizing: border-box;
-  border-radius: 150px;
+const CuriousQ = styled.div`
+  background: #FF8E00;
+  width: 40px;
+  height:40px;
+  border: 2px solid black;
+  border-radius:150px;
+  font-family:'YdestreetB';
+  font-syled: normal;
+  font-weigt:bold;
+  line-height:26px;
+  font-size:20px;
+  padding:7px 11px 7px 9px;
+
+`
+
+const UserImg = styled.div`
+  margin: 0 10px 0 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 20px;
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
 `
 const Writer = styled.p`
+  width: 100%;
   font-family: 'YdestreetL';
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 16px;
-  display: flex;
-  align-items: center;
-  margin: 0 0 4px 0;
+  font-size: ${({ theme }) => theme.fontSizes.base};
 `
 
 const CreatedAt = styled.div`
-  font-family: 'Pretendard Variable';
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  margin: 0 5px 0 0;
+`
+
+const Title = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   font-style: normal;
-  font-weight: 300;
-  font-size: 9px;
-  line-height: 11px;
-  margin: 0 3px 0 0;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  margin: 0 12px;
 `
 
 const Content = styled.div`
-  margin: 10px 0 0 0;
-  cursor: pointer;
-  height: 30px;
-  width: 250px;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 22px;
   display: flex;
-  flex-direction: column;
-`
-const Title = styled.div`
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 20px;
-  margin: 0 0 0 3px;
-`
-
-const HashTagHere = styled.div`
-  font-family: 'Pretendard Variable';
-  font-style: normal;
-  font-weight: normal;
-  display: flex;
-  font-size: 12px;
-  line-height: 20px;
+  align-items: center;
+  margin:16px 0;
 `
 
 const Icon = styled.div`
   display: flex;
-  padding: 8px 0;
+  align-items: center;
 `
 
 const Number = styled.p`
-  font-size: 12px;
-  line-height: 14px;
-  display: flex;
-  align-items: center;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: #333;
   margin: 0 9.5px 0 5px;
 `
 
+const ThumbNailContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+`
+
 const ThumbNail = styled.img`
-  width: 60px;
-  height: 60px;
-  margin: 27px 0 0 0;
+  width: 80px;
+  height: 80px;
 `
 const IconBox = styled.div`
   display: flex;
   align-items: center;
+  margin:16px 0;
 `

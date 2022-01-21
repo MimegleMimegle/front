@@ -4,9 +4,11 @@ import { history } from '../../redux/ConfigureStore'
 import { useDispatch } from 'react-redux'
 import { actionCreators as imageActions } from '../../redux/modules/image'
 
+import Grid from '../../elements/Grid'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import ImageWrapper from '../../components/image/ImageWrapper'
 import { IoCloseOutline } from 'react-icons/io5'
+import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 
 const ImageUpload = ({ preview, fileInput }) => {
   const dispatch = useDispatch()
@@ -28,19 +30,18 @@ const ImageUpload = ({ preview, fileInput }) => {
   return (
     <>
       <ImageWrapper>
-        <div style={{ width: '100%', padding: '0 15px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <button
+        <Grid flex_between padding="0 16px 16px">
+          <CloseIcon
+            className="icon"
             onClick={() => {
               history.go('/image')
             }}
-          >
-            <IoCloseOutline style={{ fontSize: '24px', color: '#FFF' }} />
-          </button>
+          />
           <UploadButton onClick={handleShowModal}>등록</UploadButton>
-        </div>
-        <div style={{ width: '100%', height: '80%', display: 'flex', alignItems: 'center' }}>
-          <img src={preview} style={{ width: '100%', maxHeight: '100%', objectFit: 'cover' }} />
-        </div>
+        </Grid>
+        <Grid height="fit-conent" overflow="hidden">
+          <img src={preview} style={{ width: '100%', objectFit: 'cover' }} />
+        </Grid>
       </ImageWrapper>
       {showModal && (
         <ConfirmModal question="밈짤을 게시하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>

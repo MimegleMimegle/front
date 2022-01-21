@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, TextareaHTMLAttributes } from 'react'
 import '../../styles/css/DictWrite.css'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
@@ -10,6 +11,7 @@ import axios from 'axios'
 import { dictApi } from '../../shared/api'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import DoubleCheckModal from '../../components/modal/DoubleCheckModal'
+import AlertModal from '../../components/modal/AlertModal'
 
 const DictWrite = (props) => {
   const dispatch = useDispatch()
@@ -19,12 +21,19 @@ const DictWrite = (props) => {
   const [content, setContent] = React.useState('')
   const [showModal, setShowModal] = React.useState(false)
   const [doubleCheck, setDoubleCheck] = React.useState(null)
-  console.log(doubleCheck)
+  const [checkedTitle, setCheckedTitle] = React.useState('')
+  const [showInputAlert, setShowInputAlert] = React.useState(false)
+  const [showDoubleCheckAlert, setShowDoubleCheckAlert] = React.useState(false)
 
   const handleShowModal = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    setShowModal(!showModal)
+    if (title === checkedTitle) {
+      setShowModal(!showModal)
+    } else {
+      setShowDoubleCheckAlert(true)
+      setTimeout(() => setShowDoubleCheckAlert(false), 2000)
+    }
   }
 
   const onChangeTitle = (e) => {
@@ -44,10 +53,6 @@ const DictWrite = (props) => {
   }
 
   const addDict = () => {
-    if (title === '' || summary === '' || content === '') {
-      swal('빈칸을 모두 입력해주세요!')
-      return
-    }
     dispatch(dictActions.addDictDB(title, summary, content), [])
     setShowModal(false)
   }
@@ -55,23 +60,29 @@ const DictWrite = (props) => {
   const doubleCheckDict = async () => {
     const dictName = title
     // dispatch(dictActions.doubleCheckDictDB(dictName), [])
-    dictApi
-      .dobleCheckDict(dictName)
-      .then((res) => {
-        console.log(res.data.data.result)
-        if (res.data.data.result === true) {
-          setDoubleCheck(true)
-        } else if (res.data.data.result === false) {
-          setDoubleCheck(false)
-        }
-      })
-      .catch((err) => {
-        if (err.res) {
-          console.log(err.res.data)
-          console.log(err.res.status)
-          console.log(err.res.headers)
-        }
-      })
+    if (title !== '') {
+      dictApi
+        .dobleCheckDict(dictName)
+        .then((res) => {
+          console.log(res.data.data.result)
+          if (res.data.data.result === true) {
+            setDoubleCheck(true)
+            setCheckedTitle(title)
+          } else if (res.data.data.result === false) {
+            setDoubleCheck(false)
+          }
+        })
+        .catch((err) => {
+          if (err.res) {
+            console.log(err.res.data)
+            console.log(err.res.status)
+            console.log(err.res.headers)
+          }
+        })
+    } else {
+      setShowInputAlert(true)
+      setTimeout(() => setShowInputAlert(false), 2000)
+    }
   }
 
   const handleMoveDictList = () => {
@@ -79,34 +90,27 @@ const DictWrite = (props) => {
     setDoubleCheck(null)
   }
 
-  // const allClearKeyword = () => {
-  //   swal({
-  //     title: '초기화를 하시면 작성하신 모든 내용이 사라집니다.',
-  //     text: '그래도 초기화 하시겠습니까?',
-  //     icon: 'warning',
-  //     buttons: true,
-  //     dangerMode: true,
-  //   }).then((allClearKeyword) => {
-  //     if (allClearKeyword) {
-  //       swal('작성하신 모든 내용이 초기화되었습니다.', {
-  //         icon: 'success',
-  //       })
-  //       setTitle('')
-  //       setSummary('')
-  //       setContent('')
-  //     } else {
-  //       swal('초기화가 취소되었습니다.')
-  //     }
-  //   })
-  // }
-
   return (
     <>
-      <Header type="DictWrite" location="오픈 밈사전"></Header>
+      <Header type="goBack" location="오픈 밈사전" />
       <div className="DictCardWritePageLayout">
         <div className="DictCardInputSection">
           <div className="DictCardInputTitleContainer">
-            <div className="DictCardInputTitleGuideText">단어</div> <input className="DictCardInputTitle" type="text" value={title} onChange={onChangeTitle} placeholder="등록할 단어를 입력해주세요" />
+            <div className="DictCardInputTitleGuideText">
+              단어<span className="highlight">*</span>
+            </div>{' '}
+            <input
+              className="DictCardInputTitle"
+              type="text"
+              value={title}
+              onChange={onChangeTitle}
+              placeholder="등록할 단어를 입력해주세요"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  doubleCheckDict()
+                }
+              }}
+            />
             <div
               className="DictCardInputTitleDoubleCheck"
               onClick={() => {
@@ -117,8 +121,10 @@ const DictWrite = (props) => {
             </div>
           </div>
           <div className="DictCardInputSummaryContainer">
-            <div className="DictCardInputSummaryGuideText">한줄설명</div>
-            <textarea
+            <div className="DictCardInputSummaryGuideText">
+              한줄설명<span className="highlight">*</span>
+            </div>
+            <input
               className="DictCardInputSummary"
               type="text"
               cols="40"
@@ -134,15 +140,17 @@ const DictWrite = (props) => {
             <textarea className="DictCardInputContent" type="text" cols="40" rows="10" value={content} onChange={onChangeContent} placeholder="추가적인 설명이나 예시를 작성해 주세요" />
           </div>
         </div>
-        <div className="DictCardTemporaryOrSubmitButton">
-          {/* <div className="DictCardTemporaryButton" onClick={allClearKeyword}>
+      </div>
+      <div className="DictCardTemporaryOrSubmitButton">
+        {/* <div className="DictCardTemporaryButton" onClick={allClearKeyword}>
             <div className="DictCardTemporaryButton_1">초기화</div>
             <div className="DictCardTemporaryButton_2"></div>
           </div> */}
-          <div className="DictCardSubmitButton" type="submit" onClick={handleShowModal}>
-            <div className="DictCardSubmitButton_1">등록</div>
-            <div className="DictCardSubmitButton_2"></div>
-          </div>
+        <div className="DictCardSubmitButton" type="submit">
+          <button className="DictCardSubmitButton_1" onClick={handleShowModal} disabled={!(title !== '' && summary !== '' && content !== '')}>
+            등록
+          </button>
+          <div className="DictCardSubmitButton_2"></div>
         </div>
       </div>
       {doubleCheck === null && null}
@@ -161,12 +169,19 @@ const DictWrite = (props) => {
         </DoubleCheckModal>
       )}
       {showModal && (
-        <ConfirmModal question="작성하신 밈단어를 게시하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
-          <button onClick={addDict}>게시</button>
+        <ConfirmModal question="작성하신 단어를 게시하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+          <AddDictButton onClick={addDict}>게시</AddDictButton>
         </ConfirmModal>
       )}
+      <AlertModal showModal={showInputAlert}>먼저 단어를 입력해주세요!</AlertModal>
+      <AlertModal showModal={showDoubleCheckAlert}>먼저 중복확인 버튼을 클릭해주세요!</AlertModal>
     </>
   )
 }
+
+const AddDictButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
+`
 
 export default DictWrite

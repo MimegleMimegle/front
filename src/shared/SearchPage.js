@@ -44,7 +44,7 @@ function SearchPage(props) {
   return (
     <SearchBarPage>
       <SearchBar onAddKeyword={handleAddKeyword}></SearchBar>
-      <History keywords={keywords} onClearKeywords={handleClearKeywords} onRemoveKeyword={handleRemoveKeyword} />
+      {/* <History keywords={keywords} onClearKeywords={handleClearKeywords} onRemoveKeyword={handleRemoveKeyword} /> */}
     </SearchBarPage>
   )
 }
@@ -52,15 +52,9 @@ function SearchPage(props) {
 const SearchBarPage = styled.div`
   width: 100%;
   height: fit-content;
-  top: 0px;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  background-color: white;
-  border-bottom: 0.5px solid rgba(229, 229, 229, 1);
+  background-color: #fbfafa;
   position: relative;
   overflow: auto;
-
-  z-index: 20;
 `
 
 export default SearchPage

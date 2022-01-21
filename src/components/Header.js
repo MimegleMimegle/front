@@ -1,147 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
+import { history } from '../redux/ConfigureStore'
+import { actionCreators as mypageActions } from '../redux/modules/mypage'
 
-import Sidebar from './Sidebar'
-import HeaderLogo from './HeaderLogo'
-import HeaderHamburder from './HeaderHamburger'
-import HeaderGoBack from './HeaderGoBack'
-import HeaderClose from './HeaderClose'
-import HeaderGoDictMain from './HeaderGoDictMain'
+import Grid from '../elements/Grid'
+import ProfileBottom from './ProfileBottom'
+import AlarmModal from './modal/AlarmModal'
+import ConfirmModal from './modal/ConfirmModal'
+import MemegleIcon from '../styles/image/smileIcon_Yellow.png'
+import { FaRegBell, FaBell } from 'react-icons/fa'
+import { ReactComponent as ArrowBackIcon } from '../styles/icons/arrow_back_ios_black_24dp.svg'
 
-const Header = ({ type, children, location, low, noBorder }) => {
-  const [showSidebar, setShowSidebar] = React.useState(false)
-  const handleSidebar = () => {
-    setShowSidebar(!showSidebar)
+const Header = ({ children, location, type }) => {
+  const dispatch = useDispatch()
+  const profile = useSelector((state) => state.mypage.myProfile)
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  // const cookieList = document.cookie.split('=')
+  // const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
+  const isLogin = userId !== null && token !== null ? true : false
+
+  const [showProfile, setShowProfile] = useState(false)
+  const [showAlarm, setShowAlarm] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+
+  const handleShowProfile = () => {
+    setShowProfile(!showProfile)
   }
 
-  const styles = { low: low, noBorder: noBorder }
-
-  if (type === 'QuizPaper') {
-    return (
-      <>
-        <NavHeader {...styles}>
-          <ul style={{ height: '100%', display: 'flex', alignItems: 'end', justifyContent: 'center' }}>
-            <li>
-              <QuizLocation>{location}</QuizLocation>
-            </li>
-          </ul>
-        </NavHeader>
-      </>
-    )
+  const handleShowAlarm = () => {
+    if (isLogin) {
+      setShowAlarm(!showAlarm)
+    } else {
+      setShowModal(true)
+    }
   }
 
-  if (type === 'PostDetail') {
-    return (
-      <>
-        <NavHeader {...styles}>
-          <ul className="nav-list">
-            <li>
-              <HeaderGoBack />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right"></div>
-            </li>
-          </ul>
-        </NavHeader>
-      </>
-    )
-  }
+  useEffect(() => {
+    if (profile === null) {
+      dispatch(mypageActions.getUserProfileDB())
+    }
+  }, [handleShowAlarm, showAlarm])
 
-  if (type === 'DictWrite' || type === 'DictEdit') {
+  if (type === 'goBack') {
     return (
       <>
         <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderClose />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right"></div>
-            </li>
-          </ul>
+          <Grid flex_between height="100%">
+            <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
+            <div className="header-location">{location}</div>
+            <div className="header-back-empty"></div>
+          </Grid>
         </NavHeader>
-      </>
-    )
-  }
-
-  if (type === 'PostWrite' || type === 'DictHistory' || type === 'DictDetail' || type === 'QuizIntro' || type === 'PostEdit') {
-    return (
-      <>
-        <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderGoBack />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right">{children}</div>
-            </li>
-          </ul>
-        </NavHeader>
-      </>
-    )
-  }
-
-  if (type === 'PostList' || type === 'PostSearchResult' || type === 'ImageList' || type === 'PostSearch' || type === 'MyPage' || type === 'DictList' || type === 'QuizResult') {
-    return (
-      <>
-        <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderHamburder handleSidebar={handleSidebar} />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right">{children}</div>
-            </li>
-          </ul>
-        </NavHeader>
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      </>
-    )
-  }
-
-  if (type === 'DictSearchResult') {
-    return (
-      <>
-        <NavHeader>
-          <ul className="nav-list">
-            <li>
-              <HeaderGoDictMain />
-            </li>
-            <li className="nav-item-middle">
-              <Location>{location}</Location>
-            </li>
-            <li>
-              <div className="nav-item-right">{children}</div>
-            </li>
-          </ul>
-        </NavHeader>
-      </>
-    )
-  }
-
-  if (type === 'Join' || type === 'Login') {
-    return (
-      <>
-        <NavHeader {...styles}>
-          <ul className="nav-list">
-            <li className="nav-item-middle">
-              <HeaderLogo />
-            </li>
-          </ul>
-        </NavHeader>
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       </>
     )
   }
@@ -149,72 +60,119 @@ const Header = ({ type, children, location, low, noBorder }) => {
   return (
     <>
       <NavHeader>
-        <ul className="nav-list">
-          <li>
-            <HeaderHamburder handleSidebar={handleSidebar} />
-          </li>
-          <li className="nav-item-middle">
-            <HeaderLogo />
-          </li>
-          <li>
-            <div className="nav-item-right"></div>
-          </li>
-        </ul>
+        <Grid flex_between height="100%">
+          <div className="header-empty"></div>
+          <div className="header-location">{location}</div>
+          <div className="header-icon">
+            <div className="header-bell-box" onClick={handleShowAlarm}>
+              {showAlarm ? (
+                <FaBell className="header-bell shown" />
+              ) : profile && profile.alarm.length > 0 ? (
+                <>
+                  <UpdateCircle />
+                  <FaRegBell className="header-bell hidden" />
+                </>
+              ) : (
+                <FaRegBell className="header-bell hidden" />
+              )}
+            </div>
+            {isLogin ? <ProfileImage src={profile?.profileImage} onClick={handleShowProfile} /> : <ProfileImage src={MemegleIcon} onClick={() => history.push('/login')} />}
+          </div>
+        </Grid>
       </NavHeader>
-      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <ProfileBottom profile={profile} showProfile={showProfile} setShowProfile={setShowProfile} />
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
+      {showAlarm && <AlarmModal showAlarm={showAlarm} setShowAlarm={setShowAlarm} profile={profile} />}
     </>
   )
 }
 
 const NavHeader = styled.nav`
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0 10px;
+  left: 0;
+  padding: 0 16px;
   width: 100%;
-  height: ${(props) => (props.low ? '62px' : '74px')};
+  height: 56px;
   background-color: ${({ theme }) => theme.colors.white};
-  border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid black')};
-  /* padding: 10px 0 12px; */
+  border-bottom: 1px solid ${({ theme }) => theme.colors.line};
   z-index: 1000;
-  .nav-list {
+  transition: 0.4s ease;
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.08);
+  .header-empty {
+    width: 76px;
     height: 100%;
-    margin: 0;
-    padding: 0;
+  }
+  .header-location {
+    font-family: 'YdestreetB';
+    font-style: normal;
+    font-weight: normal;
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+    cursor: default;
+  }
+  .header-icon {
     display: flex;
     align-items: center;
-    justify-content: space-between;
   }
-  .nav-item-middle {
-    width: 100%;
-    height: 100%;
+  .header-bell-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 20px;
+    background-color: transparent;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+    &:hover {
+      background-color: #e9e9e9;
+    }
+    .header-bell {
+      font-size: 20px;
+      &.shown {
+        color: ${({ theme }) => theme.colors.blue};
+      }
+      &.hidden {
+        color: #000;
+      }
+    }
   }
-  .nav-item-right {
-    width: 40px;
+  .arrow-back-icon {
+    cursor: pointer;
+  }
+  .header-back-empty {
+    width: 24px;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 `
 
-const Location = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes.xxl};
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-  cursor: default;
+const UpdateCircle = styled.span`
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.blue};
+  position: absolute;
+  top: 8px;
+  right: 8px;
 `
-const QuizLocation = styled.div`
+
+const ProfileImage = styled.div`
+  margin: 0 0 0 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.colors.white};
+`
+const MoveLoginButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-weight: normal;
-  text-align: center;
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default Header

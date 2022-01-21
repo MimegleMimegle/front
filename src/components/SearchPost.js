@@ -20,17 +20,10 @@ const SearchPost = (props) => {
   const [filteredPosts, setFilteredPosts] = React.useState([])
   const [notFound, setNotFound] = React.useState(false)
 
-  console.log(hashTags)
 
   const handleSearch = (e) => {
     setSearch(e.target.value)
-    console.log(e.target.value)
   }
-
-  console.log(props)
-
-  console.log(search)
-  console.log(filteredPosts)
 
   const clickSearch = async () => {
     await boardApi
@@ -41,7 +34,6 @@ const SearchPost = (props) => {
         setFilteredPosts(filter_list)
         history.push({
           pathname: `/post/search/${search}`,
-          filter_list: filter_list,
         })
       })
       .catch((error) => {
@@ -84,11 +76,10 @@ const SearchPost = (props) => {
           </div>
           <div>
             {/* DB에서 불러온 HashTags list map */}
-            <RecommendHashTag style={{ fontSize: '14px', margin: '10px 0 3px 48px' }}>추천 해시태그</RecommendHashTag>
-            {hashTags &&
-              hashTags.map((hashtag, index) => {
-                return <HashTag key={index} search={search} hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} />
-              })}
+            <RecommendHashTag style={{ fontSize: '14px', margin: '10px 0 3px 48px'}}>추천 해시태그</RecommendHashTag>
+            {hashTags&&hashTags.map((hashtag, index) => {
+              return <HashTag key={index}  hashtag={hashtag} setFilteredPosts={setFilteredPosts} setNotFound={setNotFound} />
+            })}
           </div>
         </div>
       </Wrapper>

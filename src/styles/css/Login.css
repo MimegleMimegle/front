@@ -6,9 +6,9 @@
 }
 
 .LoginLayout {
-  padding: 74px 16px 0;
+  padding: 0 16px;
   width: 100%;
-  height: 485px;
+  /* height: 485px; */
   max-height: 100%;
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@
 }
 
 .MultiInputBoxLayout_login {
-  border: 1px solid black;
+  border: 2px solid black;
   width: 100%;
   height: 250px;
 }
@@ -34,19 +34,19 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
   width: 100%;
 }
 
 .LoginButton_login {
   width: 100%;
   height: 100%;
-  border-left: 0.5px solid black;
+  border-left: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background-color: #ffe330;
+  background-color: #ffd400;
   cursor: pointer;
 
   font-family: 'YdestreetB';
@@ -89,11 +89,12 @@
 }
 
 .IdInputBox {
-  border: 0.5px solid black;
+  border: 2px solid black;
   width: 100%;
   height: 36px;
   margin: 0px 0 5px 0;
   padding-left: 10px;
+  background-color: #fafafa;
 
   font-size: 12px;
 }
@@ -106,11 +107,12 @@
 }
 
 .PwdInputBox {
-  border: 0.5px solid black;
+  border: 2px solid black;
   width: 100%;
   height: 36px;
   margin: 0px 0 15px 0;
   padding-left: 10px;
+  background-color: #fafafa;
 
   font-size: 12px;
 }
@@ -122,11 +124,11 @@
   cursor: pointer;
 }
 .Login1 {
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 0 0 0 0;
   top: 175px;
   left: -50px;
-  background-color: #00a0ff;
+  background-color: #6698fc;
   width: 100px;
   height: 40px;
   display: flex;
@@ -141,7 +143,7 @@
   z-index: 2;
 }
 .Login2 {
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 0 0 0 0;
   background-color: white;
   top: 179px;
@@ -168,31 +170,6 @@
   width: 100%;
   align-items: center;
   justify-content: space-evenly;
-}
-
-.KakaoLoginBtn {
-  width: 50px;
-  background-color: #fee500;
-  border-radius: 5px;
-}
-.KakaoLoginBtn:hover {
-  cursor: pointer;
-}
-
-.GoogleLoginBtn {
-  width: 50px;
-}
-.GoogleLoginBtn:hover {
-  cursor: pointer;
-}
-
-.NaverLoginBtn {
-  width: 50px;
-  background-color: rgb(0, 255, 0);
-  border-radius: 5px;
-}
-.NaverLoginBtn:hover {
-  cursor: pointer;
 }
 
 /* sweetalret */

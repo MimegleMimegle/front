@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { startsWith } from 'lodash'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
-  baseURL: 'http://54.180.150.230',
+  baseURL: 'https://54.180.150.230',
+  // baseURL: 'http://13.209.99.193',
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-type': 'application/json; charset=UTF-8',
@@ -12,7 +14,9 @@ const instance = axios.create({
 
 /* Interceptor를 통한 Header 설정 */
 instance.interceptors.request.use((config) => {
-  const accessToken = document.cookie.split('=')[2]
+  // const cookieList = document.cookie.split('=')
+  // const accessToken = cookieList.length === 2 ? cookieList[1] : cookieList[2]
+  const accessToken = localStorage.getItem('token')
   config.headers.common['authorization'] = `${accessToken}`
   return config
 })
@@ -22,39 +26,50 @@ export const userApi = {
   login: (username, password) => instance.post('/api/user', { username: username, password: password }),
   socialLogin: () => instance.get('/api/user/kakao/callback'),
   join: (username, nickname, password, passwordCheck) => instance.post('/api/signup', { username: username, nickname: nickname, password: password, passwordCheck: passwordCheck }),
-  getProfileInfo: () => instance.get('/api/userInfo'),
 
   /* 추가 */
   checkUsername: (username) => instance.get(`/api/signup/username?username=${username}`),
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
   KakaoLogin: (code) => instance.get(`/api/user/kakao/callback?code=${code}`),
-  NaverLogin: (code, state) => instance.get(`/api/user/naver/callback?code=[code]&state=[state]`),
-  GoogleLogin: () => instance.get(`/api/user/google/callback`),
+  NaverLogin: (code, state) => instance.get(`/api/user/naver/callback?code=${code}&state=${state}`),
+  GoogleLogin: (code) => instance.get(`/api/user/google/callback?code=${code}`),
 }
 
-/* 추가 */
 export const mypageApi = {
-  getUserInfo: () => instance.get('/api/mypage'),
+  getMypageData: () => instance.get('/api/mypage'),
+  getProfileInfo: () => instance.get('/api/userInfo'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
   editNickname: (nickname) => instance.post('/api/user/nickname', { nickname: nickname }),
 }
 
 export const boardApi = {
-  getPosts: (pageSize, currentPage) => instance.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  getPosts: (pageSize, currentPage) => instance.get(`/api/board/list/FREEBOARD?page=${currentPage - 1}&size=${pageSize}`),
   getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
   writePost: (post) => instance.post('/api/board/FREEBOARD', post),
   editPost: (boardId, content) => instance.put(`/api/board/${boardId}`, content),
   deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
   selectPost: () => instance.get('/api/board?q=query'),
-  // 추가
   getSubject: () => instance.get('/api/board/subject'),
   recommendHashTag: () => instance.get('/api/board/hashTag'),
   searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
   totalLength: () => instance.get('api/board/count/FREEBOARD'),
 }
 
+export const dictQuestionApi = {
+  getQuestions: (pageSize, currentPage) => instance.get(`/api/dict/question?page=${currentPage - 1}&size=${pageSize}`),
+  getOneQuestion: (questionId) => instance.get(`/api/dict/question/${questionId}`),
+  writeQuestion: (question) => instance.post('/api/dict/question', question),
+  editQuestion: (questionId, content) => instance.put(`/api/dict/question/${questionId}`, content),
+  deleteQuestion: (questionId) => instance.delete(`/api/dict/question/${questionId}`),
+  curiousToo: (questionId) => instance.get(`/api/dict/question/curiousToo/${questionId}`),
+  selectQuestion: (commentId) => instance.get(`/api/dict/question/select/${commentId}`),
+  totalLength: () => instance.get('/api/dict/question/count'),
+  //백엔드진행중
+  searchAlldict: (currentPage, pageSize) => instance.get(`/api/dict/search?q=’테스트’&page=${currentPage - 1}&size=${pageSize}`),
+}
+
 export const dictApi = {
-  getDictMain: (pageSize, currentPage) => instance.get(`http://54.180.150.230/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  getDictMain: (pageSize, currentPage) => instance.get(`/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
   getTodayDict: () => instance.get(`/api/bestDict/dict`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
@@ -64,26 +79,28 @@ export const dictApi = {
   dictEditHistoryDetail: (historyId) => instance.get(`/api/dict/history/${historyId}`),
   rollbackDict: (historyId) => instance.get(`/api/dict/revert/${historyId}`),
   searchDict: (keyword, pageSize, currentPage) => instance.get(`/api/dict/search?q=${keyword}&page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
-  /* 추가 */
   tellMeTotalLength: () => instance.get('/api/count/dict'),
   tellMeTotalLengthSearch: (keyword) => instance.get(`/api/count/dict?q=${keyword}`),
   dobleCheckDict: (dictName) => instance.post('/api/check/dict', { dictName: dictName }),
+  dictMyScrapList: (userId) => instance.get('/api/myMeme/dict', { userId: userId }),
+  /* 추가 */
+  getDictStat: () => instance.get('/api/stat/dict'),
 }
 
 export const quizApi = {
-  /* 추가 */
   getQuizList: (category) => instance.get(`/api/quiz/${category}?count=10`),
+  submitScore: (category, score) => instance.get(`api/stat/quiz/${category}?score=${score}`),
 }
 
 export const mainApi = {
   mainPage: () => instance.get('/api/main'),
+  countVisitors: () => instance.get('api/stat/visitor'),
 }
 
-/* 추가 */
 export const commentApi = {
-  addComment: (boardId, comment) => instance.post(`/api/board/${boardId}/comment`, { content: comment }),
-  editComment: (commentId) => instance.put(`/api/board/${commentId}`),
-  deleteComment: (commentId) => instance.delete(`/api/board/comment/${commentId}`),
+  addComment: (questionId, comment) => instance.post(`/api/dict/${questionId}/comment`, { content: comment }),
+  deleteComment: (commentId) => instance.delete(`/api/dict/comment/${commentId}`),
+  likeComment: (commentId) => instance.get(`/api/dict/comment/like/${commentId}`),
 }
 
 export const likeApi = {
