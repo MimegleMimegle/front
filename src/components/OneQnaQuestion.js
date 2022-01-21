@@ -12,9 +12,9 @@ const OneQnaQuestion = ({ question, index }) => {
     <>
       <Container {...styles} onClick={() => history.push(`/dict/question/detail/${question?.questionId}`)}>
         <div className="question-box box1">
-          <Grid flex_center height="100%">
+          <div className="title-box">
             <div className="qna-question-title">{question?.title}</div>
-          </Grid>
+          </div>
           <Grid flex_center padding="10px 0 0">
             <ProfileImage src={question?.profileImage} />
           </Grid>
@@ -42,6 +42,13 @@ const Container = styled.div`
     height: 142px;
     position: absolute;
     border: 2px solid ${({ theme }) => theme.colors.black};
+
+    .title-box {
+      width: 100%;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
   .box1 {
     background-color: ${({ theme }) => theme.colors.white};

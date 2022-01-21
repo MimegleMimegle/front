@@ -1,10 +1,9 @@
 import axios from 'axios'
-import { startsWith } from 'lodash'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
-  baseURL: 'https://54.180.150.230',
-  // baseURL: 'http://13.209.99.193',
+  baseURL: 'https://youtuberandomplayer.shop', // production
+  // baseURL: 'http://13.209.99.193', // local
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-type': 'application/json; charset=UTF-8',
@@ -40,6 +39,7 @@ export const mypageApi = {
   getProfileInfo: () => instance.get('/api/userInfo'),
   editProfileImage: (newProfileImage) => instance.post('/api/user/profileImage', newProfileImage),
   editNickname: (nickname) => instance.post('/api/user/nickname', { nickname: nickname }),
+  checkAlarm: () => instance.get('/api/alarm/read'),
 }
 
 export const boardApi = {

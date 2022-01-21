@@ -28,6 +28,9 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <!-- https 통신 -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
+
     <title>밈글밈글</title>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" type="text/javascript" charset="utf-8"></script>
@@ -38,7 +41,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <!-- og태그 설정 -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://memegle.xyz" />
+    <meta property="og:url" content="https://memegle.xyz" />
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/96426012?s=400&u=8be2ae76928b6dbe2dfe7aaa11c5f25678697efb&v=4" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="1200" />
@@ -46,10 +49,22 @@
     <meta property="og:description" content="사전, 근데 이제 신조어를 곁들인." />
     <!-- 트위터 미리보기 설정 -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:url" content="http://memegle.xyz" />
+    <meta name="twitter:url" content="https://memegle.xyz" />
     <meta name="twitter:title" content="세상의 모든 밈, 밈글밈글" />
     <meta name="twitter:description" content="사전, 근데 이제 신조어를 곁들인." />
     <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/96426012?s=400&u=8be2ae76928b6dbe2dfe7aaa11c5f25678697efb&v=4" />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-217730236-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'UA-217730236-1')
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

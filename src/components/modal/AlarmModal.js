@@ -2,23 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 
-import MemegleIcon from '../../styles/image/smileIcon_Yellow.png'
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 
-const AlarmModal = ({ showAlarm, setShowAlarm, profile }) => {
-  const userId = localStorage.getItem('id')
-  const token = localStorage.getItem('token')
-  const isLogin = userId !== null && token !== null ? true : false
-
+const AlarmModal = ({ showAlarm, setShowAlarm, alarmList }) => {
   window.addEventListener('keyup', (e) => {
     if (showAlarm && e.key === 'Escape') {
       setShowAlarm(false)
     }
   })
 
-  const alarmList = profile ? profile.alarm : []
-  console.log(profile)
-  console.log(alarmList)
   return (
     <>
       <Container>
@@ -33,23 +25,21 @@ const AlarmModal = ({ showAlarm, setShowAlarm, profile }) => {
           />
         </HeaderSection>
         <BodySection>
-          {profile &&
-            alarmList.length > 0 &&
+          {alarmList.length > 0 ? (
             alarmList.map((alarm, index) => {
               return (
                 <div className={`alarm-box ${index === 0 && 'first'}`} key={`alarm-id-${alarm.alarmId}`} onClick={() => history.push(`/dict/question/detail/${alarm.navId}`)}>
                   <div className="alarm-content">
-                    {profile?.nickname} 님의 {alarm.alarmType === 'RECEIVE_COMMENT' ? '질문에 답글이 달렸어요!' : alarm.alarmType === 'SELECT_USER' ? '답글이 채택되었어요!' : ''}
+                    {alarm.nickname} 님의 {alarm.alarmType === 'RECEIVE_COMMENT' ? '질문에 답글이 달렸어요!' : alarm.alarmType === 'SELECT_USER' ? '답글이 채택되었어요!' : ''}
+                    {alarm.checked === false ? <UpdateCircle /> : <></>}
                   </div>
                 </div>
               )
-            })}
-          {alarmList.length === 0 && (
-            <>
-              <div className="alarm-box first">
-                <div className="alarm-content">알림 내역이 없어요!</div>
-              </div>
-            </>
+            })
+          ) : (
+            <div className="alarm-box first">
+              <div className="alarm-content">알림 내역이 없어요!</div>
+            </div>
           )}
         </BodySection>
       </Container>
@@ -60,7 +50,7 @@ const AlarmModal = ({ showAlarm, setShowAlarm, profile }) => {
 const Container = styled.div`
   position: absolute;
   top: 56px;
-  right: 60px;
+  right: 16px;
   max-width: 300px;
   min-width: 300px;
   width: 100%;
@@ -112,8 +102,18 @@ const BodySection = styled.div`
     .alarm-content {
       width: fit-content;
       font-size: ${({ theme }) => theme.fontSizes.base};
+      position: relative;
     }
   }
+`
+
+const UpdateCircle = styled.span`
+  width: 8px;
+  height: 8px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.blue};
+  position: absolute;
+  top: -2px;
 `
 
 export default AlarmModal

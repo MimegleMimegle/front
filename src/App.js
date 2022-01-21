@@ -1,9 +1,9 @@
-import React from 'react'
-import './App.css'
+import React, { useEffect } from 'react'
+import ReactGA from 'react-ga'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { history } from './redux/ConfigureStore'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import GlobalStyle from './styles/GlobalStyle'
 import theme from './styles/theme'
 import Auth from './shared/auth'
@@ -36,10 +36,21 @@ import MobileFrame from './components/MobileFrame'
 import NaverLoginHandler from './shared/NaverLoginHandler'
 import KakaoLoginHandler from './shared/KakaoLoginHandler'
 import GoogleLoginHandler from './shared/GoogleLoginHandler'
+import './App.css'
+import bg from '../src/styles/image/background.jpeg'
 
 function App() {
+  useEffect(() => {
+    ReactGA.initialize('user id')
+    history.listen((location) => {
+      ReactGA.set({ page: location.pathname }) // Update the user's current page
+      ReactGA.pageview(location.pathname) // Record a pageview for the given page
+    })
+    // ReactGA.pageview(window.location.pathname + window.location.search);
+  }, [])
   return (
     <>
+    <Wrapper>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <ConnectedRouter history={history}>
@@ -74,8 +85,36 @@ function App() {
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>
+    </Wrapper>
     </>
   )
 }
 
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: #d9e3ee;
+  /* background-size: contain; */
+  overflow: hidden;
+  position: relative;
+
+  @media screen and (min-width: 1120px) {
+    background: url(${bg}) no-repeat;
+    background-size: 100% 100vh;
+  }
+`
+
 export default App
+
+ReactGA.event({
+  category: 'User',
+  action: 'Created an Account',
+})
+ReactGA.exception({
+  description: 'An error ocurred',
+  fatal: true,
+})

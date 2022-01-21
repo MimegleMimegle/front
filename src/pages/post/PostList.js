@@ -60,7 +60,10 @@ const PostList = (props) => {
           <DictNavBar />
           {!loading ? (
             <>
+            <CuriousHelp>
               <div className="curious">궁금해요!</div>
+              <div className="wait">답변을 기다리고 있어요~</div>
+            </CuriousHelp>
               {question &&
                 question.map((question, index) => {
                   return <PostCard question={question} key={question.questionId} />
@@ -94,18 +97,16 @@ const Container = styled.div`
   position: relative;
 `
 
-const SearchPostDiv = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 5;
-`
-
 const Wrap = styled.div`
   /* position: absolute; */
   width: 100%;
   height: 100%;
   padding: 0 0 80px;
+  
+`
+const CuriousHelp =styled.div`
+  display: flex;
+  margin: 25px 0 16px 16px;
   .curious {
     font-family: 'YdestreetL';
     font-style: normal;
@@ -114,15 +115,16 @@ const Wrap = styled.div`
     line-height: 29px;
     display: flex;
     align-items: center;
-    margin: 24px 16px 16px 16px;
   }
-`
-
-const Empty = styled.div`
-  border-bottom: 1px solid #e5e5e5;
-  /* position: relative; */
-  /* display: flex; */
-  /* justify-content: center; */
+  .wait{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    margin: 8px 0 0 8px;
+  }
 `
 
 const Addbtn = styled.div`

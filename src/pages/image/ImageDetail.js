@@ -12,11 +12,11 @@ import ConfirmModal from '../../components/modal/ConfirmModal'
 import ImageWrapper from '../../components/image/ImageWrapper'
 import ShareBottomSheet from '../../components/ShareBottomSheet'
 
-import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
-import { ReactComponent as DeleteIcon } from '../../styles/icons/delete_black_18dp.svg'
-import { ReactComponent as ShareIcon } from '../../styles/icons/공유_24dp.svg'
-import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/하트 비활성_24dp.svg'
-import { ReactComponent as FullHeartIcon } from '../../styles/icons/하트 활성_24dp.svg'
+import { ReactComponent as CloseIcon } from '../../styles/icons/size(28*28)(30*30)/close_28dp.svg'
+import { ReactComponent as DeleteIcon } from '../../styles/icons/size(28*28)(30*30)/bin_28dp.svg'
+import { ReactComponent as ShareIcon } from '../../styles/icons/size(28*28)(30*30)/share_28dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/size(28*28)(30*30)/heart_blank_28dp.svg'
+import { ReactComponent as FullHeartIcon } from '../../styles/icons/size(28*28)(30*30)/heart_filled_28dp.svg'
 
 const ImageDetail = (props) => {
   const dispatch = useDispatch()
@@ -122,11 +122,11 @@ const ImageDetail = (props) => {
           </Grid>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <ShareIcon className="icon" onClick={handleShareVisible} />
-            {imageData && profile && imageData.writer === profile.nickname && <DeleteIcon className="icon" width="24px" height="24px" style={{ margin: '0 0 0 16px' }} onClick={handleShowModal} />}
+            {imageData && profile && imageData.writer === profile.nickname && <DeleteIcon className="icon" style={{ margin: '0 0 0 16px' }} onClick={handleShowModal} />}
           </div>
         </Grid>
-        <Grid height="fit-content" overflow="hidden">
-          <img src={imageData.thumbNail} style={{ width: '100%', objectFit: 'cover' }} />
+        <Grid flex_center height="fit-content" overflow="hidden">
+          <img src={imageData.thumbNail} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </Grid>
         <Grid flex_align padding="10px 16px 16px">
           {isLiked ? <FullHeartIcon className="icon" onClick={handleClickLike} /> : <EmptyHeartIcon className="icon" onClick={handleClickLike} />}
@@ -156,6 +156,7 @@ const ProfileImage = styled.div`
 `
 
 const ImageWriter = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.base};
   color: ${({ theme }) => theme.colors.white};
 `
 const ImageCreatedAt = styled.p`
@@ -163,7 +164,7 @@ const ImageCreatedAt = styled.p`
   color: ${({ theme }) => theme.colors.white};
 `
 const ImageLikeCount = styled.span`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.xl};
   color: ${({ theme }) => theme.colors.white};
   padding: 0 0 0 5px;
 `

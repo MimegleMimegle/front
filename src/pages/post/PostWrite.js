@@ -61,7 +61,7 @@ const PostWrite = (props) => {
       <Header type="goBack" location="질문 작성" />
       <Container>
         <PWHeader>
-          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
+          <input type="text" className="writetitle" maxlength = "15" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
         </PWHeader>
         <PWBody>
           <textarea
