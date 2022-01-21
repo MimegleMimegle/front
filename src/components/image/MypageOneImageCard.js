@@ -118,10 +118,10 @@ const ImageSection = styled.section`
 `
 
 const ImageBox = styled.div`
-  display: flex;
+  /* display: flex; */
   width: calc(100% - 33px);
-  height: fit-content;
-  position: relative;
+  /* height: fit-content; */
+  /* position: relative; */
   overflow: hidden;
   cursor: pointer;
   border: 2px solid ${({ theme }) => theme.colors.black};
@@ -129,7 +129,7 @@ const ImageBox = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: fit-content;
+  height: 100%;
   object-fit: cover;
 `
 

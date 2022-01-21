@@ -99,10 +99,14 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background: #d9e3ee;
+  background: #2b2b2b;
   /* background-size: contain; */
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   @media screen and (min-width: 500px) {
     background: url(${bg}) no-repeat;

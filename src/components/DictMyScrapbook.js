@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
 import { likeApi } from '../shared/api'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { ReactComponent as EmptyBookMarkIcon } from '../styles/icons/북마크 비활성_18dp.svg'
-import { ReactComponent as FillBookMarkIcon } from '../styles/icons/북마크 활성_18dp.svg'
-import { ReactComponent as DictLinkCopyIcon } from '../styles/icons/링크복사_24dp.svg'
+import { ReactComponent as EmptyBookMarkIcon } from '../styles/icons/bookmark_blank.svg'
+import { ReactComponent as FillBookMarkIcon } from '../styles/icons/bookmark_filled.svg'
+import { ReactComponent as DictLinkCopyIcon } from '../styles/icons/link.svg'
 import { dictApi } from '../shared/api'
 import AlertModal from './modal/AlertModal'
 
@@ -37,7 +37,7 @@ const DictMyScrapbook = (props) => {
     DictMySrcapListDB(userId)
   }, [])
 
-  const currentUrl = window.location.href
+  const currentUrl = 'https://memegle.xyz/dict/detail'
 
   const [copyLink, setCopyLink] = useState(false)
 
@@ -74,7 +74,7 @@ const DictMyScrapbook = (props) => {
                   <FillBookMarkIcon fill="#878C92" />
                   <div className="DictMyScrapCount">스크랩</div>
                 </div>
-                <CopyToClipboard className="DictLinkCopyButton" onCopy={handleCopy} text={currentUrl}>
+                <CopyToClipboard className="DictLinkCopyButton" onCopy={handleCopy} text={currentUrl + `/${scrapList.dictId}`}>
                   <DictLinkCopyIcon fill="#878C92" width="24px" height="24px" />
                 </CopyToClipboard>
               </div>

@@ -116,7 +116,7 @@ const ImageList = (props) => {
               <FileInputLabel htmlFor="file" className="upload-label">
                 <RiEditLine size="28" fill="#FFFFFF" />
               </FileInputLabel>
-              <FileInput type="file" id="file" className="upload-file" accept="image/*" ref={fileInput} onChange={handleChangeFile} />
+              <FileInput type="file" id="file" className="upload-file" accept="image/jpg, image/jpeg, image/png, image/gif" ref={fileInput} onChange={handleChangeFile} />
             </>
           ) : (
             <RiEditLine size="28" fill="#FFFFFF" />

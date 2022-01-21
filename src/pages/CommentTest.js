@@ -4,6 +4,7 @@ import { actionCreators as commentActions } from '../redux/modules/comment'
 import { actionCreators as mypageActions } from '../redux/modules/mypage'
 import OneComment from '../components/OneComment'
 import { MdOutlineSend } from 'react-icons/md'
+import { ReactComponent as SendIcon } from '../styles/icons/send.svg'
 import styled from 'styled-components'
 import MemegleLogo from '../styles/image/smileIcon_Yellow.png'
 import { commentApi } from '../shared/api'
@@ -23,7 +24,7 @@ const CommentTest = ({ question }) => {
   const cookieList = document.cookie.split('=')
   const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
-
+  const commentId = question.commentId
 
   const onChangeComment = (e) => {
     setComment(e.target.value)
@@ -77,7 +78,7 @@ const CommentTest = ({ question }) => {
             <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
           </ConfirmModal>
         </ImgInput>
-        <MdOutlineSend style={{ fontSize: '24px', cursor: 'pointer', width: 'fit-content' }} onClick={addComment} />
+        <SendIcon style={{ cursor: 'pointer' }} onClick={addComment} />
       </CommentWrite>
       {comment_list
         ? comment_list.map((c) => {
@@ -91,8 +92,8 @@ const CommentTest = ({ question }) => {
 }
 
 const CommentWrite = styled.div`
-  position : fixed;
-  bottom : 0;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   padding: 20px;
   display: -ms-flexbox;
@@ -101,7 +102,7 @@ const CommentWrite = styled.div`
   align-items: center;
   justify-content: space-between;
   border-top: 2px solid black;
-  background: #FCFCFC;
+  background: #fcfcfc;
 `
 const MoveLoginButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.lg};
@@ -124,7 +125,7 @@ const ImgInput = styled.div`
   .writebox {
     border: none;
     font-size: 16px;
-    padding:0 20px;    
+    padding: 0 20px;
     background-color: ${({ theme }) => theme.colors.bg};
     width: 100%;
     &::placeholder {

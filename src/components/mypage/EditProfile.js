@@ -154,6 +154,7 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
                   className={`input-nickname ${isValidNickname === false ? 'fail' : ''}`}
                   maxLength={10}
                   placeholder="닉네임을 입력해주세요"
+                  value={my && my.nickname}
                   onChange={handleChangeNickname}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {

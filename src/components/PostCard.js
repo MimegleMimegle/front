@@ -7,8 +7,7 @@ import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../styles/icons/하트 비활성_24dp.svg'
 import { ReactComponent as FullHeartIcon } from '../styles/icons/하트 활성_24dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
-import { ReactComponent as ICuriousToo} from '../styles/icons/quiz_black_24dp.svg'
-
+import { ReactComponent as ICuriousToo } from '../styles/icons/quiz_black_24dp.svg'
 
 import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
 import Grid from '../elements/Grid'
@@ -59,24 +58,22 @@ const PostCard = ({ question }) => {
         <Wrap questionList={question} onClick={onC}>
           <Grid flex_align>
             <CuriousQ>Q</CuriousQ>
-            <div className="profile-box">
             <Title>{question && question.title}</Title>
-            </div>
           </Grid>
-          <div style={{display:'flex'}}>
-          <Content>{question&&question.content}</Content>
-          </div>
+          {/* <div style={{ display: 'flex' }}> */}
+          <Content>{question && question.content}</Content>
+          {/* </div> */}
           <Icon>
             <IconBox>
-              <ViewIcon fill="#333" />
+              <ViewIcon fill="#878C92" />
               <Number>{question && question.views}</Number>
             </IconBox>
             <IconBox>
-              {isCuriousToo ? <ICuriousToo fill="#00A0FF" onClick={handleClickCuriousToo} /> : <ICuriousToo fill="#333" onClick={handleClickCuriousToo} />}
+              {isCuriousToo ? <ICuriousToo fill="#00A0FF" onClick={handleClickCuriousToo} /> : <ICuriousToo fill="#878C92" onClick={handleClickCuriousToo} />}
               <Number className="like-count">{curiousTooCnt}</Number>
             </IconBox>
             <IconBox>
-              <CommentIcon fill="#333" />
+              <CommentIcon fill="#878C92" />
               <Number>{question && question.commentCnt}</Number>
             </IconBox>
           </Icon>
@@ -92,10 +89,11 @@ const FullWrap = styled.div`
   padding: 16px;
   display: flex;
   justify-content: space-between;
-  border:2px solid black;
-  margin: 16px;
-  width: 398px;
-  height: 170px;
+  border: 2px solid black;
+  margin: 16px 0;
+  width: 100%;
+  height: fit-content;
+  background-color: #fff;
 `
 
 const Wrap = styled.div`
@@ -103,63 +101,44 @@ const Wrap = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  .profile-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .created-date {
-      width: 100%;
-      display: flex;
-    }
-  }
 `
 
 const CuriousQ = styled.div`
-  background: #FF8E00;
+  background: #ff8e00;
   width: 40px;
-  height:40px;
+  height: 40px;
   border: 2px solid black;
-  border-radius:150px;
-  font-family:'YdestreetB';
-  font-syled: normal;
-  font-weigt:bold;
-  line-height:26px;
-  font-size:20px;
-  padding:7px 11px 7px 9px;
-
+  border-radius: 150px;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 12px 0 0;
 `
 
 const Title = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 24px;
-  display: flex;
+  width: calc(100% - 52px);
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: 500;
   align-items: center;
-  margin: 0 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `
 
 const Content = styled.div`
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 22px;
-  display: flex;
-  align-items: center;
-  margin:16px 0;
-  width: 300px;
-  white-space: nowrap;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: 24px;
+  height: 48px;
+  margin: 16px 0 0;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-
-
-
 `
 
 const Icon = styled.div`
@@ -168,13 +147,13 @@ const Icon = styled.div`
 `
 
 const Number = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  color: #333;
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-weight: 300;
   margin: 0 9.5px 0 5px;
 `
 
 const IconBox = styled.div`
   display: flex;
   align-items: center;
-  margin:16px 0 0;
+  margin: 16px 0 0;
 `

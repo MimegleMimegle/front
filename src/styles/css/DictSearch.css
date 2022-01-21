@@ -14,6 +14,7 @@
 
 .DictSearchPageLayout {
   padding: 56px 0 0;
+  margin: 0 0 120px 0;
   width: 100%;
   height: fit-content;
   /* border: 3px solid cornflowerblue; */
@@ -33,18 +34,18 @@
   border-top: 2px solid #e5e5e5;
   border-bottom: 2px solid #e5e5e5;
   background-color: white;
-  margin: 0 0 20px;
+  margin: 0 0 20px 0;
 }
 
 .DictSearchResultText {
   padding: 15px;
+  margin: 0 0 20px 0;
 
   font-family: 'YdestreetB';
   font-style: normal;
   font-size: 1.125rem;
   font-weight: normal;
 }
-
 
 .DictSearchNoResult {
   width: 100%;

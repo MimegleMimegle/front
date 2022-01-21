@@ -22,8 +22,7 @@ const KakaoButton = (props) => {
     <>
       <a
         onClick={() => {
-          window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${_apiKey}&redirect_uri=http://localhost:3000/redirect/kakao&response_type=code`
-          // window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${_apiKey}&redirect_uri=https://memegle.xyz/redirect/kakao&response_type=code`
+          window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${_apiKey}&redirect_uri=https://memegle.xyz/redirect/kakao&response_type=code`
         }}
       >
         <Background>
@@ -46,11 +45,14 @@ const Background = styled.div`
   border-radius: 50px;
   background-color: #ffe330;
   overflow: hidden;
+
+  -webkit-appearance: none;
 `
 
 const BlackBack = styled.div`
   background-color: #3a1d1d;
   border: none;
+  border-radius: 50px;
   display: flex;
   justify-content: center;
   align-items: center;

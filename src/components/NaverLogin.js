@@ -22,8 +22,7 @@ const NaverButton = (props) => {
     <>
       <a
         onClick={() => {
-          window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&redirect_uri=http://localhost:3000/redirect/naver&state=${newState}`
-          // window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&redirect_uri=https://memegle.xyz/redirect/naver&state=${newState}`
+          window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&redirect_uri=https://memegle.xyz/redirect/naver&state=${newState}`
         }}
       >
         <Background>

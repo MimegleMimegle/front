@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux'
 import { actionCreators as QuestionActions } from '../../redux/modules/dictquestion'
 import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { dictQuestionApi } from '../../shared/api'
+import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
+import { ReactComponent as AddPhotoIcon } from '../../styles/icons/size(28*28)(30*30)/addphoto_30dp.svg'
 import { history } from '../../redux/ConfigureStore'
 import Header from '../../components/Header'
 import AlertModal from '../../components/modal/AlertModal'
@@ -115,7 +117,7 @@ const PostEdit = (props) => {
             </Preview>
             <UploadSection>
               <label htmlFor="file" className="upload-label">
-                <MdOutlinePhotoSizeSelectActual size="25" />
+                <AddPhotoIcon />
               </label>
               <input type="file" id="file" className="upload-input" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
             </UploadSection>
@@ -147,7 +149,7 @@ const PWHeader = styled.div`
     width: 100%;
     border: none;
     padding: 16px;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-size: ${({ theme }) => theme.fontSizes.lg};
     font-weight: 500;
     color: ${({ theme }) => theme.colors.black};
     word-spacing: 1;
@@ -226,7 +228,7 @@ const PWFooter = styled.div`
     position: absolute;
     width: 100px;
     height: 40px;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
   }
   .btn-1 {
     left: 50%;

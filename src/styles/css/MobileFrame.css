@@ -17,9 +17,22 @@
 
 @media screen and (min-width: 1120px) {
   .WebFullFrame {
-    right: 20%;
     top: 50%;
-    transform: translate(20%, -50%);
+    transform: translate(30%, -50%);
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  .WebFullFrame {
+    top: 50%;
+    transform: translate(55%, -50%);
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .WebFullFrame {
+    top: 50%;
+    transform: translate(80%, -50%);
   }
 }
 
@@ -54,6 +67,7 @@
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  border-bottom: 2px solid #000;
 }
 
 .Container::-webkit-scrollbar {

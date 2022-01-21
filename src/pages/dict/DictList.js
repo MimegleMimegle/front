@@ -17,9 +17,8 @@ import Grid from '../../elements/Grid'
 import Title from '../../elements/Title'
 import OneDictionaryCard from '../../components/OneDictionaryCard'
 import ConfirmModal from '../../components/modal/ConfirmModal'
-import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
-import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
-import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/bookmark_blank.svg'
+import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/bookmark_filled.svg'
 import { RiEditLine } from 'react-icons/ri'
 
 const DictList = (props) => {
@@ -83,7 +82,7 @@ const DictList = (props) => {
           <SearchPage />
         </SearchBarSection>
         <div className="TitleBox">
-          <Title>오늘의 밈 카드</Title>
+          <Title>인기 밈</Title>
         </div>
         <Grid padding="10px 16px 16px">
           <TodayDictCardSwiper />

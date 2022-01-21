@@ -10,7 +10,7 @@ import Footer from '../components/Footer'
 import AlertModal from '../components/modal/AlertModal'
 import Grid from '../elements/Grid'
 import CircularProgress from '@mui/material/CircularProgress'
-import QuizIntroImage from '../styles/image/quiz_main_image2.gif'
+import QuizIntroImage from '../styles/image/quiz_main_image_3.gif'
 
 const QuizIntro = (props) => {
   const dispatch = useDispatch()
@@ -78,13 +78,13 @@ const QuizIntro = (props) => {
 
   return (
     <>
+      <Header type="QuizIntro" location="밈퀴즈" />
       <Wrapper>
-        <Header type="QuizIntro" location="밈퀴즈" />
         {!loading ? (
           <>
-            <ImageSection>
-              <img src={QuizIntroImage} style={{ width: '100%', objectFit: 'cover' }} />
-            </ImageSection>
+            {/* <ImageSection> */}
+            <img src={QuizIntroImage} className="quiz-intro-gif" alt="퀴즈 인트로 움짤" />
+            {/* </ImageSection> */}
             <SubjectSection>
               <div style={{ padding: '20px 0 10px' }}>
                 <p className="subject-question">어느 레벨의 밈을</p>
@@ -136,7 +136,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: fit-content;
+  height: 100%;
   padding: 56px 0 0;
   margin: 0 0 80px;
   overflow-x: hidden;
@@ -146,11 +146,17 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  .quiz-intro-gif {
+    width: 100%;
+    object-fit: cover;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+  }
 `
 
 const ImageSection = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import { history } from '../../redux/ConfigureStore'
 import { dictApi } from '../../shared/api'
 import { likeApi } from '../../shared/api'
-import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/북마크 비활성_18dp.svg'
-import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/북마크 활성_18dp.svg'
+import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/bookmark_blank.svg'
+import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/bookmark_filled.svg'
 import swal from 'sweetalert'
 import 'moment'
 import 'moment/locale/ko'
@@ -15,7 +15,7 @@ import moment from 'moment'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Grid from '../../elements/Grid'
-import { ReactComponent as CopyIcon } from '../../styles/icons/링크복사_24dp.svg'
+import { ReactComponent as CopyIcon } from '../../styles/icons/link.svg'
 import AlertModal from '../../components/modal/AlertModal'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 
@@ -136,7 +136,11 @@ const DictDetail = (props) => {
           </Grid>
           <Grid flex_between>
             <Grid flex_align>
-              {like ? <FillBookMarkIcon className="icon" fill="#878C92" onClick={handleClickLike} /> : <EmptyBookMarkIcon className="icon" fill="#878C92" onClick={handleClickLike} />}
+              {like ? (
+                <FillBookMarkIcon className="icon" fill="#878C92" height="20px" width="20px" onClick={handleClickLike} />
+              ) : (
+                <EmptyBookMarkIcon className="icon" fill="#878C92" height="20px" width="20px" onClick={handleClickLike} />
+              )}
               <div className="OneDictCardDetailInfoLikeCnt">{dict.likeCount}</div>
             </Grid>
             <CopyToClipboard onCopy={handleCopy} text={currentUrl}>
