@@ -80,6 +80,8 @@ const OneComment = (props) => {
           setIsSelected(true)
           console.log(isSelected)
           setSelectModal(false)
+          window.location.reload();
+
         })
         .catch((error) => {
           console.log('질문채택 문제 발생', error.response)
@@ -92,7 +94,6 @@ const OneComment = (props) => {
     e.preventDefault()
     e.stopPropagation()
     setSelectModal(!selectModal)
-    window.location.reload()
   }
 
   const handleShowModal = (e) => {

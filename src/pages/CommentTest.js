@@ -8,12 +8,18 @@ import { ReactComponent as SendIcon } from '../styles/icons/send.svg'
 import styled from 'styled-components'
 import MemegleLogo from '../styles/image/smileIcon_Yellow.png'
 import { commentApi } from '../shared/api'
+import { useHistory } from 'react-router'
+import ConfirmModal from '../components/modal/ConfirmModal'
+
+
 const CommentTest = ({ question }) => {
   const dispatch = useDispatch()
-  // const questionId = question.questionId
+  const history = useHistory()
   const comment_list = question.commentList
   const now_profile = useSelector((state) => state.mypage.myProfile)
   const [comment, setComment] = React.useState('')
+  const [showModal, setShowModal] = React.useState(false)
+
   const userId = localStorage.getItem('id')
   const cookieList = document.cookie.split('=')
   const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
@@ -26,16 +32,30 @@ const CommentTest = ({ question }) => {
   }
 
   const addComment = () => {
+    if(!isLogin){
+      setShowModal(true)
+    }else{
     dispatch(commentActions.addCommentDB(question.questionId, comment))
     setComment('')
     console.log(question.questionId)
+    }
   }
+  
+  comment_list&&comment_list.sort((a,b)=>{
+    if(a.isSelected && !b.isSelected){
+      return -1;
+    } else if (!a.isSelected && b.isSelected){
+      return 1;
+    } return 0;
+  })
+  
 
   React.useEffect(() => {
     if (now_profile === null) {
       dispatch(mypageActions.getUserProfileDB())
     }
   }, [])
+
 
   return (
     <>
@@ -54,21 +74,19 @@ const CommentTest = ({ question }) => {
               }
             }}
           ></input>
+          <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+            <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+          </ConfirmModal>
         </ImgInput>
         <SendIcon style={{ cursor: 'pointer' }} onClick={addComment} />
       </CommentWrite>
-      {/* {comment_list.filter(v=>v.isSelected===true)} */}
       {comment_list
         ? comment_list.map((c) => {
             return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
           })
         : null}
-      {/* {comment_list
-        ? comment_list.map((c) => {
-            return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
-          })
-        : null} */}
-      <div style={{ width: '100%', height: '63px' }}></div>
+      
+        <div style={{width:'100%', height:'63px'}}></div>
     </>
   )
 }
@@ -86,6 +104,11 @@ const CommentWrite = styled.div`
   border-top: 2px solid black;
   background: #fcfcfc;
 `
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
+`
+
 const ImgInput = styled.div`
   width: 100%;
   display: flex;
