@@ -19,7 +19,6 @@ import {
   PostEdit,
   PostList,
   PostWrite,
-  PostSearch,
   DictEdit,
   DictList,
   DictWrite,
@@ -37,7 +36,7 @@ import NaverLoginHandler from './shared/NaverLoginHandler'
 import KakaoLoginHandler from './shared/KakaoLoginHandler'
 import GoogleLoginHandler from './shared/GoogleLoginHandler'
 import './App.css'
-import bg from '../src/styles/image/background.jpeg'
+import bg from '../src/styles/image/배경_완료.svg'
 
 function App() {
   useEffect(() => {
@@ -66,7 +65,6 @@ function App() {
               <Route path="/dict/question/detail/:questionId" exact component={PostDetail} />
               <Route path="/dict/question/write" exact component={Auth(PostWrite, true)} />
               <Route path="/dict/question/edit/:questionId" exact component={Auth(PostEdit, true)} />
-              <Route path="/post/search/:search" exact component={PostSearch} />
               <Route path="/dict" exact component={DictList} />
               <Route path="/dict/write" exact component={Auth(DictWrite, true)} />
               <Route path="/dict/edit/:dictId" exact component={Auth(DictEdit, true)} />
@@ -97,13 +95,17 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background: #d9e3ee;
+  background: #2b2b2b;
   /* background-size: contain; */
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   @media screen and (min-width: 1120px) {
-    background: url(${bg}) no-repeat;
+    background: url(${bg});
     background-size: 100% 100vh;
   }
 `

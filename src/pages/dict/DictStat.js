@@ -42,7 +42,7 @@ const DictStat = (props) => {
       }
     }
     getStat()
-    setTimeout(() => setLoading(false), 400)
+    setTimeout(() => setLoading(false), 300)
   }, [])
 
   return (
