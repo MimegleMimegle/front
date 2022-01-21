@@ -19,7 +19,6 @@ import OneDictionaryCard from '../../components/OneDictionaryCard'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import { ReactComponent as EmptyBookMarkIcon } from '../../styles/icons/bookmark_blank.svg'
 import { ReactComponent as FillBookMarkIcon } from '../../styles/icons/bookmark_filled.svg'
-import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { RiEditLine } from 'react-icons/ri'
 
 const DictList = (props) => {

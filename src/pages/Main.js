@@ -13,7 +13,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import AlertModal from '../components/modal/AlertModal'
 import Grid from '../elements/Grid'
-import { ReactComponent as PlusIcon } from '../styles/icons/추가_18dp.svg'
+import { ReactComponent as PlusIcon } from '../styles/icons/add.svg'
 
 import 'swiper/swiper.min.css'
 import 'swiper/components/lazy/lazy.min.css'
