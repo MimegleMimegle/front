@@ -13,7 +13,7 @@ const KakaoShareButton = (props) => {
   const createKakaoButton = () => {
     if (window.Kakao) {
       const kakao = window.Kakao
-      const quizIntroUrl = 'http://memegle.xyz/quiz'
+      const quizIntroUrl = 'https://memegle.xyz/quiz'
 
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
