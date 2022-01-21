@@ -2,8 +2,10 @@ import axios from 'axios'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
-  baseURL: 'https://youtuberandomplayer.shop', // production
-  // baseURL: 'http://13.209.99.193', // local
+  /* production */
+  // baseURL: 'https://youtuberandomplayer.shop',
+  /* dev - local */
+  baseURL: 'http://13.209.99.193',
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-type': 'application/json; charset=UTF-8',
