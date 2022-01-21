@@ -7,6 +7,9 @@ import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../styles/icons/하트 비활성_24dp.svg'
 import { ReactComponent as FullHeartIcon } from '../styles/icons/하트 활성_24dp.svg'
 import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
+import { ReactComponent as ICuriousToo} from '../styles/icons/quiz_black_24dp.svg'
+
+
 import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
 import Grid from '../elements/Grid'
 
@@ -33,7 +36,7 @@ const PostCard = ({ question }) => {
           setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 취소 문제 발생', error.response)
+          console.log('나도궁금해요 취소 문제 발생', error.response)
         })
     } else {
       await dictQuestionApi
@@ -45,7 +48,7 @@ const PostCard = ({ question }) => {
           console.log(isCuriousToo)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 문제 발생', error.response)
+          console.log('나도 궁금해요 문제 발생', error.response)
         })
     }
   }
@@ -56,40 +59,28 @@ const PostCard = ({ question }) => {
         <Wrap questionList={question} onClick={onC}>
           <Grid flex_align>
             <CuriousQ>Q</CuriousQ>
-            {/* <UserImg src={question.profileImageUrl} alt="" /> */}
             <div className="profile-box">
             <Title>{question && question.title}</Title>
-
-              {/* <Writer>{question.writer}</Writer> */}
-              {/* <div className="created-date">
-                <CreatedAt>{question.createdAt.split('T')[0]}</CreatedAt>
-                <CreatedAt>{hour.split(':')[0] + ':' + hour.split(':')[1]}</CreatedAt>
-              </div> */}
             </div>
           </Grid>
+          <div style={{display:'flex'}}>
           <Content>{question&&question.content}</Content>
-          {/* <Title>{question && question.title}</Title> */}
+          </div>
           <Icon>
             <IconBox>
               <ViewIcon fill="#333" />
               <Number>{question && question.views}</Number>
             </IconBox>
             <IconBox>
-              {isCuriousToo ? <FullHeartIcon fill="#333" onClick={handleClickCuriousToo} /> : <EmptyHeartIcon fill="#333" onClick={handleClickCuriousToo} />}
+              {isCuriousToo ? <ICuriousToo fill="#00A0FF" onClick={handleClickCuriousToo} /> : <ICuriousToo fill="#333" onClick={handleClickCuriousToo} />}
               <Number className="like-count">{curiousTooCnt}</Number>
             </IconBox>
             <IconBox>
               <CommentIcon fill="#333" />
               <Number>{question && question.commentCnt}</Number>
             </IconBox>
-            {/* <IconBox>{question.isComplete ? <BiBadgeCheck size="20" /> : <BiBadge size="20" />}</IconBox> */}
           </Icon>
         </Wrap>
-        {/* {question.thumbNail ? (
-          <ThumbNailContainer>
-            <ThumbNail className="uploadimg" src={question && question.thumbNail} alt="" />
-          </ThumbNailContainer>
-        ) : null} */}
       </FullWrap>
     </>
   )
@@ -138,28 +129,6 @@ const CuriousQ = styled.div`
 
 `
 
-const UserImg = styled.div`
-  margin: 0 10px 0 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 20px;
-  background-size: cover;
-  background-image: url('${(props) => props.src}');
-  background-position: center;
-`
-const Writer = styled.p`
-  width: 100%;
-  font-family: 'YdestreetL';
-  font-style: normal;
-  font-weight: normal;
-  font-size: ${({ theme }) => theme.fontSizes.base};
-`
-
-const CreatedAt = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.small};
-  margin: 0 5px 0 0;
-`
-
 const Title = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   font-style: normal;
@@ -169,6 +138,9 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   margin: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const Content = styled.div`
@@ -179,6 +151,15 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   margin:16px 0;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+
+
 `
 
 const Icon = styled.div`
@@ -192,17 +173,8 @@ const Number = styled.p`
   margin: 0 9.5px 0 5px;
 `
 
-const ThumbNailContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-`
-
-const ThumbNail = styled.img`
-  width: 80px;
-  height: 80px;
-`
 const IconBox = styled.div`
   display: flex;
   align-items: center;
-  margin:16px 0;
+  margin:16px 0 0;
 `

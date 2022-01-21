@@ -8,7 +8,6 @@ import AlertModal from '../components/modal/AlertModal'
 import { ReactComponent as DustBinIcon } from '../styles/icons/delete_black_18dp.svg'
 import { ReactComponent as EmptyHeartIcon } from '../styles/icons/하트 비활성_24dp.svg'
 import { ReactComponent as FullHeartIcon } from '../styles/icons/하트 활성_24dp.svg'
-import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import Grid from '../elements/Grid'
 import { commentApi } from '../shared/api'
@@ -22,8 +21,7 @@ const OneComment = (props) => {
   const questionId = props.questionId 
   const commentId = props.commentId 
   const createdAt = props.createdAt.split('T')[0] + ' ' + props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]
-
-  console.log(props)
+  
 
   const [isLiked, setIsLiked] = React.useState(props.isLike)
   const [likeCount, setLikeCount] = React.useState(props.likeCount)
@@ -95,6 +93,7 @@ const OneComment = (props) => {
     e.preventDefault()
     e.stopPropagation()
     setSelectModal(!selectModal)
+    window.location.reload();
   }
 
   const handleShowModal = (e) => {
@@ -118,17 +117,25 @@ const OneComment = (props) => {
             <CreatedAt>{createdAt}</CreatedAt>
           </div>
         </div>
-          {isSelected? 
+
+        {props.selectedComment===commentId?
+          <Select>
+            <IoMdCheckmarkCircleOutline fill="#FFFFFF" size='27px'/>
+            <SelectTextTure>채택</SelectTextTure>
+          </Select> :
+          questionUser!==username?
           <Select>
             <IoMdCheckmarkCircleOutline size='27px'/>
-            <SelectText onClick={handleClickIsSelected}>채택</SelectText>
-          </Select> :null}
-          {!isSelected && username!== commentWriterId && username===questionUser &&  props.selectedComment===0? 
-          <Select>
-        <SelectText onClick={handleSelectModal} >
-            <IoMdCheckmarkCircleOutline size='27px'/>채택
-        </SelectText>
-        </Select>  : null}
+            <SelectText >채택</SelectText>
+          </Select> :
+          questionUser===commentWriterId?
+          null:
+          <Select onClick={handleSelectModal}>
+        <IoMdCheckmarkCircleOutline size='27px'/>
+        <SelectText>채택</SelectText>
+        </Select>
+        }
+
         {selectModal && (
           <ConfirmModal question="채택 후 변경이 불가합니다. 이 답변을 채택하시겠습니까?" showModal={selectModal} handleShowModal={handleSelectModal} setShowModal={setSelectModal}>
             <DeleteButton onClick={handleClickIsSelected}>채택</DeleteButton>
@@ -149,7 +156,7 @@ const OneComment = (props) => {
               </div>  
               {props.selectedComment!==commentId && commentWriterId === username? (
                 <button onClick={handleShowModal}>
-                  <DustBinIcon />
+                  <DustBinIcon height='20px' width='20px' />
                 </button>
               ) : null}
         </IconBox>
@@ -202,15 +209,27 @@ const Select = styled.div`
   height: 83px;
   background: #00A0FF;
   padding: 11px 24px;
+  cursor: pointer;
 `
+const SelectTextTure = styled.div`
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: white;
+`
+
 const SelectText =  styled.div`
-font-family: 'YdestreetL';
-font-style: normal;
-font-weight: bold;
-font-size: 16px;
-line-height: 22px;
-display: flex;
-align-items: center;
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
 `
 
 const ContentWrap = styled.div`
