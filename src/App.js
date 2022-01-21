@@ -19,7 +19,6 @@ import {
   PostEdit,
   PostList,
   PostWrite,
-  PostSearch,
   DictEdit,
   DictList,
   DictWrite,
@@ -33,11 +32,13 @@ import {
   DictStat,
 } from './pages'
 import MobileFrame from './components/MobileFrame'
+import Background from './components/Background'
 import NaverLoginHandler from './shared/NaverLoginHandler'
 import KakaoLoginHandler from './shared/KakaoLoginHandler'
 import GoogleLoginHandler from './shared/GoogleLoginHandler'
 import './App.css'
 import bg from '../src/styles/image/background.jpeg'
+// import yellowmollu from '../src/styles/image/배경 분리/노랑 몰?루.svg'
 
 function App() {
   useEffect(() => {
@@ -51,6 +52,7 @@ function App() {
   return (
     <>
     <Wrapper>
+    {/* <Background> */}
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <ConnectedRouter history={history}>
@@ -66,7 +68,6 @@ function App() {
             <Route path="/dict/question/detail/:questionId" exact component={PostDetail} />
             <Route path="/dict/question/write" exact component={Auth(PostWrite, true)} />
             <Route path="/dict/question/edit/:questionId" exact component={Auth(PostEdit, true)} />
-            <Route path="/post/search/:search" exact component={PostSearch} />
             <Route path="/dict" exact component={DictList} />
             <Route path="/dict/write" exact component={Auth(DictWrite, true)} />
             <Route path="/dict/edit/:dictId" exact component={Auth(DictEdit, true)} />
@@ -86,6 +87,7 @@ function App() {
         </ConnectedRouter>
       </ThemeProvider>
     </Wrapper>
+    {/* </Background> */}
     </>
   )
 }
@@ -102,7 +104,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
 
-  @media screen and (min-width: 1120px) {
+  @media screen and (min-width: 500px) {
     background: url(${bg}) no-repeat;
     background-size: 100% 100vh;
   }
