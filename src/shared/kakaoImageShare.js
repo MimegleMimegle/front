@@ -13,7 +13,7 @@ const KakaoImageShareButton = (props) => {
     if (window.Kakao) {
       const kakao = window.Kakao
 
-      const imageDetaillUrl = `http://memegle.xyz/image/detail/${boardId}`
+      const imageDetaillUrl = `https://memegle.xyz/image/detail/${boardId}`
 
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize

@@ -14,8 +14,8 @@ const ShareBottomSheet = (props) => {
   const { shareVisible, setShareVisible, type, thumbNail, boardId } = props
 
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
-  const quizIntroUrl = 'http://memegle.xyz/quiz'
-  const imageDetailUrl = `http://memegle.xyz/image/detail/${boardId}`
+  const quizIntroUrl = 'https://memegle.xyz/quiz'
+  const imageDetailUrl = `https://memegle.xyz/image/detail/${boardId}`
 
   const [showModal, setShowModal] = useState(false)
 
