@@ -2,7 +2,7 @@ import axios from 'axios'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
-  baseURL: 'https://54.180.150.230', // production
+  baseURL: 'https://youtuberandomplayer.shop', // production
   // baseURL: 'http://13.209.99.193', // local
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
