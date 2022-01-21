@@ -104,9 +104,11 @@ const joinDB = (username, nickname, password, passwordCheck) => {
     userApi
       .join(username, nickname, password, passwordCheck)
       .then((res) => {
+        dispatch(loading(true))
         history.push('/login')
       })
       .catch((err) => {
+        dispatch(loading(false))
         swal('이미 등록된 사용자 입니다! 아이디 또는 닉네임을 변경해주세요')
       })
   }
@@ -130,6 +132,7 @@ const logInDB = (username, password) => {
       })
       .catch((err) => {
         console.log(err)
+        dispatch(loading(false))
         dispatch(failLogin(true))
       })
   }
