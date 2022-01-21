@@ -13,7 +13,6 @@ import PostDetail from './post/PostDetail'
 import PostEdit from './post/PostEdit'
 import PostList from './post/PostList'
 import PostWrite from './post/PostWrite'
-import PostSearch from './post/PostSearch'
 
 import DictEdit from './dict/DictEdit'
 import DictList from './dict/DictList'
@@ -41,7 +40,6 @@ export {
   PostEdit,
   PostList,
   PostWrite,
-  PostSearch,
   DictEdit,
   DictList,
   DictWrite,

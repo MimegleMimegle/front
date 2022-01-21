@@ -19,7 +19,6 @@ import {
   PostEdit,
   PostList,
   PostWrite,
-  PostSearch,
   DictEdit,
   DictList,
   DictWrite,
@@ -66,7 +65,6 @@ function App() {
               <Route path="/dict/question/detail/:questionId" exact component={PostDetail} />
               <Route path="/dict/question/write" exact component={Auth(PostWrite, true)} />
               <Route path="/dict/question/edit/:questionId" exact component={Auth(PostEdit, true)} />
-              <Route path="/post/search/:search" exact component={PostSearch} />
               <Route path="/dict" exact component={DictList} />
               <Route path="/dict/write" exact component={Auth(DictWrite, true)} />
               <Route path="/dict/edit/:dictId" exact component={Auth(DictEdit, true)} />
