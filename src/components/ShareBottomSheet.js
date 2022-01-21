@@ -5,7 +5,7 @@ import useScript from '../util/useScript'
 
 import BottomPopup from './BottomPopup'
 import AlertModal from './modal/AlertModal'
-import { ReactComponent as LinkCopyIcon } from '../styles/icons/링크복사_24dp.svg'
+import { ReactComponent as LinkCopyIcon } from '../styles/icons/link.svg'
 import { KakaoShareButton } from '../shared/kakaoShare'
 import { KakaoImageShareButton } from '../shared/kakaoImageShare'
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, LineShareButton, LineIcon } from 'react-share'
