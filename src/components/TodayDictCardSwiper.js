@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { history } from '../redux/ConfigureStore'
@@ -42,19 +43,20 @@ const TodayDictCardSwiper = (props) => {
   return (
     <>
       <Swiper
-        slidesPerView={3}
-        spaceBetween={100}
+        slidesPerView="auto"
+        spaceBetween={16}
         keyboard={{
           enabled: true,
         }}
         // centeredSlides={true}
+        slidesPerGroupSkip={1}
         grabCursor={true}
-        breakpoints={{
-          769: {
-            slidesPerView: 2,
-            slidesPerGroup: 2,
-          },
-        }}
+        // breakpoints={{
+        //   769: {
+        //     slidesPerView: 2,
+        //     slidesPerGroup: 2,
+        //   },
+        // }}
         scrollbar={false}
         autoplay={{
           delay: 5000,
@@ -65,18 +67,14 @@ const TodayDictCardSwiper = (props) => {
         loop={false}
         className="mySwiper"
       >
-        {todayDict.map((todayDict) => (
-          <SwiperSlide>
+        {todayDict.map((todayDict, index) => (
+          <SwiperSlide className="dict-swiper-slide">
             <div className="TodayDictCard" onClick={() => history.push(`/dict/detail/${todayDict.dictId}`)}>
               <div className="TodayDictCard_1" key={todayDict.id}>
                 <div className="TodayDictCard_Title">{todayDict.title}</div>
                 <div className="TodayDictCard_Summary">{todayDict.summary}</div>
               </div>
-              {colors.map((colors, index) => (
-                <div className="TodayDictCard_2" key={index}>
-                  <div id="area" backgroundColor={colors}></div>
-                </div>
-              ))}
+              <TodayDictCardBack index={index} />
             </div>
           </SwiperSlide>
         ))}
@@ -84,5 +82,18 @@ const TodayDictCardSwiper = (props) => {
     </>
   )
 }
+
+const TodayDictCardBack = styled.div`
+  border: 2px solid black;
+  /* border: none; */
+  top: 6px;
+  left: 6px;
+  background-color: ${(props) => (props.index % 3 === 0 ? '#FFE330' : props.index % 3 === 1 ? '#FF8E00' : '#00A0FF')};
+  width: 150px;
+  height: 150px;
+  position: absolute;
+
+  z-index: 1;
+`
 
 export default TodayDictCardSwiper

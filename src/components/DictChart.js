@@ -30,7 +30,7 @@ const DictChart = ({ chartData }) => {
           <XAxis dataKey="date" fontSize="12px" fontWeight="500" padding={{ left: 10, right: 10 }} />
           <YAxis fontSize="12px" fontWeight="500" width={20} />
           <Tooltip content={<CustomTooltip />} />
-          <Line type="linear" isAnimationActive={true} animationDuration={1500} dataKey="count" stroke="#6698FC" strokeWidth={2} activeDot={{ r: 8 }} />
+          <Line type="linear" isAnimationActive={true} animationDuration={1500} dataKey="count" stroke="#00A0FF" strokeWidth={2} activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     </>

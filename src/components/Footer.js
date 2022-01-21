@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
+import { history } from '../redux/ConfigureStore'
 
 import Grid from '../elements/Grid'
-import AlertModal from './modal/AlertModal'
+import ConfirmModal from './modal/ConfirmModal'
 import SmileIcon from '../styles/image/smileIcon_Blue.png'
 import { RiBookMarkLine, RiGamepadLine } from 'react-icons/ri'
 import { MdOutlinePhotoLibrary } from 'react-icons/md'
@@ -14,12 +15,11 @@ const Footer = (props) => {
   const token = localStorage.getItem('token')
   const isLogin = userId !== null && token !== null ? true : false
 
-  const [showAlert, setShowAlert] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const handleClickMypage = () => {
     if (!isLogin) {
-      setShowAlert(true)
-      setTimeout(() => setShowAlert(false), 2000)
+      setShowModal(true)
     }
     return
   }
@@ -74,9 +74,9 @@ const Footer = (props) => {
           </ul>
         </NavBar>
       </NavContainer>
-      <AlertModal showModal={showAlert}>
-        <AlertText>로그인 후 이용하실 수 있습니다!</AlertText>
-      </AlertModal>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
@@ -148,8 +148,10 @@ const Logo = styled.div`
   background-image: url('${(props) => props.src}');
   background-position: center;
 `
-const AlertText = styled.p`
+
+const MoveLoginButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
 
 export default Footer

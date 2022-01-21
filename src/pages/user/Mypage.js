@@ -205,7 +205,7 @@ const UserProfile = styled.div`
       justify-content: center;
       .user-activity-info-subject {
         font-size: ${({ theme }) => theme.fontSizes.xxl};
-        font-weight: 500;
+        font-weight: 600;
       }
       .user-activity-info-count {
         font-size: ${({ theme }) => theme.fontSizes.xl};
@@ -221,10 +221,9 @@ const UserProfile = styled.div`
   }
   .box-2 {
     left: calc(50%);
-    transform: translateX(calc(-50% + 4px));
-    top: 4px;
+    transform: translateX(calc(-50% + 6px));
+    top: 6px;
     background-color: ${({ theme }) => theme.colors.yellow};
-    border: none;
   }
 `
 

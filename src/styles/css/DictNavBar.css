@@ -9,6 +9,7 @@
   padding: 0 16px;
   width: 100%;
   border-bottom: 1px solid #e5e5e5;
+  background-color: #fff;
 }
 
 /* nav태그 아래의 자식들을 수평정렬하기 위한 설정 */
@@ -28,9 +29,3 @@
 } */
 
 /* 하단 네비바의 메뉴를 눌렀을 때 색상 변경*/
-.DictNavItem {
-  font-family: 'YdestreetB';
-  font-style: normal;
-  font-size: 18px;
-  font-weight: normal;
-}

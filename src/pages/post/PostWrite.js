@@ -5,6 +5,7 @@ import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { actionCreators as questionActions } from '../../redux/modules/dictquestion'
 import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
 import { history } from '../../redux/ConfigureStore'
+import Header from '../../components/Header'
 
 const PostWrite = (props) => {
   const dispatch = useDispatch()
@@ -54,17 +55,13 @@ const PostWrite = (props) => {
     const uploadFile = thumbNail ? fileInput.current.files[0] : ''
     dispatch(questionActions.addQuestionDB(title, content, uploadFile))
   }
- 
+
   return (
     <>
-      <Header>
-        <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
-        <h2 className="location">질문</h2>
-        <div className="empty"></div>
-      </Header>
+      <Header type="goBack" location="질문 작성" />
       <Container>
         <PWHeader>
-          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
+          <input type="text" className="writetitle" maxlength = "15" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
         </PWHeader>
         <PWBody>
           <textarea
@@ -97,35 +94,6 @@ const PostWrite = (props) => {
   )
 }
 
-const Header = styled.header`
-  width: 100%;
-  height: 56px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.bg};
-  z-index: 1000;
-  .arrow-back-icon {
-    cursor: pointer;
-    font-size: 20px;
-  }
-  .location {
-    font-family: 'YdestreetL';
-    font-style: normal;
-    font-weight: normal;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-    cursor: default;
-  }
-  .empty {
-    width: 24px;
-    height: 100%;
-  }
-`
-
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -134,7 +102,6 @@ const Container = styled.div`
 `
 
 const PWHeader = styled.div`
-  border-top: 1px solid #444;
   border-bottom: 1px solid ${({ theme }) => theme.colors.line};
 
   .writetitle {
@@ -224,7 +191,7 @@ const PWFooter = styled.div`
   .btn-1 {
     left: 50%;
     transform: translateX(-50%);
-    background-color:#00A0FF;
+    background-color: #00a0ff;
     /* ${({ theme }) => theme.colors.blue}; */
     font-size: ${({ theme }) => theme.fontSizes.xl};
     font-weight: 700;

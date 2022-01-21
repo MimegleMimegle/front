@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import Backdrop from '@mui/material/Backdrop'
 
-const ConfirmModal = ({ showModal, setShowModal, handleShowModal, question, children }) => {
+const ConfirmModal = ({ showModal, setShowModal, handleShowModal, title, question, children }) => {
   window.addEventListener('keyup', (e) => {
     if (showModal && e.key === 'Escape') {
       setShowModal(!showModal)
@@ -15,9 +15,17 @@ const ConfirmModal = ({ showModal, setShowModal, handleShowModal, question, chil
     <>
       <Backdrop open={showModal} sx={{ zIndex: 10000 }} onClick={handleOverlayClick}>
         <Container onClick={handleContentClick}>
-          <div className="question-box">{question}</div>
+          <div>
+            <div className="title-box">{title}</div>
+            <div className="question-box">{question}</div>
+          </div>
           <div className="confirm-box">
-            <button className="cancel-button" onClick={handleShowModal}>
+            <button
+              className="cancel-button"
+              onClick={() => {
+                setShowModal(!showModal)
+              }}
+            >
               취소
             </button>
             <div>{children}</div>
@@ -33,7 +41,9 @@ const Container = styled.div`
   top: 40%;
   left: 50%;
   transform: translate(-50%, -40%);
-  width: 340px;
+  max-width: 300px;
+  min-width: 280px;
+  width: 100%;
   height: 130px;
   background-color: #fff;
   padding: 24px;
@@ -43,6 +53,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   -webkit-appearance: none;
+  .title-box {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+  }
   .question-box {
     font-size: ${({ theme }) => theme.fontSizes.lg};
   }

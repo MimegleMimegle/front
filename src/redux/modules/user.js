@@ -63,11 +63,11 @@ const naverLoginDB = (code, state) => {
       .then((res) => {
         console.log(res) // 토큰이 넘어올 것임
 
-        const ACCESS_TOKEN = res.data.accessToken
+        localStorage.setItem('token', res.headers.authorization)
+        localStorage.setItem('nickname', res.data.data.nickname)
 
-        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
-
-        // history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        dispatch(setUser({ nickname: res.data.data.nickname }))
+        history.replace('/')
       })
       .catch((err) => {
         console.log('네이버로그인 에러', err)
@@ -184,6 +184,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = null
         draft.is_login = false
+        draft.is_loading = false
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {

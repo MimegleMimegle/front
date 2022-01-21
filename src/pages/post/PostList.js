@@ -8,22 +8,27 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import DictNavBar from '../../components/DictNavBar'
 import SearchPost from '../../components/SearchPost'
-
+import SpeedDialButton from '../../components/SpeedDialButton'
+import Grid from '../../elements/Grid'
 import '../../index.css'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
 import { RiEditLine } from 'react-icons/ri'
-import SpeedDialButton from '../../components/SpeedDialButton'
-
 
 const PostList = (props) => {
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
+
   const [question, setQuestion] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -39,33 +44,47 @@ const PostList = (props) => {
     console.log(response.data.data)
   }
 
+  const handleClickWrite = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    } else {
+      history.push('/dict/question/write')
+    }
+  }
+
   return (
     <>
       <Header location="밈 사전" />
-      {!loading ? (
-        <>
-          <Container>
-            <Wrap>
-               <DictNavBar />
-              <div className='curious'>궁금해요!</div>
+      <Container>
+        <Wrap>
+          <DictNavBar />
+          {!loading ? (
+            <>
+            <CuriousHelp>
+              <div className="curious">궁금해요!</div>
+              <div className="wait">답변을 기다리고 있어요~</div>
+            </CuriousHelp>
               {question &&
                 question.map((question, index) => {
                   return <PostCard question={question} key={question.questionId} />
                 })}
 
               <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-            </Wrap>
-          </Container>
-        </>
-      ) : (
-        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <CircularProgress color="inherit" />
-        </div>
-      )}
+            </>
+          ) : (
+            <Grid flex_center height="100%">
+              <CircularProgress color="inherit" />
+            </Grid>
+          )}
+        </Wrap>
+      </Container>
       <Footer />
-      <SpeedDialButton _onClick={() => history.push('/dict/question/write')}>
+      <SpeedDialButton _onClick={handleClickWrite}>
         <RiEditLine size="28" fill="#FFFFFF" />
       </SpeedDialButton>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
@@ -74,19 +93,20 @@ export default PostList
 
 const Container = styled.div`
   padding: 56px 0 0;
+  height: 100%;
   position: relative;
-`
-
-const SearchPostDiv = styled.div`
-  width: 100%;
-  position: absolute;
-  z-index: 5;
 `
 
 const Wrap = styled.div`
   /* position: absolute; */
   width: 100%;
+  height: 100%;
   padding: 0 0 80px;
+  
+`
+const CuriousHelp =styled.div`
+  display: flex;
+  margin: 25px 0 16px 16px;
   .curious {
     font-family: 'YdestreetL';
     font-style: normal;
@@ -95,15 +115,16 @@ const Wrap = styled.div`
     line-height: 29px;
     display: flex;
     align-items: center;
-    margin:24px 16px 16px 16px;
   }
-`
-
-const Empty = styled.div`
-  border-bottom: 1px solid #e5e5e5;
-  /* position: relative; */
-  /* display: flex; */
-  /* justify-content: center; */
+  .wait{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    margin: 8px 0 0 8px;
+  }
 `
 
 const Addbtn = styled.div`
@@ -139,4 +160,8 @@ const AddbtnShadow = styled.div`
   border: 1px solid black;
   position: absolute;
   z-index: -1;
+`
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `
