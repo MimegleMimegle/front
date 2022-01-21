@@ -130,8 +130,7 @@ const QuizPaper = (props) => {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px 0;
-  margin: 0 0 20px;
+  padding: 20px 0 0;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -229,6 +228,7 @@ const ButtonSection = styled.div`
   position: relative;
   width: 100%;
   margin: 20px 0 40px;
+  padding: 0 0 80px;
   .next-btn-box {
     width: 120px;
     height: 48px;

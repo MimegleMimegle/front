@@ -108,7 +108,7 @@ const ImageDetail = (props) => {
           <CloseIcon
             className="icon"
             onClick={() => {
-              history.goBack()
+              history.replace('/image')
             }}
           />
         </Grid>
@@ -151,7 +151,6 @@ const ProfileImage = styled.div`
   background-size: cover;
   background-image: url('${(props) => props.src}');
   background-position: center;
-  cursor: pointer;
   background-color: ${({ theme }) => theme.colors.white};
 `
 
