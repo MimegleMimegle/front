@@ -74,8 +74,8 @@ const CommentTest = ({ question }) => {
             }}
           ></input>
           <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
-        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
-      </ConfirmModal>
+            <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+          </ConfirmModal>
         </ImgInput>
         <MdOutlineSend style={{ fontSize: '24px', cursor: 'pointer', width: 'fit-content' }} onClick={addComment} />
       </CommentWrite>

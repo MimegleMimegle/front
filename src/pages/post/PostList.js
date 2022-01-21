@@ -76,6 +76,8 @@ const PostList = (props) => {
               <CircularProgress color="inherit" />
             </Grid>
           )}
+                <div style={{width:'100%', height:'100px'}}></div>
+
         </Wrap>
       </Container>
       <Footer />

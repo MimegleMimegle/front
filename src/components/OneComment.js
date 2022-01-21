@@ -208,7 +208,7 @@ const CreatedAt = styled.div`
 const Select = styled.div`
   width: 80px;
   height: 83px;
-  background: #C4C4C4;
+  background: #00A0FF;
   padding: 11px 24px;
   cursor: pointer;
 `
