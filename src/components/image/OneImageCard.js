@@ -93,6 +93,7 @@ const ImageBox = styled.div`
   transition: all 0.3s ease-in-out;
   width: 100%;
   margin-bottom: 7px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 
   .active {
     position: absolute;

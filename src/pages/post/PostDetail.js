@@ -8,10 +8,10 @@ import ConfirmModal from '../../components/modal/ConfirmModal'
 import AlertModal from '../../components/modal/AlertModal'
 import CommentTest from '../CommentTest'
 import Grid from '../../elements/Grid'
-import { ReactComponent as ICuriousToo} from '../../styles/icons/quiz_black_24dp.svg'
+import { ReactComponent as ICuriousToo } from '../../styles/icons/quiz_black_24dp.svg'
 import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
-import { IoCloseOutline } from 'react-icons/io5'
-import { BsThreeDotsVertical } from 'react-icons/bs'
+import { ReactComponent as CloseIcon } from '../../styles/icons/close.svg'
+import { ReactComponent as ThreedotIcon } from '../../styles/icons/more.svg'
 import '../../index.css'
 
 const PostDetail = (props) => {
@@ -29,7 +29,7 @@ const PostDetail = (props) => {
   const [noChangeModal, setNoChangeModal] = useState(false)
 
   const handleCloseNoChangeModal = () => {
-    setTimeout(()=> {
+    setTimeout(() => {
       setNoChangeModal(false)
     }, 1800)
   }
@@ -107,53 +107,49 @@ const PostDetail = (props) => {
   return (
     <>
       <Header>
-        <ArrowBackIcon className="arrow-back-icon" onClick={() => history.goBack()} />
+        <ArrowBackIcon className="icon" onClick={() => history.goBack()} />
         <HeaderQuestion>질문</HeaderQuestion>
-        {username === question.username ? (
-          <button style={{ padding: '5px 5px 0' }} onClick={clickToggleModalChang}>
-            <BsThreeDotsVertical size="20" />
-          </button>
-        ) : (<div></div>)}
+        {username === question.username ? <ThreedotIcon className="icon" onClick={clickToggleModalChang} /> : <div className="empty"></div>}
         {toggleModalChang && (
           <ModalChang>
-            {question.selectedComment ===0?
-            <>
-            <Grid flex_end padding="5px 8px">
-              <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
-            </Grid>
-            <div className="button-box">
-              <button
-                className="button edit"
-                onClick={() => {
-                  history.push(`/dict/question/edit/${questionId}`)
-                }}
-              >
-                수정하기
-              </button>
-            </div>
-            <div className="button-box">
-              <button className="button delete" onClick={handleShowModal}>
-                삭제하기
-              </button>
-            </div>
-            </> : <>
-            <Grid flex_end padding="5px 8px">
-              <IoCloseOutline className="close-icon" onClick={clickToggleModalChang} />
-            </Grid>
-            <div className="button-box">
-              <button
-                className="button edit"
-                onClick={handleNoChangeModal}
-              >
-                수정하기
-              </button>
-            </div>
-            <div className="button-box">
-              <button className="button delete" onClick={handleNoChangeModal}>
-                삭제하기
-              </button>
-            </div>
-            </> }
+            {question.selectedComment === 0 ? (
+              <>
+                <Grid flex_end padding="5px 8px">
+                  <CloseIcon className="close-icon" onClick={clickToggleModalChang} />
+                </Grid>
+                <div className="button-box">
+                  <button
+                    className="button edit"
+                    onClick={() => {
+                      history.push(`/dict/question/edit/${questionId}`)
+                    }}
+                  >
+                    수정하기
+                  </button>
+                </div>
+                <div className="button-box">
+                  <button className="button delete" onClick={handleShowModal}>
+                    삭제하기
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Grid flex_end padding="5px 8px">
+                  <CloseIcon className="close-icon" onClick={clickToggleModalChang} />
+                </Grid>
+                <div className="button-box">
+                  <button className="button edit" onClick={handleNoChangeModal}>
+                    수정하기
+                  </button>
+                </div>
+                <div className="button-box">
+                  <button className="button delete" onClick={handleNoChangeModal}>
+                    삭제하기
+                  </button>
+                </div>
+              </>
+            )}
           </ModalChang>
         )}
       </Header>
@@ -164,7 +160,7 @@ const PostDetail = (props) => {
             <Title>{question.title}</Title>
             <div className="profile-box">
               <Writer>{question.writer}</Writer>
-              <div style={{ fontSize: '12px'}}>{question && createdAt}</div>
+              <CreatedAt>{question && createdAt}</CreatedAt>
             </div>
           </div>
         </Grid>
@@ -174,33 +170,31 @@ const PostDetail = (props) => {
           <ImageBox>
             <ContentImg src={question ? question.thumbNail : null} alt="" />
           </ImageBox>
-          <div className='views'>조회 {question.views}회</div>
+          <div className="views">조회 {question.views}회</div>
         </Middle>
 
         <ViewLikeComment>
-            {isCuriousToo ? (
-              <div className='icon-box'onClick={handleClickCuriousToo}>
-              <ICuriousToo sty fill='#00A0FF'/>
-              <div style={{color:'#00A0FF'}} className='icon-box__text'>나도 궁금해요 {curiousTooCnt}</div>
-            </div>
-            ) : (
-              <div className='icon-box' onClick={handleClickCuriousToo}>
-              <ICuriousToo fill="#333" className="heart-icon"/>
-              <div className='icon-box__text'>나도 궁금해요 {curiousTooCnt} </div>
+          {isCuriousToo ? (
+            <div className="icon-box" onClick={handleClickCuriousToo}>
+              <ICuriousToo sty fill="#00A0FF" />
+              <div style={{ color: '#00A0FF' }} className="icon-box__text">
+                나도 궁금해요 {curiousTooCnt}
               </div>
-            )}
+            </div>
+          ) : (
+            <div className="icon-box" onClick={handleClickCuriousToo}>
+              <ICuriousToo fill="#333" className="heart-icon" />
+              <div className="icon-box__text">나도 궁금해요 {curiousTooCnt} </div>
+            </div>
+          )}
         </ViewLikeComment>
       </PostWrap>
 
       <CommentTest question={question} />
 
-      {noChangeModal && (
-        <AlertModal showModal={noChangeModal}>
-            질문 답변 채택 후 수정 삭제가 불가능합니다.
-        </AlertModal>
-      )}
+      {noChangeModal && <AlertModal showModal={noChangeModal}>질문 답변 채택 후 수정 삭제가 불가능합니다.</AlertModal>}
       {showModal && (
-        <ConfirmModal question="밈글을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
+        <ConfirmModal question="질문을 삭제하시겠어요?" showModal={showModal} handleShowModal={handleShowModal} setShowModal={setShowModal}>
           <DeleteButton onClick={handleDeleteQuestion}>삭제</DeleteButton>
         </ConfirmModal>
       )}
@@ -223,9 +217,12 @@ const Header = styled.header`
   margin: 0 0 24px 0;
   border-bottom: 1px solid #e5e5e5;
   box-shadow: 0 0 15px 0 #e5e5e5;
-  .arrow-back-icon {
+  .icon {
     cursor: pointer;
-    font-size: 20px;
+  }
+  .empty {
+    width: 24px;
+    height: 100%;
   }
 `
 
@@ -241,6 +238,7 @@ const HeaderQuestion = styled.div`
 
 const PostWrap = styled.div`
   padding: 70px 0px 0;
+  border-bottom: 2px solid #e5e5e5;
   .profile-box {
     display: flex;
     align-items: center;
@@ -248,27 +246,29 @@ const PostWrap = styled.div`
   }
 `
 const CuriousQ = styled.div`
-  background: #FF8E00;
+  background: #ff8e00;
   width: 40px;
-  height:40px;
+  height: 40px;
   border: 2px solid black;
-  border-radius:150px;
-  font-family:'YdestreetB';
-  font-syled: normal;
-  font-weigt:bold;
-  line-height:26px;
-  font-size:20px;
-  padding:7px 11px 7px 9px;
+  border-radius: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
   margin: 0 12px 0 0;
-
 `
 
 const Writer = styled.div`
-  font-size: 12px;
-  font-family: 'YdestreetL';
-  font-style: normal;
-  font-weight: normal;
+  font-size: ${({ theme }) => theme.fontSizes.small};
   margin: 0 8px 0 0;
+`
+
+const CreatedAt = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  font-weight: 300;
 `
 
 const Middle = styled.div`
@@ -277,7 +277,7 @@ const Middle = styled.div`
   flex-direction: column;
   .views {
     font-style: normal;
-    font-weight: normal; 
+    font-weight: normal;
     font-size: 12px;
     line-height: 14px;
     display: flex;
@@ -286,17 +286,15 @@ const Middle = styled.div`
 `
 
 const Title = styled.div`
-  font-style: normal;
   font-weight: 500;
-  font-family: Pretendard;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
   line-height: 22px;
   display: flex;
   align-items: center;
 `
 
 const Content = styled.div`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
 `
 
 const ImageBox = styled.div`
@@ -312,18 +310,17 @@ const ImageBox = styled.div`
 const ContentImg = styled.img`
   width: 100%;
   object-fit: cover;
-  margin:
 `
 
 const ViewLikeComment = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 0 0 30px;
   .icon-box {
     display: flex;
     align-items: center;
-    padding: 0 10px 0 0;
     cursor: pointer;
-    padding: 0 138px 33px;
 
     .icon-box__text {
       font-size: ${({ theme }) => theme.fontSizes.lg};
@@ -335,7 +332,6 @@ const ViewLikeComment = styled.div`
       display: flex;
       align-items: center;
       padding: 0 0 0 12px;
-
     }
   }
 `

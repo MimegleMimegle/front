@@ -4,6 +4,7 @@ import { actionCreators as commentActions } from '../redux/modules/comment'
 import { actionCreators as mypageActions } from '../redux/modules/mypage'
 import OneComment from '../components/OneComment'
 import { MdOutlineSend } from 'react-icons/md'
+import { ReactComponent as SendIcon } from '../styles/icons/send.svg'
 import styled from 'styled-components'
 import MemegleLogo from '../styles/image/smileIcon_Yellow.png'
 import { commentApi } from '../shared/api'
@@ -18,7 +19,7 @@ const CommentTest = ({ question }) => {
   const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
   const commentId = question.commentId
-  
+
   const onChangeComment = (e) => {
     setComment(e.target.value)
     console.log(e.target.value)
@@ -29,8 +30,6 @@ const CommentTest = ({ question }) => {
     setComment('')
     console.log(question.questionId)
   }
-
-  
 
   React.useEffect(() => {
     if (now_profile === null) {
@@ -56,7 +55,7 @@ const CommentTest = ({ question }) => {
             }}
           ></input>
         </ImgInput>
-        <MdOutlineSend style={{ fontSize: '24px', cursor: 'pointer', width: 'fit-content' }} onClick={addComment} />
+        <SendIcon style={{ cursor: 'pointer' }} onClick={addComment} />
       </CommentWrite>
       {/* {comment_list.filter(v=>v.isSelected===true)} */}
       {comment_list
@@ -69,14 +68,14 @@ const CommentTest = ({ question }) => {
             return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
           })
         : null} */}
-        <div style={{width:'100%', height:'63px'}}></div>
+      <div style={{ width: '100%', height: '63px' }}></div>
     </>
   )
 }
 
 const CommentWrite = styled.div`
-  position : fixed;
-  bottom : 0;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   padding: 20px;
   display: -ms-flexbox;
@@ -85,7 +84,7 @@ const CommentWrite = styled.div`
   align-items: center;
   justify-content: space-between;
   border-top: 2px solid black;
-  background: #FCFCFC;
+  background: #fcfcfc;
 `
 const ImgInput = styled.div`
   width: 100%;
@@ -103,7 +102,7 @@ const ImgInput = styled.div`
   .writebox {
     border: none;
     font-size: 16px;
-    padding:0 20px;    
+    padding: 0 20px;
     background-color: ${({ theme }) => theme.colors.bg};
     width: 100%;
     &::placeholder {
