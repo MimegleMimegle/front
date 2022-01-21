@@ -36,7 +36,7 @@ const PostCard = ({ question }) => {
           setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 취소 문제 발생', error.response)
+          console.log('나도궁금해요 취소 문제 발생', error.response)
         })
     } else {
       await dictQuestionApi
@@ -48,7 +48,7 @@ const PostCard = ({ question }) => {
           console.log(isCuriousToo)
         })
         .catch((error) => {
-          console.log('이미지 좋아요 문제 발생', error.response)
+          console.log('나도 궁금해요 문제 발생', error.response)
         })
     }
   }
@@ -63,7 +63,9 @@ const PostCard = ({ question }) => {
             <Title>{question && question.title}</Title>
             </div>
           </Grid>
+          <div style={{display:'flex'}}>
           <Content>{question&&question.content}</Content>
+          </div>
           <Icon>
             <IconBox>
               <ViewIcon fill="#333" />
@@ -136,6 +138,9 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   margin: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const Content = styled.div`
@@ -146,6 +151,15 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   margin:16px 0;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+
+
 `
 
 const Icon = styled.div`
@@ -162,5 +176,5 @@ const Number = styled.p`
 const IconBox = styled.div`
   display: flex;
   align-items: center;
-  margin:16px 0;
+  margin:16px 0 0;
 `

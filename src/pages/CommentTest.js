@@ -13,13 +13,12 @@ const CommentTest = ({ question }) => {
   const comment_list = question.commentList
   const now_profile = useSelector((state) => state.mypage.myProfile)
   const [comment, setComment] = React.useState('')
-
   const userId = localStorage.getItem('id')
   const cookieList = document.cookie.split('=')
   const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
   const commentId = question.commentId
-  console.log(question)
+  
   const onChangeComment = (e) => {
     setComment(e.target.value)
     console.log(e.target.value)
@@ -59,11 +58,17 @@ const CommentTest = ({ question }) => {
         </ImgInput>
         <MdOutlineSend style={{ fontSize: '24px', cursor: 'pointer', width: 'fit-content' }} onClick={addComment} />
       </CommentWrite>
+      {/* {comment_list.filter(v=>v.isSelected===true)} */}
       {comment_list
         ? comment_list.map((c) => {
             return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
           })
         : null}
+      {/* {comment_list
+        ? comment_list.map((c) => {
+            return <OneComment key={c.commentId} questionId={question.questionId} {...c} username={question.username} selectedComment={question.selectedComment} />
+          })
+        : null} */}
         <div style={{width:'100%', height:'63px'}}></div>
     </>
   )

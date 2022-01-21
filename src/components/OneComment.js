@@ -21,8 +21,6 @@ const OneComment = (props) => {
   const questionId = props.questionId 
   const commentId = props.commentId 
   const createdAt = props.createdAt.split('T')[0] + ' ' + props.createdAt.split('T')[1].split(':')[0] + ':' + props.createdAt.split('T')[1].split(':')[1]
-
-  console.log(questionUser===username)
   
 
   const [isLiked, setIsLiked] = React.useState(props.isLike)
@@ -95,6 +93,7 @@ const OneComment = (props) => {
     e.preventDefault()
     e.stopPropagation()
     setSelectModal(!selectModal)
+    window.location.reload();
   }
 
   const handleShowModal = (e) => {
