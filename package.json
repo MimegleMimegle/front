@@ -36,6 +36,7 @@
     "react-router-dom": "5.2.1",
     "react-scripts": "^5.0.0",
     "react-share": "^4.4.0",
+    "react-spinners": "^0.11.0",
     "react-spring": "^9.4.0",
     "react-spring-bottom-sheet": "^3.4.0",
     "recharts": "^2.1.8",

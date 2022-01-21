@@ -33,6 +33,9 @@ import {
   DictStat,
 } from './pages'
 import MobileFrame from './components/MobileFrame'
+import NaverLoginHandler from './shared/NaverLoginHandler'
+import KakaoLoginHandler from './shared/KakaoLoginHandler'
+import GoogleLoginHandler from './shared/GoogleLoginHandler'
 
 function App() {
   return (
@@ -64,6 +67,10 @@ function App() {
             <Route path="/image" exact component={ImageList} />
             <Route path="/image/detail/:imageId" exact component={ImageDetail} />
             <Route path="/image/upload" exact component={ImageUpload} />
+            {/* Social Login Redirect Handler */}
+            <Route path="/redirect/naver" component={NaverLoginHandler} />
+            <Route path="/redirect/kakao" component={KakaoLoginHandler} />
+            <Route path="/redirect/google" component={GoogleLoginHandler} />
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>

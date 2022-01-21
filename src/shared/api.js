@@ -3,7 +3,8 @@ import { startsWith } from 'lodash'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
-  baseURL: 'http://54.180.150.230',
+  baseURL: 'https://54.180.150.230',
+  // baseURL: 'http://13.209.99.193',
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-type': 'application/json; charset=UTF-8',
@@ -31,7 +32,7 @@ export const userApi = {
   checkNickname: (nickname) => instance.get(`/api/signup/nickname?nickname=${nickname}`),
   KakaoLogin: (code) => instance.get(`/api/user/kakao/callback?code=${code}`),
   NaverLogin: (code, state) => instance.get(`/api/user/naver/callback?code=${code}&state=${state}`),
-  GoogleLogin: () => instance.get(`/api/user/google/callback`),
+  GoogleLogin: (code) => instance.get(`/api/user/google/callback?code=${code}`),
 }
 
 export const mypageApi = {
@@ -68,7 +69,7 @@ export const dictQuestionApi = {
 }
 
 export const dictApi = {
-  getDictMain: (pageSize, currentPage) => instance.get(`http://54.180.150.230/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
+  getDictMain: (pageSize, currentPage) => instance.get(`/api/dict?page=${pageSize * (currentPage - 1)}&size=${pageSize}`),
   getDictDetail: (dictId) => instance.get(`/api/dict/${dictId}`),
   getTodayDict: () => instance.get(`/api/bestDict/dict`),
   addDict: (title, summary, content) => instance.post('/api/dict', { title: title, summary: summary, content: content }),
