@@ -26,7 +26,7 @@ const Mypage = (props) => {
 
   const my = useSelector((state) => state.mypage.myPageData)
   const myMemeDictList = my && my.dict
-  const myMemePostList = my && my.postBoards.filter((post) => post.category === 'FREEBOARD')
+  const myQuestionList = my && my.question
   const myMemeImageList = my && my.postBoards.filter((post) => post.category === 'IMAGEBOARD')
 
   const handleEditProfile = (e) => {
@@ -93,7 +93,11 @@ const Mypage = (props) => {
                     <div className="user-activity-info-count">{my && my.dictCount > 0 ? my.dictCount : 0}</div>
                   </div>
                   <div className="user-activity-info">
-                    <div className="user-activity-info-subject">게시글</div>
+                    <div className="user-activity-info-subject">내질문</div>
+                    <div className="user-activity-info-count">{my && my.postCount > 0 ? my.questionCount : 0}</div>
+                  </div>
+                  <div className="user-activity-info">
+                    <div className="user-activity-info-subject">짤방</div>
                     <div className="user-activity-info-count">{my && my.postCount > 0 ? my.postCount : 0}</div>
                   </div>
                 </div>
@@ -126,11 +130,14 @@ const Mypage = (props) => {
                   })
                 : null}
               {/* Board */}
-              {showBoard && myMemePostList.length > 0
-                ? myMemePostList.map((question) => {
-                    return <PostCard key={question.questionId} question={question} />
-                  })
-                : null}
+              <Grid padding="0 16px">
+                {showBoard && myQuestionList.length > 0
+                  ? myQuestionList.map((question) => {
+                      return <PostCard key={question.questionId} question={question} />
+                    })
+                  : null}
+              </Grid>
+
               {/* Photo */}
               {showImage && (
                 <MyImageList>

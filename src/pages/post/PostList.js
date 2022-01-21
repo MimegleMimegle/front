@@ -11,11 +11,14 @@ import SpeedDialButton from '../../components/SpeedDialButton'
 import Grid from '../../elements/Grid'
 import '../../index.css'
 import ConfirmModal from '../../components/modal/ConfirmModal'
+import Title from '../../elements/Title'
+import SearchPage from '../../shared/SearchPage'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
 import { RiEditLine } from 'react-icons/ri'
+import { IoSearchCircleSharp } from 'react-icons/io5'
 
 const PostList = (props) => {
   const userId = localStorage.getItem('id')
@@ -31,8 +34,8 @@ const PostList = (props) => {
 
   useEffect(() => {
     setLoading(true)
-    setTimeout(() => setLoading(false), 400)
     getQuestionListDB()
+    setTimeout(() => setLoading(false), 400)
   }, [currentPage])
 
   const getQuestionListDB = async () => {
@@ -53,14 +56,18 @@ const PostList = (props) => {
 
   return (
     <>
-      <Header location="밈 사전" />
+      <Header location="오픈 밈사전" />
       <Container>
-        <Wrap>
-          <DictNavBar />
-          {!loading ? (
-            <>
+        <DictNavBar />
+        {!loading ? (
+          <>
+            <SearchBarSection>
+              <SearchPage />
+            </SearchBarSection>
+            <Wrap>
               <CuriousHelp>
-                <div className="curious">궁금해요!</div>
+                <Title>궁금해요!</Title>
+                {/* <div className="curious">궁금해요!</div> */}
                 <div className="wait">답변을 기다리고 있어요~</div>
               </CuriousHelp>
               {question &&
@@ -69,13 +76,16 @@ const PostList = (props) => {
                 })}
 
               <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-            </>
-          ) : (
+            </Wrap>
+          </>
+        ) : (
+          <>
             <Grid flex_center height="100%">
               <CircularProgress color="inherit" />
             </Grid>
-          )}
-        </Wrap>
+            <Grid height="90px"></Grid>
+          </>
+        )}
       </Container>
       <Footer />
       <SpeedDialButton _onClick={handleClickWrite}>
@@ -95,16 +105,24 @@ const Container = styled.div`
   height: 100%;
   position: relative;
 `
+const SearchBarSection = styled.div`
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px 16px;
+`
 
 const Wrap = styled.div`
   /* position: absolute; */
   width: 100%;
   height: 100%;
-  padding: 0 0 80px;
+  padding: 16px 16px 0;
 `
 const CuriousHelp = styled.div`
   display: flex;
-  margin: 25px 0 16px 16px;
+  margin: 0 0 16px;
   .curious {
     font-family: 'YdestreetL';
     font-style: normal;
@@ -115,13 +133,10 @@ const CuriousHelp = styled.div`
     align-items: center;
   }
   .wait {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 17px;
+    font-size: ${({ theme }) => theme.fontSizes.base};
     display: flex;
     align-items: center;
-    margin: 8px 0 0 8px;
+    margin: 0 0 0 8px;
   }
 `
 

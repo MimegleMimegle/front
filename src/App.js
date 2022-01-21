@@ -36,7 +36,7 @@ import NaverLoginHandler from './shared/NaverLoginHandler'
 import KakaoLoginHandler from './shared/KakaoLoginHandler'
 import GoogleLoginHandler from './shared/GoogleLoginHandler'
 import './App.css'
-import bg from '../src/styles/image/background.jpeg'
+import bg from '../src/styles/image/배경_완료.svg'
 
 function App() {
   useEffect(() => {
@@ -95,13 +95,17 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background: #d9e3ee;
+  background: #2b2b2b;
   /* background-size: contain; */
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   @media screen and (min-width: 1120px) {
-    background: url(${bg}) no-repeat;
+    background: url(${bg});
     background-size: 100% 100vh;
   }
 `

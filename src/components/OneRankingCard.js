@@ -32,7 +32,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   .nickname {
     font-size: ${({ theme }) => theme.fontSizes.base};
     padding: 20px 0 5px;

@@ -75,6 +75,7 @@
   height: 35px;
   border-radius: 35px;
   margin: 0 10px 0 0;
+  border: 2px solid #000;
 }
 
 .DictWriter {
@@ -103,6 +104,7 @@
   height: 35px;
   border-radius: 35px;
   margin: 0 10px 0 0;
+  border: 2px solid #000;
 }
 
 .DictHistoryFirstWriter {
