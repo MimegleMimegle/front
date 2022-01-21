@@ -37,7 +37,7 @@ const DictMyScrapbook = (props) => {
     DictMySrcapListDB(userId)
   }, [])
 
-  const currentUrl = window.location.href
+  const currentUrl = 'https://memegle.xyz/dict/detail'
 
   const [copyLink, setCopyLink] = useState(false)
 
@@ -74,7 +74,7 @@ const DictMyScrapbook = (props) => {
                   <FillBookMarkIcon fill="#878C92" />
                   <div className="DictMyScrapCount">스크랩</div>
                 </div>
-                <CopyToClipboard className="DictLinkCopyButton" onCopy={handleCopy} text={currentUrl}>
+                <CopyToClipboard className="DictLinkCopyButton" onCopy={handleCopy} text={currentUrl + `/${scrapList.dictId}`}>
                   <DictLinkCopyIcon fill="#878C92" width="24px" height="24px" />
                 </CopyToClipboard>
               </div>

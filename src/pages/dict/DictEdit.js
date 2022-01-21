@@ -3,7 +3,7 @@ import '../../styles/css/DictEdit.css'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
-import axios from 'axios'
+import { dictApi } from '../../shared/api'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
 import Header from '../../components/Header'
@@ -23,7 +23,7 @@ const DictEdit = (props) => {
   }
 
   const getDictListDB = async () => {
-    let response = await axios.get(`http://54.180.150.230/api/dict/${dictId}`)
+    let response = await dictApi.getDictDetail(dictId)
     console.log(response)
     const _dict = response.data.data
     setDict(_dict)
