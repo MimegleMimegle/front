@@ -65,7 +65,7 @@ const DictSearch = (props) => {
         <div className="DictSearchResultText">"{keyword}"에 대한 검색결과</div>
         <Grid flex_start column>
           <Grid padding="0 16px">
-            <Title>오픈 밈 사전</Title>
+            <Title>밈 사전</Title>
           </Grid>
           {notResultDict ? (
             <>

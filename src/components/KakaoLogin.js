@@ -27,7 +27,7 @@ const KakaoButton = (props) => {
       >
         <Background>
           <BlackBack>
-            <KakaoLogo fill="#FFE330" width="60px" height="55px"></KakaoLogo>
+            <KakaoLogo fill="#FFE330" width="55px" height="55px"></KakaoLogo>
           </BlackBack>
         </Background>
       </a>
@@ -45,15 +45,18 @@ const Background = styled.div`
   border-radius: 50px;
   background-color: #ffe330;
   overflow: hidden;
+
+  -webkit-appearance: none;
 `
 
 const BlackBack = styled.div`
   background-color: #3a1d1d;
   border: none;
+  border-radius: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 37px;
+  width: 35px;
   height: 30px;
 
   -webkit-appearance: none;
