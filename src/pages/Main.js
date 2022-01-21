@@ -140,36 +140,36 @@ const Main = (props) => {
               </div>
             ))}
           </div>
-          {/* <div className="MainPageTagMoreButton_1">
+          <div className="MainPageTagMoreButton_1">
             <div className="MainPageTagMoreButton_1st" onClick={() => history.push('/dict')}>
               <div className="MainPageTagMoreButton1">More</div>
               <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
               </svg>
             </div>
-          </div> */}
+          </div>
         </div>
         <div className="MainPageTopPostSection">
           <div className="MainPageTopPostText">명예의 밈글</div>
           <Grid padding="16px 16px 0  ">
             <PopularBoardCardSwiper />
           </Grid>
-          {/* <div className="MainPageTagMoreButton_2">
+          <div className="MainPageTagMoreButton_2">
             <div className="MainPageTagMoreButton_2nd" onClick={() => history.push('/image')}>
               <div className="MainPageTagMoreButton2">More</div>
               <svg width="96" height="30" viewBox="0 0 96 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 29H93L65.1497 1" stroke="black" strokeWidth="2" />
               </svg>
             </div>
-          </div> */}
+          </div>
         </div>
-        <div className="MainPageAddButtonSection">
+        {/* <div className="MainPageAddButtonSection">
           <div className="MainPageAddButtonSectionHr"></div>
           <div className="MainPageAddButton">
             <PlusIcon width="24px" height="24px" />
           </div>
           <div className="MainPageAddButtonGuideText">나도 추가하러 가보자!</div>
-        </div>
+        </div> */}
       </div>
       <Footer />
       {showModal && (
