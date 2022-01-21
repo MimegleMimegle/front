@@ -76,8 +76,9 @@ const ImageList = (props) => {
 
   return (
     <>
-      <Header location="짤방"></Header>
       <Wrapper>
+        <Header location="짤방"></Header>
+
         {!loading ? (
           <>
             <PopularSection>
@@ -121,8 +122,8 @@ const ImageList = (props) => {
             <RiEditLine size="28" fill="#FFFFFF" />
           )}
         </SpeedDialButton>
+        <Footer />
       </Wrapper>
-      <Footer />
       <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
         <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
       </ConfirmModal>

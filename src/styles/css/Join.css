@@ -63,7 +63,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffd400;
+  background-color: #ffe330;
   padding: 10px;
   cursor: pointer;
 
@@ -151,7 +151,7 @@
   border-radius: 0 0 0 0;
   top: 315px;
   left: -50px;
-  background-color: #6698fc;
+  background-color: #00a0ff;
   width: 100px;
   height: 40px;
   display: flex;

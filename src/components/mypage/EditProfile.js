@@ -18,7 +18,8 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
   const [imageFile, setImageFile] = useState()
   const [nickname, setNickname] = useState('')
   const [isValidNickname, setIsValidNickname] = useState()
-  const [checkedNickname, setCheckedNickname] = useState(null)
+  const [passedNickname, setPassedNickname] = useState('')
+  const [usedNickname, setUsedNickname] = useState('')
   const [doubleCheck, setDoubleCheck] = useState(null)
   const [doubleCheckAlert, setDoubleCheckAlert] = useState(false)
   const [validAlert, setValidAlert] = useState(false)
@@ -62,9 +63,10 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
           .then((response) => {
             if (response.data.result === true) {
               setDoubleCheck(true)
-              setCheckedNickname(nickname)
+              setPassedNickname(nickname)
             } else if (response.data.result === false) {
               setDoubleCheck(false)
+              setUsedNickname(nickname)
             }
           })
           .catch((error) => {
@@ -83,10 +85,11 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
       dispatch(mypageActions.editProfileImageDB(userId, uploadFile))
       setShowModal(false)
       setImageFile()
-      setCheckedNickname(null)
+      setPassedNickname('')
+      setUsedNickname('')
     }
     if (nickname !== '') {
-      if (nickname === checkedNickname && isValidNickname === true) {
+      if (nickname === passedNickname && isValidNickname === true) {
         dispatch(mypageActions.editNicknameDB(userId, nickname))
         if (imageFile) {
           const uploadFile = fileInput.current.files[0]
@@ -96,9 +99,10 @@ const EditProfile = ({ showModal, setShowModal, my }) => {
         setImageFile()
         setNickname('')
         setIsValidNickname()
-        setCheckedNickname(null)
+        setPassedNickname('')
+        setUsedNickname('')
       }
-      if (nickname !== checkedNickname) {
+      if (nickname !== passedNickname || nickname === usedNickname) {
         setDoubleCheckAlert(true)
         setTimeout(() => setDoubleCheckAlert(false), 2000)
       }
