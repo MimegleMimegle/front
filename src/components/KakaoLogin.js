@@ -1,39 +1,63 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import { ReactComponent as KakaoLogo } from '../styles/image/kakaotalk.svg'
 
-class KakaoButton extends Component {
-  componentDidMount() {
-    // Kakao sdk import
-    const kakaoScript = document.createElement('script')
-    kakaoScript.src = 'https://developers.kakao.com/sdk/js/kakao.min.js'
-    document.head.appendChild(kakaoScript)
+const KakaoButton = (props) => {
+  let _apiKey = process.env.REACT_APP_KAKAO_API_KEY
+  let _callBack = process.env.REACT_APP_KAKAO_CALLBACK_URL
 
-    // Kakao sdk 스크립트 로드 완료시
-    kakaoScript.onload = () => {
-      window.Kakao.init('96a19735de948eb6ddb3bfcc34fb2f78')
-      window.Kakao.Auth.createLoginButton({
-        container: '#kakao-login-btn',
-        success: (auth) => {
-          console.log('Kakao 로그인 완료', auth)
-          // Kakao 로그인 성공시, 사용자정보 API 호출
-          window.Kakao.API.request({
-            url: '/v2/user/me',
-            success: (res) => {
-              console.log('Kakao 사용자 정보', res)
-            },
-            fail: (err) => {
-              console.log(err)
-            },
-          })
-        },
-        fail: (err) => {
-          console.log(err)
-        },
-      })
+  function randomString() {
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'
+    const stringLength = 6
+    let randomstring = ''
+    for (let i = 0; i < stringLength; i++) {
+      const rnum = Math.floor(Math.random() * chars.length)
+      randomstring += chars.substring(rnum, rnum + 1)
     }
+    return randomstring
   }
-  render() {
-    return <button type="submit" id="kakao-login-btn"></button>
-  }
+  let newState = randomString()
+
+  return (
+    <>
+      <a
+        onClick={() => {
+          window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${_apiKey}&redirect_uri=http://localhost:3000/redirect/kakao&response_type=code`
+          // window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${_apiKey}&redirect_uri=https://memegle.xyz/redirect/kakao&response_type=code`
+        }}
+      >
+        <Background>
+          <BlackBack>
+            <KakaoLogo fill="#FFE330" width="55px" height="55px"></KakaoLogo>
+          </BlackBack>
+        </Background>
+      </a>
+    </>
+  )
 }
+
+const Background = styled.div`
+  width: 53px;
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 50px;
+  background-color: #ffe330;
+  overflow: hidden;
+`
+
+const BlackBack = styled.div`
+  background-color: #3a1d1d;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 30px;
+
+  -webkit-appearance: none;
+`
 
 export default KakaoButton
