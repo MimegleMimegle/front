@@ -2,7 +2,8 @@ import axios from 'axios'
 
 /* Axios 인스턴스 생성 */
 const instance = axios.create({
-  baseURL: 'http://13.209.99.193',
+  baseURL: 'http://54.180.150.230', // production
+  // baseURL: 'http://13.209.99.193', // local
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-type': 'application/json; charset=UTF-8',
