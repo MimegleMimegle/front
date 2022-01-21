@@ -22,7 +22,7 @@ const GoogleButton = (props) => {
     <>
       <a
         onClick={() => {
-          window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=235810148650-gku8ffkajo19u6b6nqlofffdt3ta835e.apps.googleusercontent.com&redirect_uri=http://localhost:3000/redirect/google&response_type=code&scope=email%20profile%20openid&access_type=offline`
+          window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=235810148650-gku8ffkajo19u6b6nqlofffdt3ta835e.apps.googleusercontent.com&redirect_uri=https://memegle.xyz/redirect/google&response_type=code&scope=email%20profile%20openid&access_type=offline`
         }}
       >
         <Background>
