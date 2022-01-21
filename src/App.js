@@ -95,7 +95,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1120px) {
     background: url(${bg}) no-repeat;
     background-size: 100% 100vh;
   }
