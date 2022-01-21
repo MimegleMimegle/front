@@ -128,7 +128,7 @@ const Mypage = (props) => {
               {/* Board */}
               {showBoard && myMemePostList.length > 0
                 ? myMemePostList.map((question) => {
-                    return <PostCard key={question.boardId} question={question} />
+                    return <PostCard key={question.questionId} question={question} />
                   })
                 : null}
               {/* Photo */}

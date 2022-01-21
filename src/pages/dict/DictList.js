@@ -83,7 +83,7 @@ const DictList = (props) => {
           <SearchPage />
         </SearchBarSection>
         <div className="TitleBox">
-          <Title>오늘의 밈 카드</Title>
+          <Title>인기 밈</Title>
         </div>
         <Grid padding="10px 16px 16px">
           <TodayDictCardSwiper />

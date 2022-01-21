@@ -136,7 +136,11 @@ const DictDetail = (props) => {
           </Grid>
           <Grid flex_between>
             <Grid flex_align>
-              {like ? <FillBookMarkIcon className="icon" fill="#878C92" onClick={handleClickLike} /> : <EmptyBookMarkIcon className="icon" fill="#878C92" onClick={handleClickLike} />}
+              {like ? (
+                <FillBookMarkIcon className="icon" fill="#878C92" height="20px" width="20px" onClick={handleClickLike} />
+              ) : (
+                <EmptyBookMarkIcon className="icon" fill="#878C92" height="20px" width="20px" onClick={handleClickLike} />
+              )}
               <div className="OneDictCardDetailInfoLikeCnt">{dict.likeCount}</div>
             </Grid>
             <CopyToClipboard onCopy={handleCopy} text={currentUrl}>

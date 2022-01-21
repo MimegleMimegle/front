@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { history } from '../redux/ConfigureStore'
 import { actionCreators as userActions } from '../redux/modules/user'
-import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
+import { ReactComponent as CloseIcon } from '../styles/icons/size(28*28)(30*30)/close_28dp.svg'
 
 import Grid from '../elements/Grid'
 import BottomPopup from './BottomPopup'
@@ -30,7 +30,7 @@ const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
 
   return (
     <>
-      <BottomPopup isOpen={showProfile} onClose={() => setShowProfile(false)} heightPixel={220}>
+      <BottomPopup isOpen={showProfile} onClose={() => setShowProfile(false)} heightPixel={230}>
         <Container>
           <CloseButtonBox>
             <CloseIcon className="close-icon" onClick={() => setShowProfile(false)} fill="#444" />
@@ -66,7 +66,7 @@ const ProfileBottom = ({ profile, showProfile, setShowProfile }) => {
 
 const Container = styled.div`
   width: 100%;
-  height: 220px;
+  height: 230px;
   border-radius: 20px 20px 0 0;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
@@ -82,11 +82,9 @@ const CloseButtonBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: right;
-  padding: 10px 16px 0;
+  padding: 16px 16px 0;
   .close-icon {
     cursor: pointer;
-    width: 30px;
-    height: 30px;
   }
 `
 
