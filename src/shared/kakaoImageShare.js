@@ -13,7 +13,7 @@ const KakaoImageShareButton = (props) => {
     if (window.Kakao) {
       const kakao = window.Kakao
 
-      const imageDetailUrl = `http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/image/detail/${boardId}`
+      const imageDetaillUrl = `https://memegle.xyz/image/detail/${boardId}`
 
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
@@ -24,12 +24,12 @@ const KakaoImageShareButton = (props) => {
         container: '#kakao-link-btn',
         objectType: 'feed',
         content: {
-          title: '밈글밈글 MemegleMemegle',
-          description: '#밈글밈글 #밈짤 #짤방',
+          title: '세상의 모든 밈, 밈글밈글',
+          description: '사전. 근데 이제 신조어를 곁들인..',
           imageUrl: thumbNail, // process.env.FETCH_URL + '/logo.png' 절대경로여야함
           link: {
-            mobileWebUrl: thumbNail,
-            webUrl: thumbNail,
+            mobileWebUrl: imageDetaillUrl,
+            webUrl: imageDetaillUrl,
           },
         },
         social: {
@@ -40,15 +40,15 @@ const KakaoImageShareButton = (props) => {
           {
             title: '웹으로 보기',
             link: {
-              mobileWebUrl: imageDetailUrl,
-              webUrl: imageDetailUrl,
+              mobileWebUrl: imageDetaillUrl,
+              webUrl: imageDetaillUrl,
             },
           },
           {
             title: '앱으로 보기',
             link: {
-              mobileWebUrl: imageDetailUrl,
-              webUrl: imageDetailUrl,
+              mobileWebUrl: imageDetaillUrl,
+              webUrl: imageDetaillUrl,
             },
           },
         ],

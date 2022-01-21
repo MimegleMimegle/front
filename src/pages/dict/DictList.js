@@ -30,7 +30,7 @@ const DictList = (props) => {
   const isLogin = userId !== null && token !== null ? true : false
 
   const [show, setShow] = useState(false)
-
+  const [loading, setLoading] = useState(false)
   const [dict, setDict] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
@@ -41,6 +41,8 @@ const DictList = (props) => {
   const [showModal, setShowModal] = useState(false)
 
   React.useEffect(() => {
+    setLoading(true)
+    setTimeout(() => setLoading(false), 600)
     getDictListDB()
   }, [currentPage])
 

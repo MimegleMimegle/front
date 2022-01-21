@@ -6,9 +6,9 @@ import { history } from '../../redux/ConfigureStore'
 import ShareBottomSheet from '../ShareBottomSheet'
 import Grid from '../../elements/Grid'
 
-import { ReactComponent as ShareIcon } from '../../styles/icons/공유_24dp.svg'
-import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/좋아요 비활성_18dp.svg'
-import { ReactComponent as FullHeartIcon } from '../../styles/icons/좋아요 활성_18dp.svg'
+import { ReactComponent as ShareIcon } from '../../styles/icons/share.svg'
+import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/heart_blank.svg'
+import { ReactComponent as FullHeartIcon } from '../../styles/icons/heart_filled.svg'
 
 const OneImageCard = ({ image, type }) => {
   const boardId = image.boardId
@@ -69,7 +69,7 @@ const OneImageCard = ({ image, type }) => {
         <Overlay className={`${hover ? 'active' : 'inactive'}`}>
           <Grid flex_between column height="100%" padding="6px">
             <Grid flex_end>
-              <ShareIcon fill="#FFF" width="18px" onClick={handleShareVisible} />
+              <ShareIcon fill="#FFF" width="24px" onClick={handleShareVisible} />
             </Grid>
             <Grid flex_start>
               {isLiked ? <FullHeartIcon fill="#FFF" onClick={handleClickLike} /> : <EmptyHeartIcon fill="#FFF" onClick={handleClickLike} />}
@@ -120,7 +120,7 @@ const ImageThumbnail = styled.img`
 const Overlay = styled.div`
   .like-count {
     color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => theme.fontSizes.base};
+    font-size: ${({ theme }) => theme.fontSizes.lg};
     padding: 0 0 0 3px;
   }
 `

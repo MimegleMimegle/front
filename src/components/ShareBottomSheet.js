@@ -14,7 +14,8 @@ const ShareBottomSheet = (props) => {
   const { shareVisible, setShareVisible, type, thumbNail, boardId } = props
 
   useScript('https://developers.kakao.com/sdk/js/kakao.js')
-  const quizIntroUrl = 'http://memeglememegle.s3-website.ap-northeast-2.amazonaws.com/quiz'
+  const quizIntroUrl = 'https://memegle.xyz/quiz'
+  const imageDetailUrl = `https://memegle.xyz/image/detail/${boardId}`
 
   const [showModal, setShowModal] = useState(false)
 
@@ -36,7 +37,7 @@ const ShareBottomSheet = (props) => {
           <div className="share share-header">공유하기</div>
           <ShareBody>
             <div className="each-share-container">
-              <CopyToClipboard onCopy={onCopy} text={type === 'image' ? thumbNail : quizIntroUrl}>
+              <CopyToClipboard onCopy={onCopy} text={type === 'image' ? imageDetailUrl : quizIntroUrl}>
                 <button className="link-copy-button">
                   <LinkCopyIcon />
                 </button>
@@ -48,19 +49,19 @@ const ShareBottomSheet = (props) => {
               <p className="each-share-container__text">카카오톡</p>
             </div>
             <div className="each-share-container">
-              <FacebookShareButton url={type === 'image' ? thumbNail : quizIntroUrl}>
+              <FacebookShareButton url={type === 'image' ? imageDetailUrl : quizIntroUrl}>
                 <FacebookIcon size={52} round={true} />
               </FacebookShareButton>
               <p className="each-share-container__text">페이스북</p>
             </div>
             <div className="each-share-container">
-              <TwitterShareButton url={type === 'image' ? thumbNail : quizIntroUrl}>
+              <TwitterShareButton url={type === 'image' ? imageDetailUrl : quizIntroUrl}>
                 <TwitterIcon size={52} round={true} />
               </TwitterShareButton>
               <p className="each-share-container__text">트위터</p>
             </div>
             <div className="each-share-container">
-              <LineShareButton url={type === 'image' ? thumbNail : quizIntroUrl}>
+              <LineShareButton url={type === 'image' ? imageDetailUrl : quizIntroUrl}>
                 <LineIcon size={52} round={true} />
               </LineShareButton>
               <p className="each-share-container__text">라인</p>

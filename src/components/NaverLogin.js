@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { userApi } from '../shared/api'
-import { actionCreators as userActions } from '../redux/modules/user'
 import { ReactComponent as NaverLogo } from '../styles/image/naver.svg'
 
 const NaverButton = (props) => {
-  const href = window.location.href
   let _clientId = process.env.REACT_APP_NAVER_API_KEY
   let _callBack = process.env.REACT_APP_NAVER_CALLBACK_URL
 
@@ -21,34 +18,43 @@ const NaverButton = (props) => {
   }
   let newState = randomString()
 
-  useEffect(() => {
-    async function naverLogin() {
-      try {
-        // console.log(newState)
-        const url = new URL(window.location.href)
-        let params = url.href
-        let code = params.get('code')
-        let state = params.get('state')
-        const result = await userApi.NaverLogin(code, state)
-        console.log(result)
-      } catch (error) {
-        console.log('네이버 로그인 문제 발생', error.response)
-      }
-    }
-    naverLogin()
-  }, [])
-
   return (
     <>
-      <button
+      <a
         onClick={() => {
-          window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&redirect_uri=http://localhost:3000/redirect&state=${newState}`
+          window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&redirect_uri=http://localhost:3000/redirect/naver&state=${newState}`
+          // window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${_clientId}&redirect_uri=https://memegle.xyz/redirect/naver&state=${newState}`
         }}
       >
-        <NaverLogo fill="#00C300" width="53px" height="53px" />
-      </button>
+        <Background>
+          <WhiteBack>
+            <NaverLogo fill="#00C300" width="50px" height="50px" />
+          </WhiteBack>
+        </Background>
+      </a>
     </>
   )
 }
+
+const Background = styled.div`
+  width: 53px;
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 50px;
+  background-color: #00c300;
+  overflow: hidden;
+`
+
+const WhiteBack = styled.div`
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 35px;
+`
 
 export default NaverButton

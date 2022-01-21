@@ -35,22 +35,30 @@ const initialState = {
 }
 
 //middleware
-const kakaoLogin = (code) => {
+const kakaoLoginDB = (code) => {
   return function (dispatch, getState, { history }) {
     userApi
       .KakaoLogin(code)
-      .then((res) => {
-        console.log(res) // 토큰이 넘어올 것임
-
+      .then(async (res) => {
+        console.log(res)
         const ACCESS_TOKEN = res.data.accessToken
+        const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
+        const REFRESH_TOKEN = res.data.refreshToken
 
-        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
+        await setCookie('is_login', REFRESH_TOKEN)
 
-        history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        await localStorage.setItem('token', res.data.data.token)
+        await localStorage.setItem('username', res.data.data.username)
+        await localStorage.setItem('nickname', res.data.data.nickname)
+        await localStorage.setItem('id', res.data.data.userId)
+
+        dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
+
+        await history.replace('/')
       })
       .catch((err) => {
         console.log('카카오로그인 에러', err)
-        window.alert('로그인에 실패하였습니다.')
+        // window.alert('로그인에 실패하였습니다.')
         history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
       })
   }
@@ -60,14 +68,22 @@ const naverLoginDB = (code, state) => {
   return function (dispatch, getState, { history }) {
     userApi
       .NaverLogin(code, state)
-      .then((res) => {
-        console.log(res) // 토큰이 넘어올 것임
+      .then(async (res) => {
+        console.log(res)
+        const ACCESS_TOKEN = res.data.accessToken
+        const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
+        const REFRESH_TOKEN = res.data.refreshToken
 
-        localStorage.setItem('token', res.headers.authorization)
-        localStorage.setItem('nickname', res.data.data.nickname)
+        await setCookie('is_login', REFRESH_TOKEN)
 
-        dispatch(setUser({ nickname: res.data.data.nickname }))
-        history.replace('/')
+        await localStorage.setItem('token', res.headers.authorization)
+        await localStorage.setItem('username', res.data.data.username)
+        await localStorage.setItem('nickname', res.data.data.nickname)
+        await localStorage.setItem('id', res.data.data.userId)
+
+        dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
+
+        await history.replace('/')
       })
       .catch((err) => {
         console.log('네이버로그인 에러', err)
@@ -77,22 +93,30 @@ const naverLoginDB = (code, state) => {
   }
 }
 
-const googleLogin = () => {
+const googleLoginDB = (code) => {
   return function (dispatch, getState, { history }) {
     userApi
-      .GoogleLogin()
-      .then((res) => {
-        console.log(res) // 토큰이 넘어올 것임
-
+      .GoogleLogin(code)
+      .then(async (res) => {
         const ACCESS_TOKEN = res.data.accessToken
+        const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
+        const REFRESH_TOKEN = res.data.refreshToken
+        console.log(res)
 
-        localStorage.setItem('token', ACCESS_TOKEN) //예시로 로컬에 저장함
+        await setCookie('is_login', REFRESH_TOKEN)
 
-        history.replace('/') // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        await localStorage.setItem('token', res.data.data.token)
+        await localStorage.setItem('username', res.data.data.username)
+        await localStorage.setItem('nickname', res.data.data.nickname)
+        await localStorage.setItem('id', res.data.data.userId)
+
+        dispatch(setUser({ username: res.data.data.username, nickname: res.data.data.nickname }))
+
+        await history.replace('/')
       })
       .catch((err) => {
         console.log('구글로그인 에러', err)
-        window.alert('로그인에 실패하였습니다.')
+        // window.alert('로그인에 실패하였습니다.')
         history.replace('/login') // 로그인 실패하면 로그인화면으로 돌려보냄
       })
   }
@@ -104,9 +128,11 @@ const joinDB = (username, nickname, password, passwordCheck) => {
     userApi
       .join(username, nickname, password, passwordCheck)
       .then((res) => {
+        dispatch(loading(true))
         history.push('/login')
       })
       .catch((err) => {
+        dispatch(loading(false))
         swal('이미 등록된 사용자 입니다! 아이디 또는 닉네임을 변경해주세요')
       })
   }
@@ -130,6 +156,7 @@ const logInDB = (username, password) => {
       })
       .catch((err) => {
         console.log(err)
+        dispatch(loading(false))
         dispatch(failLogin(true))
       })
   }
@@ -207,6 +234,7 @@ export default handleActions(
     [FAIL_LOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.is_failure = action.payload.is_failure
+        draft.is_loading = false
       }),
   },
   initialState
@@ -220,9 +248,9 @@ const actionCreators = {
   logInDB,
   logOutDB,
   loginCheckDB,
-  kakaoLogin,
+  kakaoLoginDB,
   naverLoginDB,
-  googleLogin,
+  googleLoginDB,
   setLogin,
   SetLogin,
   initFirstLogin,

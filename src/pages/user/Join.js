@@ -40,9 +40,15 @@ const Join = () => {
   const [isPasswordCheck, setIsPasswordCheck] = useState(false)
 
   // 아이디 & 닉네임 중복확인
-  const [isUsernameChecked, setIsUsernameChecked] = useState(false)
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false)
+  const [passedUsername, setPassedUsername] = useState('')
+  const [passedNickname, setPassedNickname] = useState('')
+  const [usedUsername, setUsedUsername] = useState('')
+  const [usedNickname, setUsedNickname] = useState('')
   const [doubleCheck, setDoubleCheck] = useState(null)
+  const [InputUsernameAlert, setInputUsernameAlert] = useState(false)
+  const [InputNicknameAlert, setInputNicknameAlert] = useState(false)
+  const [DoubleCheckAlert, setDoubleCheckAlert] = useState(false)
+
   console.log(doubleCheck)
 
   const [showAlert, setShowAlert] = useState(false)
@@ -106,49 +112,71 @@ const Join = () => {
   }
 
   const checkUsername = async () => {
-    await userApi
-      .checkUsername(username)
-      .then((response) => {
-        console.log(response.data)
-        if (response.data.result === true) {
-          // swal('사용 가능한 아이디입니다.')
-          setDoubleCheck(true)
-          setIsUsernameChecked(true)
-        } else {
-          // swal('사용 중인 아이디입니다.')
-          setDoubleCheck(false)
-          setIsUsernameChecked(false)
-        }
-      })
-      .catch((error) => {
-        console.log('아이디를 중복확인하는 데 문제가 발생했습니다.', error.response)
-      })
+    if (username !== '') {
+      await userApi
+        .checkUsername(username)
+        .then((response) => {
+          console.log(response.data)
+          if (response.data.result === true) {
+            /* 중복확인 -> 사용 가능한 아이디 상태 저장 */
+            setDoubleCheck(true)
+            setPassedUsername(username)
+          } else {
+            /* 중복확인 -> 사용 불가능한 아이디 상태 저장 */
+            setDoubleCheck(false)
+            setUsedUsername(username)
+          }
+        })
+        .catch((error) => {
+          console.log('아이디를 중복확인하는 데 문제가 발생했습니다.', error.response)
+        })
+    } else {
+      /* 아이디를 입력하지 않고 중복확인 버튼을 클릭하는 경우 */
+      /* 아이디를 입력한 후 클릭해달라는 알럿 */
+      setInputUsernameAlert(true)
+      setTimeout(() => setInputUsernameAlert(false), 2000)
+    }
   }
 
   const checkNickname = async () => {
-    await userApi
-      .checkNickname(nickname)
-      .then((response) => {
-        console.log(response.data)
-        if (response.data.result === true) {
-          // swal('사용 가능한 닉네임입니다.')
-          setDoubleCheck(true)
-          setIsNicknameChecked(true)
-        } else {
-          // swal('사용 중인 닉네임입니다.')
-          setDoubleCheck(false)
-          setIsNicknameChecked(false)
-        }
-      })
-      .catch((error) => {
-        console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
-      })
+    if (nickname !== '') {
+      await userApi
+        .checkNickname(nickname)
+        .then((response) => {
+          console.log(response.data)
+          if (response.data.result === true) {
+            /* 중복확인 -> 사용 가능한 닉네임 상태 저장 */
+            setDoubleCheck(true)
+            setPassedNickname(nickname)
+          } else {
+            /* 중복확인 -> 사용 불가능한 닉네임 상태 저장 */
+            setDoubleCheck(false)
+            setUsedNickname(nickname)
+          }
+        })
+        .catch((error) => {
+          console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
+        })
+    } else {
+      /* 닉네임을 입력하지 않고 중복확인 버튼을 클릭하는 경우 */
+      /* 닉네임을 입력한 후 클릭해달라는 알럿 */
+      setInputNicknameAlert(true)
+      setTimeout(() => setInputNicknameAlert(false), 2000)
+    }
   }
 
   const join = () => {
     if (username === '' || nickname === '' || password === '' || passwordCheck === '') {
       setShowAlert(true)
       setTimeout(() => setShowAlert(false), 2000)
+      return
+    }
+    if (username !== passedUsername || username === usedUsername || nickname !== passedNickname || nickname === usedNickname) {
+      /* 입력한 아이디 또는 닉네임이 중복확인 -> 사용 가능한 아이디 또는 닉네임과 일치하지 않는 경우 (중복확인 후 입력란을 다시 변경한 경우) */
+      /* 입력한 아이디 또는 닉네임이 중복확인 -> 이미 사용 중인 아이디 또는 닉네임과 일치하는 경우 (사용 중이라는 알럿을 띄웠지만 변경하지 않은 경우) */
+      /* 아이디와 닉네임 중복확인을 완료할 것을 요청하는 알럿 */
+      setDoubleCheckAlert(true)
+      setTimeout(() => setDoubleCheckAlert(false), 2000)
       return
     }
     dispatch(userActions.joinDB(username, nickname, password, passwordCheck))
@@ -267,18 +295,19 @@ const Join = () => {
       <Footer />
       {doubleCheck === null && null}
       {doubleCheck === true && (
-        <DoubleCheckModal title="사용 가능합니다." doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+        <DoubleCheckModal title="사용 가능합니다!" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
           <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
         </DoubleCheckModal>
       )}
       {doubleCheck === false && (
-        <DoubleCheckModal type="exist-onlyConfirm" title="사용 중입니다." doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+        <DoubleCheckModal type="exist-onlyConfirm" title="이미 사용 중입니다!" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
           <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
         </DoubleCheckModal>
       )}
-      <AlertModal showModal={showAlert}>
-        <AlertText>아이디와 비밀번호를 모두 입력해주세요!</AlertText>
-      </AlertModal>
+      <AlertModal showModal={showAlert}>아이디와 비밀번호를 모두 입력해 주세요!</AlertModal>
+      <AlertModal showModal={InputUsernameAlert}>아이디를 입력한 후 중복확인 버튼을 클릭해 주세요!</AlertModal>
+      <AlertModal showModal={InputNicknameAlert}>닉네임을 입력한 후 중복확인 버튼을 클릭해 주세요!</AlertModal>
+      <AlertModal showModal={DoubleCheckAlert}>먼저 아이디와 닉네임의 중복확인을 완료해 주세요!</AlertModal>
     </>
   )
 }
@@ -328,21 +357,4 @@ const Logo = styled.div`
   background-position: center;
 `
 
-const AlertText = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-`
-
 export default Join
-
-{
-  /* <div className="SocialLoginHR_JoinPage">또는</div> */
-}
-{
-  /* <div className="SocialLoginBtns_JoinPage"> */
-}
-// <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
-// <img className="KakaoLoginBtn_JoinPage" size="50" src={kakaotalk}></img>
-// </a>
-// <img className="GoogleLoginBtn_JoinPage" size="50" src={googleColor}></img>
-// <img className="NaverLoginBtn_JoinPage" size="50" src={naver}></img>
-// </div>

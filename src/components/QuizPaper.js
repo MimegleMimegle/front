@@ -78,41 +78,43 @@ const QuizPaper = (props) => {
     <>
       {!showResult ? (
         !loading ? (
-          <Wrapper>
-            <Grid flex_center>
-              <h2 className="quiz-category">Lv. {category === 'lv1' ? '1' : category === 'lv2' ? '2' : '3'}</h2>
-            </Grid>
-            <QuizTitle>
-              <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
-              <div className="question-number-box box-2"></div>
-              <h2 className="title">{quiz ? quiz.question : null}</h2>
-              <Grid flex_center height="100%" overflow="hidden" margin="16px 0 0">
-                <img src={quiz?.quizImage} className="quiz-image" />
+          <>
+            <Wrapper>
+              <Grid flex_center>
+                <h2 className="quiz-category">Lv. {category === 'lv1' ? '1' : category === 'lv2' ? '2' : '3'}</h2>
               </Grid>
-            </QuizTitle>
-            <QuizBox>
-              <button className={`answer-btn ${clicked1 ? 'clicked' : ''}`} value={quiz ? quiz.choice[0] : ''} onClick={clickAnswer1}>
-                {quiz ? quiz.choice[0] : null}
-              </button>
-              <button className={`answer-btn ${clicked2 ? 'clicked' : ''}`} value={quiz ? quiz.choice[1] : ''} onClick={clickAnswer2}>
-                {quiz ? quiz.choice[1] : null}
-              </button>
-              <button className={`answer-btn ${clicked3 ? 'clicked' : ''}`} value={quiz ? quiz.choice[2] : ''} onClick={clickAnswer3}>
-                {quiz ? quiz.choice[2] : null}
-              </button>
-              <button className={`answer-btn btn-4 ${clicked4 ? 'clicked' : ''}`} value={quiz ? quiz.choice[3] : ''} onClick={clickAnswer4}>
-                {quiz ? quiz.choice[3] : null}
-              </button>
-            </QuizBox>
-            <ButtonSection>
-              <div className="next-btn-box box-1">
-                <button className="next-btn" onClick={submitAnswer} disabled={!(clicked1 || clicked2 || clicked3 || clicked4)}>
-                  {currentIndex === 9 ? '결과' : '다음'}
+              <QuizTitle>
+                <div className="question-number-box box-1">Q. {currentIndex + 1}</div>
+                <div className="question-number-box box-2"></div>
+                <h2 className="title">{quiz ? quiz.question : null}</h2>
+                <Grid flex_center height="100%" overflow="hidden" margin="16px 0 0">
+                  <img src={quiz?.quizImage} className="quiz-image" />
+                </Grid>
+              </QuizTitle>
+              <QuizBox>
+                <button className={`answer-btn ${clicked1 ? 'clicked' : ''}`} value={quiz ? quiz.choice[0] : ''} onClick={clickAnswer1}>
+                  {quiz ? quiz.choice[0] : null}
                 </button>
-              </div>
-              <div className="next-btn-box box-2"></div>
-            </ButtonSection>
-          </Wrapper>
+                <button className={`answer-btn ${clicked2 ? 'clicked' : ''}`} value={quiz ? quiz.choice[1] : ''} onClick={clickAnswer2}>
+                  {quiz ? quiz.choice[1] : null}
+                </button>
+                <button className={`answer-btn ${clicked3 ? 'clicked' : ''}`} value={quiz ? quiz.choice[2] : ''} onClick={clickAnswer3}>
+                  {quiz ? quiz.choice[2] : null}
+                </button>
+                <button className={`answer-btn btn-4 ${clicked4 ? 'clicked' : ''}`} value={quiz ? quiz.choice[3] : ''} onClick={clickAnswer4}>
+                  {quiz ? quiz.choice[3] : null}
+                </button>
+              </QuizBox>
+              <ButtonSection>
+                <div className="next-btn-box box-1">
+                  <button className="next-btn" onClick={submitAnswer} disabled={!(clicked1 || clicked2 || clicked3 || clicked4)}>
+                    {currentIndex === 9 ? '결과' : '다음'}
+                  </button>
+                </div>
+                <div className="next-btn-box box-2"></div>
+              </ButtonSection>
+            </Wrapper>
+          </>
         ) : (
           <Grid flex_center height="100%">
             <CircularProgress color="inherit" />
@@ -128,7 +130,7 @@ const QuizPaper = (props) => {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px 0;
+  padding: 20px 0 0;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -225,7 +227,8 @@ const QuizBox = styled.div`
 const ButtonSection = styled.div`
   position: relative;
   width: 100%;
-  margin: 20px 0 0;
+  margin: 20px 0 40px;
+  padding: 0 0 80px;
   .next-btn-box {
     width: 120px;
     height: 48px;
