@@ -7,19 +7,23 @@ import { MdOutlineSend } from 'react-icons/md'
 import styled from 'styled-components'
 import MemegleLogo from '../styles/image/smileIcon_Yellow.png'
 import { commentApi } from '../shared/api'
+import { useHistory } from 'react-router'
+import ConfirmModal from '../components/modal/ConfirmModal'
 
 
 const CommentTest = ({ question }) => {
   const dispatch = useDispatch()
-  // const questionId = question.questionId
+  const history = useHistory()
   const comment_list = question.commentList
   const now_profile = useSelector((state) => state.mypage.myProfile)
   const [comment, setComment] = React.useState('')
+  const [showModal, setShowModal] = React.useState(false)
+
   const userId = localStorage.getItem('id')
   const cookieList = document.cookie.split('=')
   const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
   const isLogin = userId !== null && token !== undefined ? true : false
-  const commentId = question.commentId
+
 
   const onChangeComment = (e) => {
     setComment(e.target.value)
@@ -27,9 +31,13 @@ const CommentTest = ({ question }) => {
   }
 
   const addComment = () => {
+    if(!isLogin){
+      setShowModal(true)
+    }else{
     dispatch(commentActions.addCommentDB(question.questionId, comment))
     setComment('')
     console.log(question.questionId)
+    }
   }
   
   comment_list&&comment_list.sort((a,b)=>{
@@ -65,6 +73,9 @@ const CommentTest = ({ question }) => {
               }
             }}
           ></input>
+          <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
         </ImgInput>
         <MdOutlineSend style={{ fontSize: '24px', cursor: 'pointer', width: 'fit-content' }} onClick={addComment} />
       </CommentWrite>
@@ -92,6 +103,11 @@ const CommentWrite = styled.div`
   border-top: 2px solid black;
   background: #FCFCFC;
 `
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
+`
+
 const ImgInput = styled.div`
   width: 100%;
   display: flex;
