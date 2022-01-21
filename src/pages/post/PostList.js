@@ -35,8 +35,8 @@ const PostList = (props) => {
 
   useEffect(() => {
     setLoading(true)
-    setTimeout(() => setLoading(false), 400)
     getQuestionListDB()
+    setTimeout(() => setLoading(false), 400)
   }, [currentPage])
 
   const getQuestionListDB = async () => {
@@ -57,15 +57,15 @@ const PostList = (props) => {
 
   return (
     <>
-      <Header location="밈 사전" />
+      <Header location="오픈 밈사전" />
       <Container>
         <DictNavBar />
-        <SearchBarSection>
-          <SearchPage />
-        </SearchBarSection>
-        <Wrap>
-          {!loading ? (
-            <>
+        {!loading ? (
+          <>
+            <SearchBarSection>
+              <SearchPage />
+            </SearchBarSection>
+            <Wrap>
               <CuriousHelp>
                 <Title>궁금해요!</Title>
                 {/* <div className="curious">궁금해요!</div> */}
@@ -77,14 +77,16 @@ const PostList = (props) => {
                 })}
 
               <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-            </>
-          ) : (
+            </Wrap>
+          </>
+        ) : (
+          <>
             <Grid flex_center height="100%">
               <CircularProgress color="inherit" />
             </Grid>
-          )}
-          <Grid height="90px"></Grid>
-        </Wrap>
+            <Grid height="90px"></Grid>
+          </>
+        )}
       </Container>
       <Footer />
       <SpeedDialButton _onClick={handleClickWrite}>

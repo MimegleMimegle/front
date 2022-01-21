@@ -95,7 +95,7 @@ const Main = (props) => {
             spaceBetween={30}
             lazy={true}
             grabCursor={true}
-            centeredSlides={true}
+            // centeredSlides={true}
             breakpoints={{
               769: {
                 slidesPerView: 1,
@@ -120,14 +120,15 @@ const Main = (props) => {
               }}
               className="main-swiper-slide"
             >
-              <MainPageImageSlide />
+              <MainPageImageSlide type="quiz" />
             </SwiperSlide>
             <SwiperSlide
               onClick={() => {
                 history.push('/quiz')
               }}
+              className="main-swiper-slide"
             >
-              <MainPageImageSlide />
+              <MainPageImageSlide type="event" />
             </SwiperSlide>
           </Swiper>
         </div>
