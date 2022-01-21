@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { actionCreators as questionActions } from '../../redux/modules/dictquestion'
 import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
+import { ReactComponent as AddPhotoIcon } from '../../styles/icons/size(28*28)(30*30)/addphoto_30dp.svg'
 import { history } from '../../redux/ConfigureStore'
 import Header from '../../components/Header'
 
@@ -61,7 +62,7 @@ const PostWrite = (props) => {
       <Header type="goBack" location="질문 작성" />
       <Container>
         <PWHeader>
-          <input type="text" className="writetitle" maxlength = "15" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
+          <input type="text" className="writetitle" maxlength="15" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
         </PWHeader>
         <PWBody>
           <textarea
@@ -78,7 +79,7 @@ const PostWrite = (props) => {
           </Preview>
           <UploadSection>
             <label htmlFor="file" className="upload-label">
-              <MdOutlinePhotoSizeSelectActual size="25" />
+              <AddPhotoIcon />
             </label>
             <input type="file" id="file" className="upload-input" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           </UploadSection>
@@ -108,8 +109,7 @@ const PWHeader = styled.div`
     width: 100%;
     border: none;
     padding: 16px;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-    font-weight: 500;
+    font-size: ${({ theme }) => theme.fontSizes.lg};
     color: ${({ theme }) => theme.colors.black};
     word-spacing: 1;
     background-color: ${({ theme }) => theme.colors.bg};
