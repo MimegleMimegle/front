@@ -44,19 +44,6 @@ export const mypageApi = {
   checkAlarm: () => instance.get('/api/alarm/read'),
 }
 
-export const boardApi = {
-  getPosts: (pageSize, currentPage) => instance.get(`/api/board/list/FREEBOARD?page=${currentPage - 1}&size=${pageSize}`),
-  getOnePost: (boardId) => instance.get(`/api/board/${boardId}`),
-  writePost: (post) => instance.post('/api/board/FREEBOARD', post),
-  editPost: (boardId, content) => instance.put(`/api/board/${boardId}`, content),
-  deletePost: (boardId) => instance.delete(`/api/board/${boardId}`),
-  selectPost: () => instance.get('/api/board?q=query'),
-  getSubject: () => instance.get('/api/board/subject'),
-  recommendHashTag: () => instance.get('/api/board/hashTag'),
-  searchPost: (query) => instance.get(`/api/board/search?q=${query}`),
-  totalLength: () => instance.get('api/board/count/FREEBOARD'),
-}
-
 export const dictQuestionApi = {
   getQuestions: (pageSize, currentPage) => instance.get(`/api/dict/question?page=${currentPage - 1}&size=${pageSize}`),
   getOneQuestion: (questionId) => instance.get(`/api/dict/question/${questionId}`),

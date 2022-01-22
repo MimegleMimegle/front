@@ -38,7 +38,6 @@ const PostDetail = (props) => {
     setNoChangeModal(true)
     handleCloseNoChangeModal()
   }
-  console.log(question)
 
   const handleShowModal = (e) => {
     e.preventDefault()
@@ -75,9 +74,7 @@ const PostDetail = (props) => {
       await dictQuestionApi
         .curiousToo(questionId)
         .then((response) => {
-          console.log(response.data)
           setIsCuriousToo(false)
-          console.log(isCuriousToo)
           setCuriousTooCnt(curiousTooCnt - 1)
         })
         .catch((error) => {
@@ -87,10 +84,8 @@ const PostDetail = (props) => {
       await dictQuestionApi
         .curiousToo(questionId)
         .then((response) => {
-          console.log(response.data)
           setIsCuriousToo(true)
           setCuriousTooCnt(curiousTooCnt + 1)
-          console.log(isCuriousToo)
         })
         .catch((error) => {
           console.log('나도 궁금해요 문제 발생', error.response)
