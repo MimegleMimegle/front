@@ -13,12 +13,28 @@
   vertical-align: middle; */
   /* 레이아웃 작업 후 삭제 */
   /* border: 5px solid red; */
+
+  z-index: 999;
+}
+
+@media screen and (min-width: 500px) {
+  .WebFullFrame {
+    top: 50%;
+    transform: translate(-10%, -50%);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .WebFullFrame {
+    top: 50%;
+    transform: translate(20%, -50%);
+  }
 }
 
 @media screen and (min-width: 1120px) {
   .WebFullFrame {
     top: 50%;
-    transform: translate(30%, -50%);
+    transform: translate(20%, -50%);
   }
 }
 
@@ -32,7 +48,7 @@
 @media screen and (min-width: 2000px) {
   .WebFullFrame {
     top: 50%;
-    transform: translate(80%, -50%);
+    transform: translate(60%, -50%);
   }
 }
 
@@ -43,7 +59,7 @@
   justify-content: center;
   vertical-align: middle;
   top: 50%;
-  left: 50%;
+  left: 15%;
   transform: translate(-50%, -50%);
   /* max-width: 430px; */
   width: 100%;
@@ -57,6 +73,8 @@
   background-color: #fbfafa;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3);
   /* margin: 270px 10px 300px 10px; */
+
+  z-index: 999;
 }
 
 .Container {
@@ -68,6 +86,8 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   border-bottom: 2px solid #000;
+
+  z-index: 999;
 }
 
 .Container::-webkit-scrollbar {
