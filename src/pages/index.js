@@ -13,7 +13,6 @@ import PostDetail from './post/PostDetail'
 import PostEdit from './post/PostEdit'
 import PostList from './post/PostList'
 import PostWrite from './post/PostWrite'
-import PostSearch from './post/PostSearch'
 
 import DictEdit from './dict/DictEdit'
 import DictList from './dict/DictList'
@@ -21,6 +20,8 @@ import DictWrite from './dict/DictWrite'
 import DictDetail from './dict/DictDetail'
 import DictSearch from './dict/DictSearch'
 import DictHistory from './dict/DictHistory'
+import DictMyMeMe from './dict/DictMyMeMe'
+import DictStat from './dict/DictStat'
 
 import ImageList from './image/ImageList'
 import ImageDetail from './image/ImageDetail'
@@ -39,7 +40,6 @@ export {
   PostEdit,
   PostList,
   PostWrite,
-  PostSearch,
   DictEdit,
   DictList,
   DictWrite,
@@ -49,4 +49,6 @@ export {
   ImageUpload,
   DictSearch,
   DictHistory,
+  DictMyMeMe,
+  DictStat,
 }

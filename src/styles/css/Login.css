@@ -1,17 +1,19 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
 .LoginLayout {
+  padding: 0 16px;
   width: 100%;
-  max-width: 400px;
-  height: 485px;
+  /* height: 485px; */
   max-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: 10px 0 0 0;
   overflow-x: hidden;
   overflow-y: hidden;
   -ms-overflow-style: none;
@@ -22,9 +24,9 @@
 }
 
 .MultiInputBoxLayout_login {
-  border: 1px solid black;
-  width: 328px;
-  height: 265px;
+  border: 2px solid black;
+  width: 100%;
+  height: 250px;
 }
 
 .LoginOrJoinButtons_login {
@@ -32,26 +34,28 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
   width: 100%;
 }
 
 .LoginButton_login {
-  font-size: 16px;
-  font-weight: 500;
   width: 100%;
   height: 100%;
-  border-left: 0.5px solid black;
+  border-left: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
   background-color: #ffe330;
+  cursor: pointer;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 .JoinButton_login {
-  font-size: 16px;
-  font-weight: 500;
   width: 100%;
   height: 100%;
   /* border-left: 0.5px solid black; */
@@ -60,6 +64,12 @@
   align-items: center;
   padding: 10px;
   background-color: none;
+  cursor: pointer;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 .LoginOrJoinInputs_login {
@@ -68,38 +78,43 @@
   align-items: center;
   width: 100%;
   height: 280px;
+  padding: 0 30px;
 }
 
 .IdInputLabel {
   font-size: 14px;
   display: flex;
   align-self: flex-start;
-  margin-left: 35px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .IdInputBox {
-  border: 0.5px solid black;
-  width: 267px;
+  border: 2px solid black;
+  width: 100%;
   height: 36px;
-  margin: 0px 0 10px 0;
+  margin: 0px 0 5px 0;
   padding-left: 10px;
+  background-color: #fafafa;
+
+  font-size: 12px;
 }
 
 .PwdInputLabel {
   font-size: 14px;
   display: flex;
   align-self: flex-start;
-  margin-left: 35px;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .PwdInputBox {
-  border: 0.5px solid black;
-  width: 267px;
+  border: 2px solid black;
+  width: 100%;
   height: 36px;
   margin: 0px 0 15px 0;
   padding-left: 10px;
+  background-color: #fafafa;
+
+  font-size: 12px;
 }
 
 .MemegleButton_LoginSubmit {
@@ -109,26 +124,29 @@
   cursor: pointer;
 }
 .Login1 {
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 0 0 0 0;
-  top: 200px;
+  top: 175px;
   left: -50px;
   background-color: #00a0ff;
   width: 100px;
   height: 40px;
-  font-size: 15px;
-  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
 
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 16px;
+  font-weight: normal;
+
   z-index: 2;
 }
 .Login2 {
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 0 0 0 0;
   background-color: white;
-  top: 204px;
+  top: 179px;
   left: -46px;
   width: 100px;
   height: 40px;
@@ -152,31 +170,6 @@
   width: 100%;
   align-items: center;
   justify-content: space-evenly;
-}
-
-.KakaoLoginBtn {
-  width: 50px;
-  background-color: #fee500;
-  border-radius: 5px;
-}
-.KakaoLoginBtn:hover {
-  cursor: pointer;
-}
-
-.GoogleLoginBtn {
-  width: 50px;
-}
-.GoogleLoginBtn:hover {
-  cursor: pointer;
-}
-
-.NaverLoginBtn {
-  width: 50px;
-  background-color: rgb(0, 255, 0);
-  border-radius: 5px;
-}
-.NaverLoginBtn:hover {
-  cursor: pointer;
 }
 
 /* sweetalret */

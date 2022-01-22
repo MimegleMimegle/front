@@ -8,15 +8,17 @@ import { actionCreators as userActions } from '../redux/modules/user'
  * return			: 해당 페이지와 react-router props(history, match, location)
  */
 
-export default (Page, checkAuth) => {
+export default function (Page, checkAuth) {
   const AuthCheck = (props) => {
     const dispatch = useDispatch()
-    const token = document.cookie.split('=')[1]
+    const token = localStorage.getItem('token')
+    // const cookieList = document.cookie.split('=')
+    // const token = cookieList.length === 2 ? cookieList[1] : cookieList[2]
     const username = localStorage.getItem('username')
     const isLoggedIn = username !== null && token !== undefined ? true : false
 
     useEffect(() => {
-      dispatch(userActions.setLogin())
+      dispatch(userActions.SetLogin())
       // 로그인을 하지 않았는데 로그인 필요한 페이지에 있을 경우
       if (!isLoggedIn && checkAuth) {
         window.alert('로그인이 필요합니다.')

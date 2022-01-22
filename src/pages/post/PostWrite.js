@@ -1,14 +1,14 @@
 import React, { useRef, useState, createRef } from 'react'
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router'
-import ReactQuill from 'react-quill'
+import { useDispatch } from 'react-redux'
 import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
-import { actionCreators as postActions } from '../../redux/modules/post'
+import { actionCreators as questionActions } from '../../redux/modules/dictquestion'
+import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
+import { ReactComponent as AddPhotoIcon } from '../../styles/icons/size(28*28)(30*30)/addphoto_30dp.svg'
+import { history } from '../../redux/ConfigureStore'
 import Header from '../../components/Header'
 
 const PostWrite = (props) => {
-  const history = useHistory()
   const dispatch = useDispatch()
 
   const textRef = createRef()
@@ -17,8 +17,6 @@ const PostWrite = (props) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [thumbNail, setThumbNail] = useState(null)
-  const [hashTag, setHashTag] = useState('')
-  const [hashTagList, setHashTagList] = useState([])
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
@@ -28,43 +26,11 @@ const PostWrite = (props) => {
     setContent(e.target.value)
   }
 
-  const onChangeHashTag = (e) => {
-    setHashTag(e.target.value)
-  }
-
   const handleTextareaResize = () => {
     const obj = textRef.current
     obj.style.height = 'auto'
     obj.style.height = obj.scrollHeight + 'px'
   }
-
-  const onKeyUp = React.useCallback(
-    (e) => {
-      // if (process.browser) {
-      /* 요소 불러오기, 만들기*/
-      const $hashWrapOutter = document.querySelector('.hashWrapOutter')
-      const $hashWrapInner = document.createElement('div')
-      $hashWrapInner.className = 'hashWrapInner'
-
-      /* 태그를 클릭 이벤트 관련 로직 */
-      $hashWrapInner.addEventListener('click', () => {
-        $hashWrapOutter?.removeChild($hashWrapInner)
-        console.log($hashWrapInner.innerHTML)
-        setHashTagList(hashTagList.filter((hashTag) => hashTag))
-      })
-
-      /* enter 키 코드 :13 */
-      if (e.keyCode === 13 && e.target.value.trim() !== '') {
-        console.log('Enter Key 입력됨!', e.target.value)
-        $hashWrapInner.innerHTML = '#' + e.target.value
-        $hashWrapOutter?.appendChild($hashWrapInner)
-        setHashTagList((hashTagList) => [...hashTagList, hashTag])
-        setHashTag('')
-      }
-    },
-    // },
-    [hashTag, hashTagList]
-  )
 
   const onChangeFile = (e) => {
     setThumbNail(e.target.files)
@@ -80,26 +46,23 @@ const PostWrite = (props) => {
       }
     }
   }
-  console.log(title)
-  console.log(content)
-  console.log(hashTagList)
 
-  const addPost = () => {
+  const addQuestion = () => {
     if (title === '' || content === '') {
       window.alert('제목 혹은 내용을 작성해주세요.')
       return
     }
 
     const uploadFile = thumbNail ? fileInput.current.files[0] : ''
-    dispatch(postActions.addPostDB(title, content, uploadFile, hashTagList))
+    dispatch(questionActions.addQuestionDB(title, content, uploadFile))
   }
 
   return (
     <>
-      <Header type="PostWrite" location="밈+글 등록하기"></Header>
+      <Header type="goBack" location="질문 작성" />
       <Container>
         <PWHeader>
-          <input type="text" className="writetitle" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
+          <input type="text" className="writetitle" maxlength="15" placeholder="제목을 입력하세요" value={title} onChange={onChangeTitle} />
         </PWHeader>
         <PWBody>
           <textarea
@@ -112,21 +75,17 @@ const PostWrite = (props) => {
             onKeyUp={handleTextareaResize}
           ></textarea>
           <Preview>
-            <img src={thumbNail} className="thumbNail" />
+            <img src={thumbNail} className="thumbNail" alt="" />
           </Preview>
           <UploadSection>
             <label htmlFor="file" className="upload-label">
-              <MdOutlinePhotoSizeSelectActual size="25" />
+              <AddPhotoIcon />
             </label>
             <input type="file" id="file" className="upload-input" ref={fileInput} accept="image/jpeg, image/jpg" onChange={onChangeFile} />
           </UploadSection>
-          <HashDivWrap className="hashWrap">
-            <div className="hashWrapOutter"></div>
-            <input className="hashInput" type="text" placeholder="해시태그를 입력해주세요 (최대5개, 해시태그는 클릭 시 지워집니다.)" value={hashTag} onChange={onChangeHashTag} onKeyUp={onKeyUp} />
-          </HashDivWrap>
         </PWBody>
         <PWFooter>
-          <button className="postbtn btn-1" onClick={addPost}>
+          <button className="postbtn btn-1" onClick={addQuestion}>
             등록
           </button>
           <div className="postbtn btn-2"></div>
@@ -140,7 +99,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 0 40px;
+  padding: 56px 0 0;
 `
 
 const PWHeader = styled.div`
@@ -152,6 +111,8 @@ const PWHeader = styled.div`
     padding: 16px;
     font-size: ${({ theme }) => theme.fontSizes.lg};
     color: ${({ theme }) => theme.colors.black};
+    word-spacing: 1;
+    background-color: ${({ theme }) => theme.colors.bg};
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.grey};
@@ -162,19 +123,21 @@ const PWHeader = styled.div`
 const PWBody = styled.div`
   display: flex;
   flex-direction: column;
-  .plustfuction {
-    margin: 0px 15px 10px 15px;
-  }
+  border-bottom: 1px solid #444;
   .writedesc {
     width: 100%;
-    min-height: 10rem;
+    /* min-height: 10rem; */
     border: none;
     padding: 16px;
     resize: none;
     font-size: ${({ theme }) => theme.fontSizes.lg};
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-weight: 300;
     color: ${({ theme }) => theme.colors.black};
     overflow-y: hidden;
-    line-height: 1.6;
+    word-spacing: 1;
+    background-color: ${({ theme }) => theme.colors.bg};
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.grey};
@@ -215,50 +178,6 @@ const UploadSection = styled.div`
   }
 `
 
-const HashDivWrap = styled.div`
-  color: ${({ theme }) => theme.colors.black};
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  padding: 10px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  letter-spacing: -0.5px;
-  border-top: 1px solid ${({ theme }) => theme.colors.line};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.black};
-
-  .hashWrapOutter {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px 0;
-  }
-
-  .hashWrapInner {
-    padding: 5px 7px 5px 0;
-    height: 24px;
-    color: ${({ theme }) => theme.colors.black};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    line-height: 24px;
-    cursor: pointer;
-  }
-
-  .hashInput {
-    width: 100%;
-    padding: 0;
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    display: inline-flex;
-    outline: none;
-    cursor: text;
-    line-height: 2rem;
-    min-width: 100%;
-    border: none;
-    &::placeholder {
-      font-size: ${({ theme }) => theme.fontSizes.base};
-    }
-  }
-`
-
 const PWFooter = styled.div`
   position: relative;
   margin: 20px 0;
@@ -267,26 +186,27 @@ const PWFooter = styled.div`
     position: absolute;
     width: 100px;
     height: 40px;
-    border: 1px solid ${({ theme }) => theme.colors.black};
+    border: 2px solid ${({ theme }) => theme.colors.black};
   }
   .btn-1 {
-    left: 49.3%;
-    transform: translateX(-49.3%);
-    background-color: ${({ theme }) => theme.colors.blue};
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #00a0ff;
+    /* ${({ theme }) => theme.colors.blue}; */
     font-size: ${({ theme }) => theme.fontSizes.xl};
     font-weight: 700;
     z-index: 100;
     transition-duration: 0.3s;
     &:active {
       margin-top: 4px;
-      left: 50.7%;
-      transform: translateX(-50.7%);
+      left: calc(50%);
+      transform: translateX(calc(-50% + 4px));
     }
   }
   .btn-2 {
     top: 4px;
-    left: 50.7%;
-    transform: translateX(-50.7%);
+    left: calc(50%);
+    transform: translateX(calc(-50% + 4px));
   }
 `
 

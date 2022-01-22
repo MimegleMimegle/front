@@ -8,6 +8,7 @@ const GET_IMAGE_DETAIL = 'GET_IMAGE_DETAIL'
 const UPLOAD_IMAGE = 'UPLOAD_IMAGE'
 const DELETE_IMAGE = 'DELETE_IMAGE'
 const LOADING = 'LOADING'
+const INIT_IMAGE_LIST = 'INIT_IMAGE_LIST'
 
 /* action creator */
 const getImageList = createAction(GET_IMAGE_LIST, (image_data) => ({ image_data }))
@@ -15,18 +16,21 @@ const getImageDetail = createAction(GET_IMAGE_DETAIL, (image) => ({ image }))
 const uploadImage = createAction(UPLOAD_IMAGE, (image) => ({ image }))
 const deleteImage = createAction(DELETE_IMAGE, (boardId) => ({ boardId }))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
+const initImageList = createAction(INIT_IMAGE_LIST, () => ({}))
 
 /* initial state */
 const initialState = {
   image_list: [],
   page: 0,
   has_next: false,
+  is_loading: false,
 }
 
 /* middleware */
 const getImageListDB = (page) => {
   return async function (dispatch, getState, { history }) {
     const size = 13
+    dispatch(loading(true))
     await imageApi
       .getImageList(page, size)
       .then((response) => {
@@ -129,6 +133,7 @@ export default handleActions(
         draft.image_list.push(...action.payload.image_data.image_list)
         draft.page = action.payload.image_data.page
         draft.has_next = action.payload.image_data.next
+        draft.is_loading = false
       }),
     [UPLOAD_IMAGE]: (state, action) =>
       produce(state, (draft) => {
@@ -137,6 +142,10 @@ export default handleActions(
     [DELETE_IMAGE]: (state, action) =>
       produce(state, (draft) => {
         draft.image_list = action.payload
+      }),
+    [INIT_IMAGE_LIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.image_list = []
       }),
   },
   initialState
@@ -151,6 +160,7 @@ const actionCreators = {
   uploadImageDB,
   deleteImage,
   deleteImageDB,
+  initImageList,
 }
 
 export { actionCreators }

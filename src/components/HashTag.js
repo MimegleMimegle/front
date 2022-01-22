@@ -1,19 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { useHistory } from 'react-router'
 import { boardApi } from '../shared/api'
 
 const HashTag = (props) => {
+  const history = useHistory();
+  const hashTag = props.hashtag
+
   const clickHashTag = () => {
     boardApi
-      .searchPost(props.hashtag)
+      .searchPost(hashTag)
       .then((response) => {
         console.log(response.data)
         props.setFilteredPosts(response.data.data)
+        history.push({
+          pathname:`/post/search/${hashTag}`,
+          })
       })
       .catch((error) => {
         console.log('해시태그 관련 게시글 정보를 불러오는 데 문제가 발생했습니다.', error.response)
-        if (error.response.status === 404) {
+        if (error.response.status === 404 || 400) {
           props.setNotFound(true)
           props.closeNotFountModal()
         }
@@ -22,7 +29,7 @@ const HashTag = (props) => {
 
   return (
     <>
-      <HashTagButton onClick={clickHashTag}># {props.hashtag}</HashTagButton>
+      <HashTagButton onClick={clickHashTag}># {hashTag}</HashTagButton>
     </>
   )
 }
@@ -37,11 +44,8 @@ const HashTagButton = styled.button`
   font-size: 14px;
   margin: 12px 0px 12px 48px;
   padding: 0 10px;
-  line-height: 16.8px;  
-  /* background-color: #fff8b6; */
-  /* display: inline-block; */
-  /* border-radius: 20px; */
-  /* border: 1px solid #111; */
+  line-height: 17px;  
+
 `
 
 export default HashTag

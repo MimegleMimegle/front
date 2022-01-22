@@ -2,109 +2,179 @@ import React, { useEffect, useState } from 'react'
 import { history } from '../../redux/ConfigureStore'
 import styled from 'styled-components'
 import PostCard from '../../components/PostCard'
-import { MdPostAdd } from 'react-icons/md'
-import { useDispatch, useSelector } from 'react-redux'
-import post, { actionCreators as postActions } from '../../redux/modules/post'
 import Pagination from 'rc-pagination'
-import SearchPage from '../../shared/SearchPage'
-import { boardApi } from '../../shared/api'
-import axios from 'axios'
+import { dictQuestionApi } from '../../shared/api'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import DictNavBar from '../../components/DictNavBar'
+import SpeedDialButton from '../../components/SpeedDialButton'
+import Grid from '../../elements/Grid'
+import '../../index.css'
+import ConfirmModal from '../../components/modal/ConfirmModal'
+import Title from '../../elements/Title'
+import SearchPage from '../../shared/SearchPage'
 
+import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
+import { CircularProgress } from '@mui/material'
+import { RiEditLine } from 'react-icons/ri'
+import { IoSearchCircleSharp } from 'react-icons/io5'
 
 const PostList = (props) => {
-  const dispatch = useDispatch()
+  const userId = localStorage.getItem('id')
+  const token = localStorage.getItem('token')
+  const isLogin = userId !== null && token !== null ? true : false
 
-  const [post, setPost] = useState([])
+  const [question, setQuestion] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
-
-  const postList = useSelector((state) => state.post.list) // state는 리덕스 스토어의 전체 데이터
-  console.log(postList)
+  const [loading, setLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    getPostListDB()
-    // dispatch(postActions.getPostsDB())
+    setLoading(true)
+    getQuestionListDB()
+    setTimeout(() => setLoading(false), 400)
   }, [currentPage])
 
-  const getPostListDB = async () => {
-    let response = await axios.get(`http://54.180.150.230/api/board/list/FREEBOARD?page=${currentPage - 1}&size=${pageSize}`)
-    let totalLength = await boardApi.totalLength()
-    console.log(response)
-    console.log(totalLength)
-    setPost(response.data.data)
+  const getQuestionListDB = async () => {
+    let response = await dictQuestionApi.getQuestions(pageSize, currentPage)
+    let totalLength = await dictQuestionApi.totalLength()
+    setQuestion(response.data.data)
     setTotalCount(totalLength.data.data)
+    console.log(response.data.data)
   }
 
-  console.log(post)
-  console.log(totalCount)
+  const handleClickWrite = () => {
+    if (!isLogin) {
+      setShowModal(true)
+    } else {
+      history.push('/dict/question/write')
+    }
+  }
 
   return (
     <>
-      <Header type="PostList" location="밈+글 커뮤니티">
-        <button style={{ padding: '5px 8px 0' }} onClick={() => history.push('/post/search')}>
-          <SearchIcon />
-        </button>
-      </Header>
+      <Header location="오픈 밈사전" />
       <Container>
-        <Empty>
-          <Addbtn
-            onClick={() => {
-              history.push('/post/write')
-            }}
-          >
-            밈+글 등록
-          </Addbtn>
-          <AddbtnShadow />
-        </Empty>
+        <DictNavBar />
+        {!loading ? (
+          <>
+            <SearchBarSection>
+              <SearchPage />
+            </SearchBarSection>
+            <Wrap>
+              <CuriousHelp>
+                <Title>궁금해요!</Title>
+                {/* <div className="curious">궁금해요!</div> */}
+                <div className="wait">답변을 기다리고 있어요~</div>
+              </CuriousHelp>
+              {question &&
+                question.map((question, index) => {
+                  return <PostCard question={question} key={question.questionId} />
+                })}
 
-        {post &&
-          post.map((post, index) => {
-            return <PostCard post={post} key={post.boardId} />
-          })}
-
-        <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+              <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+            </Wrap>
+          </>
+        ) : (
+          <>
+            <Grid flex_center height="100%">
+              <CircularProgress color="inherit" />
+            </Grid>
+            <Grid height="90px"></Grid>
+          </>
+        )}
       </Container>
+      <Footer />
+      <SpeedDialButton _onClick={handleClickWrite}>
+        <RiEditLine size="28" fill="#FFFFFF" />
+      </SpeedDialButton>
+      <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">
+        <MoveLoginButton onClick={() => history.push('/login')}>이동</MoveLoginButton>
+      </ConfirmModal>
     </>
   )
 }
 
 export default PostList
 
-const Container = styled.div``
-
-const Empty = styled.div`
-  border-bottom: 1px solid #e5e5e5;
+const Container = styled.div`
+  padding: 56px 0 0;
+  height: 100%;
   position: relative;
+`
+const SearchBarSection = styled.div`
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px 16px;
+`
+
+const Wrap = styled.div`
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
+  padding: 16px 16px 0;
+`
+const CuriousHelp = styled.div`
+  display: flex;
+  margin: 0 0 16px;
+  .curious {
+    font-family: 'YdestreetL';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+  }
+  .wait {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 8px;
+  }
 `
 
 const Addbtn = styled.div`
   width: 280px;
   height: 40px;
-  background-color: rgba(0, 160, 255, 1);
+  background-color: ${({ theme }) => theme.colors.blue};
   border: 1px solid black;
   display: flex;
   justify-content: center;
-  align-itmes: center;
+  align-items: center;
   font-size: 14px;
-  font-weight: bold;
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: 700;
   cursor: pointer;
   z-index: 2;
-  margin: 20px 42px 20px 38px;
-  padding: 12px 105px 13px 106px;
+  /* transform: translateX(-50%); */
+  margin: 15px 0 30px 0;
+  transition-duration: 0.2s;
+  &:hover {
+    left: calc(50%);
+    transform: translate(4px, 10%);
+  }
 `
 
 const AddbtnShadow = styled.div`
   width: 280px;
   height: 40px;
-  top: 4px;
-  right: 42px;
+  top: 19px;
+  left: calc(50%);
+  transform: translateX(calc(-50% + 4px));
   background-color: white;
   border: 1px solid black;
   position: absolute;
-
-  /* z-index: -1; */
   z-index: -1;
+`
+const MoveLoginButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
 `

@@ -1,22 +1,72 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetL.otf') format('truetype'), url('../fonts/YdestreetL.ttf') format('truetype');
+}
+
 .MainPageLayout {
-  max-width: 100%;
-  max-height: 500px;
-  /* margin: 30px 0 0 0; */
+  width: 100%;
+  height: 100%;
+  margin: 10px 0 80px 0;
+  padding: 74px 0 0;
   overflow-x: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .MainPageLayout::-webkit-scrollbar {
   display: none;
 }
 
-.swiper {
-  width: 100%;
-  height: 100%;
+.MainPageCarouselSection {
+  width: 90%;
+  height: fit-content;
 }
 
-.swiper-slide {
+.MainPageCarouselText {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+
+.MainPageCarouselText_1 {
+  display: flex;
+  justify-self: flex-start;
+  margin: 0 10px 10px 0;
+  width: fit-content;
+  line-height: normal;
+  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
+
+  font-family: 'YdestreetB';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.MainPageCarouselText_2 {
+  width: fit-content;
+  height: fit-content;
+  font-size: 14px;
+  margin: 2px 0 0 0;
+}
+
+.swiper-wrapper {
+  width: 100%;
+}
+
+.main-swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -36,7 +86,20 @@
   align-items: center;
 }
 
-.swiper-slide img {
+.swiper-pagination {
+  position: relative;
+}
+
+.swiper-pagination-bullets-dynamic {
+  overflow: hidden;
+  font-size: 0;
+  position: absolute;
+  margin-bottom: 15px;
+
+  z-index: 10;
+}
+
+.main-swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
@@ -46,13 +109,14 @@
 .swiper {
   margin-left: none;
   margin-right: none;
+  /* width: 100%; */
 }
 
 .MainPageTagSection {
   width: 100%;
-  /* margin: 30px 0 0 0; */
+  margin: 10px 0 0 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
   justify-self: center;
@@ -61,39 +125,38 @@
 .MainPageTagName {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 10px 20px;
-  font-size: 18px;
-  font-weight: 700;
+  margin: 30px 0 10px 16px;
   width: fit-content;
   line-height: normal;
-  background-image: linear-gradient(transparent 50%, #ffe330 50%);
+  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
+
+  font-family: 'YdestreetB';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .MainPageTagList {
-  /* width: 95%; */
-  /* margin-left: 10px; */
   padding: 12px 16px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  background-color: none;
 }
 
 .MainPageTag {
-  /* border: none; */
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 75px;
-  /* background-color: lightblue; */
   background-color: white;
   width: fit-content;
   height: fit-content;
-  /* padding: 5px 15px 5px 15px; */
   padding: 6px 12px;
   color: black;
-  /* font-size: 16px; */
   font-size: 14px;
-  /* font-weight: bold; */
-  /* margin: 5px 0 5px 10px; */
   margin: 0 12px 10px 0;
+}
+.MainPageTag:hover {
+  cursor: pointer;
 }
 
 .MainPageTagMoreButton_1 {
@@ -101,36 +164,53 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-right: 20px;
+  margin-top: 15px;
+  padding-right: 20px;
 }
-.MainPageTagMoreButton_1:hover {
+
+.MainPageTagMoreButton_1st {
+  width: fit-content;
+  height: fit-content;
+}
+.MainPageTagMoreButton_1st:hover {
   cursor: pointer;
 }
 
 .MainPageTagMoreButton1 {
   display: flex;
-  font-size: 17px;
-  font-weight: 500;
-  margin-right: 55px;
+  font-size: 12px;
+  margin: 5px 55px 0 0;
   position: absolute;
+
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+
+  -webkit-appearance: none;
 }
 
 .MainPageTopPostSection {
+  width: 100%;
+  margin: 0 0 20px 0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin-bottom: 10px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-self: center;
 }
 
 .MainPageTopPostText {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 10px 20px;
-  font-size: 18px;
-  font-weight: 700;
+  margin: 40px 0 10px 16px;
   width: fit-content;
   line-height: normal;
-  background-image: linear-gradient(transparent 50%, #ffe330 50%);
+  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
+
+  font-family: 'YdestreetB';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .MainPageTopPostList {
@@ -147,23 +227,35 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin-top: 25px;
+  margin-bottom: 50px;
   padding-right: 20px;
 }
-.MainPageTagMoreButton_2:hover {
+
+.MainPageTagMoreButton_2nd {
+  width: fit-content;
+  height: fit-content;
+}
+.MainPageTagMoreButton_2nd:hover {
   cursor: pointer;
 }
 
 .MainPageTagMoreButton2 {
   display: flex;
-  font-size: 17px;
-  font-weight: 500;
-  margin-right: 55px;
+  font-size: 12px;
+  margin: 5px 55px 0 0;
   position: absolute;
+
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-weight: normal;
+
+  -webkit-appearance: none;
 }
 
 .MainPagePopularBoardSection {
   width: 100%;
-  /* margin: 30px 0 0 0; */
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -172,18 +264,22 @@
 .MainPagePopularBoardText {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 10px 20px;
+  margin: 30px 0 20px 0;
   font-size: 18px;
   font-weight: 700;
   width: fit-content;
   line-height: normal;
-  background-image: linear-gradient(transparent 50%, #ffe330 50%);
+  /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
 }
 
 .MainPagePopularBoardList {
-  width: 328px;
+  width: 100%;
   height: 120px;
-  margin: 0 0 16px 17px;
+  margin: 0 0 16px 0;
   display: flex;
   border: 1px solid black;
 }
@@ -198,13 +294,13 @@
 .MainPagePopularBoardInfo {
   display: flex;
   flex-direction: column;
-  width: 208px;
+  width: 100%;
   height: 100%;
   padding: 15px;
 }
 
 .MainPagePopularBoardTitle {
-  width: 80%;
+  width: 100%;
   height: 50px;
   margin-bottom: 25px;
   font-size: 14px;
@@ -226,15 +322,107 @@
   display: flex;
   justify-content: flex-end;
   padding-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
-.MainPageTagMoreButton_3:hover {
+
+.MainPageTagMoreButton_3rd {
+  width: fit-content;
+  height: fit-content;
+}
+.MainPageTagMoreButton_3rd:hover {
   cursor: pointer;
 }
 
 .MainPageTagMoreButton3 {
   display: flex;
-  font-size: 17px;
-  font-weight: 500;
-  margin-right: 55px;
+  margin: 5px 55px 0 0;
   position: absolute;
+
+  font-family: 'YdestreetL';
+  font-style: normal;
+  font-size: 12px;
+  font-weight: normal;
+
+  -webkit-appearance: none;
+}
+
+.MainPageAddButtonSection {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  margin: 50px 0 0;
+}
+
+.MainPageAddButtonSectionHr {
+  width: 100%;
+  height: 1px;
+  border: 1px solid black;
+}
+
+.MainPageAddButton {
+  width: 50px;
+  height: 50px;
+  border: 2px solid black;
+  border-radius: 50px;
+  background-color: #00a0ff;
+  font-size: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 80px;
+}
+
+.MainPageAddButtonGuideText {
+  margin: 50px 0 0 0;
+  width: fit-content;
+  height: 50px;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* 피드백 영역 */
+.MainPageFeedBackSection {
+  width: 90%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid black;
+  padding: 17px 0 17px 20px;
+  margin: 15px 0 0 0;
+  background-color: white;
+}
+.MainPageFeedBackSection:hover {
+  cursor: pointer;
+}
+
+.MainPageFeedBackText1 {
+  font-size: 0.85rem;
+  font-weight: 400;
+  width: 60%;
+}
+
+.MainPageFeedBackBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  margin: 0 0 0 10px;
+}
+
+.MainPageFeedBackText2 {
+  font-size: 0.85rem;
+  font-weight: 400;
+  width: 5%;
+  margin: 0 20px 0 0;
 }

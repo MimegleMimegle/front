@@ -4,25 +4,27 @@ import { likeApi } from '../../shared/api'
 import { history } from '../../redux/ConfigureStore'
 
 import ShareBottomSheet from '../ShareBottomSheet'
+import Grid from '../../elements/Grid'
 
-import { MdShare } from 'react-icons/md'
-import { HiOutlineHeart } from 'react-icons/hi'
-import { HiHeart } from 'react-icons/hi'
+import { ReactComponent as ShareIcon } from '../../styles/icons/share.svg'
+import { ReactComponent as EmptyHeartIcon } from '../../styles/icons/heart_blank.svg'
+import { ReactComponent as FullHeartIcon } from '../../styles/icons/heart_filled.svg'
 
-const OneImageCard = ({ image }) => {
+const OneImageCard = ({ image, type }) => {
+  const boardId = image.boardId
+
   const [hover, setHover] = useState(false)
   const [likeCount, setLikeCount] = useState(image.likeCnt)
   const [isLiked, setIsLiked] = useState(image.isLike)
   const [shareVisible, setShareVisible] = useState(false)
+  const [thumbNail, setThumbNail] = useState(image ? image.thumbNail : '')
 
   const handleShareVisible = (e) => {
-    e.preventDefault()
     e.stopPropagation()
     setShareVisible(!shareVisible)
   }
 
   const handleClickLike = async (e) => {
-    e.preventDefault()
     e.stopPropagation()
     if (isLiked) {
       await likeApi
@@ -64,49 +66,52 @@ const OneImageCard = ({ image }) => {
       >
         <ImageThumbnail src={image && image.thumbNail}></ImageThumbnail>
         {/* {hover && ( */}
-        <Overlay className={`${hover ? 'active' : 'in-active'}`}>
-          <div style={{ width: '100%', height: '100%', padding: '7px 7px 5px 7px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between' }}>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
-              <button className="share-button" onClick={handleShareVisible}>
-                <MdShare fontSize="18px" />
-              </button>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button className="like-button">
-                {isLiked ? <HiHeart style={{ fontSize: '18px' }} onClick={handleClickLike} /> : <HiOutlineHeart style={{ fontSize: '18px' }} onClick={handleClickLike} />}
-              </button>
+        <Overlay className={`${hover ? 'active' : 'inactive'}`}>
+          <Grid flex_between column height="100%" padding="6px">
+            <Grid flex_end>
+              <ShareIcon fill="#FFF" width="24px" onClick={handleShareVisible} />
+            </Grid>
+            <Grid flex_start>
+              {isLiked ? <FullHeartIcon fill="#FFF" onClick={handleClickLike} /> : <EmptyHeartIcon fill="#FFF" onClick={handleClickLike} />}
               <span className="like-count">{likeCount}</span>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </Overlay>
       </ImageBox>
-      {shareVisible && <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />}
+      <ShareBottomSheet type="image" shareVisible={shareVisible} setShareVisible={setShareVisible} thumbNail={thumbNail} boardId={boardId} />
     </>
   )
 }
 
 const ImageBox = styled.div`
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   position: relative;
-  max-width: 160px;
-  max-height: 270px;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  margin-bottom: 7px;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
+
   .active {
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.6);
     z-index: 100;
     transition: all 0.3s ease-in-out;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
   }
   .inactive {
     display: none;
   }
 `
+
 const ImageThumbnail = styled.img`
   width: 100%;
   height: 100%;
@@ -114,19 +119,10 @@ const ImageThumbnail = styled.img`
 `
 
 const Overlay = styled.div`
-  .share-button {
-    color: ${({ theme }) => theme.colors.white};
-    z-index: 1000;
-    padding: 0;
-  }
-  .like-button {
-    color: ${({ theme }) => theme.colors.white};
-    z-index: 1000;
-    padding: 0 3px 0 0;
-  }
   .like-count {
     color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => theme.fontSizes.small};
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    padding: 0 0 0 3px;
   }
 `
 

@@ -1,5 +1,22 @@
+@font-face {
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/YdestreetB.otf') format('truetype'), url('../fonts/YdestreetB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Pretendard-Bold.woff') format('woff'), url('../fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
 .DictSearchPageLayout {
+  padding: 56px 0 0;
+  margin: 0 0 120px 0;
   width: 100%;
+  height: fit-content;
   /* border: 3px solid cornflowerblue; */
   overflow-x: hidden;
   overflow-y: scroll;
@@ -14,4 +31,77 @@
 .DictSearchListSection {
   width: 100%;
   height: 100%;
+  border-top: 2px solid #e5e5e5;
+  border-bottom: 2px solid #e5e5e5;
+  background-color: white;
+  margin: 0 0 20px 0;
+}
+
+.DictSearchResultText {
+  padding: 15px;
+  margin: 0 0 20px 0;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 1.125rem;
+  font-weight: normal;
+}
+
+.DictSearchNoResult {
+  width: 100%;
+  height: fit-content;
+  padding: 15px;
+
+  font-size: 1rem;
+}
+
+.DictSearchNoResultAddDictGuideText {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 1.125rem;
+  font-weight: normal;
+}
+
+.DictSearchNoResult_AddDictButton {
+  position: relative;
+}
+.DictSearchNoResult_AddDictButton:hover {
+  cursor: pointer;
+}
+
+.DictSearchNoResult_AddDictButton_1 {
+  width: 110px;
+  height: 35px;
+  border: 2px solid black;
+  background-color: rgba(0, 160, 255, 1);
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'YdestreetB';
+  font-style: normal;
+  font-size: 0.875rem;
+  font-weight: normal;
+
+  z-index: 2;
+}
+
+.DictSearchNoResult_AddDictButton_2 {
+  width: 110px;
+  height: 35px;
+  border: 2px solid black;
+  top: 4px;
+  left: 4px;
+  background-color: white;
+  border-radius: 30px;
+  position: absolute;
+
+  z-index: -1;
 }

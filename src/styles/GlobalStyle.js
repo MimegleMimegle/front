@@ -17,7 +17,11 @@ html, body, div, span, applet, object, iframe,
     figure, figcaption, footer, header, hgroup, 
     menu, nav, output, ruby, section, summary,
     time, mark, audio, video, input, button {
-      font-family: 'Pretendard-Light';
+      font-family: 'Pretendard Variable';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.6;
     }
 
 *, *::before, *::after {
@@ -25,12 +29,7 @@ html, body, div, span, applet, object, iframe,
 }
 
 body {
-  font-family: 'Pretendard-Light';
-  background-color: #e5e5e5;
-  color: #000000;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.6;
+  color: #000;
 }
 
 p, h1, h2, h3, h4 {
@@ -59,6 +58,15 @@ a {
 
 li {
   list-style: none;
+}
+
+input, textarea, button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
 }
 
 `

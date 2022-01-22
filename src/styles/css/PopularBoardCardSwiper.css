@@ -1,54 +1,63 @@
+.popularBoardCardSwiper {
+  background-color: #fbfafa;
+  width: 100%;
+  height: fit-content;
+
+  -webkit-appearance: none;
+}
+
 .PopularBoardCard {
   position: relative;
   width: 100%;
-  height: 300px;
-}
-.PopularBoardCard:hover {
-  cursor: pointer;
+  height: 250px;
+  background-color: #fbfafa;
+
+  -webkit-appearance: none;
 }
 
 .PopularBoardCard_1 {
-  border: 1px solid black;
-  border-radius: 0 0 0 0;
+  border: 2px solid black;
   top: 0px;
   left: 0px;
-  background-color: white;
+  background-color: #fbfafa;
   width: 180px;
   height: 240px;
-  margin: 10px;
   position: absolute;
   object-fit: cover;
 
   z-index: 2;
+
+  -webkit-appearance: none;
+}
+.PopularBoardCard_1:hover {
+  cursor: pointer;
 }
 
 .PopularBoardCard_2 {
-  border: 1px solid black;
-  border-radius: 0 0 0 0;
-  top: 16px;
-  left: 16px;
+  border: 2px solid black;
+  top: 8px;
+  left: 8px;
   background-color: #ffe330;
   width: 180px;
   height: 240px;
   position: absolute;
 
   z-index: 1;
+
+  -webkit-appearance: none;
 }
 
 .PopularBoardCard_Image {
   width: fit-content;
   height: fit-content;
+
+  -webkit-appearance: none;
 }
 
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
+.popular-swiper-slide {
   text-align: center;
   font-size: 16px;
-  background: white;
+  width: 200px !important;
   /* Center slide text vertically */
   display: -webkit-box;
   display: -ms-flexbox;
@@ -62,6 +71,8 @@
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+
+  -webkit-appearance: none;
 }
 
 .swiper-slide img {
@@ -69,4 +80,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+
+  -webkit-appearance: none;
 }

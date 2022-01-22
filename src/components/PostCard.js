@@ -1,53 +1,83 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai'
-import { FiMessageSquare } from 'react-icons/fi'
-import { useSelector } from 'react-redux'
+import { dictQuestionApi } from '../shared/api'
 import { useHistory } from 'react-router'
-import HashTag from './HashTag'
+import '../index.css'
+import { ReactComponent as ViewIcon } from '../styles/icons/조회_18dp.svg'
+import { ReactComponent as EmptyHeartIcon } from '../styles/icons/하트 비활성_24dp.svg'
+import { ReactComponent as FullHeartIcon } from '../styles/icons/하트 활성_24dp.svg'
+import { ReactComponent as CommentIcon } from '../styles/icons/댓글_18dp.svg'
+import { ReactComponent as ICuriousToo } from '../styles/icons/quiz_black_24dp.svg'
 
-const PostCard = ({ post }) => {
+import { BiBadge, BiBadgeCheck } from 'react-icons/bi'
+import Grid from '../elements/Grid'
+
+const PostCard = ({ question }) => {
   const history = useHistory()
 
   const onC = () => {
-    history.push(`/post/detail/${post.boardId}`)
+    history.push(`/dict/question/detail/${question && question.questionId}`)
   }
+  const [curiousTooCnt, setCuriousTooCnt] = useState(question.curiousTooCnt)
+  const [isCuriousToo, setIsCuriousToo] = useState(question.isCuriousToo)
+  const hour = question.createdAt.split('T')[1].split('.')[0]
 
-  const hour = post.createdAt.split('T')[1].split('.')[0]
+  const handleClickCuriousToo = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isCuriousToo) {
+      await dictQuestionApi
+        .curiousToo(question.questionId)
+        .then((response) => {
+          console.log(response.data)
+          setIsCuriousToo(false)
+          console.log(isCuriousToo)
+          setCuriousTooCnt(curiousTooCnt - 1)
+        })
+        .catch((error) => {
+          console.log('나도궁금해요 취소 문제 발생', error.response)
+        })
+    } else {
+      await dictQuestionApi
+        .curiousToo(question.questionId)
+        .then((response) => {
+          console.log(response.data)
+          setIsCuriousToo(true)
+          setCuriousTooCnt(curiousTooCnt + 1)
+          console.log(isCuriousToo)
+        })
+        .catch((error) => {
+          console.log('나도 궁금해요 문제 발생', error.response)
+        })
+    }
+  }
 
   return (
     <>
       <FullWrap>
-        <Wrap postList={post} onClick={onC}>
-          <UserInfo>
-            <UserImg src={post ? post.profileImageUrl : null} alt="" />
-            <div className="userinfo">
-              <Writer>{post ? post.writer : null}</Writer>
-              <div className="createdate">
-                <CreatedAt>{post ? post.createdAt.split('T')[0] : null}</CreatedAt>
-                <CreatedAt>{post ? hour.split(':')[0] + ':' + hour.split(':')[1] : null}</CreatedAt>
-              </div>
-            </div>
-          </UserInfo>
-          <Content>
-            <Title>{post ? post.title : null}</Title>
-            <HashTagHere>
-              {post.hashTags &&
-                post.hashTags.map((hashTag, index) => {
-                  return <p key={index}>#{hashTag}</p>
-                })}
-            </HashTagHere>
-          </Content>
+        <Wrap questionList={question} onClick={onC}>
+          <Grid flex_align>
+            <CuriousQ>Q</CuriousQ>
+            <Title>{question && question.title}</Title>
+          </Grid>
+          {/* <div style={{ display: 'flex' }}> */}
+          <Content>{question && question.content}</Content>
+          {/* </div> */}
           <Icon>
-            <AiOutlineEye size="18" color="#878C92" />
-            <Number>{post ? post.views : null}</Number>
-            <AiOutlineHeart color="#878C92" size="18" />
-            <Number>{post ? post.likeCnt : null}</Number>
-            <FiMessageSquare size="19" color="#878C92" />
-            <Number>{post ? post.commentCnt : null}</Number>
+            <IconBox>
+              <ViewIcon fill="#878C92" />
+              <Number>{question && question.views}</Number>
+            </IconBox>
+            <IconBox>
+              {isCuriousToo ? <ICuriousToo fill="#00A0FF" onClick={handleClickCuriousToo} /> : <ICuriousToo fill="#878C92" onClick={handleClickCuriousToo} />}
+              <Number className="like-count">{curiousTooCnt}</Number>
+            </IconBox>
+            <IconBox>
+              <CommentIcon fill="#878C92" />
+              <Number>{question && question.commentCnt}</Number>
+            </IconBox>
           </Icon>
         </Wrap>
-        {post.thumbNail ? <ThumbNail className="uploadimg" src={post && post.thumbNail} alt="" /> : null}
       </FullWrap>
     </>
   )
@@ -56,89 +86,74 @@ const PostCard = ({ post }) => {
 export default PostCard
 
 const FullWrap = styled.div`
-  height: 133px;
-  padding: 16px 16px 16px 16px;
+  padding: 16px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #e5e5e5;
+  border: 2px solid black;
+  margin: 16px 0;
+  width: 100%;
+  height: fit-content;
+  background-color: #fff;
 `
 
 const Wrap = styled.div`
+  width: 100%;
   cursor: pointer;
-`
-
-const UserInfo = styled.div`
   display: flex;
-  height: 30px;
-  .createdate {
-    display: flex;
-  }
+  flex-direction: column;
 `
 
-const UserImg = styled.img`
-  margin: 0 8px 0 0;
-  width: 28px;
-  height: 28px;
-  border: 1px solid #000000;
-  box-sizing: border-box;
+const CuriousQ = styled.div`
+  background: #ff8e00;
+  width: 40px;
+  height: 40px;
+  border: 2px solid black;
   border-radius: 150px;
-`
-const Writer = styled.text`
+  font-family: 'YdestreetB';
   font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 13px;
+  font-weight: bold;
+  font-size: 20px;
   display: flex;
   align-items: center;
-  margin: 0 0 4px 0;
+  justify-content: center;
+  margin: 0 12px 0 0;
 `
 
-const CreatedAt = styled.div`
-  font-style: normal;
-  font-weight: normal;
-  font-size: 9px;
-  line-height: 11px;
-  margin: 0 3px 0 0;
+const Title = styled.div`
+  width: calc(100% - 52px);
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: 500;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const Content = styled.div`
-  margin: 10px 0 0 0;
-  cursor: pointer;
-  hight: 30px;
-  width: 250px;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 20px;
-`
-const Title = styled.div`
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 20px;
-`
-
-const HashTagHere = styled.div`
-  display: flex;
-  fontsize: 12px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: 24px;
+  height: 48px;
+  margin: 16px 0 0;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
 
 const Icon = styled.div`
   display: flex;
-  padding: 8px 0;
+  align-items: center;
 `
 
 const Number = styled.p`
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 14px;
-  display: flex;
-  align-items: center;
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-weight: 300;
   margin: 0 9.5px 0 5px;
 `
 
-const ThumbNail = styled.img`
-  width: 60px;
-  height: 60px;
-  margin: 27px 0 0 0;
+const IconBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 16px 0 0;
 `

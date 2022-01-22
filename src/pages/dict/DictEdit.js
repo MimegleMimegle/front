@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/css/DictEdit.css'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
-import axios from 'axios'
+import { dictApi } from '../../shared/api'
 import { actionCreators as dictActions } from '../../redux/modules/dict'
 import swal from 'sweetalert'
 import Header from '../../components/Header'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 
 const DictEdit = (props) => {
   const dispatch = useDispatch()
@@ -14,9 +16,14 @@ const DictEdit = (props) => {
   const [summary, setSummary] = React.useState('')
   const [content, setContent] = React.useState('')
   const [recentWriter, setRecentWriter] = React.useState('')
+  const [showModal, setShowModal] = React.useState(false)
+
+  const handleShowModal = (e) => {
+    setShowModal(!showModal)
+  }
 
   const getDictListDB = async () => {
-    let response = await axios.get(`http://54.180.150.230/api/dict/${dictId}`)
+    let response = await dictApi.getDictDetail(dictId)
     console.log(response)
     const _dict = response.data.data
     setDict(_dict)
@@ -44,23 +51,7 @@ const DictEdit = (props) => {
   }
   console.log(recentWriter)
   const editDict = () => {
-    swal({
-      title: '작성하신 내용을 게시하시겠어요?',
-      buttons: {
-        cancel: true,
-        confirm: true,
-      },
-    }).then((editDict) => {
-      if (editDict) {
-        dispatch(dictActions.editDictDB(dictId, summary, content))
-        swal('밈 단어 편집이 완료되었습니다.', {
-          icon: 'success',
-        })
-      } else if (summary === '' || content === '') {
-        swal('변경사항이 없습니다.')
-        return
-      }
-    })
+    dispatch(dictActions.editDictDB(dictId, summary, content))
   }
 
   const allClearKeyword = () => {
@@ -84,39 +75,62 @@ const DictEdit = (props) => {
 
   return (
     <>
-      <Header type="DictEdit" location="오픈 밈사전"></Header>
+      <Header type="goBack" location="오픈 밈사전" />
       <div className="DictCardEditPageLayout">
         <div className="DictCardEditInputSection">
           <div className="DictCardEditInputTitleContainer">
-            <div className="DictCardEditInputTitleGuideText">단어</div>
+            <div className="DictCardEditInputTitleGuideText">
+              단어<span className="highlight">*</span>
+            </div>
             <div className="DictCardEditInputTitle">{dict.title}</div>
           </div>
           <div className="DictCardEditInputSummaryContainer">
-            <div className="DictCardEditInputSummaryGuideText">한줄설명</div>
-            <textarea className="DictCardEditInputSummary" type="text" cols="40" rows="3" value={summary} onChange={onChangeSummary} placeholder={dict.summary}>
-              {dict.summary}
-            </textarea>
+            <div className="DictCardEditInputSummaryGuideText">
+              한줄설명<span className="highlight">*</span>
+            </div>
+            <input
+              className="DictCardEditInputSummary"
+              type="text"
+              cols="40"
+              rows="3"
+              maxlength="25"
+              value={summary}
+              onChange={onChangeSummary}
+              placeholder="단어의 뜻을 25자 이내로 요약하여 입력해주세요"
+            />
           </div>
           <div className="DictCardEditInputContentContainer">
             <div className="DictCardEditInputContentGuideText">부가설명</div>
-            <textarea className="DictCardEditInputContent" type="text" cols="40" rows="5" value={content} onChange={onChangeContent} placeholder={dict.content}>
+            <textarea className="DictCardEditInputContent" type="text" cols="40" rows="10" value={content} onChange={onChangeContent} placeholder="추가적인 설명이나 예시를 작성해 주세요">
               {dict.meaning}
             </textarea>
           </div>
         </div>
-        <div className="DictCardEditTemporaryOrSubmitButton">
-          {/* <div className="DictCardEditTemporaryButton" onClick={allClearKeyword}>
+      </div>
+      <div className="DictCardEditTemporaryOrSubmitButton">
+        {/* <div className="DictCardEditTemporaryButton" onClick={allClearKeyword}>
             <div className="DictCardEditTemporaryButton_1">초기화</div>
             <div className="DictCardEditTemporaryButton_2"></div>
           </div> */}
-          <div className="DictCardEditSubmitButton" type="submit" onClick={editDict}>
-            <div className="DictCardEditSubmitButton_1">편집</div>
-            <div className="DictCardEditSubmitButton_2"></div>
-          </div>
+        <div className="DictCardEditSubmitButton" type="submit">
+          <button className="DictCardEditSubmitButton_1" onClick={handleShowModal} disabled={!(summary !== '' && content !== '')}>
+            편집
+          </button>
+          <div className="DictCardEditSubmitButton_2"></div>
         </div>
       </div>
+      {showModal && (
+        <ConfirmModal question="편집하신 단어를 게시하시겠어요?" showModal={showModal} setShowModal={setShowModal}>
+          <EditDictButton onClick={editDict}>게시</EditDictButton>
+        </ConfirmModal>
+      )}
     </>
   )
 }
+
+const EditDictButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
+`
 
 export default DictEdit

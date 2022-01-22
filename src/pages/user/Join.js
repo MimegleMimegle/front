@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import '../../styles/css/Join.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../redux/ConfigureStore'
 import swal from 'sweetalert'
 import { actionCreators as userActions } from '../../redux/modules/user'
@@ -9,9 +9,17 @@ import kakaotalk from '../../styles/image/kakaotalk.svg'
 import naver from '../../styles/image/naver.svg'
 import googleColor from '../../styles/image/google_color.svg'
 import styled from 'styled-components'
+import DoubleCheckModal from '../../components/modal/DoubleCheckModal'
+import Footer from '../../components/Footer'
+import MemegleIcon from '../../styles/image/smileIcon_Yellow.png'
+import Grid from '../../elements/Grid'
+import AlertModal from '../../components/modal/AlertModal'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const Join = () => {
   const dispatch = useDispatch()
+
+  const loading = useSelector((state) => state.user.is_loading)
 
   //이름, 이메일, 비밀번호, 비밀번호 확인
   const [username, setUsername] = React.useState('')
@@ -32,8 +40,18 @@ const Join = () => {
   const [isPasswordCheck, setIsPasswordCheck] = useState(false)
 
   // 아이디 & 닉네임 중복확인
-  const [isUsernameChecked, setIsUsernameChecked] = useState(false)
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false)
+  const [passedUsername, setPassedUsername] = useState('')
+  const [passedNickname, setPassedNickname] = useState('')
+  const [usedUsername, setUsedUsername] = useState('')
+  const [usedNickname, setUsedNickname] = useState('')
+  const [doubleCheck, setDoubleCheck] = useState(null)
+  const [InputUsernameAlert, setInputUsernameAlert] = useState(false)
+  const [InputNicknameAlert, setInputNicknameAlert] = useState(false)
+  const [DoubleCheckAlert, setDoubleCheckAlert] = useState(false)
+
+  console.log(doubleCheck)
+
+  const [showAlert, setShowAlert] = useState(false)
 
   // 유저네임 유효성 검사
   const onChangeUsername = (e) => {
@@ -94,44 +112,71 @@ const Join = () => {
   }
 
   const checkUsername = async () => {
-    await userApi
-      .checkUsername(username)
-      .then((response) => {
-        console.log(response.data)
-        if (response.data.result === true) {
-          swal('사용 가능한 아이디입니다.')
-          setIsUsernameChecked(true)
-        } else {
-          swal('사용 중인 아이디입니다.')
-          setIsUsernameChecked(false)
-        }
-      })
-      .catch((error) => {
-        console.log('아이디를 중복확인하는 데 문제가 발생했습니다.', error.response)
-      })
+    if (username !== '') {
+      await userApi
+        .checkUsername(username)
+        .then((response) => {
+          console.log(response.data)
+          if (response.data.result === true) {
+            /* 중복확인 -> 사용 가능한 아이디 상태 저장 */
+            setDoubleCheck(true)
+            setPassedUsername(username)
+          } else {
+            /* 중복확인 -> 사용 불가능한 아이디 상태 저장 */
+            setDoubleCheck(false)
+            setUsedUsername(username)
+          }
+        })
+        .catch((error) => {
+          console.log('아이디를 중복확인하는 데 문제가 발생했습니다.', error.response)
+        })
+    } else {
+      /* 아이디를 입력하지 않고 중복확인 버튼을 클릭하는 경우 */
+      /* 아이디를 입력한 후 클릭해달라는 알럿 */
+      setInputUsernameAlert(true)
+      setTimeout(() => setInputUsernameAlert(false), 2000)
+    }
   }
 
   const checkNickname = async () => {
-    await userApi
-      .checkNickname(nickname)
-      .then((response) => {
-        console.log(response.data)
-        if (response.data.result === true) {
-          swal('사용 가능한 닉네임입니다.')
-          setIsNicknameChecked(true)
-        } else {
-          swal('사용 중인 닉네임입니다.')
-          setIsNicknameChecked(false)
-        }
-      })
-      .catch((error) => {
-        console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
-      })
+    if (nickname !== '') {
+      await userApi
+        .checkNickname(nickname)
+        .then((response) => {
+          console.log(response.data)
+          if (response.data.result === true) {
+            /* 중복확인 -> 사용 가능한 닉네임 상태 저장 */
+            setDoubleCheck(true)
+            setPassedNickname(nickname)
+          } else {
+            /* 중복확인 -> 사용 불가능한 닉네임 상태 저장 */
+            setDoubleCheck(false)
+            setUsedNickname(nickname)
+          }
+        })
+        .catch((error) => {
+          console.log('닉네임을 중복확인하는 데 문제가 발생했습니다.', error.response)
+        })
+    } else {
+      /* 닉네임을 입력하지 않고 중복확인 버튼을 클릭하는 경우 */
+      /* 닉네임을 입력한 후 클릭해달라는 알럿 */
+      setInputNicknameAlert(true)
+      setTimeout(() => setInputNicknameAlert(false), 2000)
+    }
   }
 
   const join = () => {
     if (username === '' || nickname === '' || password === '' || passwordCheck === '') {
-      swal('빈칸을 모두 입력해주세요!')
+      setShowAlert(true)
+      setTimeout(() => setShowAlert(false), 2000)
+      return
+    }
+    if (username !== passedUsername || username === usedUsername || nickname !== passedNickname || nickname === usedNickname) {
+      /* 입력한 아이디 또는 닉네임이 중복확인 -> 사용 가능한 아이디 또는 닉네임과 일치하지 않는 경우 (중복확인 후 입력란을 다시 변경한 경우) */
+      /* 입력한 아이디 또는 닉네임이 중복확인 -> 이미 사용 중인 아이디 또는 닉네임과 일치하는 경우 (사용 중이라는 알럿을 띄웠지만 변경하지 않은 경우) */
+      /* 아이디와 닉네임 중복확인을 완료할 것을 요청하는 알럿 */
+      setDoubleCheckAlert(true)
+      setTimeout(() => setDoubleCheckAlert(false), 2000)
       return
     }
     dispatch(userActions.joinDB(username, nickname, password, passwordCheck))
@@ -139,6 +184,9 @@ const Join = () => {
 
   return (
     <>
+      <Grid flex_center padding="40px 0 37px">
+        <Logo src={MemegleIcon} />
+      </Grid>
       <div className="JoinPageLayout">
         <div className="MultiInputBoxLayout_join">
           <div className="LoginOrJoinButtons_join">
@@ -152,7 +200,20 @@ const Join = () => {
               아이디
             </label>
             <DoubleCheckBox>
-              <input className="JoinInputBox input1" id="UsernameInput_Join" maxLength="16" placeholder="영어, 숫자 3~16자" type="text" value={username} onChange={onChangeUsername} />
+              <input
+                className="JoinInputBox input1"
+                id="UsernameInput_Join"
+                maxLength="16"
+                placeholder="영어, 숫자 3~16자"
+                type="text"
+                value={username}
+                onChange={onChangeUsername}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    checkUsername()
+                  }
+                }}
+              />
               <button className="doubleCheckButton" onClick={checkUsername}>
                 중복확인
               </button>
@@ -165,12 +226,17 @@ const Join = () => {
               <input
                 className="JoinInputBox input1"
                 id="NicknameInput_Join"
-                maxLength="16"
+                maxLength="10"
                 placeholder="한글,영어 대소문자, 숫자 2~10자"
                 text="이름"
                 type="text"
                 value={nickname}
                 onChange={onChangeNickname}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    checkNickname()
+                  }
+                }}
               />
               <button className="doubleCheckButton" onClick={checkNickname}>
                 중복확인
@@ -185,7 +251,7 @@ const Join = () => {
               id="PasswordInput_Join"
               maxLength="16"
               type="password"
-              placeholder="영어 대소문자, 숫자, 특수문자 6~16자"
+              placeholder="영어 대소문자, 숫자, 특수문자(!@#$%^&*()._-) 6~16자"
               onChange={onChangePassword}
               passwordText="비밀번호 (숫자+영문자+특수문자 조합으로 8자리 이상)"
               title="비밀번호"
@@ -200,7 +266,7 @@ const Join = () => {
               id="PasswordCheckInput_Join"
               maxLength="16"
               type="password"
-              placeholder="영어 대소문자, 숫자, 특수문자 6~16자"
+              placeholder="영어 대소문자, 숫자, 특수문자(!@#$%^&*()._-) 6~16자"
               onChange={onChangePasswordCheck}
               passwordText=" "
               title="비밀번호 확인"
@@ -218,20 +284,30 @@ const Join = () => {
                 }
               }}
             >
-              <div className="MemegleButton_JoinSubmit Join1">회원가입</div>
+              <button className="MemegleButton_JoinSubmit Join1" disabled={loading}>
+                {loading ? <CircularProgress size={16} sx={{ color: '#FFFFFF' }} /> : '회원가입'}
+              </button>
               <div className="MemegleButton_JoinSubmit Join2"></div>
             </div>
           </div>
-          <div className="SocialLoginHR_JoinPage">또는</div>
-          <div className="SocialLoginBtns_JoinPage">
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=316b336d315dff9b64eaa117a37ee25b&redirect_uri=http://localhost:3000/*TODO*/&response_type=code">
-              <img className="KakaoLoginBtn_JoinPage" size="5" src={kakaotalk}></img>
-            </a>
-            <img className="GoogleLoginBtn_JoinPage" size="5" src={googleColor}></img>
-            <img className="NaverLoginBtn_JoinPage" size="5" src={naver}></img>
-          </div>
         </div>
       </div>
+      <Footer />
+      {doubleCheck === null && null}
+      {doubleCheck === true && (
+        <DoubleCheckModal title="사용 가능합니다!" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+          <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
+        </DoubleCheckModal>
+      )}
+      {doubleCheck === false && (
+        <DoubleCheckModal type="exist-onlyConfirm" title="이미 사용 중입니다!" doubleCheck={doubleCheck} setDoubleCheck={setDoubleCheck}>
+          <ConfirmButton onClick={() => setDoubleCheck(null)}>확인</ConfirmButton>
+        </DoubleCheckModal>
+      )}
+      <AlertModal showModal={showAlert}>아이디와 비밀번호를 모두 입력해 주세요!</AlertModal>
+      <AlertModal showModal={InputUsernameAlert}>아이디를 입력한 후 중복확인 버튼을 클릭해 주세요!</AlertModal>
+      <AlertModal showModal={InputNicknameAlert}>닉네임을 입력한 후 중복확인 버튼을 클릭해 주세요!</AlertModal>
+      <AlertModal showModal={DoubleCheckAlert}>먼저 아이디와 닉네임의 중복확인을 완료해 주세요!</AlertModal>
     </>
   )
 }
@@ -244,13 +320,15 @@ const DoubleCheckBox = styled.div`
 `
 const SpanUsername = styled.span`
   font-size: 12px;
-  margin-bottom: -15px;
+  margin-top: -5px;
+  margin-bottom: -10px;
   color: #ffa07a;
 `
 
 const SpanNickname = styled.span`
   font-size: 12px;
-  margin-bottom: -15px;
+  margin-top: -5px;
+  margin-bottom: -10px;
   color: #ffa07a;
 `
 const SpanPassword = styled.span`
@@ -260,8 +338,23 @@ const SpanPassword = styled.span`
 `
 const SpanPasswordCheck = styled.span`
   font-size: 12px;
-  margin-bottom: -15px;
+  margin-bottom: -10px;
   color: #ffa07a;
+`
+
+const ConfirmButton = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.blue};
+`
+
+const Logo = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 2px solid #111;
+  /* cursor: pointer; */
+  background-size: cover;
+  background-image: url('${(props) => props.src}');
+  background-position: center;
 `
 
 export default Join
