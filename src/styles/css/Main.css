@@ -45,15 +45,14 @@
   display: flex;
   justify-self: flex-start;
   margin: 0 10px 10px 0;
-  font-size: 18px;
-  font-weight: 700;
   width: fit-content;
   line-height: normal;
   /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
 
   font-family: 'YdestreetB';
+  font-size: 20px;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 700;
 }
 
 .MainPageCarouselText_2 {
@@ -115,7 +114,7 @@
 
 .MainPageTagSection {
   width: 100%;
-  /* margin: 30px 0 0 0; */
+  margin: 10px 0 0 0;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -127,15 +126,14 @@
   display: flex;
   justify-self: flex-start;
   margin: 30px 0 10px 16px;
-  font-size: 18px;
-  font-weight: 700;
   width: fit-content;
   line-height: normal;
   /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
 
   font-family: 'YdestreetB';
+  font-size: 20px;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 700;
 }
 
 .MainPageTagList {
@@ -157,13 +155,16 @@
   font-size: 14px;
   margin: 0 12px 10px 0;
 }
+.MainPageTag:hover {
+  cursor: pointer;
+}
 
 .MainPageTagMoreButton_1 {
   position: relative;
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin-top: 15px;
   padding-right: 20px;
 }
 
@@ -201,16 +202,15 @@
 .MainPageTopPostText {
   display: flex;
   justify-self: flex-start;
-  margin: 30px 0 10px 16px;
-  font-size: 18px;
-  font-weight: 700;
+  margin: 40px 0 10px 16px;
   width: fit-content;
   line-height: normal;
   /* background-image: linear-gradient(transparent 60%, #ffe330 40%); */
 
   font-family: 'YdestreetB';
+  font-size: 20px;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 700;
 }
 
 .MainPageTopPostList {
@@ -227,7 +227,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin-top: 25px;
   margin-bottom: 50px;
   padding-right: 20px;
 }
@@ -388,4 +388,41 @@
   font-style: normal;
   font-size: 16px;
   font-weight: 400;
+}
+
+/* 피드백 영역 */
+.MainPageFeedBackSection {
+  width: 90%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid black;
+  padding: 17px 0 17px 20px;
+  margin: 15px 0 0 0;
+  background-color: white;
+}
+.MainPageFeedBackSection:hover {
+  cursor: pointer;
+}
+
+.MainPageFeedBackText1 {
+  font-size: 0.85rem;
+  font-weight: 400;
+  width: 60%;
+}
+
+.MainPageFeedBackBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  margin: 0 0 0 10px;
+}
+
+.MainPageFeedBackText2 {
+  font-size: 0.85rem;
+  font-weight: 400;
+  width: 5%;
+  margin: 0 20px 0 0;
 }

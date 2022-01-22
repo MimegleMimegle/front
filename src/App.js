@@ -32,11 +32,13 @@ import {
   DictStat,
 } from './pages'
 import MobileFrame from './components/MobileFrame'
+import Background from './components/Background'
 import NaverLoginHandler from './shared/NaverLoginHandler'
 import KakaoLoginHandler from './shared/KakaoLoginHandler'
 import GoogleLoginHandler from './shared/GoogleLoginHandler'
 import './App.css'
-import bg from '../src/styles/image/배경_완료.svg'
+import bg from '../src/styles/image/background.jpeg'
+// import yellowmollu from '../src/styles/image/배경 분리/노랑 몰?루.svg'
 
 function App() {
   useEffect(() => {
@@ -49,7 +51,8 @@ function App() {
   }, [])
   return (
     <>
-      <Wrapper>
+      <Background>
+        {/* <Wrapper> */}
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <ConnectedRouter history={history}>
@@ -68,7 +71,7 @@ function App() {
               <Route path="/dict" exact component={DictList} />
               <Route path="/dict/write" exact component={Auth(DictWrite, true)} />
               <Route path="/dict/edit/:dictId" exact component={Auth(DictEdit, true)} />
-              <Route path="/dict/detail/:dictId" component={DictDetail} />
+              <Route path="/dict/detail/:dictId" exact component={DictDetail} />
               <Route path="/dict/search/:keyword" exact component={DictSearch} />
               <Route path="/dict/history/:dictId" exact component={DictHistory} />
               <Route path="/dict/mymeme" exact component={Auth(DictMyMeMe, true)} />
@@ -83,7 +86,8 @@ function App() {
             </MobileFrame>
           </ConnectedRouter>
         </ThemeProvider>
-      </Wrapper>
+        {/* </Wrapper> */}
+      </Background>
     </>
   )
 }
@@ -104,8 +108,8 @@ const Wrapper = styled.div`
   bottom: 0;
   left: 0;
 
-  @media screen and (min-width: 1120px) {
-    background: url(${bg});
+  @media screen and (min-width: 500px) {
+    background: url(${bg}) no-repeat;
     background-size: 100% 100vh;
   }
 `
