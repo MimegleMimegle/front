@@ -50,12 +50,13 @@ function App() {
   }, [])
   return (
     <>
-      {/* <Wrapper> */}
-      <Background>
+      <Wrapper>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <ConnectedRouter history={history}>
-            <MobileFrame>
+            <BackgroundOpacity />
+            <Background className="BackgroundPage" />
+            <MobileFrame className="MobileFramePage">
               <Route path="/" exact component={Main} />
               <Route path="/join" exact component={Auth(Join, false)} />
               <Route path="/login" exact component={Auth(Login, false)} />
@@ -85,8 +86,7 @@ function App() {
             </MobileFrame>
           </ConnectedRouter>
         </ThemeProvider>
-      </Background>
-      {/* </Wrapper> */}
+      </Wrapper>
     </>
   )
 }
@@ -107,10 +107,36 @@ const Wrapper = styled.div`
   bottom: 0;
   left: 0;
 
+  .BackgroundPage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -999;
+  }
+
+  .MobileFramePage {
+    z-index: 999;
+  }
+
   @media screen and (min-width: 500px) {
     background: url(${bg}) no-repeat;
     background-size: 100% 100vh;
   }
+`
+
+const BackgroundOpacity = styled.div`
+  width: 100vw;
+  height: 100vh;
+  /* background: rgb(250, 250, 250, 0.2); */
+  /* background-size: contain; */
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `
 
 export default App
