@@ -145,6 +145,9 @@ const RankSection = styled.section`
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
+    -webkit-appearance: none;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
   }
   .rank-info {
     font-size: ${({ theme }) => theme.fontSizes.small};
