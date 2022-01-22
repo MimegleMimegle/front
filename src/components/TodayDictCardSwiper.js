@@ -35,10 +35,7 @@ const TodayDictCardSwiper = (props) => {
   const getTodayDictList = async () => {
     let response = await dictApi.getTodayDict()
     setTodayDict(response.data.data)
-    console.log(response)
   }
-
-  console.log(todayDict)
 
   return (
     <>

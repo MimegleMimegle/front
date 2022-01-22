@@ -29,8 +29,6 @@ const DictMyScrapbook = (props) => {
     let response = await dictApi.dictMyScrapList(userId)
 
     setScrapList(response.data.data)
-    console.log(response)
-    console.log(response.data.data)
   }
 
   React.useEffect((userId) => {

@@ -40,7 +40,6 @@ const kakaoLoginDB = (code) => {
     userApi
       .KakaoLogin(code)
       .then(async (res) => {
-        console.log(res)
         const ACCESS_TOKEN = res.data.accessToken
         const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
         const REFRESH_TOKEN = res.data.refreshToken
@@ -69,7 +68,6 @@ const naverLoginDB = (code, state) => {
     userApi
       .NaverLogin(code, state)
       .then(async (res) => {
-        console.log(res)
         const ACCESS_TOKEN = res.data.accessToken
         const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
         const REFRESH_TOKEN = res.data.refreshToken
@@ -101,7 +99,6 @@ const googleLoginDB = (code) => {
         const ACCESS_TOKEN = res.data.accessToken
         const ACCESS_TOKEN_EXP = res.data.accessTokenExpiresIn
         const REFRESH_TOKEN = res.data.refreshToken
-        console.log(res)
 
         await setCookie('is_login', REFRESH_TOKEN)
 
@@ -144,7 +141,6 @@ const logInDB = (username, password) => {
     userApi
       .login(username, password)
       .then((res) => {
-        console.log(res)
         // setCookie('token', res.headers.authorization, 3)
         localStorage.setItem('token', res.headers.authorization)
         localStorage.setItem('username', res.data.data.username)

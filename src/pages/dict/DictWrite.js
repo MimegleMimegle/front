@@ -40,10 +40,6 @@ const DictWrite = (props) => {
     setTitle(e.target.value)
   }
 
-  console.log(title)
-  console.log(summary)
-  console.log(content)
-
   const onChangeSummary = async (e) => {
     setSummary(e.target.value)
   }
@@ -64,7 +60,6 @@ const DictWrite = (props) => {
       dictApi
         .dobleCheckDict(dictName)
         .then((res) => {
-          console.log(res.data.data.result)
           if (res.data.data.result === true) {
             setDoubleCheck(true)
             setCheckedTitle(title)
