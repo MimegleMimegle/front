@@ -4,6 +4,7 @@ import { actionCreators as userActions } from '../redux/modules/user'
 
 import ScaleLoader from 'react-spinners/ScaleLoader'
 import styled from 'styled-components'
+import Spinner from '../components/Spinner'
 
 const KakaoLoginHandler = (props) => {
   const dispatch = useDispatch()
@@ -19,10 +20,11 @@ const KakaoLoginHandler = (props) => {
   return (
     <>
       <BackGround>
-        <Flex>
+        {/* <Flex>
           <Text>대충 로그인 중이라는 내용</Text>
           <ScaleLoader height="160px" width="32px" color="#7362ff" radius="8px" margin="5px" speedMultiplier="2" />
-        </Flex>
+        </Flex> */}
+        <Spinner />
       </BackGround>
     </>
   )
