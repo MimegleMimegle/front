@@ -35,7 +35,6 @@ const getImageListDB = (page) => {
       .getImageList(page, size)
       .then((response) => {
         let is_next = null
-        console.log(response.data.data)
         if (response.data.data.length < 13) {
           is_next = false
         } else {
@@ -63,9 +62,7 @@ const getImageDetailDB = (boardId) => {
     await imageApi
       .getImageDetail(boardId)
       .then((response) => {
-        console.log(response.data)
         const image = response.data.data
-        console.log(image)
         dispatch(loading(false))
         dispatch(getImageDetail(image))
       })
@@ -92,9 +89,7 @@ const uploadImageDB = (uploadFile) => {
     await imageApi
       .uploadImage(category, formData)
       .then((response) => {
-        console.log(response.data)
         const image = response.data.data
-        console.log(image)
         dispatch(loading(false))
       })
       .then(() => {
