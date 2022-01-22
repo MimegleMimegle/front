@@ -273,8 +273,12 @@ const CloseButtonBox = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: flex-end;
+  justify-content: end;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   padding: 10px 16px;
+  -webkit-appearance: none;
   .close-icon {
     cursor: pointer;
     width: 30px;
