@@ -251,7 +251,7 @@ const Join = () => {
               id="PasswordInput_Join"
               maxLength="16"
               type="password"
-              placeholder="영어 대소문자, 숫자, 특수문자 6~16자"
+              placeholder="영어 대소문자, 숫자, 특수문자(!@#$%^&*()._-) 6~16자"
               onChange={onChangePassword}
               passwordText="비밀번호 (숫자+영문자+특수문자 조합으로 8자리 이상)"
               title="비밀번호"
@@ -266,7 +266,7 @@ const Join = () => {
               id="PasswordCheckInput_Join"
               maxLength="16"
               type="password"
-              placeholder="영어 대소문자, 숫자, 특수문자 6~16자"
+              placeholder="영어 대소문자, 숫자, 특수문자(!@#$%^&*()._-) 6~16자"
               onChange={onChangePasswordCheck}
               passwordText=" "
               title="비밀번호 확인"

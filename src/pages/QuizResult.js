@@ -11,8 +11,8 @@ import BottomPopup from '../components/BottomPopup'
 import ShareBottomSheet from '../components/ShareBottomSheet'
 import OneQuiz from '../components/OneQuiz'
 import Footer from '../components/Footer'
-import { ReactComponent as GoBackIcon } from '../styles/icons/back.svg'
-import { ReactComponent as CopyLinkIcon } from '../styles/icons/share.svg'
+import { ReactComponent as GoBackIcon } from '../styles/icons/되돌아가기_24dp.svg'
+import { ReactComponent as CopyLinkIcon } from '../styles/icons/link.svg'
 import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
 
 const QuizResult = ({ quiz_list, category }) => {
