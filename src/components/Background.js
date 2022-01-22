@@ -28,8 +28,8 @@ const Background = () => {
         <img className="bubble letsgo" src={Letsgo} alt="" />
         <img className="bubble nitetomeetu" src={NiceToMeetU} alt="" />
         <img className="gguggu" src={Gguggu} alt="" />
-            <img className="whatevertv" src={WhateverTv} alt="" />
-            <img className="himsoonjjin" src={HimsoonJin} alt="" />
+        <img className="whatevertv" src={WhateverTv} alt="" />
+        <img className="himsoonjjin" src={HimsoonJin} alt="" />
         <img className="title" src={Mimgle} alt="" />
         <img className="bottomicons" src={Smile} alt="" />
         <img className="bottomicons-2" src={Smile} alt="" />
@@ -44,17 +44,12 @@ const Background = () => {
             <img className="nicetomeetu" src={NiceToMeetU} alt="" />
             <img className="title" src={Mimgle} alt="" />
             <img className="bottomicons" src={Smile} alt="" /> */}
-
-
-
-
-        </Wrap>
-        </>
-    )
+      </Wrap>
+    </>
+  )
 }
 
-export default Background;
-
+export default Background
 
 const Wrap = styled.div`
   width: 100vw;
@@ -62,25 +57,25 @@ const Wrap = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  
+
   .bottomicons {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      /* width: 100vw; */
-      height: 100vh;
-    }
-    .bottomicons-2 {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 2001px;
-      /* width: 100vw; */
-      height: 100vh;
-    }
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* width: 100vw; */
+    height: 100vh;
+  }
+  .bottomicons-2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 2001px;
+    /* width: 100vw; */
+    height: 100vh;
+  }
 
   /* @media screen and (min-width: 500px) { */
   .speechbubble {
@@ -100,27 +95,26 @@ const Wrap = styled.div`
     left: 0;
     width: 130rem;
     height: 70rem;
-
   }
-  
-   .gguggu {
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        .whatevertv {
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        .himsoonjjin {
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+
+  .gguggu {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .whatevertv {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .himsoonjjin {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   .JjajjaYellow {
     height: 100%;
     position: absolute;
@@ -141,15 +135,7 @@ const Wrap = styled.div`
     top: 0;
     left: 0;
   }
-   .bottomicons {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-    }
-  }
-   
-  }
+
   .bubble {
     position: absolute;
   }
@@ -173,5 +159,4 @@ const Wrap = styled.div`
     top: 0;
     left: 0;
   }
-
 `
