@@ -51,8 +51,8 @@ function App() {
   }, [])
   return (
     <>
-    <Wrapper>
-    {/* <Background> */}
+    {/* <Wrapper> */}
+    <Background>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <ConnectedRouter history={history}>
@@ -86,8 +86,9 @@ function App() {
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>
-    </Wrapper>
-    {/* </Background> */}
+    </Background>
+    {/* </Wrapper> */}
+
     </>
   )
 }
