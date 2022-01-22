@@ -45,14 +45,10 @@ const DictList = (props) => {
     getDictListDB()
   }, [currentPage])
 
-  console.log(dict)
-  console.log(totalCount)
-
   const getDictListDB = async () => {
     let response = await dictApi.getDictMain(pageSize, currentPage)
     let totalLength = await dictApi.tellMeTotalLength()
-    console.log(response)
-    console.log(totalLength)
+
     setDict(response.data.data)
     setTotalCount(totalLength.data.data)
   }

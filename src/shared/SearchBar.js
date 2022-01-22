@@ -21,8 +21,6 @@ function SearchBar({ onAddKeyword }, props) {
     let response = await dictApi.searchDict(keyword, pageSize, currentPage)
     let searchTotalLength = await dictApi.tellMeTotalLengthSearch(keyword)
 
-    console.log(response.data.data)
-    console.log(searchTotalLength)
     setTotalCount(searchTotalLength.data.data)
   }
 
