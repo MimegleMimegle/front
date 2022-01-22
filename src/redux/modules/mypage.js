@@ -34,7 +34,6 @@ const getMypageDataDB = () => {
       .getMypageData()
       .then((response) => {
         const myPageData = response.data.data
-        console.log(myPageData)
         dispatch(getMypageData(myPageData))
       })
       .catch((error) => {

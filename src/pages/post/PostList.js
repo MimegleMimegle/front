@@ -16,7 +16,6 @@ import SearchPage from '../../shared/SearchPage'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
 import { RiEditLine } from 'react-icons/ri'
-import { IoSearchCircleSharp } from 'react-icons/io5'
 
 const PostList = (props) => {
   const userId = localStorage.getItem('id')
@@ -38,7 +37,6 @@ const PostList = (props) => {
     let totalLength = await dictQuestionApi.totalLength()
     setQuestion(response.data.data)
     setTotalCount(totalLength.data.data)
-    console.log(response.data.data)
   }
 
   const handleClickWrite = () => {

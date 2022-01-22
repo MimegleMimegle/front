@@ -30,8 +30,6 @@ const getQuizListDB = (category) => {
       .getQuizList(category)
       .then((res) => {
         const quiz_list = res.data.data
-        console.log(res.data)
-        console.log(quiz_list)
         dispatch(getQuizList(quiz_list))
       })
       .catch((err) => {

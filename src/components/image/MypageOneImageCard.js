@@ -25,9 +25,7 @@ const MyPageOneImageCard = ({ image }) => {
     e.stopPropagation()
     await imageApi
       .deleteImage(boardId)
-      .then((response) => {
-        console.log(response.data)
-      })
+      .then((response) => {})
       .then(() => {
         window.location.reload()
       })

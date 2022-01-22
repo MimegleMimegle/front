@@ -37,7 +37,6 @@ const Header = ({ children, location, type }) => {
       setShowAlarm(!showAlarm)
       try {
         const { result } = await mypageApi.checkAlarm()
-        console.log(result)
       } catch (error) {
         console.log(error.response)
       }
