@@ -2,7 +2,6 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 import { connectRouter } from 'connected-react-router'
-import Post from './modules/post'
 import Quiz from './modules/quiz'
 import User from './modules/user'
 import Dict from './modules/dict'
@@ -15,7 +14,6 @@ import Question from './modules/dictquestion'
 export const history = createBrowserHistory()
 
 const rootReducer = combineReducers({
-  post: Post,
   quiz: Quiz,
   user: User,
   dict: Dict,
