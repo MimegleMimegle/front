@@ -38,7 +38,6 @@ import KakaoLoginHandler from './shared/KakaoLoginHandler'
 import GoogleLoginHandler from './shared/GoogleLoginHandler'
 import './App.css'
 import bg from '../src/styles/image/background.jpeg'
-// import yellowmollu from '../src/styles/image/배경 분리/노랑 몰?루.svg'
 
 function App() {
   useEffect(() => {
@@ -51,8 +50,8 @@ function App() {
   }, [])
   return (
     <>
-    {/* <Wrapper> */}
-    <Background>
+      {/* <Wrapper> */}
+      {/* <Background> */}
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <ConnectedRouter history={history}>
@@ -86,8 +85,8 @@ function App() {
           </MobileFrame>
         </ConnectedRouter>
       </ThemeProvider>
-    </Background>
-    {/* </Wrapper> */}
+      {/* </Background> */}
+      {/* </Wrapper> */}
     </>
   )
 }

@@ -12,13 +12,11 @@ import PostCard from '../../components/PostCard'
 import MyPageOneImageCard from '../../components/image/MypageOneImageCard'
 import OneDictionaryCard from '../../components/OneDictionaryCard'
 import Grid from '../../elements/Grid'
-import CircularProgress from '@mui/material/CircularProgress'
 import { ReactComponent as EditIcon } from '../../styles/icons/edit.svg'
 
 const Mypage = (props) => {
   const dispatch = useDispatch()
 
-  const [loading, setLoading] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [showDictionary, setShowDictionary] = React.useState(true)
   const [showBoard, setShowBoard] = React.useState(false)
@@ -64,11 +62,6 @@ const Mypage = (props) => {
   }
 
   React.useEffect(() => {
-    setLoading(true)
-    setTimeout(() => setLoading(false), 500)
-  }, [])
-
-  React.useEffect(() => {
     if (my == null) {
       dispatch(mypageActions.getMypageDataDB())
     }
@@ -78,85 +71,79 @@ const Mypage = (props) => {
     <>
       <Header type="MyPage" location="마이페이지"></Header>
       <Wrapper>
-        {!loading ? (
-          <>
-            <UserProfile>
-              <ProfileImage src={my && my.profileImageUrl} />
-              <div className="profile-info box-1">
-                <div style={{ padding: '60px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div className="user-nickname">{my && my.nickname}</div>
-                  <EditIcon className="edit-icon" onClick={handleEditProfile} />
+        <>
+          <UserProfile>
+            <ProfileImage src={my && my.profileImageUrl} />
+            <div className="profile-info box-1">
+              <div style={{ padding: '60px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="user-nickname">{my && my.nickname}</div>
+                <EditIcon className="edit-icon" onClick={handleEditProfile} />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="user-activity-info">
+                  <div className="user-activity-info-subject">단어장</div>
+                  <div className="user-activity-info-count">{my && my.dictCount > 0 ? my.dictCount : 0}</div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div className="user-activity-info">
-                    <div className="user-activity-info-subject">단어장</div>
-                    <div className="user-activity-info-count">{my && my.dictCount > 0 ? my.dictCount : 0}</div>
-                  </div>
-                  <div className="user-activity-info">
-                    <div className="user-activity-info-subject">내질문</div>
-                    <div className="user-activity-info-count">{my && my.postCount > 0 ? my.questionCount : 0}</div>
-                  </div>
-                  <div className="user-activity-info">
-                    <div className="user-activity-info-subject">짤방</div>
-                    <div className="user-activity-info-count">{my && my.postCount > 0 ? my.postCount : 0}</div>
-                  </div>
+                <div className="user-activity-info">
+                  <div className="user-activity-info-subject">내질문</div>
+                  <div className="user-activity-info-count">{my && my.postCount > 0 ? my.questionCount : 0}</div>
+                </div>
+                <div className="user-activity-info">
+                  <div className="user-activity-info-subject">짤방</div>
+                  <div className="user-activity-info-count">{my && my.postCount > 0 ? my.postCount : 0}</div>
                 </div>
               </div>
-              <div className="profile-info box-2"></div>
-            </UserProfile>
+            </div>
+            <div className="profile-info box-2"></div>
+          </UserProfile>
 
-            <Filter>
-              <Grid flex_center>
-                <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
-                  단어장
-                </button>
-              </Grid>
-              <Grid flex_center>
-                <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
-                  내질문
-                </button>
-              </Grid>
-              <Grid flex_center>
-                <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
-                  짤방
-                </button>
-              </Grid>
-            </Filter>
-            <UserActivity>
-              {/* Dictionary */}
-              {showDictionary && myMemeDictList !== null
-                ? myMemeDictList.map((dict) => {
-                    return <OneDictionaryCard key={dict.dictId} dict={dict} />
+          <Filter>
+            <Grid flex_center>
+              <button className={`filter-button ${showDictionary ? 'filter-button-active' : ''}`} onClick={handleShowDictionary}>
+                단어장
+              </button>
+            </Grid>
+            <Grid flex_center>
+              <button className={`filter-button ${showBoard ? 'filter-button-active' : ''}`} onClick={handleShowBoard}>
+                내질문
+              </button>
+            </Grid>
+            <Grid flex_center>
+              <button className={`filter-button ${showImage ? 'filter-button-active' : ''}`} onClick={handleShowPhoto}>
+                짤방
+              </button>
+            </Grid>
+          </Filter>
+          <UserActivity>
+            {/* Dictionary */}
+            {showDictionary && myMemeDictList !== null
+              ? myMemeDictList.map((dict) => {
+                  return <OneDictionaryCard key={dict.dictId} dict={dict} />
+                })
+              : null}
+            {/* Board */}
+            <Grid padding="0 16px">
+              {showBoard && myQuestionList.length > 0
+                ? myQuestionList.map((question) => {
+                    return <PostCard key={question.questionId} question={question} />
                   })
                 : null}
-              {/* Board */}
-              <Grid padding="0 16px">
-                {showBoard && myQuestionList.length > 0
-                  ? myQuestionList.map((question) => {
-                      return <PostCard key={question.questionId} question={question} />
-                    })
-                  : null}
-              </Grid>
+            </Grid>
 
-              {/* Photo */}
-              {showImage && (
-                <MyImageList>
-                  <Masonry breakpointCols={2} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
-                    {myMemeImageList.length > 0
-                      ? myMemeImageList.map((image) => {
-                          return <MyPageOneImageCard key={image.boardId} image={image} />
-                        })
-                      : null}
-                  </Masonry>
-                </MyImageList>
-              )}
-            </UserActivity>
-          </>
-        ) : (
-          <Grid flex_center height="100%">
-            <CircularProgress color="inherit" />
-          </Grid>
-        )}
+            {/* Photo */}
+            {showImage && (
+              <MyImageList>
+                <Masonry breakpointCols={2} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
+                  {myMemeImageList.length > 0
+                    ? myMemeImageList.map((image) => {
+                        return <MyPageOneImageCard key={image.boardId} image={image} />
+                      })
+                    : null}
+                </Masonry>
+              </MyImageList>
+            )}
+          </UserActivity>
+        </>
         {showModal && <EditProfile showModal={showModal} setShowModal={setShowModal} my={my} />}
       </Wrapper>
       <Footer />
