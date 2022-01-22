@@ -26,11 +26,12 @@ const Background = () => {
             <img className="speechbubble" src={KingReceive} alt="" />
             <img className="speechbubble" src={Letsgo} alt="" />
             <img className="speechbubble" src={NiceToMeetU} alt="" />
-            <img className="speechbubble" src={Gguggu} alt="" />
-            <img className="speechbubble" src={WhateverTv} alt="" />
-            <img className="speechbubble" src={HimsoonJin} alt="" />
             <img className="title" src={Mimgle} alt="" />
             <img className="bottomicons" src={Smile} alt="" />
+
+            <img className="gguggu" src={Gguggu} alt="" />
+            <img className="whatevertv" src={WhateverTv} alt="" />
+            <img className="himsoonjjin" src={HimsoonJin} alt="" />
 
             {/* 애니메이션 줄것만 따로 사용 */}
             {/* <img className="jjajja" src={Jjajja} alt="" />
@@ -40,9 +41,7 @@ const Background = () => {
             <img className="kingreceive" src={KingReceive} alt="" />
             <img className="letsgo" src={Letsgo} alt="" />
             <img className="nicetomeetu" src={NiceToMeetU} alt="" />
-            <img className="gguggu" src={Gguggu} alt="" />
-            <img className="whatevertv" src={WhateverTv} alt="" />
-            <img className="himsoonjjin" src={HimsoonJin} alt="" />
+            
             <img className="title" src={Mimgle} alt="" />
             <img className="bottomicons" src={Smile} alt="" /> */}
 
@@ -71,7 +70,6 @@ const Wrap = styled.div`
             right:0;
             bottom: 0;
             left: 0;
-            /* height: 100vh; */
             width: 100vw;
         }
         .title{
@@ -80,8 +78,27 @@ const Wrap = styled.div`
             right: 0;
             bottom: 0;
             left: 0;
-            height: 100vh;
         }
+
+        .gguggu {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .whatevertv {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .himsoonjjin {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
         @media screen and (min-width: 500px) {
             .bottomicons {
                 position:absolute;
@@ -89,8 +106,7 @@ const Wrap = styled.div`
                 right: 0;
                 bottom: 0;
                 left: 0;
-                height: 100vh;
-                
+                width: 100vw;
             }
         }
     /* } */
