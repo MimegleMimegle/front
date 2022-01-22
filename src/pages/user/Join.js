@@ -49,8 +49,6 @@ const Join = () => {
   const [InputNicknameAlert, setInputNicknameAlert] = useState(false)
   const [DoubleCheckAlert, setDoubleCheckAlert] = useState(false)
 
-  console.log(doubleCheck)
-
   const [showAlert, setShowAlert] = useState(false)
 
   // 유저네임 유효성 검사
@@ -116,7 +114,6 @@ const Join = () => {
       await userApi
         .checkUsername(username)
         .then((response) => {
-          console.log(response.data)
           if (response.data.result === true) {
             /* 중복확인 -> 사용 가능한 아이디 상태 저장 */
             setDoubleCheck(true)
@@ -143,7 +140,6 @@ const Join = () => {
       await userApi
         .checkNickname(nickname)
         .then((response) => {
-          console.log(response.data)
           if (response.data.result === true) {
             /* 중복확인 -> 사용 가능한 닉네임 상태 저장 */
             setDoubleCheck(true)

@@ -26,10 +26,7 @@ const PopularBoardCardSwiper = (props) => {
   const searchDictDB = async () => {
     let response = await mainApi.mainPage()
 
-    console.log(response)
     setPopularImages(response.data.data.popularImages)
-
-    console.log(popularImages)
   }
 
   React.useEffect(() => {

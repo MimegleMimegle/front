@@ -49,14 +49,9 @@ const Main = (props) => {
   const searchDictDB = async () => {
     let response = await mainApi.mainPage()
 
-    console.log(response)
     setPopularBoards(response.data.data.popularBoards)
     setPopularImages(response.data.data.popularImages)
     setTodayMemes(response.data.data.todayMemes)
-
-    console.log(popularBoards)
-    console.log(popularImages)
-    console.log(todayMemes)
   }
 
   useEffect(() => {

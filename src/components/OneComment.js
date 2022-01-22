@@ -70,22 +70,17 @@ const OneComment = (props) => {
   const handleClickIsSelected = async (e) => {
     if (props.isSelected === true) {
       console.log('이미 채택된 질문입니다.')
-    } else if (username === commentWriterId) {
-      console.log('질문작성자는 자신의 답변을 채택할 수 없습니다.')
     } else if (!isSelected || username !== props.commentwriterId) {
       await dictQuestionApi
         .selectQuestion(commentId)
         .then((response) => {
-          console.log(response.data)
           setIsSelected(true)
-          console.log(isSelected)
           setSelectModal(false)
           window.location.reload();
 
         })
         .catch((error) => {
           console.log('질문채택 문제 발생', error.response)
-          console.log(error.message)
         })
     }
   }

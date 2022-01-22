@@ -2,7 +2,6 @@ import React, { useState, createRef } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { actionCreators as QuestionActions } from '../../redux/modules/dictquestion'
-import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { dictQuestionApi } from '../../shared/api'
 import { ReactComponent as ArrowBackIcon } from '../../styles/icons/arrow_back_ios_black_24dp.svg'
 import { ReactComponent as AddPhotoIcon } from '../../styles/icons/size(28*28)(30*30)/addphoto_30dp.svg'
@@ -29,7 +28,6 @@ const PostEdit = (props) => {
       .getOneQuestion(questionId)
       .then((response) => {
         const _question = response.data.data
-        console.log(_question)
         setPost(response.data.data)
         setTitle(_question.title)
         setContent(_question.content)
@@ -73,9 +71,6 @@ const PostEdit = (props) => {
     }
   }
 
-  console.log(post.thumbNail)
-  console.log(thumbNail)
-  console.log(fileInput.current.files)
 
   const editQuestion = () => {
     if (title === '' || content === '') {
@@ -86,7 +81,6 @@ const PostEdit = (props) => {
 
     if (fileInput.current.files.length === 0) {
       const uploadFile = post && post.thumbNail
-      console.log(post.thumbNail)
       dispatch(QuestionActions.editQuestionDB(questionId, title, uploadFile, content))
     } else {
       const uploadFile = fileInput.current.files[0]

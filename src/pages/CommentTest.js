@@ -28,7 +28,6 @@ const CommentTest = ({ question }) => {
 
   const onChangeComment = (e) => {
     setComment(e.target.value)
-    console.log(e.target.value)
   }
 
   const addComment = () => {
@@ -37,7 +36,6 @@ const CommentTest = ({ question }) => {
     }else{
     dispatch(commentActions.addCommentDB(question.questionId, comment))
     setComment('')
-    console.log(question.questionId)
     }
   }
   

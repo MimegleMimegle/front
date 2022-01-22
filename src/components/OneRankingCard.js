@@ -25,6 +25,7 @@ const OneRankingCard = ({ rank, index, first }) => {
 }
 
 const Container = styled.div`
+  align-self: flex-end;
   max-width: ${(props) => (props.first ? '120px' : '120px')};
   min-width: ${(props) => (props.first ? '120px' : '120px')};
   width: 100%;
@@ -33,6 +34,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  -webkit-appearance: none;
+  justify-content: end;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   .nickname {
     font-size: ${({ theme }) => theme.fontSizes.base};
     padding: 20px 0 5px;

@@ -34,12 +34,6 @@ const DictSearch = (props) => {
     setQuestionResult(response.data.data.questionResult)
     setTotalCountDict(response.data.data.dictResult.length)
     setTotalCountQnA(response.data.data.questionResult.length)
-
-    console.log(response)
-    console.log(response.data.data.dictResult)
-    console.log(response.data.data.questionResult)
-    console.log(response.data.data.dictResult.length)
-    console.log(response.data.data.questionResult.length)
   }
 
   React.useEffect(() => {

@@ -103,7 +103,6 @@ const getTodayDictListDB = () => {
         const todayDict_list = response.data.data
         dispatch(getTodayDictList(todayDict_list))
         dispatch(loading(false))
-        console.log(todayDict_list)
       })
       .catch((err) => {
         if (err.res) {
@@ -202,7 +201,6 @@ const getDictHistoryDB = (dictId) => {
         const dictHistory_list = response.data.data
         dispatch(getDictHistory(dictHistory_list))
         dispatch(loading(false))
-        console.log(dictHistory_list)
       })
       .catch((err) => {
         if (err.res) {
@@ -219,7 +217,6 @@ const doubleCheckDictDB = (dictName) => {
     dictApi
       .dobleCheckDict(dictName)
       .then((res) => {
-        console.log(res.data.data.result)
         if (res.data.data.result === true) {
           swal({
             title: '등록되지 않은 단어입니다.',
