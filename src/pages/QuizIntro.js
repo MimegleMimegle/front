@@ -8,9 +8,9 @@ import { mainApi } from '../shared/api'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import AlertModal from '../components/modal/AlertModal'
-import Grid from '../elements/Grid'
-import CircularProgress from '@mui/material/CircularProgress'
 import QuizIntroImage from '../styles/image/quiz_main_image_3.gif'
+import Spinner from '../components/Spinner'
+import Grid from '../elements/Grid'
 
 const QuizIntro = (props) => {
   const dispatch = useDispatch()
@@ -80,47 +80,43 @@ const QuizIntro = (props) => {
     <>
       <Header type="QuizIntro" location="밈퀴즈" />
       <Wrapper>
-        {!loading ? (
-          <>
-            {/* <ImageSection> */}
-            <img src={QuizIntroImage} className="quiz-intro-gif" alt="퀴즈 인트로 움짤" />
-            {/* </ImageSection> */}
-            <SubjectSection>
-              <div style={{ padding: '20px 0 10px' }}>
-                <p className="subject-question">어느 레벨의 밈을</p>
-                <p className="subject-question">테스트하고 싶으신가요?</p>
-              </div>
-              <div className="subject-button-box">
-                <button className={`subject-button ${lv1 ? 'selected' : ''}`} value="lv1" onClick={handleChangeSubjectY2000}>
-                  Lv. 1
-                </button>
-              </div>
-              <div className="subject-button-box">
-                <button className={`subject-button ${lv2 ? 'selected' : ''}`} value="lv2" onClick={handleChangeSubjectY2010}>
-                  Lv. 2
-                </button>
-              </div>
-              <div className="subject-button-box">
-                <button className={`subject-button ${lv3 ? 'selected' : ''}`} value="lv3" onClick={handleChangeSubjectY2020}>
-                  Lv. 3
-                </button>
-              </div>
-            </SubjectSection>
-            <div style={{ width: '100%', height: '6px' }}></div>
-            <ButtonSection>
-              <div className="start-button-box box1">
-                <button className="start-button" onClick={handleStartQuiz}>
-                  시작!
-                </button>
-              </div>
-              <div className="start-button-box box2"></div>
-            </ButtonSection>
-          </>
-        ) : (
-          <Grid flex_center height="100%">
-            <CircularProgress color="inherit" />
+        {/* {loading ? (
+          <Spinner />
+        ) : ( */}
+        <>
+          <img src={QuizIntroImage} className="quiz-intro-gif" alt="퀴즈 인트로 움짤" />
+          <Grid flex_center column>
+            <div style={{ padding: '20px 0 10px' }}>
+              <p className="subject-question">어느 레벨의 밈을</p>
+              <p className="subject-question">테스트하고 싶으신가요?</p>
+            </div>
+            <div className="subject-button-box">
+              <button className={`subject-button ${lv1 ? 'selected' : ''}`} value="lv1" onClick={handleChangeSubjectY2000}>
+                Lv. 1
+              </button>
+            </div>
+            <div className="subject-button-box">
+              <button className={`subject-button ${lv2 ? 'selected' : ''}`} value="lv2" onClick={handleChangeSubjectY2010}>
+                Lv. 2
+              </button>
+            </div>
+            <div className="subject-button-box">
+              <button className={`subject-button ${lv3 ? 'selected' : ''}`} value="lv3" onClick={handleChangeSubjectY2020}>
+                Lv. 3
+              </button>
+            </div>
           </Grid>
-        )}
+          <div style={{ width: '100%', height: '6px' }}></div>
+          <ButtonSection>
+            <div className="start-button-box box1">
+              <button className="start-button" onClick={handleStartQuiz}>
+                시작!
+              </button>
+            </div>
+            <div className="start-button-box box2"></div>
+          </ButtonSection>
+        </>
+        {/* )} */}
         <Footer />
       </Wrapper>
       {showModal && (
@@ -135,6 +131,7 @@ const QuizIntro = (props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
   padding: 56px 0 0;
@@ -147,30 +144,12 @@ const Wrapper = styled.div`
     display: none;
   }
   .quiz-intro-gif {
-    width: 100%;
+    width: 100.5%;
     object-fit: cover;
     border-top: 2px solid #000;
     border-bottom: 2px solid #000;
+    object-fit: cover;
   }
-`
-
-const ImageSection = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-top: 2px solid ${({ theme }) => theme.colors.black};
-  border-bottom: 2px solid ${({ theme }) => theme.colors.black};
-`
-
-const SubjectSection = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   .subject-question {
     font-size: ${({ theme }) => theme.fontSizes.xxl};
     font-family: 'YdestreetL';

@@ -15,9 +15,7 @@ import Title from '../../elements/Title'
 import SearchPage from '../../shared/SearchPage'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
-import { CircularProgress } from '@mui/material'
 import { RiEditLine } from 'react-icons/ri'
-import { IoSearchCircleSharp } from 'react-icons/io5'
 
 const PostList = (props) => {
   const userId = localStorage.getItem('id')
@@ -28,13 +26,10 @@ const PostList = (props) => {
   const [pageSize, setPageSize] = useState(10)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
-  const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    setLoading(true)
     getQuestionListDB()
-    setTimeout(() => setLoading(false), 400)
   }, [currentPage])
 
   const getQuestionListDB = async () => {
@@ -42,7 +37,6 @@ const PostList = (props) => {
     let totalLength = await dictQuestionApi.totalLength()
     setQuestion(response.data.data)
     setTotalCount(totalLength.data.data)
-    console.log(response.data.data)
   }
 
   const handleClickWrite = () => {
@@ -58,32 +52,23 @@ const PostList = (props) => {
       <Header location="오픈 밈사전" />
       <Container>
         <DictNavBar />
-        {!loading ? (
-          <>
-            <SearchBarSection>
-              <SearchPage />
-            </SearchBarSection>
-            <Wrap>
-              <CuriousHelp>
-                <Title>궁금해요!</Title>
-                <div className="wait">답변을 기다리고 있어요~</div>
-              </CuriousHelp>
-              {question &&
-                question.map((question, index) => {
-                  return <PostCard question={question} key={question.questionId} />
-                })}
+        <>
+          <SearchBarSection>
+            <SearchPage />
+          </SearchBarSection>
+          <Wrap>
+            <CuriousHelp>
+              <Title>궁금해요!</Title>
+              <div className="wait">답변을 기다리고 있어요~</div>
+            </CuriousHelp>
+            {question &&
+              question.map((question, index) => {
+                return <PostCard question={question} key={question.questionId} />
+              })}
 
-              <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
-            </Wrap>
-          </>
-        ) : (
-          <>
-            <Grid flex_center height="100%">
-              <CircularProgress color="inherit" />
-            </Grid>
-            <Grid height="90px"></Grid>
-          </>
-        )}
+            <Pagination simple total={totalCount} current={currentPage} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} />
+          </Wrap>
+        </>
       </Container>
       <Footer />
       <SpeedDialButton _onClick={handleClickWrite}>

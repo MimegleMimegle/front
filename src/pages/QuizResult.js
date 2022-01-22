@@ -14,6 +14,7 @@ import Footer from '../components/Footer'
 import { ReactComponent as GoBackIcon } from '../styles/icons/되돌아가기_24dp.svg'
 import { ReactComponent as CopyLinkIcon } from '../styles/icons/link.svg'
 import { ReactComponent as CloseIcon } from '../styles/icons/X_24dp.svg'
+import Spinner from '../components/Spinner'
 
 const QuizResult = ({ quiz_list, category }) => {
   const dispatch = useDispatch()
@@ -27,6 +28,7 @@ const QuizResult = ({ quiz_list, category }) => {
   const [showQuiz, setShowQuiz] = useState(false)
   const [resultText, setResultText] = useState({ sub: '', main: '' })
   const [shareVisible, setShareVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleShareVisible = (e) => {
     e.preventDefault()
@@ -46,6 +48,11 @@ const QuizResult = ({ quiz_list, category }) => {
     history.push('/quiz')
     dispatch(quizActions.initAnswer())
   }
+
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => setLoading(false), 2000)
+  }, [])
 
   useEffect(() => {
     if (answerCnt >= 0 && answerCnt < 4) {
@@ -70,74 +77,84 @@ const QuizResult = ({ quiz_list, category }) => {
 
   return (
     <>
-      <Wrapper>
-        <Grid flex_center>
-          <h2 className="quiz-category">Lv. {category === 'lv1' ? '1' : category === 'lv2' ? '2' : '3'}</h2>
-        </Grid>
-        <Grid flex_center column>
-          <QuizResultBox>
-            <div className="quiz-subject box-1">결과</div>
-            <div className="quiz-subject box-2"></div>
-            <Grid flex_center column padding="40px 0 20px">
-              <h2 className="result-text__sub">{resultText.sub}</h2>
-              <h2 className="result-text__main">{resultText.main}</h2>
-              <span className="result-text__answerCnt">{answerCnt}/10</span>
+      {loading ? (
+        <Spinner>
+          밈글봇이 열심히 채점하고 있어요.
+          <br />
+          잠시만 기다려주세요!
+        </Spinner>
+      ) : (
+        <>
+          <Wrapper>
+            <Grid flex_center>
+              <h2 className="quiz-category">Lv. {category === 'lv1' ? '1' : category === 'lv2' ? '2' : '3'}</h2>
             </Grid>
-          </QuizResultBox>
-          <ResultButtonContainer>
-            <div className="resultButtonBox box1">
-              <button className="resultButton" onClick={handleShowQuiz}>
-                정답확인
-              </button>
-            </div>
-            <div className="resultButtonBox box2"></div>
-          </ResultButtonContainer>
-          <TextButtonContainer>
-            <Grid flex_center padding="12px 0">
-              <div className="circle-button-box">
-                <div
-                  className="circle-button btn-1"
-                  onClick={() => {
-                    history.push('/quiz')
-                  }}
-                >
-                  <GoBackIcon />
+            <Grid flex_center column>
+              <QuizResultBox>
+                <div className="quiz-subject box-1">결과</div>
+                <div className="quiz-subject box-2"></div>
+                <Grid flex_center column padding="40px 0 20px">
+                  <h2 className="result-text__sub">{resultText.sub}</h2>
+                  <h2 className="result-text__main">{resultText.main}</h2>
+                  <span className="result-text__answerCnt">{answerCnt}/10</span>
+                </Grid>
+              </QuizResultBox>
+              <ResultButtonContainer>
+                <div className="resultButtonBox box1">
+                  <button className="resultButton" onClick={handleShowQuiz}>
+                    정답확인
+                  </button>
                 </div>
-                <div className="circle-button btn-2"></div>
-              </div>
-              <button className="text-button" onClick={handleMoveQuizIntro}>
-                다른 테스트 하러 가기
-              </button>
+                <div className="resultButtonBox box2"></div>
+              </ResultButtonContainer>
+              <TextButtonContainer>
+                <Grid flex_center padding="12px 0">
+                  <div className="circle-button-box">
+                    <div
+                      className="circle-button btn-1"
+                      onClick={() => {
+                        history.push('/quiz')
+                      }}
+                    >
+                      <GoBackIcon />
+                    </div>
+                    <div className="circle-button btn-2"></div>
+                  </div>
+                  <button className="text-button" onClick={handleMoveQuizIntro}>
+                    다른 테스트 하러 가기
+                  </button>
+                </Grid>
+                <Grid flex_center padding="12px 0">
+                  <div className="circle-button-box">
+                    <div className="circle-button btn-1" onClick={handleShareVisible}>
+                      <CopyLinkIcon />
+                    </div>
+                    <div className="circle-button btn-2"></div>
+                  </div>
+                  <button className="text-button" onClick={handleShareVisible}>
+                    친구에게 공유하기
+                  </button>
+                </Grid>
+              </TextButtonContainer>
+              <BottomPopup isOpen={showQuiz} onClose={() => setShowQuiz(false)} heightPixel={400}>
+                <QuizContainer>
+                  <CloseButtonBox>
+                    <CloseIcon className="close-icon" onClick={() => setShowQuiz(false)} fill="#333" />
+                  </CloseButtonBox>
+                  <div className="quiz-answer-box">
+                    {quiz_list &&
+                      quiz_list.map((quiz, index) => {
+                        return <OneQuiz key={index} quiz={quiz} index={index} />
+                      })}
+                  </div>
+                </QuizContainer>
+              </BottomPopup>
             </Grid>
-            <Grid flex_center padding="12px 0">
-              <div className="circle-button-box">
-                <div className="circle-button btn-1" onClick={handleShareVisible}>
-                  <CopyLinkIcon />
-                </div>
-                <div className="circle-button btn-2"></div>
-              </div>
-              <button className="text-button" onClick={handleShareVisible}>
-                친구에게 공유하기
-              </button>
-            </Grid>
-          </TextButtonContainer>
-          <BottomPopup isOpen={showQuiz} onClose={() => setShowQuiz(false)} heightPixel={400}>
-            <QuizContainer>
-              <CloseButtonBox>
-                <CloseIcon className="close-icon" onClick={() => setShowQuiz(false)} fill="#333" />
-              </CloseButtonBox>
-              <div className="quiz-answer-box">
-                {quiz_list &&
-                  quiz_list.map((quiz, index) => {
-                    return <OneQuiz key={index} quiz={quiz} index={index} />
-                  })}
-              </div>
-            </QuizContainer>
-          </BottomPopup>
-        </Grid>
-        <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />
-      </Wrapper>
-      <Footer />
+            <ShareBottomSheet shareVisible={shareVisible} setShareVisible={setShareVisible} />
+          </Wrapper>
+          <Footer />
+        </>
+      )}
     </>
   )
 }
