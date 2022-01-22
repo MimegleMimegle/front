@@ -5,7 +5,6 @@ import { imageApi } from '../../shared/api'
 import { actionCreators as imageActions } from '../../redux/modules/image'
 import { history } from '../../redux/ConfigureStore'
 
-import Grid from '../../elements/Grid'
 import Title from '../../elements/Title'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
@@ -15,7 +14,7 @@ import ImageUpload from '../image/ImageUpload'
 import OneImageCard from '../../components/image/OneImageCard'
 import ConfirmModal from '../../components/modal/ConfirmModal'
 import SpeedDialButton from '../../components/SpeedDialButton'
-import CircularProgress from '@mui/material/CircularProgress'
+import Spinner from '../../components/Spinner'
 import { RiEditLine } from 'react-icons/ri'
 
 const ImageList = (props) => {
@@ -58,8 +57,7 @@ const ImageList = (props) => {
 
   useEffect(() => {
     setLoading(true)
-    setTimeout(() => setLoading(false), 600)
-    dispatch(imageActions.initImageList())
+    setTimeout(() => setLoading(false), 700)
   }, [])
 
   useEffect(() => {
@@ -72,14 +70,16 @@ const ImageList = (props) => {
       .catch((error) => {
         console.log('명예의 전당 이미지 불러오기 문제 발생', error.response)
       })
+    dispatch(imageActions.initImageList())
   }, [])
 
   return (
     <>
       <Wrapper>
         <Header location="짤방"></Header>
-
-        {!loading ? (
+        {loading ? (
+          <Spinner />
+        ) : (
           <>
             <PopularSection>
               <Title>명예의 밈짤</Title>
@@ -103,25 +103,21 @@ const ImageList = (props) => {
                 </InfinityScroll>
               </Container>
             </GeneralSection>
+            <SpeedDialButton _onClick={handleClickWrite}>
+              {isLogin ? (
+                <>
+                  <FileInputLabel htmlFor="file" className="upload-label">
+                    <RiEditLine size="28" fill="#FFFFFF" />
+                  </FileInputLabel>
+                  <FileInput type="file" id="file" className="upload-file" accept="image/jpg, image/jpeg, image/png, image/gif" ref={fileInput} onChange={handleChangeFile} />
+                </>
+              ) : (
+                <RiEditLine size="28" fill="#FFFFFF" />
+              )}
+            </SpeedDialButton>
           </>
-        ) : (
-          <Grid flex_center height="100%">
-            <CircularProgress color="inherit" />
-          </Grid>
         )}
         {preview && <ImageUpload preview={preview} fileInput={fileInput} />}
-        <SpeedDialButton _onClick={handleClickWrite}>
-          {isLogin ? (
-            <>
-              <FileInputLabel htmlFor="file" className="upload-label">
-                <RiEditLine size="28" fill="#FFFFFF" />
-              </FileInputLabel>
-              <FileInput type="file" id="file" className="upload-file" accept="image/jpg, image/jpeg, image/png, image/gif" ref={fileInput} onChange={handleChangeFile} />
-            </>
-          ) : (
-            <RiEditLine size="28" fill="#FFFFFF" />
-          )}
-        </SpeedDialButton>
         <Footer />
       </Wrapper>
       <ConfirmModal showModal={showModal} setShowModal={setShowModal} title="로그인 후 이용 가능합니다!" question="로그인 페이지로 이동하시겠어요?">

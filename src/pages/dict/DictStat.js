@@ -13,7 +13,7 @@ import DictChart from '../../components/DictChart'
 import OneQnaQuestion from '../../components/OneQnaQuestion'
 import Grid from '../../elements/Grid'
 import Title from '../../elements/Title'
-import CircularProgress from '@mui/material/CircularProgress'
+import Spinner from '../../components/Spinner'
 
 import 'swiper/swiper.min.css'
 
@@ -42,7 +42,7 @@ const DictStat = (props) => {
       }
     }
     getStat()
-    setTimeout(() => setLoading(false), 300)
+    setTimeout(() => setLoading(false), 400)
   }, [])
 
   return (
@@ -50,70 +50,70 @@ const DictStat = (props) => {
       <Header location="오픈 밈사전"></Header>
       <Wrapper>
         <DictNavBar />
-        {!loading ? (
-          <>
-            <RankSection>
-              <Title>열정적인 밈글러 top3</Title>
-              <div className="rank-container">
-                <OneRankingCard rank={rankList[1]} index={1} />
-                <OneRankingCard rank={rankList[0]} index={0} first />
-                <OneRankingCard rank={rankList[2]} index={2} />
-              </div>
-              <div className="rank-info">
-                <span className="yde-icon-check">쳌</span>단어 등록 개수 기준
-              </div>
-            </RankSection>
-            <ChartSection>
-              <Title>위클리 리포트</Title>
-              <div className="chart-container">
-                <DictChart chartData={chartData} />
-                <div className="updated-at">{nowTime} 기준</div>
-                <Grid flex_center column padding="16px 0 0">
-                  <p className="chart-text">
-                    <span className="chart-highlight">오늘</span> 등록된 <span className="chart-highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
-                  </p>
-                  <p className="chart-text">
-                    총 <span className="chart-highlight border">{totalDict}</span>개의 <span className="chart-highlight">밈 단어</span>가 등록되었어요!
-                  </p>
-                </Grid>
-              </div>
-            </ChartSection>
-            <QNASection>
-              <Grid flex_center column>
-                <Grid>
-                  <Title>답변을 기다리고 있어요!</Title>
-                  <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
-                    {remainedQuestion &&
-                      remainedQuestion.map((question, index) => {
-                        return (
-                          <SwiperSlide key={`question-id-${question.questionId}`}>
-                            <OneQnaQuestion question={question} />
-                          </SwiperSlide>
-                        )
-                      })}
-                  </StyledSwiper>
-                </Grid>
-                <Grid>
-                  <Title>따끈따끈한 답변이 등록됐어요!</Title>
-                  <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
-                    {completedQuestion &&
-                      completedQuestion.map((question, index) => {
-                        return (
-                          <SwiperSlide key={`question-id-${question.questionId}`}>
-                            <OneQnaQuestion question={question} index={index} />
-                          </SwiperSlide>
-                        )
-                      })}
-                  </StyledSwiper>
-                </Grid>
+        <>
+          <RankSection>
+            <Title>열정적인 밈글러 top3</Title>
+            <div className="rank-container">
+              {loading ? (
+                <Spinner type="white" />
+              ) : (
+                <>
+                  <OneRankingCard rank={rankList[1]} index={1} />
+                  <OneRankingCard rank={rankList[0]} index={0} first />
+                  <OneRankingCard rank={rankList[2]} index={2} />
+                </>
+              )}
+            </div>
+            <div className="rank-info">
+              <span className="yde-icon-check">쳌</span>단어 등록 개수 기준
+            </div>
+          </RankSection>
+          <ChartSection>
+            <Title>위클리 리포트</Title>
+            <div className="chart-container">
+              <DictChart chartData={chartData} />
+              <div className="updated-at">{nowTime} 기준</div>
+              <Grid flex_center column padding="16px 0 0">
+                <p className="chart-text">
+                  <span className="chart-highlight">오늘</span> 등록된 <span className="chart-highlight border">{chartData && chartData[6].count}</span>개를 더해서,{' '}
+                </p>
+                <p className="chart-text">
+                  총 <span className="chart-highlight border">{totalDict}</span>개의 <span className="chart-highlight">밈 단어</span>가 등록되었어요!
+                </p>
               </Grid>
-            </QNASection>
-          </>
-        ) : (
-          <Grid flex_center height="100%">
-            <CircularProgress color="inherit" />
-          </Grid>
-        )}
+            </div>
+          </ChartSection>
+          <QNASection>
+            <Grid flex_center column>
+              <Grid>
+                <Title>답변을 기다리고 있어요!</Title>
+                <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
+                  {remainedQuestion &&
+                    remainedQuestion.map((question, index) => {
+                      return (
+                        <SwiperSlide key={`question-id-${question.questionId}`}>
+                          <OneQnaQuestion question={question} />
+                        </SwiperSlide>
+                      )
+                    })}
+                </StyledSwiper>
+              </Grid>
+              <Grid>
+                <Title>따끈따끈한 답변이 등록됐어요!</Title>
+                <StyledSwiper slidesPerView="auto" spaceBetween={16} freeMode={true} lazy={true}>
+                  {completedQuestion &&
+                    completedQuestion.map((question, index) => {
+                      return (
+                        <SwiperSlide key={`question-id-${question.questionId}`}>
+                          <OneQnaQuestion question={question} index={index} />
+                        </SwiperSlide>
+                      )
+                    })}
+                </StyledSwiper>
+              </Grid>
+            </Grid>
+          </QNASection>
+        </>
       </Wrapper>
       <Footer />
     </>
@@ -136,7 +136,7 @@ const RankSection = styled.section`
   .rank-container {
     max-width: 400px;
     width: 100%;
-    height: fit-content;
+    height: 204px;
     background-color: #fff;
     box-shadow: 0 4px 35px 4px hsl(0deg 0% 64% / 25%);
     border: 2px solid ${({ theme }) => theme.colors.line};
