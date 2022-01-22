@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import React from 'react'
 
-// import Mollu from '../styles/image/배경 분리/노랑 몰?루.svg'
-import Jjajja from '../styles/image/background/노랑_짜짜.svg'
-import Holymoly from '../styles/image/background/노랑_홀리몰리과카몰리.svg'
+import Mollu from '../styles/image/background/노랑_몰루.png'
+import Jjajja from '../styles/image/background/노랑_짜짜.png'
+import Holymoly from '../styles/image/background/노랑_홀리몰리과카몰리.png'
 import Mimgle from '../styles/image/background/밈글밈글.svg'
 import Cute from '../styles/image/background/주황_700.png'
 import Loveu from '../styles/image/background/주황_h워월v.png'
@@ -19,8 +19,9 @@ const Background = () => {
   return (
     <>
       <Wrap>
-        <img className="speechbubble" src={Jjajja} alt="" />
-        <img className="speechbubble" src={Holymoly} alt="" />
+        <img className="JjajjaYellow" src={Jjajja} alt="" />
+        <img className="MolluYellow" src={Mollu} alt="" />
+        <img className="HolymolyYellow" src={Holymoly} alt="" />
         <img className="bubble cute" src={Cute} alt="" />
         <img className="bubble loveu" src={Loveu} alt="" />
         <img className="bubble kingreceive" src={KingReceive} alt="" />
@@ -54,28 +55,61 @@ const Background = () => {
 export default Background
 
 const Wrap = styled.div`
-  overflow: fixed;
   width: 100vw;
-  /* height: 100vh; */
+  height: 100vh;
   position: fixed;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
+
   /* @media screen and (min-width: 500px) { */
   .speechbubble {
+    position: absolute;
+    left: 10;
+    right: 0;
+    bottom: 0;
+    top: 10;
+    width: 120rem;
+    height: 70rem;
+  }
+  .title {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 130rem;
+    height: 70rem;
   }
-  .title {
+  .JjajjaYellow {
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+  }
+
+  .MolluYellow {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .HolymolyYellow {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  @media screen and (min-width: 500px) {
+    .bottomicons {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+    }
+  }
+   
   }
   .bubble {
     position: absolute;
