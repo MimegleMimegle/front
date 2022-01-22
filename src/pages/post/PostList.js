@@ -15,7 +15,6 @@ import Title from '../../elements/Title'
 import SearchPage from '../../shared/SearchPage'
 
 import { ReactComponent as CloseIcon } from '../../styles/icons/X_24dp.svg'
-import { ReactComponent as SearchIcon } from '../../styles/icons/검색_24dp.svg'
 import { CircularProgress } from '@mui/material'
 import { RiEditLine } from 'react-icons/ri'
 import { IoSearchCircleSharp } from 'react-icons/io5'
@@ -67,7 +66,6 @@ const PostList = (props) => {
             <Wrap>
               <CuriousHelp>
                 <Title>궁금해요!</Title>
-                {/* <div className="curious">궁금해요!</div> */}
                 <div className="wait">답변을 기다리고 있어요~</div>
               </CuriousHelp>
               {question &&

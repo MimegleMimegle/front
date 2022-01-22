@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { history } from '../redux/ConfigureStore'
 
 import Grid from '../elements/Grid'
-import { ReactComponent as EmptyBookMarkIcon } from '../styles/icons/북마크 비활성_18dp.svg'
-import { ReactComponent as FillBookMarkIcon } from '../styles/icons/북마크 활성_18dp.svg'
+import { ReactComponent as EmptyBookMarkIcon } from '../styles/icons/bookmark_blank.svg'
+import { ReactComponent as FillBookMarkIcon } from '../styles/icons/bookmark_filled.svg'
 
 const OneDictionaryCard = ({ dict }) => {
   return (
