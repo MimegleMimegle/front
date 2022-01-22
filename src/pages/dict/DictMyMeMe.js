@@ -23,8 +23,6 @@ const DictMyMeMe = (props) => {
     let response = await dictApi.dictMyScrapList()
 
     setScrapList(response.data.data)
-    console.log(response)
-    console.log(response.data.data)
   }
 
   React.useEffect(() => {

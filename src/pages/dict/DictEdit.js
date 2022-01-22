@@ -24,7 +24,7 @@ const DictEdit = (props) => {
 
   const getDictListDB = async () => {
     let response = await dictApi.getDictDetail(dictId)
-    console.log(response)
+
     const _dict = response.data.data
     setDict(_dict)
     setSummary(_dict.summary)
@@ -38,10 +38,6 @@ const DictEdit = (props) => {
   const dictId = Number(props.match.params.dictId)
   const newRecentWriter = window.localStorage.getItem('nickname')
 
-  console.log(dict)
-  console.log(dictId)
-  console.log(newRecentWriter)
-
   const onChangeSummary = (e) => {
     setSummary(e.target.value)
   }
@@ -49,7 +45,7 @@ const DictEdit = (props) => {
   const onChangeContent = (e) => {
     setContent(e.target.value)
   }
-  console.log(recentWriter)
+
   const editDict = () => {
     dispatch(dictActions.editDictDB(dictId, summary, content))
   }

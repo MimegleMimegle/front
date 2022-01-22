@@ -26,19 +26,14 @@ const DictEditHistory = (props) => {
 
   const [showModal, setShowModal] = useState(false)
 
-  console.log(dictId)
-
   React.useEffect(() => {
     getDictHistoryDB()
   }, [])
-
-  console.log(dictHistory)
 
   const getDictHistoryDB = async () => {
     const dictId = Number(props.match.params.dictId)
     let response = await dictApi.dictEditHistory(dictId)
 
-    console.log(response)
     setIsDict(response.data.data)
     setDictHistory(response.data.data.history)
     setFirstCreatedAt(response.data.data.firstCreatedAt.split('T')[0])
