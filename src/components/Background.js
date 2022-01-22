@@ -33,7 +33,6 @@ const SocuteImage = styled.img`
   top: 0;
   left: 0;
 `
-
 export default Background
 
 const Wrap = styled.div`

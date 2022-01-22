@@ -124,7 +124,7 @@ const Main = (props) => {
             </SwiperSlide>
             <SwiperSlide
               onClick={() => {
-                history.push('/quiz')
+                window.open('https://forms.gle/xmfGQt2WsPQhiHg87', '_blank')
               }}
               className="main-swiper-slide"
             >
