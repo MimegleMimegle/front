@@ -19,6 +19,7 @@
   - react-masonry-css
   - react-spring
   - recharts
+  - dayjs
   - immer
 * Redux
   - redux-actions
