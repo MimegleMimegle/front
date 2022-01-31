@@ -1,15 +1,17 @@
 # 밈글밈글
 
+[시연영상](https://www.youtube.com/watch?v=0FW30mV3Jgs)
+
 
 ## 1. 프로젝트 소개
 ## 2. 팀 구성원
 > Back-end (Spring)
-* 김용빈 (팀장)
-* 임전혁
+* [김용빈](https://github.com/Zabee52) (팀장)
+* [임전혁](https://github.com/yarogono)
 > Front-end (React)
-* 정주혜
-* 이한샘
-* 이지연
+* [정주혜](https://github.com/zubetcha)
+* [이한샘](https://github.com/undriedspring)
+* [이지연](https://github.com/zhiyeonyi)
 > Design
 * 장세연
 * 김수은
