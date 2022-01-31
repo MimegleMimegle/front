@@ -14,5 +14,9 @@
 * 장세연
 * 김수은
 ## 3. 기술 스택
+* React
+* Redux
+* Styled-components
+* Axios
 ## 4. 주요 기능
 ## 5. 트러블 슈팅
