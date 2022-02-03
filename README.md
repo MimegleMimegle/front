@@ -19,18 +19,19 @@
 * 장세연
 * 김수은
 ## 3. 기술 스택
-* **React**
-  - react-router-dom
-  - react-masonry-css
-  - react-spring
-  - recharts
-  - dayjs
-  - immer
-* **Redux**
-  - redux-actions
-  - redux-logger
-  - redux-thunk
-* **Styled-components**
-* **Axios**
+> **React**
+* react-router-dom
+* react-masonry-css
+* react-spring
+* recharts
+* dayjs
+* immer
+> **Redux**
+* redux-actions
+* redux-logger
+* redux-thunk
+> **Styled-components**
+
+> **Axios**
 ## 4. 주요 기능
 ## 5. 트러블 슈팅
