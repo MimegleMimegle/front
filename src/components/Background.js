@@ -17,12 +17,13 @@ import Gguggu from '../styles/image/background/blue_Gguggu.png'
 import WhateverTv from '../styles/image/background/blue_WhateverTV.png'
 import HimsoonJin from '../styles/image/background/blue_Himsumjjin.png'
 import Smile from '../styles/image/background/하단_스마일.png'
+import MemegleBackground from '../styles/image/background/background.jpeg'
 
 const Background = React.memo(() => {
   return (
     <>
       <Wrap>
-        <img className="bubble JjajjaYellow" src={Jjajja} alt="" />
+        {/* <img className="bubble JjajjaYellow" src={Jjajja} alt="" />
         <img className="bubble MolluYellow" src={Mollu} alt="" />
         <img className="bubble HolymolyYellow" src={Holymoly} alt="" />
         <img className="bubble cute" src={Cute} alt="" />
@@ -37,7 +38,8 @@ const Background = React.memo(() => {
         <div className="bottomSection">
           <img className="bottomicons" src={Smile} alt="" />
           <img className="bottomicons-2" src={Smile} alt="" />
-        </div>
+        </div> */}
+        <img className="background" src={MemegleBackground} alt="배경화면" />
       </Wrap>
     </>
   )
@@ -53,6 +55,13 @@ const Wrap = styled.div`
   left: 0;
   background-color: white;
   z-index: -999;
+  .background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
   .bottomSection {
     bottom: 0;
     left: 0;
@@ -470,8 +479,8 @@ const Wrap = styled.div`
     .JjajjaYellow {
       top: -60px;
       left: 100px;
-      width: 130rem;
-      height: 70rem;
+      width: 24rem;
+      height: 9rem;
     }
     .cute {
       top: 550px;
@@ -507,8 +516,8 @@ const Wrap = styled.div`
     .MolluYellow {
       top: -50px;
       right: -50px;
-      width: 140rem;
-      height: 80rem;
+      width: 24rem;
+      height: 9rem;
     }
     .loveu {
       top: 735px;

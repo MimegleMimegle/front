@@ -52,7 +52,7 @@ code {
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: local('YdestreetB'), url('styles/fonts/YdestreetB.woff2') format('woff2'), url('styles/fonts/YdestreetB.woff') format('woff');
+  src: local('YdestreetB'), url('styles/fonts/YdestreetB.otf') format('truetype'), url('styles/fonts/YdestreetB.ttf') format('truetype');
 }
 
 @font-face {
@@ -60,5 +60,5 @@ code {
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: local('YdestretL'), url('styles/fonts/YdestreetL.woff2') format('woff2'), url('styles/fonts/YdestreetL.woff2') format('woff2');
+  src: local('YdestreetL'), url('styles/fonts/YdestreetL.otf') format('truetype'), url('styles/fonts/YdestreetL.ttf') format('truetype');
 }
